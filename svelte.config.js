@@ -9,7 +9,7 @@ export default {
 	compilerOptions: {immutable: true},
 	kit: {
 		adapter: adapter(),
-		// paths: dev ? undefined : {base: '/felt-template'}, // for GitHub pages -- delete this line for top-level domains
+		// paths: dev ? undefined : {base: '/feltcoop/util'}, // for GitHub pages -- delete this line for top-level domains
 		files: {assets: 'src/static'},
 	},
 };
