@@ -3,7 +3,11 @@
 
 	import {exports} from '$lib/exports';
 
-	const exps = exports.map((e) => `$${e} `).filter(Boolean);
+	// TODO glob import and print API?
+
+	const exps = exports.map((e) => `$${e}`).filter(Boolean);
+
+	console.log(`exps`, exps);
 </script>
 
 <main class="column">
@@ -21,8 +25,12 @@
 		>
 	</section>
 	<section class="padded-xl">
-		{#each exps as exp}<li>
-				<a href="https://github.com/feltcoop/util/blob/main/src/{exp.substring(1)}">{exp}</a>
+		{#each exps as exp}<li class="markup">
+				<code class="padded-sm"
+					>import {'{'}...} from '<a
+						href="https://github.com/feltcoop/util/blob/main/src/{exp.substring(1)}">{exp.trim()}</a
+					>'</code
+				>
 			</li>{/each}
 	</section>
 	<footer>
