@@ -1,5 +1,10 @@
 # changelog
 
+## 0.2.1
+
+- fix exports
+  ([#3](https://github.com/feltcoop/felt/pull/3))
+
 ## 0.2.0
 
 - **break**: require fully qualified imports for almost everything
