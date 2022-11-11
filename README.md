@@ -1,6 +1,6 @@
 # @feltcoop/util
 
-> utilities for javascript in typescript 🦕🐋
+> utilities for javascript in typescript 🦕🐋 [util.felt.dev](https://util.felt.dev)
 
 ## usage
 
