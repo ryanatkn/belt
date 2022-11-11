@@ -1,4 +1,3 @@
-export * from '$lib/index';
 export * from '$lib/array';
 export * from '$lib/async';
 export * from '$lib/counter';
