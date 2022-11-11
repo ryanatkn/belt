@@ -12,8 +12,8 @@
 
 <main class="column">
 	<section class="padded-xl">
-		<header class="centered-hz">
-			<h1 class="centered-hz">@feltcoop/util 🦕🐋</h1>
+		<header>
+			<h1 class="centered-hz">@feltcoop/util<a href="https://github.com/feltcoop">🦕🐋</a></h1>
 		</header>
 	</section>
 	<section class="padded-xl">
