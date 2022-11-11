@@ -6,8 +6,6 @@
 	// TODO glob import and print API?
 
 	const exps = exports.map((e) => `$${e}`).filter(Boolean);
-
-	console.log(`exps`, exps);
 </script>
 
 <main class="column">
