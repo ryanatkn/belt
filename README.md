@@ -6,10 +6,12 @@
 
 usage: `npm i @feltcoop/util`
 
-TODO see [src/lib/](src/lib/)
+TODO see [src/lib/index.ts](src/lib/index.ts)
 
 ```ts
-import {type Result, unwrap} from '@feltcoop/result.js';
+import {type Result, unwrap} from '@feltcoop/util';
+// or
+import {type Result, unwrap} from '@feltcoop/util/result.js';
 ```
 
 TODO docs:
