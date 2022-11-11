@@ -2,10 +2,11 @@
 	import Message from '@feltcoop/felt/ui/Message.svelte';
 
 	import {exports} from '$lib/exports';
+	import {stripStart} from '$lib/string';
 
 	// TODO glob import and print API?
 
-	const exps = exports.map((e) => `$${e}`).filter(Boolean);
+	const exps = exports.map((e) => `@feltcoop/util/${stripStart(e, 'lib/')}`).filter(Boolean);
 </script>
 
 <main class="column">
@@ -23,10 +24,10 @@
 		>
 	</section>
 	<section class="padded-xl">
-		{#each exps as exp}<li class="markup">
+		{#each exps as exp, i}<li class="markup">
 				<code class="padded-sm"
 					>import {'{'}...} from '<a
-						href="https://github.com/feltcoop/util/blob/main/src/{exp.substring(1)}">{exp.trim()}</a
+						href="https://github.com/feltcoop/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
 			</li>{/each}

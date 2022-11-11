@@ -17,10 +17,10 @@ test__getJsonType('basic behavior', () => {
 	assert.is(getJsonType({}), 'object');
 	assert.is(getJsonType(null), 'null');
 	assert.is(getJsonType([]), 'array');
-	assert.throws(() => getJsonType(undefined as any));
-	assert.throws(() => getJsonType(noop as any));
-	assert.throws(() => getJsonType(BigInt(9000) as any));
-	assert.throws(() => getJsonType(Symbol() as any));
+	assert.is(getJsonType(undefined as any), undefined);
+	assert.is(getJsonType(noop as any), undefined);
+	assert.is(getJsonType(BigInt(9000) as any), undefined);
+	assert.is(getJsonType(Symbol() as any), undefined);
 });
 
 test__getJsonType.run();

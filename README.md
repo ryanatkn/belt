@@ -6,16 +6,15 @@
 
 usage: [`npm i @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
 
-see [src/lib/index.ts](src/lib/index.ts)
-
 ```ts
 import {type Result, unwrap} from '@feltcoop/util';
 // or
 import {type Result, unwrap} from '@feltcoop/util/result.js';
+import {randomInt} from '@feltcoop/util/random.js'; // etc
 ```
 
-TODO docs:
-[util.felt.dev](https://util.felt.dev)
+see the available modules at [util.felt.dev](https://util.felt.dev)
+and [src/lib/exports](src/lib/exports.ts)
 
 ## build
 

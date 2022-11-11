@@ -1,25 +1,7 @@
-export * from '$lib/array';
-export * from '$lib/async';
-export * from '$lib/counter';
-export * from '$lib/dom';
-export * from '$lib/env';
-export * from '$lib/error';
-export * from '$lib/function';
-export * from '$lib/id';
-export * from '$lib/json';
-export * from '$lib/log';
-export * from '$lib/map';
-export * from '$lib/maths';
-export * from '$lib/object';
-export * from '$lib/obtainable';
-export * from '$lib/path';
-export * from '$lib/pathParsing';
-export * from '$lib/print';
-export * from '$lib/process';
-export * from '$lib/random';
-export * from '$lib/randomSeeded';
-export * from '$lib/result';
-export * from '$lib/regexp';
-export * from '$lib/string';
-export * from '$lib/timings';
-export * from '$lib/types';
+// Individual module exports are listed at `src/lib/exports.ts`,
+// e.g. `import Dialog from '@feltcoop/felt/ui/dialog/Dialog.svelte'`
+
+// The public API for `@feltcoop/util`:
+
+export * from '$lib/result.js';
+export * from '$lib/types.js';
