@@ -1,12 +1,12 @@
 # @feltcoop/util
 
-> utilities for javascript in typescript
+> utilities for javascript in typescript 🦕🐋
 
 ## usage
 
-usage: `npm i @feltcoop/util`
+usage: [`npm i @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
 
-TODO see [src/lib/index.ts](src/lib/index.ts)
+see [src/lib/index.ts](src/lib/index.ts)
 
 ```ts
 import {type Result, unwrap} from '@feltcoop/util';
