@@ -1,9 +1,10 @@
 {
-  "name": "felt-template",
-  "description": "a static web app and Node library template with SvelteKit, Gro, and Felt",
+  "name": "@feltcoop/util",
+  "description": "utilities for javascript in typescript",
+  "license": "MIT",
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://template.felt.dev",
+  "homepage": "https://util.felt.dev",
   "engines": {
     "node": ">=18.6"
   },

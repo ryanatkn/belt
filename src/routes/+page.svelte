@@ -1,26 +1,39 @@
 <script lang="ts">
 	import Message from '@feltcoop/felt/ui/Message.svelte';
 
-	import Mreows from '$lib/Mreows.svelte';
+	import {exports} from '$lib/exports';
 
-	let mreows: Array<{icon: string}> | undefined;
+	// TODO glob import and print API?
+
+	const exps = exports.map((e) => `$${e}`).filter(Boolean);
 </script>
 
-<main class="markup column">
-	<section>
-		<header class="centered-hz">
-			<h1>felt<small><a href="https://github.com/feltcoop">💚</a></small>template</h1>
+<main class="column">
+	<section class="padded-xl">
+		<header>
+			<h1 class="centered-hz">@feltcoop/util<a href="https://github.com/feltcoop">🦕🐋</a></h1>
 		</header>
+	</section>
+	<section class="padded-xl">
 		<Message
-			><span slot="icon"
-				>{#if mreows}{mreows[0].icon}{:else}✨{/if}</span
-			><span
-				>hello, welcome to <a href="https://github.com/feltcoop/felt-template">felt-template</a
+			><a href="https://github.com/feltcoop/util" slot="icon">🐙😺</a><span
+				><a href="https://www.npmjs.com/package/@feltcoop/util"><code>npm i @feltcoop/util</code></a
 				></span
 			></Message
 		>
 	</section>
-	<Mreows bind:mreows />
+	<section class="padded-xl">
+		{#each exps as exp}<li class="markup">
+				<code class="padded-sm"
+					>import {'{'}...} from '<a
+						href="https://github.com/feltcoop/util/blob/main/src/{exp.substring(1)}">{exp.trim()}</a
+					>'</code
+				>
+			</li>{/each}
+	</section>
+	<footer>
+		<a href="https://github.com/feltcoop/util" title="source code on github">🐙😺</a>
+	</footer>
 </main>
 
 <style>
@@ -32,5 +45,8 @@
 	}
 	h1 {
 		text-align: center;
+	}
+	footer {
+		font-size: var(--font_size_xl5);
 	}
 </style>
