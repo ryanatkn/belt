@@ -3,6 +3,7 @@
 ## 0.2.2
 
 - add `kleur` as a peer dep
+- remove `@lukeed/uuid` as a peer dep, swapped with `globalThis.crypto.randomUUID`
 
 ## 0.2.1
 
