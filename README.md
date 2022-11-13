@@ -9,7 +9,7 @@
 ```ts
 // a few things are exported from the root:
 import {type Result, unwrap} from '@feltcoop/util';
-// most are available at their full module path:
+// usually you'll import full module paths:
 import {type Result, unwrap} from '@feltcoop/util/result.js';
 import {randomInt} from '@feltcoop/util/random.js'; // etc
 ```
