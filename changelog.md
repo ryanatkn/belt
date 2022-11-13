@@ -1,9 +1,10 @@
 # changelog
 
-## 0.2.2
+## 0.3.0
 
+- **break**: remove `toUuid`, use platform `crypto.randomUUID` instead
+- remove `@lukeed/uuid` as a peer dep
 - add `kleur` as a peer dep
-- remove `@lukeed/uuid` as a peer dep, swapped with `globalThis.crypto.randomUUID`
 
 ## 0.2.1
 

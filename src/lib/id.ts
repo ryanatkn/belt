@@ -3,9 +3,6 @@ import {toCounter} from '$lib/counter';
 
 export type Uuid = Flavored<string, 'Uuid'>;
 
-// https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID
-export const toUuid: () => Uuid = globalThis.crypto.randomUUID;
-
 export const isUuid = (str: string): str is Uuid => uuidMatcher.test(str);
 
 // Postgres doesn't support the namespace prefix, so neither does Felt.

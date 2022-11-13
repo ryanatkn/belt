@@ -1,24 +1,14 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
+import {randomUUID} from 'crypto';
 
-import {toUuid, isUuid, toToClientId} from '$lib/id.js';
-
-/* test__toUuid */
-const test__toUuid = suite('toUuid');
-
-test__toUuid('basic behavior', () => {
-	assert.ok(toUuid());
-	assert.is(toUuid().length, 36);
-});
-
-test__toUuid.run();
-/* test__toUuid */
+import {isUuid, toToClientId} from '$lib/id.js';
 
 /* test__isUuid */
 const test__isUuid = suite('isUuid');
 
 test__isUuid('basic behavior', () => {
-	assert.ok(isUuid(toUuid()));
+	assert.ok(isUuid(randomUUID()));
 	assert.ok(isUuid('f81d4fae-7dec-11d0-a765-00a0c91e6bf6'));
 	assert.not.ok(isUuid('g81d4fae-7dec-11d0-a765-00a0c91e6bf6'));
 	assert.not.ok(isUuid(''));
