@@ -1,5 +1,9 @@
 # changelog
 
+## 0.2.2
+
+- add `kleur` as a peer dep
+
 ## 0.2.1
 
 - fix exports

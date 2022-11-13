@@ -55,7 +55,9 @@ gro deploy
 
 ## credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
 
-[Svelte](https://github.com/sveltejs/svelte) ∙
+depends on [`kleur`](https://github.com/lukeed/kleur)
+
+made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [SvelteKit](https://github.com/sveltejs/kit) ∙
 [Vite](https://github.com/vitejs/vite) ∙
 [esbuild](https://github.com/evanw/esbuild) ∙
