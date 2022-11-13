@@ -4,7 +4,7 @@
 
 ## usage
 
-usage: [`npm i @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
+> [`npm i -D @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
 
 ```ts
 import {type Result, unwrap} from '@feltcoop/util';
@@ -15,6 +15,12 @@ import {randomInt} from '@feltcoop/util/random.js'; // etc
 
 see the available modules at [util.felt.dev](https://util.felt.dev)
 and [src/lib/exports](src/lib/exports.ts)
+
+## design
+
+- includes utilities to fill in for the modern web platform
+- all typescript, no svelte
+- zero non-platform dependencies (some modules depend on platform features of the browser and Node)
 
 ## build
 
