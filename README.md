@@ -7,8 +7,9 @@
 > [`npm i -D @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
 
 ```ts
+// a few things are exported from the root:
 import {type Result, unwrap} from '@feltcoop/util';
-// or
+// most are available at their full module path:
 import {type Result, unwrap} from '@feltcoop/util/result.js';
 import {randomInt} from '@feltcoop/util/random.js'; // etc
 ```
