@@ -1,5 +1,10 @@
 # changelog
 
+## 0.4.0
+
+- **break**: rename `random-alea.ts` from `random-seeded.ts`
+  and `toRandomAlea` from `toRandomSeeded`
+
 ## 0.3.0
 
 - **break**: remove `toUuid`, use platform `crypto.randomUUID` instead

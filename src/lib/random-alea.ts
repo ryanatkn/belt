@@ -38,7 +38,7 @@ export interface Alea {
 	seeds: unknown[];
 }
 
-export const toRandomSeeded = (...args: unknown[]): Alea => {
+export const toRandomAlea = (...args: unknown[]): Alea => {
 	// Johannes Baagøe <baagoe@baagoe.com>, 2010
 	let s0 = 0;
 	let s1 = 0;

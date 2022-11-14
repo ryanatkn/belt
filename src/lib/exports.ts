@@ -23,7 +23,7 @@ export const exports = [
 	'lib/print.ts',
 	'lib/process.ts',
 	'lib/random.ts',
-	'lib/random-seeded.ts',
+	'lib/random-alea.ts',
 	'lib/result.ts',
 	'lib/regexp.ts',
 	'lib/string.ts',

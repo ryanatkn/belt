@@ -33,40 +33,40 @@ THE SOFTWARE.
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toRandomSeeded} from '$lib/random-seeded.js';
+import {toRandomAlea} from '$lib/random-alea.js';
 
-/* test__toRandomSeeded */
-const test__toRandomSeeded = suite('toRandomSeeded');
+/* test__toRandomAlea */
+const test__toRandomAlea = suite('toRandomAlea');
 
-test__toRandomSeeded('Math.random() replacement', () => {
+test__toRandomAlea('Math.random() replacement', () => {
 	// From http://baagoe.com/en/RandomMusings/javascript/
 	// via https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
-	const random = toRandomSeeded('my', 3, 'seeds');
+	const random = toRandomAlea('my', 3, 'seeds');
 	assert.is(random(), 0.30802189325913787);
 	assert.is(random(), 0.5190450621303171);
 	assert.is(random(), 0.43635262292809784);
 });
 
-test__toRandomSeeded('another seed', () => {
-	const random2 = toRandomSeeded(1277182878230);
+test__toRandomAlea('another seed', () => {
+	const random2 = toRandomAlea(1277182878230);
 	assert.is(random2(), 0.6198398587293923);
 	assert.is(random2(), 0.8385338634252548);
 	assert.is(random2(), 0.3644848605617881);
 });
 
-test__toRandomSeeded('seeded random uint32', () => {
-	const randomUint32 = toRandomSeeded('').uint32;
+test__toRandomAlea('seeded random uint32', () => {
+	const randomUint32 = toRandomAlea('').uint32;
 	assert.is(randomUint32(), 715789690);
 	assert.is(randomUint32(), 2091287642);
 	assert.is(randomUint32(), 486307);
 });
 
-test__toRandomSeeded('seeded random fract53', () => {
-	const randomFract53 = toRandomSeeded('').fract53;
+test__toRandomAlea('seeded random fract53', () => {
+	const randomFract53 = toRandomAlea('').fract53;
 	assert.is(randomFract53(), 0.16665777435687268);
 	assert.is(randomFract53(), 0.00011322738143160205);
 	assert.is(randomFract53(), 0.17695781631176488);
 });
 
-test__toRandomSeeded.run();
-/* test__toRandomSeeded */
+test__toRandomAlea.run();
+/* test__toRandomAlea */
