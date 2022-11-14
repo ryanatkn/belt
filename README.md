@@ -9,7 +9,7 @@ design:
 - mix of JS module environments - browser-only, Node-only, universal
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
-- kinda minimal in many ways
+- kinda minimal in many ways but also not
 
 ## usage
 
