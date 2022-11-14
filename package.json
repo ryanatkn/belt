@@ -15,6 +15,12 @@
     "test": "gro test",
     "deploy": "gro deploy"
   },
+  "keywords": [
+    "js",
+    "typescript",
+    "utilities",
+    "web"
+  ],
   "peerDependencies": {
     "kleur": "^4.0.0"
   },
