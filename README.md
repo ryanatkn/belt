@@ -33,7 +33,8 @@ gro build
 
 ## test
 
-For more see [`uvu`](https://github.com/lukeed/uvu).
+For more see [`uvu`](https://github.com/lukeed/uvu)
+and [Gro's test docs](https://github.com/feltcoop/gro/blob/main/src/docs/test.md).
 
 ```bash
 gro test
