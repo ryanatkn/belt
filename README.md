@@ -4,7 +4,7 @@
 
 design:
 
-- includes utilities to fill in for the modern web platform
+- a collection of JS utilities to complement the modern web platform
 - all typescript, no svelte
 - mix of JS module environments - browser-only, Node-only, universal
 - near-zero non-platform third party dependencies,
