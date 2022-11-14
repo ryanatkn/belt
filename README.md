@@ -1,10 +1,11 @@
 # @feltcoop/util
 
-> utilities for javascript in typescript 🦕🐋 [util.felt.dev](https://util.felt.dev)
+> a collection of JS utilities to complement the modern web platform 🦕🐋
+> [util.felt.dev](https://util.felt.dev)
 
 design:
 
-- a collection of JS utilities to complement the modern web platform
+- complement the modern web platform, stay evergreen
 - all typescript, no svelte
 - mix of JS module environments - browser-only, Node-only, universal
 - near-zero non-platform third party dependencies,

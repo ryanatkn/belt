@@ -1,6 +1,6 @@
 {
   "name": "@feltcoop/util",
-  "description": "utilities for javascript in typescript 🦕🐋",
+  "description": "a collection of JS utilities to complement the modern web platform 🦕🐋",
   "license": "MIT",
   "version": "0.3.0",
   "type": "module",
