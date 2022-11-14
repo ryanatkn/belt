@@ -2,6 +2,14 @@
 
 > utilities for javascript in typescript 🦕🐋 [util.felt.dev](https://util.felt.dev)
 
+design:
+
+- includes utilities to fill in for the modern web platform
+- all typescript, no svelte
+- mix of JS module environments - browser-only, Node-only, universal
+- near-zero non-platform third party dependencies,
+  currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
+
 ## usage
 
 > [`npm i -D @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
@@ -16,14 +24,6 @@ import {randomInt} from '@feltcoop/util/random.js'; // etc
 
 see the available modules at [util.felt.dev](https://util.felt.dev)
 and [src/lib/exports](src/lib/exports.ts)
-
-## design
-
-- includes utilities to fill in for the modern web platform
-- all typescript, no svelte
-- mix of JS module environments - browser-only, Node-only, universal
-- near-zero non-platform third party dependencies,
-  currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
 
 ## build
 
