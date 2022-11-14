@@ -2,7 +2,7 @@
   "name": "@feltcoop/util",
   "description": "a collection of JS utilities to complement the modern web platform 🦕🐋",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "homepage": "https://util.felt.dev",
   "engines": {
