@@ -21,7 +21,9 @@ and [src/lib/exports](src/lib/exports.ts)
 
 - includes utilities to fill in for the modern web platform
 - all typescript, no svelte
-- zero non-platform dependencies (some modules depend on platform features of the browser and Node)
+- mix of JS module environments - browser-only, Node-only, universal
+- near-zero non-platform third party dependencies,
+  currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
 
 ## build
 
