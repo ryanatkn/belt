@@ -33,8 +33,7 @@ gro build
 
 ## test
 
-For more see [uvu](https://github.com/lukeed/uvu)
-and [`src/lib/example.test.ts`](src/lib/example.test.ts)
+For more see [`uvu`](https://github.com/lukeed/uvu).
 
 ```bash
 gro test
