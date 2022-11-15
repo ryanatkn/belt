@@ -32,9 +32,13 @@
 				<ul class="import">
 					{#each manifest.exports[i].identifiers as identifier}<li class="identifier">
 							<span class="name">{identifier.name?.trim()}</span>:&nbsp;
-							<span class="type">{identifier.type?.trim()}</span>
+							<span class="type"
+								>{#if identifier.type !== undefined}{identifier.type.trim()}{:else}<span
+										class="comment">// TODO fixme</span
+									>{/if}</span
+							>
 						</li>{:else}
-						<span class="comment">// TODO is broken</span>{/each}
+						<span class="comment">// TODO fixme</span>{/each}
 				</ul>
 			</code>
 		</li>{/each}
