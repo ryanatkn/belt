@@ -2,6 +2,7 @@ import type {Gen} from '@feltcoop/gro';
 import ts from 'typescript';
 
 import {exports} from '$lib/exports';
+import type {Logger} from '$lib/log';
 
 export interface Manifest {
 	exports: ManifestExport[];
@@ -50,28 +51,15 @@ export const gen: Gen = async ({fs, log}) => {
 					s.declarationList.declarations[0].type ||
 					s.declarationList.declarations[0].initializer.type
 				) {
-					// TODO BLOCK move
-					const printParams = (n: any, sourceFile: ts.SourceFile) => {
-						// TODO this is a hacky first pass at using the API, I'm definitely not doing things the best way
-						if (n.initializer) {
-							const initializer: any = {
-								...n.initializer,
-								body: undefined,
-								equalsGreaterThanToken: undefined,
-							};
-							log.error('[printParams]', `initializer`, initializer);
-							return printer.printNode(ts.EmitHint.Unspecified, initializer, sourceFile);
-						} else {
-							return printer.printNode(ts.EmitHint.Unspecified, n, sourceFile);
-						}
-					};
-					(identifier || (identifier = {})).type = s.declarationList.declarations[0].type
-						? printer.printNode(
-								ts.EmitHint.Unspecified,
-								s.declarationList.declarations[0].type,
-								node,
-						  )
-						: printParams(s.declarationList.declarations[0], node);
+					(identifier || (identifier = {})).type = normalizeType(
+						s.declarationList.declarations[0].type
+							? printer.printNode(
+									ts.EmitHint.Unspecified,
+									s.declarationList.declarations[0].type,
+									node,
+							  )
+							: printParams(printer, s.declarationList.declarations[0], node, log),
+					);
 
 					// '(' +
 					//   printer.printList(
@@ -103,4 +91,24 @@ export const gen: Gen = async ({fs, log}) => {
 	}
 
 	return JSON.stringify(json);
+};
+
+const normalizeType = (t: string) => {
+	if (t.endsWith(' ;')) return t.slice(0, -2);
+	return t;
+};
+
+// TODO this is a hacky first pass at using the API, I'm definitely not doing things the best way
+const printParams = (printer: ts.Printer, n: any, sourceFile: ts.SourceFile, log: Logger) => {
+	if (n.initializer) {
+		const initializer: any = {
+			...n.initializer,
+			body: undefined,
+			equalsGreaterThanToken: undefined,
+		};
+		log.error('[printParams]', `initializer`, initializer);
+		return printer.printNode(ts.EmitHint.Unspecified, initializer, sourceFile);
+	} else {
+		return printer.printNode(ts.EmitHint.Unspecified, n, sourceFile);
+	}
 };
