@@ -1,6 +1,6 @@
 {
 	"exports": [
-		{"file": "lib/index.ts", "identifiers": [{}, {}]},
+		{"file": "lib/index.ts", "identifiers": []},
 		{
 			"file": "lib/array.ts",
 			"identifiers": [{"name": "EMPTY_ARRAY"}, {"name": "toArray"}, {"name": "removeUnordered"}]
@@ -20,8 +20,6 @@
 		{
 			"file": "lib/env.ts",
 			"identifiers": [
-				{},
-				{},
 				{"name": "env"},
 				{"name": "ToEnvString"},
 				{"name": "toEnvString"},
@@ -37,8 +35,6 @@
 		{
 			"file": "lib/id.ts",
 			"identifiers": [
-				{},
-				{},
 				{"name": "Uuid", "type": "Flavored<string, \"Uuid\">"},
 				{"name": "isUuid"},
 				{"name": "uuidMatcher"},
@@ -64,9 +60,6 @@
 		{
 			"file": "lib/log.ts",
 			"identifiers": [
-				{},
-				{},
-				{},
 				{"name": "LogLevel"},
 				{"name": "parseLogLevel"},
 				{"name": "ENV_LOG_LEVEL"},
@@ -115,7 +108,6 @@
 		{
 			"file": "lib/object.ts",
 			"identifiers": [
-				{},
 				{"name": "mapRecord"},
 				{"name": "omit"},
 				{"name": "pickBy"},
@@ -134,7 +126,6 @@
 		{
 			"file": "lib/path.ts",
 			"identifiers": [
-				{},
 				{"name": "stripTrailingSlash"},
 				{"name": "replaceExtension"},
 				{"name": "toPathStem"},
@@ -156,10 +147,6 @@
 		{
 			"file": "lib/print.ts",
 			"identifiers": [
-				{},
-				{},
-				{},
-				{},
 				{"name": "printKeyValue"},
 				{"name": "printMs"},
 				{"name": "printCauses"},
@@ -175,12 +162,6 @@
 		{
 			"file": "lib/process.ts",
 			"identifiers": [
-				{},
-				{},
-				{},
-				{},
-				{},
-				{},
 				{"name": "log"},
 				{"name": "SpawnedProcess"},
 				{
@@ -252,7 +233,7 @@
 		},
 		{
 			"file": "lib/timings.ts",
-			"identifiers": [{}, {"name": "Stopwatch"}, {"name": "createStopwatch"}, {"name": "Timings"}]
+			"identifiers": [{"name": "Stopwatch"}, {"name": "createStopwatch"}, {"name": "Timings"}]
 		},
 		{
 			"file": "lib/types.ts",

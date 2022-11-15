@@ -33,21 +33,28 @@ export const gen: Gen = async ({fs}) => {
 		// console.log(`node`, node.statements);
 		for (const s of node.statements) {
 			const printer = ts.createPrinter({newLine: ts.NewLineKind.LineFeed});
-			const identifier: ManifestExportIdentifier = {};
+			let identifier: ManifestExportIdentifier | undefined;
 			if (s.name) {
-				identifier.name = printer.printNode(ts.EmitHint.Unspecified, s.name, node);
+				(identifier || (identifier = {})).name = printer.printNode(
+					ts.EmitHint.Unspecified,
+					s.name,
+					node,
+				);
 			} else if (s.declarationList) {
-				identifier.name = printer.printNode(
+				(identifier || (identifier = {})).name = printer.printNode(
 					ts.EmitHint.Unspecified,
 					s.declarationList.declarations[0].name,
 					node,
 				);
 			}
 			if (s.type) {
-				identifier.type = printer.printNode(ts.EmitHint.Unspecified, s.type, node);
+				(identifier || (identifier = {})).type = printer.printNode(
+					ts.EmitHint.Unspecified,
+					s.type,
+					node,
+				);
 			}
-
-			manifestExport.identifiers.push(identifier);
+			if (identifier) manifestExport.identifiers.push(identifier);
 		}
 		// await fs.writeFile(importPath + '.ts', printed, 'utf8');
 	}
