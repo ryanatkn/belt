@@ -29,7 +29,6 @@
 				</code>
 			</header>
 			<code class="padded-sm">
-				<div class="markup"><p>import {'{'}</p></div>
 				<ul class="import">
 					{#each manifest.exports[i].identifiers as identifier}<li class="identifier">
 							<span class="name">{identifier.name?.trim()}</span>:&nbsp;
@@ -37,15 +36,6 @@
 						</li>{:else}
 						<span class="comment">// TODO is broken</span>{/each}
 				</ul>
-				<div class="markup">
-					<p>
-						{'}'} from '<a
-							class="comment"
-							href="https://github.com/feltcoop/util/blob/main/src/{manifest.exports[i].file}"
-							>{exp}</a
-						>'
-					</p>
-				</div>
 			</code>
 		</li>{/each}
 </ul>
@@ -61,7 +51,6 @@
 	}
 	.import {
 		padding-left: var(--spacing_xl);
-		margin: var(--spacing_xl) 0;
 	}
 	.identifier {
 		margin: var(--spacing_xs) 0;
