@@ -1,0 +1,282 @@
+{
+	"exports": [
+		{"file": "lib/index.ts", "identifiers": [{}, {}]},
+		{
+			"file": "lib/array.ts",
+			"identifiers": [{"name": "EMPTY_ARRAY"}, {"name": "toArray"}, {"name": "removeUnordered"}]
+		},
+		{
+			"file": "lib/async.ts",
+			"identifiers": [
+				{"name": "AsyncStatus", "type": "\"initial\" | \"pending\" | \"success\" | \"failure\""},
+				{"name": "wait"}
+			]
+		},
+		{
+			"file": "lib/counter.ts",
+			"identifiers": [{"name": "Counter"}, {"name": "ToCounter"}, {"name": "toCounter"}]
+		},
+		{"file": "lib/dom.ts", "identifiers": [{"name": "isEditable"}, {"name": "swallow"}]},
+		{
+			"file": "lib/env.ts",
+			"identifiers": [
+				{},
+				{},
+				{"name": "env"},
+				{"name": "ToEnvString"},
+				{"name": "toEnvString"},
+				{"name": "ToEnvNumber"},
+				{"name": "toEnvNumber"}
+			]
+		},
+		{"file": "lib/error.ts", "identifiers": [{"name": "UnreachableError"}]},
+		{
+			"file": "lib/function.ts",
+			"identifiers": [{"name": "noop"}, {"name": "identity"}, {"name": "Lazy"}, {"name": "lazy"}]
+		},
+		{
+			"file": "lib/id.ts",
+			"identifiers": [
+				{},
+				{},
+				{"name": "Uuid", "type": "Flavored<string, \"Uuid\">"},
+				{"name": "isUuid"},
+				{"name": "uuidMatcher"},
+				{"name": "ClientId", "type": "Flavored<string, \"ClientId\">"},
+				{"name": "ToClientId"},
+				{"name": "toToClientId"}
+			]
+		},
+		{
+			"file": "lib/json.ts",
+			"identifiers": [
+				{
+					"name": "Json",
+					"type": "string | number | boolean | null | {\n    [prop: string]: Json;\n} | Json[]"
+				},
+				{
+					"name": "JsonType",
+					"type": "\"string\" | \"number\" | \"boolean\" | \"null\" | \"object\" | \"array\""
+				},
+				{"name": "getJsonType"}
+			]
+		},
+		{
+			"file": "lib/log.ts",
+			"identifiers": [
+				{},
+				{},
+				{},
+				{"name": "LogLevel"},
+				{"name": "parseLogLevel"},
+				{"name": "ENV_LOG_LEVEL"},
+				{"name": "DEFAULT_LOG_LEVEL"},
+				{"name": "Log", "type": "(...args: any[]) => void"},
+				{"name": "LoggerState"},
+				{"name": "LogLevelDefaults"},
+				{"name": "BaseLogger"},
+				{"name": "resolveValues"},
+				{"name": "Logger"},
+				{"name": "SystemLogger"},
+				{"name": "configureLogLevel"},
+				{"name": "printLogLabel"}
+			]
+		},
+		{
+			"file": "lib/map.ts",
+			"identifiers": [{"name": "sortMap"}, {"name": "compareSimpleMapEntries"}]
+		},
+		{
+			"file": "lib/maths.ts",
+			"identifiers": [
+				{"name": "clamp"},
+				{"name": "lerp"},
+				{"name": "round"},
+				{"name": "GR"},
+				{"name": "GRi"},
+				{"name": "GR2"},
+				{"name": "GR2i"},
+				{"name": "GR3"},
+				{"name": "GR3i"},
+				{"name": "GR4"},
+				{"name": "GR4i"},
+				{"name": "GR5"},
+				{"name": "GR5i"},
+				{"name": "GR6"},
+				{"name": "GR6i"},
+				{"name": "GR7"},
+				{"name": "GR7i"},
+				{"name": "GR8"},
+				{"name": "GR8i"},
+				{"name": "GR9"},
+				{"name": "GR9i"}
+			]
+		},
+		{
+			"file": "lib/object.ts",
+			"identifiers": [
+				{},
+				{"name": "mapRecord"},
+				{"name": "omit"},
+				{"name": "pickBy"},
+				{"name": "omitUndefined"},
+				{"name": "reorder"},
+				{"name": "nulls"},
+				{"name": "undefineds"},
+				{"name": "EMPTY_OBJECT"},
+				{"name": "traverse"}
+			]
+		},
+		{
+			"file": "lib/obtainable.ts",
+			"identifiers": [{"name": "Unobtain", "type": "() => void"}, {"name": "toObtainable"}]
+		},
+		{
+			"file": "lib/path.ts",
+			"identifiers": [
+				{},
+				{"name": "stripTrailingSlash"},
+				{"name": "replaceExtension"},
+				{"name": "toPathStem"},
+				{"name": "toCommonBaseDir"}
+			]
+		},
+		{
+			"file": "lib/path-parsing.ts",
+			"identifiers": [
+				{"name": "toPathParts"},
+				{"name": "toPathSegments"},
+				{"name": "toPathPieces"},
+				{
+					"name": "PathPiece",
+					"type": "{\n    type: \"piece\";\n    path: string;\n    name: string;\n} | {\n    type: \"separator\";\n    path: string;\n}"
+				}
+			]
+		},
+		{
+			"file": "lib/print.ts",
+			"identifiers": [
+				{},
+				{},
+				{},
+				{},
+				{"name": "printKeyValue"},
+				{"name": "printMs"},
+				{"name": "printCauses"},
+				{"name": "printString"},
+				{"name": "printNumber"},
+				{"name": "printBoolean"},
+				{"name": "printValue"},
+				{"name": "printError"},
+				{"name": "printTiming"},
+				{"name": "printTimings"}
+			]
+		},
+		{
+			"file": "lib/process.ts",
+			"identifiers": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{"name": "log"},
+				{"name": "SpawnedProcess"},
+				{
+					"name": "SpawnResult",
+					"type": "Result<{\n    signal: NodeJS.Signals | null;\n}, {\n    signal: NodeJS.Signals | null;\n    code: number | null;\n}>"
+				},
+				{"name": "printChildProcess"},
+				{"name": "globalSpawn"},
+				{"name": "registerGlobalSpawn"},
+				{"name": "despawn"},
+				{"name": "attachProcessErrorHandlers"},
+				{"name": "handleFatalError"},
+				{"name": "handleUnhandledRejection"},
+				{"name": "ToErrorLabel"},
+				{"name": "spawnProcess"},
+				{"name": "spawn"},
+				{"name": "printSpawnResult"},
+				{"name": "RestartableProcess"},
+				{"name": "spawnRestartableProcess"}
+			]
+		},
+		{
+			"file": "lib/random.ts",
+			"identifiers": [
+				{"name": "randomFloat"},
+				{"name": "randomInt"},
+				{"name": "randomBool"},
+				{"name": "randomItem"}
+			]
+		},
+		{
+			"file": "lib/random-alea.ts",
+			"identifiers": [
+				{"name": "Alea"},
+				{"name": "toRandomAlea"},
+				{"name": "Mash"},
+				{"name": "toMash"}
+			]
+		},
+		{
+			"file": "lib/result.ts",
+			"identifiers": [
+				{
+					"name": "Result",
+					"type": "({\n    ok: true;\n} & TValue) | ({\n    ok: false;\n} & TError)"
+				},
+				{"name": "OK"},
+				{"name": "NOT_OK"},
+				{"name": "unwrap"},
+				{"name": "ResultError"},
+				{"name": "unwrapError"}
+			]
+		},
+		{"file": "lib/regexp.ts", "identifiers": [{"name": "escapeRegexp"}]},
+		{
+			"file": "lib/string.ts",
+			"identifiers": [
+				{"name": "truncate"},
+				{"name": "stripStart"},
+				{"name": "stripEnd"},
+				{"name": "stripAfter"},
+				{"name": "stripBefore"},
+				{"name": "ensureStart"},
+				{"name": "ensureEnd"},
+				{"name": "deindent"},
+				{"name": "plural"},
+				{"name": "toGraphemeCount"}
+			]
+		},
+		{
+			"file": "lib/timings.ts",
+			"identifiers": [{}, {"name": "Stopwatch"}, {"name": "createStopwatch"}, {"name": "Timings"}]
+		},
+		{
+			"file": "lib/types.ts",
+			"identifiers": [
+				{"name": "OmitStrict", "type": "Pick<T, Exclude<keyof T, K>>"},
+				{
+					"name": "PartialExcept",
+					"type": "{\n    [P in K]: T[P];\n} & {\n    [P in Exclude<keyof T, K>]?: T[P];\n}"
+				},
+				{
+					"name": "PartialOnly",
+					"type": "{\n    [P in K]?: T[P];\n} & {\n    [P in Exclude<keyof T, K>]: T[P];\n}"
+				},
+				{"name": "PartialValues", "type": "{\n    [P in keyof T]: Partial<T[P]>;\n}"},
+				{"name": "Assignable", "type": "{\n    -readonly [P in K]: T[P];\n}"},
+				{"name": "Defined", "type": "T extends undefined ? never : T"},
+				{"name": "NotNull", "type": "T extends null ? never : T"},
+				{"name": "Branded", "type": "TValue & Brand<TName>"},
+				{"name": "Flavored", "type": "TValue & Flavor<TName>"},
+				{"name": "BrandedSymbol"},
+				{"name": "FlavoredSymbol"},
+				{"name": "Brand"},
+				{"name": "Flavor"}
+			]
+		}
+	]
+}
