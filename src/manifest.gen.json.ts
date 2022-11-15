@@ -2,6 +2,7 @@ import type {Gen} from '@feltcoop/gro';
 import ts from 'typescript';
 
 import {exports} from '$lib/exports';
+import {omit} from '$lib/object';
 
 export interface Manifest {
 	exports: ManifestExport[];
@@ -50,25 +51,38 @@ export const gen: Gen = async ({fs}) => {
 					s.declarationList.declarations[0].type ||
 					s.declarationList.declarations[0].initializer.type
 				) {
+					// TODO BLOCK move
+					const printParams = (n: any, sourceFile: ts.SourceFile) => {
+						// TODO this is a hacky first pass at using the API, I'm definitely not doing things the best way
+						console.log(`printParams n`, n);
+						if (n.initializer) {
+							const initializer: any = omit({...n.initializer}, ['body', 'equalsGreaterThanToken']);
+							return printer.printNode(ts.EmitHint.Unspecified, initializer, sourceFile);
+						} else {
+							return printer.printNode(ts.EmitHint.Unspecified, n, sourceFile);
+						}
+					};
 					(identifier || (identifier = {})).type = s.declarationList.declarations[0].type
 						? printer.printNode(
 								ts.EmitHint.Unspecified,
 								s.declarationList.declarations[0].type,
 								node,
 						  )
-						: '(' +
-						  printer.printList(
-								ts.EmitHint.Unspecified,
-								s.declarationList.declarations[0].initializer.parameters,
-								node,
-						  ) +
-						  ') => ' +
-						  printer.printNode(
-								ts.EmitHint.Unspecified,
-								s.declarationList.declarations[0].initializer.type,
-								node,
-						  );
-					console.log(`identifier.type`, identifier.type);
+						: printParams(s.declarationList.declarations[0], node);
+
+					// '(' +
+					//   printer.printList(
+					// 		ts.EmitHint.Unspecified,
+					// 		s.declarationList.declarations[0].initializer.parameters,
+					// 		node,
+					//   ) +
+					//   ') => ' +
+					//   printer.printNode(
+					// 		ts.EmitHint.Unspecified,
+					// 		s.declarationList.declarations[0].initializer.type,
+					// 		node,
+					//   );
+					// console.log(`identifier.type`, identifier.type);
 				}
 			}
 			if (s.type) {
@@ -78,7 +92,7 @@ export const gen: Gen = async ({fs}) => {
 					node,
 				);
 			}
-			console.log(`s`, s);
+			// console.log(`s`, s);
 			console.log(`identifier`, identifier);
 			if (identifier) manifestExport.identifiers.push(identifier);
 		}
