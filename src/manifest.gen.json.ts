@@ -2,7 +2,6 @@ import type {Gen} from '@feltcoop/gro';
 import ts from 'typescript';
 
 import {exports} from '$lib/exports';
-import {omit} from '$lib/object';
 
 export interface Manifest {
 	exports: ManifestExport[];
@@ -17,7 +16,7 @@ interface ManifestExportIdentifier {
 	type?: string;
 }
 
-export const gen: Gen = async ({fs}) => {
+export const gen: Gen = async ({fs, log}) => {
 	console.log(`exports`, exports);
 
 	const json: Manifest = {exports: []};
@@ -54,9 +53,13 @@ export const gen: Gen = async ({fs}) => {
 					// TODO BLOCK move
 					const printParams = (n: any, sourceFile: ts.SourceFile) => {
 						// TODO this is a hacky first pass at using the API, I'm definitely not doing things the best way
-						console.log(`printParams n`, n);
 						if (n.initializer) {
-							const initializer: any = omit({...n.initializer}, ['body', 'equalsGreaterThanToken']);
+							const initializer: any = {
+								...n.initializer,
+								body: undefined,
+								equalsGreaterThanToken: undefined,
+							};
+							log.error('[printParams]', `initializer`, initializer);
 							return printer.printNode(ts.EmitHint.Unspecified, initializer, sourceFile);
 						} else {
 							return printer.printNode(ts.EmitHint.Unspecified, n, sourceFile);
