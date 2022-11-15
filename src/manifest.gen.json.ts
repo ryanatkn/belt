@@ -24,7 +24,6 @@ export const gen: Gen = async ({fs}) => {
 	for (const file of exports) {
 		const manifestExport: ManifestExport = {file, identifiers: []};
 		json.exports.push(manifestExport);
-		// if ('lib/json.ts' !== file) continue;
 		const importPath = 'src/' + file;
 		const contents = await fs.readFile(importPath, 'utf8'); // eslint-disable-line no-await-in-loop
 		console.log(file, contents.length);
@@ -46,6 +45,31 @@ export const gen: Gen = async ({fs}) => {
 					s.declarationList.declarations[0].name,
 					node,
 				);
+				console.log(`s.declarationList.declarations[0]`, s.declarationList.declarations[0]);
+				if (
+					s.declarationList.declarations[0].type ||
+					s.declarationList.declarations[0].initializer.type
+				) {
+					(identifier || (identifier = {})).type = s.declarationList.declarations[0].type
+						? printer.printNode(
+								ts.EmitHint.Unspecified,
+								s.declarationList.declarations[0].type,
+								node,
+						  )
+						: '(' +
+						  printer.printList(
+								ts.EmitHint.Unspecified,
+								s.declarationList.declarations[0].initializer.parameters,
+								node,
+						  ) +
+						  ') => ' +
+						  printer.printNode(
+								ts.EmitHint.Unspecified,
+								s.declarationList.declarations[0].initializer.type,
+								node,
+						  );
+					console.log(`identifier.type`, identifier.type);
+				}
 			}
 			if (s.type) {
 				(identifier || (identifier = {})).type = printer.printNode(
@@ -54,6 +78,8 @@ export const gen: Gen = async ({fs}) => {
 					node,
 				);
 			}
+			console.log(`s`, s);
+			console.log(`identifier`, identifier);
 			if (identifier) manifestExport.identifiers.push(identifier);
 		}
 		// await fs.writeFile(importPath + '.ts', printed, 'utf8');
