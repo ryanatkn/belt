@@ -7,7 +7,11 @@
 	export let manifest: Manifest;
 
 	const exps = manifest.exports
-		.map((e) => `@feltcoop/util/${stripStart(e.file, 'lib/')}`)
+		.map((e) => {
+			const s = `@feltcoop/util/${stripStart(e.file, 'lib/')}`;
+			if (s.endsWith('.ts')) return s.slice(0, -3) + '.js';
+			return s;
+		})
 		.filter(Boolean);
 
 	$: console.log(`manifest`, manifest);
@@ -20,7 +24,7 @@
 			<header class="markup">
 				<code>
 					<a href="https://github.com/feltcoop/util/blob/main/src/{manifest.exports[i].file}"
-						>{exp.trim()}</a
+						>{exp}</a
 					>
 				</code>
 			</header>
@@ -38,7 +42,7 @@
 						{'}'} from '<a
 							class="comment"
 							href="https://github.com/feltcoop/util/blob/main/src/{manifest.exports[i].file}"
-							>{exp.trim()}</a
+							>{exp}</a
 						>'
 					</p>
 				</div>
@@ -67,6 +71,7 @@
 	}
 	header {
 		align-items: flex-start;
+		font-size: var(--font_size_lg);
 	}
 	header code {
 		padding: var(--spacing_sm);
