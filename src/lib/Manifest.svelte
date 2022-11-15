@@ -31,8 +31,8 @@
 			<code class="padded-sm">
 				<ul class="import">
 					{#each manifest.exports[i].identifiers as identifier}<li class="identifier">
-							<span class="name">{identifier.name?.trim()}</span>:&nbsp;
-							<span class="type"
+							<span>{identifier.name?.trim()}</span>:&nbsp;
+							<span
 								>{#if identifier.type !== undefined}{identifier.type.trim()}{:else}<span
 										class="comment">// TODO fixme</span
 									>{/if}</span
