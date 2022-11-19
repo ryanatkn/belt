@@ -20,8 +20,7 @@ design:
 // a few things are exported from the root:
 import {type Result, unwrap} from '@feltcoop/util';
 // usually you'll import full module paths:
-import {type Result, unwrap} from '@feltcoop/util/result.js';
-import {randomInt} from '@feltcoop/util/random.js'; // etc
+import {randomInt} from '@feltcoop/util/random.js';
 ```
 
 see the available modules at [util.felt.dev](https://util.felt.dev)
