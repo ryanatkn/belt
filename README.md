@@ -19,6 +19,7 @@ design:
 ```ts
 // a few things are exported from the root:
 import {type Result, unwrap} from '@feltcoop/util';
+
 // usually you'll import full module paths:
 import {randomInt} from '@feltcoop/util/random.js';
 ```
