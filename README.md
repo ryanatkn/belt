@@ -6,11 +6,11 @@
 design:
 
 - kitchen-sink utilities library (sorry, we wish it weren't so)
-- complement the modern web platform, stay evergreen
-- all typescript, no svelte
 - mix of JS module environments - browser-only, Node-only, universal
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
+- all typescript, no svelte or SvelteKit
+- complement the modern web platform, stay evergreen
 - kinda minimal in many ways but also not
 
 ## usage
