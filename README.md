@@ -5,6 +5,7 @@
 
 design:
 
+- kitchen-sink utilities library (sorry, we wish it weren't so)
 - complement the modern web platform, stay evergreen
 - all typescript, no svelte
 - mix of JS module environments - browser-only, Node-only, universal
