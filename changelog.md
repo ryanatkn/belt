@@ -3,7 +3,7 @@
 ## 0.4.1
 
 - add `toNext` to `$lib/array`
-  ([#4](https://github.com/feltcoop/felt/pull/4))
+  ([#5](https://github.com/feltcoop/felt/pull/5))
 
 ## 0.4.0
 
