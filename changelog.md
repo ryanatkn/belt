@@ -2,8 +2,8 @@
 
 ## 0.4.1
 
-- add `nexter` to `$lib/array`
-  ([#3](https://github.com/feltcoop/felt/pull/3))
+- add `toNext` to `$lib/array`
+  ([#4](https://github.com/feltcoop/felt/pull/4))
 
 ## 0.4.0
 

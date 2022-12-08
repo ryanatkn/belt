@@ -13,7 +13,7 @@ export const removeUnordered = (array: any[], index: number): void => {
  * @param array
  * @returns A function that returns the next item in the `array`
  */
-export const nexter = <T>(array: T[]): (() => T) => {
+export const toNext = <T>(array: T[]): (() => T) => {
 	let i = -1;
 	return () => {
 		i++;
