@@ -1,8 +1,13 @@
 # changelog
 
+## 0.4.1
+
+- add `toNext` to `$lib/array`
+  ([#5](https://github.com/feltcoop/felt/pull/5))
+
 ## 0.4.0
 
-- **break**: rename `random-alea.ts` from `random-seeded.ts`
+- **break**: rename `$lib/random-alea` from `$lib/random-seeded`
   and `toRandomAlea` from `toRandomSeeded`
 
 ## 0.3.0
@@ -20,11 +25,11 @@
 
 - **break**: require fully qualified imports for almost everything
   ([#2](https://github.com/feltcoop/felt/pull/2))
-- **break**: change `getJsonType` in `json.ts` to return `undefined` instead of throwing
+- **break**: change `getJsonType` in `$lib/json` to return `undefined` instead of throwing
   ([#2](https://github.com/feltcoop/felt/pull/2))
 - **break**: rename camelCase filenames to dash-case,
-  `path-parsing.ts` from `pathParsing.ts` and
-  `random-seeded.ts` from `randomSeed.ts`
+  `$lib/path-parsing` from `$lib/pathParsing` and
+  `$lib/random-seeded` from `$lib/randomSeed`
   ([#2](https://github.com/feltcoop/felt/pull/2))
 
 ## 0.1.0
