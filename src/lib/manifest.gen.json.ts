@@ -18,8 +18,6 @@ interface ManifestExportIdentifier {
 }
 
 export const gen: Gen = async ({fs, log}) => {
-	console.log(`exports`, exports);
-
 	const json: Manifest = {exports: []};
 
 	for (const file of exports) {
