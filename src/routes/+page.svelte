@@ -2,11 +2,19 @@
 	import Message from '@feltcoop/felt/ui/Message.svelte';
 
 	import {exports} from '$lib/exports';
+	import {exportsData} from '$lib/exportsData';
 	import {stripStart} from '$lib/string';
 
-	// TODO glob import and print API?
+	const exps = exports.map((e) => `@feltcoop/util/${stripStart(e, 'lib/')}`);
 
-	const exps = exports.map((e) => `@feltcoop/util/${stripStart(e, 'lib/')}`).filter(Boolean);
+	// TODO do this with properly with a component, is just a quick hack
+	const renderIdentifiers = (i: number) => {
+		// if (i !== -12) return '...'; // TODO BLOCK use this stuff
+		const path = exports[i];
+		const data = exportsData.find((d) => d.path === path);
+		if (!data) return '...'; // TODO not in system build, use tsc to parse the file directly
+		return data.identifiers.join(', ');
+	};
 </script>
 
 <main class="column">
@@ -31,7 +39,7 @@
 	<section class="padded-xl">
 		{#each exps as exp, i}<li class="markup">
 				<code class="padded-sm"
-					>import {'{'}...} from '<a
+					>import {'{'}{renderIdentifiers(i)}} from '<a
 						href="https://github.com/feltcoop/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
