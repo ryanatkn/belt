@@ -4,6 +4,8 @@
 	import {exports} from '$lib/exports';
 	import {exportsData} from '$lib/exportsData';
 	import {stripStart} from '$lib/string';
+	import manifest from '$lib/manifest.json';
+	import Manifest from '$lib/Manifest.svelte';
 
 	const exps = exports.map((e) => `@feltcoop/util/${stripStart(e, 'lib/')}`);
 
@@ -37,6 +39,9 @@
 		>
 	</section>
 	<section class="padded-xl">
+		<Manifest {manifest} />
+	</section>
+	<section class="padded-xl">
 		{#each exps as exp, i}<li class="markup">
 				<code class="padded-sm"
 					>import {'{'}{renderIdentifiers(i)}} from '<a
@@ -66,5 +71,6 @@
 	}
 	footer > *:first-child {
 		font-size: var(--font_size_xl5);
+		margin-bottom: var(--spacing_xl5);
 	}
 </style>
