@@ -3,7 +3,7 @@
 ## 0.5.0
 
 - **break**: remove `$lib/env`
-  ([#6](https://github.com/feltcoop/felt/pull/6))
+  ([#7](https://github.com/feltcoop/felt/pull/7))
 
 ## 0.4.1
 
