@@ -1,5 +1,10 @@
 # changelog
 
+## 0.5.0
+
+- **break**: remove `$lib/env`
+  ([#6](https://github.com/feltcoop/felt/pull/6))
+
 ## 0.4.1
 
 - add `toNext` to `$lib/array`

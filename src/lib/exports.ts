@@ -8,7 +8,6 @@ export const exports = [
 	'lib/async.ts',
 	'lib/counter.ts',
 	'lib/dom.ts',
-	'lib/env.ts',
 	'lib/error.ts',
 	'lib/function.ts',
 	'lib/id.ts',
