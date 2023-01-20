@@ -1,7 +1,6 @@
 import {red, yellow, gray, black, magenta, bgYellow, bgRed} from 'kleur/colors';
 
 import {EMPTY_ARRAY, toArray} from '$lib/array.js';
-import {env} from '$lib/env.js';
 
 // TODO could use some refactoring
 
@@ -16,19 +15,35 @@ export enum LogLevel {
 	Trace = 4,
 }
 
+/**
+ * Sets the log level for both the main and system loggers.
+ * @param level The desired log level.
+ * @param configureMainLogger Set the `Logger` log level? Defaults to true.
+ * @param configureSystemLogger Set the `SystemLogger` log level? Defaults to true.
+ */
+export const configureLogLevel = (
+	level: LogLevel,
+	configureMainLogger = true,
+	configureSystemLogger = true,
+): void => {
+	if (configureMainLogger) {
+		Logger.level = level;
+	}
+	if (configureSystemLogger) {
+		SystemLogger.level = level;
+	}
+};
+
 // Accepts both sides of the enum, e.g. both `'0'` and `'Off'` parse to `0`.
-// Could be refactored to something more generic.
 const parseLogLevel = (logLevel: unknown): LogLevel | undefined => {
-	const v = (LogLevel as any)[String(logLevel)];
+	const v = (LogLevel as any)[logLevel + ''];
 	if (v === undefined) return undefined;
 	if (typeof v === 'number') return v;
 	const v2 = (LogLevel as any)[v];
 	return typeof v2 === 'number' ? v2 : undefined;
 };
 
-export const ENV_LOG_LEVEL = parseLogLevel(env.VITE_LOG_LEVEL);
-
-export const DEFAULT_LOG_LEVEL = ENV_LOG_LEVEL ?? LogLevel.Trace;
+const DEFAULT_LOG_LEVEL = parseLogLevel(import.meta.env?.PUBLIC_LOG_LEVEL) ?? LogLevel.Trace;
 
 /*
 
@@ -239,19 +254,6 @@ export class SystemLogger extends BaseLogger {
 	static info = Logger.info;
 	static trace = Logger.trace;
 }
-
-export const configureLogLevel = (
-	level: LogLevel,
-	configureMainLogger = true,
-	configureSystemLogger = true,
-): void => {
-	if (configureMainLogger) {
-		Logger.level = level;
-	}
-	if (configureSystemLogger) {
-		SystemLogger.level = level;
-	}
-};
 
 export const printLogLabel = (label: string, color = magenta): string =>
 	`${gray('[')}${color(label)}${gray(']')}`;
