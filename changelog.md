@@ -1,5 +1,15 @@
 # changelog
 
+## 0.5.0
+
+- **break**: remove `$lib/env`
+  ([#7](https://github.com/feltcoop/felt/pull/7))
+- **break**: default log level to `import.meta.env.PUBLIC_LOG_LEVEL`
+  instead of the obsolete `VITE_LOG_LEVEL`
+  ([#7](https://github.com/feltcoop/felt/pull/7))
+- **break**: remove exports `DEFAULT_LOG_LEVEL` and `ENV_LOG_LEVEL` from `$lib/log`
+  ([#7](https://github.com/feltcoop/felt/pull/7))
+
 ## 0.4.1
 
 - add `toNext` to `$lib/array`
