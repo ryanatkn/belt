@@ -13,6 +13,41 @@ export interface SpawnedProcess {
 	closed: Promise<SpawnResult>;
 }
 
+/**
+ * This is just a convenient promise wrapper around `spawnProcess`
+ * that's intended for commands that have an end, not long running-processes like watchers.
+ * Any more advanced usage should use `spawnProcess` directly for access to the `child` process.
+ * @param args
+ * @returns
+ */
+export const spawn = (...args: Parameters<typeof spawnProcess>): Promise<SpawnResult> =>
+	spawnProcess(...args).closed;
+
+/**
+ * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
+ * Also returns a convenient `closed` promise.
+ * If you only need `closed`, prefer the shorthand function `spawnProcess`.
+ * @param command
+ * @param args
+ * @param options
+ * @returns
+ */
+export const spawnProcess = (
+	command: string,
+	args: readonly string[] = [],
+	options?: SpawnOptions,
+): SpawnedProcess => {
+	let resolve: (v: SpawnResult) => void;
+	const closed = new Promise<SpawnResult>((r) => (resolve = r));
+	const child = spawnChildProcess(command, args, {stdio: 'inherit', ...options});
+	const unregister = registerGlobalSpawn(child);
+	child.once('close', (code, signal) => {
+		unregister();
+		resolve(code ? {ok: false, code, signal} : {ok: true, signal});
+	});
+	return {closed, child};
+};
+
 // TODO are `code` and `signal` more related than that?
 // e.g. should this be a union type where one is always `null`?
 export type SpawnResult = Result<
@@ -23,11 +58,17 @@ export type SpawnResult = Result<
 export const printChildProcess = (child: ChildProcess): string =>
 	`${gray('pid(')}${child.pid}${gray(')')} ← ${green(child.spawnargs.join(' '))}`;
 
-// We register spawned processes gloabally so we can gracefully exit child processes.
-// Otherwise, errors can cause zombie processes, sometimes blocking ports even!
+/**
+ * We register spawned processes gloabally so we can gracefully exit child processes.
+ * Otherwise, errors can cause zombie processes, sometimes blocking ports even!
+ */
 export const globalSpawn: Set<ChildProcess> = new Set();
 
-// Returns a function that unregisters the `child`.
+/**
+ * Returns a function that unregisters the `child`.
+ * @param child
+ * @returns
+ */
 export const registerGlobalSpawn = (child: ChildProcess): (() => void) => {
 	if (globalSpawn.has(child)) {
 		log.error(red('already registered global spawn:'), printChildProcess(child));
@@ -41,6 +82,11 @@ export const registerGlobalSpawn = (child: ChildProcess): (() => void) => {
 	};
 };
 
+/**
+ * Kills a child process and returns a `SpawnResult`.
+ * @param child
+ * @returns
+ */
 export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	let resolve: (v: SpawnResult) => void;
 	const closed = new Promise<SpawnResult>((r) => (resolve = r));
@@ -77,31 +123,6 @@ interface ToErrorLabel {
 	(err: any): string | null;
 }
 
-// Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
-// Also returns a convenient `closed` promise.
-// If you only need `closed`, prefer the shorthand function `spawnProcess`.
-export const spawnProcess = (
-	command: string,
-	args: readonly string[] = [],
-	options?: SpawnOptions,
-): SpawnedProcess => {
-	let resolve: (v: SpawnResult) => void;
-	const closed = new Promise<SpawnResult>((r) => (resolve = r));
-	const child = spawnChildProcess(command, args, {stdio: 'inherit', ...options});
-	const unregister = registerGlobalSpawn(child);
-	child.once('close', (code, signal) => {
-		unregister();
-		resolve(code ? {ok: false, code, signal} : {ok: true, signal});
-	});
-	return {closed, child};
-};
-
-// This is just a convenient promise wrapper around `spawnProcess`
-// that's intended for commands that have an end, not long running-processes like watchers.
-// Any more advanced usage should use `spawnProcess` directly for access to the `child` process.
-export const spawn = (...args: Parameters<typeof spawnProcess>): Promise<SpawnResult> =>
-	spawnProcess(...args).closed;
-
 export const printSpawnResult = (result: SpawnResult): string => {
 	if (result.ok) return 'ok';
 	let text = result.code === null ? '' : printKeyValue('code', result.code);
@@ -115,7 +136,14 @@ export interface RestartableProcess {
 	kill: () => Promise<void>;
 }
 
-// Handles many concurrent `restart` calls gracefully.
+/**
+ * Like `spawnProcess` but with `restart` and `kill`,
+ * handling many concurrent `restart` calls gracefully.
+ * @param command
+ * @param args
+ * @param options
+ * @returns
+ */
 export const spawnRestartableProcess = (
 	command: string,
 	args: readonly string[] = [],
