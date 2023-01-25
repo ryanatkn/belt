@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>@feltcoop/util</title>
+	<title>@feltjs/util</title>
 	<link rel="icon" href="{base}/favicon.png" />
 </svelte:head>
 

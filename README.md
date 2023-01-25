@@ -1,4 +1,4 @@
-# @feltcoop/util
+# @feltjs/util
 
 > a collection of JS utilities to complement the modern web platform 🦕🐋
 > [util.felt.dev](https://util.felt.dev)
@@ -15,14 +15,14 @@ design:
 
 ## usage
 
-> [`npm i -D @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
+> [`npm i -D @feltjs/util`](https://www.npmjs.com/package/@feltjs/util)
 
 ```ts
 // a few things are exported from the root:
-import {type Result, unwrap} from '@feltcoop/util';
+import {type Result, unwrap} from '@feltjs/util';
 
 // usually you'll import full module paths:
-import {randomInt} from '@feltcoop/util/random.js';
+import {randomInt} from '@feltjs/util/random.js';
 ```
 
 see the available modules at [util.felt.dev](https://util.felt.dev)
