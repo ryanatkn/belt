@@ -1,5 +1,9 @@
 # changelog
 
+## 0.5.1
+
+- fix published version for @feltjs
+
 ## 0.5.0
 
 - **break**: remove `$lib/env`
