@@ -70,7 +70,7 @@ made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [TypeScript](https://github.com/microsoft/TypeScript) ∙
 [ESLint](https://github.com/eslint/eslint) ∙
 [Prettier](https://github.com/prettier/prettier) ∙
-[Felt](https://github.com/feltcoop/felt) ∙
+[FeltUI](https://github.com/feltjs/felt-ui) ∙
 [Gro](https://github.com/feltjs/gro)
 & [more](package.json)
 
