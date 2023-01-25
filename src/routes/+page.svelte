@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Message from '@feltcoop/felt/ui/Message.svelte';
+	import Message from '@feltcoop/felt/Message.svelte';
 
 	import {exports} from '$lib/exports';
 	import {stripStart} from '$lib/string';
