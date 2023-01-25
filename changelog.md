@@ -1,5 +1,10 @@
 # changelog
 
+## 0.5.2
+
+- fix published version for @feltjs this time for real
+  ([#9](https://github.com/feltjs/util/pull/9))
+
 ## 0.5.1
 
 - fix published version for @feltjs

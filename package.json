@@ -40,7 +40,7 @@
   "devDependencies": {
     "@feltcoop/felt": "^0.46.0",
     "@feltjs/eslint-config": "^0.2.1",
-    "@feltjs/gro": "^0.70.0",
+    "@feltjs/gro": "^0.70.2",
     "@sveltejs/adapter-static": "^1.0.5",
     "@sveltejs/kit": "^1.2.9",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
