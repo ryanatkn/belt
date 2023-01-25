@@ -38,9 +38,9 @@
     "kleur": "^4.0.0"
   },
   "devDependencies": {
-    "@feltcoop/eslint-config": "^0.2.1",
     "@feltcoop/felt": "^0.42.0",
-    "@feltcoop/gro": "^0.64.0",
+    "@feltjs/eslint-config": "^0.2.1",
+    "@feltjs/gro": "^0.70.0",
     "@sveltejs/adapter-static": "^1.0.0-next.48",
     "@sveltejs/kit": "^1.0.0-next.542",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
@@ -59,7 +59,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": "@feltcoop"
+    "extends": "@feltjs"
   },
   "prettier": {
     "useTabs": true,
