@@ -3,17 +3,17 @@
 ## 0.5.0
 
 - **break**: remove `$lib/env`
-  ([#7](https://github.com/feltcoop/felt/pull/7))
+  ([#7](https://github.com/feltjs/util/pull/7))
 - **break**: default log level to `import.meta.env.PUBLIC_LOG_LEVEL`
   instead of the obsolete `VITE_LOG_LEVEL`
-  ([#7](https://github.com/feltcoop/felt/pull/7))
+  ([#7](https://github.com/feltjs/util/pull/7))
 - **break**: remove exports `DEFAULT_LOG_LEVEL` and `ENV_LOG_LEVEL` from `$lib/log`
-  ([#7](https://github.com/feltcoop/felt/pull/7))
+  ([#7](https://github.com/feltjs/util/pull/7))
 
 ## 0.4.1
 
 - add `toNext` to `$lib/array`
-  ([#5](https://github.com/feltcoop/felt/pull/5))
+  ([#5](https://github.com/feltjs/util/pull/5))
 
 ## 0.4.0
 
@@ -29,20 +29,20 @@
 ## 0.2.1
 
 - fix exports
-  ([#3](https://github.com/feltcoop/felt/pull/3))
+  ([#3](https://github.com/feltjs/util/pull/3))
 
 ## 0.2.0
 
 - **break**: require fully qualified imports for almost everything
-  ([#2](https://github.com/feltcoop/felt/pull/2))
+  ([#2](https://github.com/feltjs/util/pull/2))
 - **break**: change `getJsonType` in `$lib/json` to return `undefined` instead of throwing
-  ([#2](https://github.com/feltcoop/felt/pull/2))
+  ([#2](https://github.com/feltjs/util/pull/2))
 - **break**: rename camelCase filenames to dash-case,
   `$lib/path-parsing` from `$lib/pathParsing` and
   `$lib/random-seeded` from `$lib/randomSeed`
-  ([#2](https://github.com/feltcoop/felt/pull/2))
+  ([#2](https://github.com/feltjs/util/pull/2))
 
 ## 0.1.0
 
 - publish
-  ([#1](https://github.com/feltcoop/felt/pull/1))
+  ([#1](https://github.com/feltjs/util/pull/1))

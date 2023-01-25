@@ -1,4 +1,4 @@
-# @feltcoop/util
+# @feltjs/util
 
 > a collection of JS utilities to complement the modern web platform 🦕🐋
 > [util.felt.dev](https://util.felt.dev)
@@ -15,14 +15,14 @@ design:
 
 ## usage
 
-> [`npm i -D @feltcoop/util`](https://www.npmjs.com/package/@feltcoop/util)
+> [`npm i -D @feltjs/util`](https://www.npmjs.com/package/@feltjs/util)
 
 ```ts
 // a few things are exported from the root:
-import {type Result, unwrap} from '@feltcoop/util';
+import {type Result, unwrap} from '@feltjs/util';
 
 // usually you'll import full module paths:
-import {randomInt} from '@feltcoop/util/random.js';
+import {randomInt} from '@feltjs/util/random.js';
 ```
 
 see the available modules at [util.felt.dev](https://util.felt.dev)
@@ -39,7 +39,7 @@ gro build
 ## test
 
 For more see [`uvu`](https://github.com/lukeed/uvu)
-and [Gro's test docs](https://github.com/feltcoop/gro/blob/main/src/docs/test.md).
+and [Gro's test docs](https://github.com/feltjs/gro/blob/main/src/docs/test.md).
 
 ```bash
 gro test
@@ -49,7 +49,7 @@ gro test -- uvu --forwarded_args 'to uvu'
 
 ## deploy
 
-[Deploy](https://github.com/feltcoop/gro/blob/main/src/docs/deploy.md)
+[Deploy](https://github.com/feltjs/gro/blob/main/src/docs/deploy.md)
 (build, commit, and push) to the `deploy` branch, e.g. for GitHub Pages:
 
 ```bash
@@ -71,7 +71,7 @@ made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [ESLint](https://github.com/eslint/eslint) ∙
 [Prettier](https://github.com/prettier/prettier) ∙
 [Felt](https://github.com/feltcoop/felt) ∙
-[Gro](https://github.com/feltcoop/gro)
+[Gro](https://github.com/feltjs/gro)
 & [more](package.json)
 
 ## license [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)

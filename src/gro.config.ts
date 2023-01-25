@@ -1,4 +1,4 @@
-import type {GroConfigCreator, GroConfigPartial} from '@feltcoop/gro';
+import type {GroConfigCreator, GroConfigPartial} from '@feltjs/gro';
 
 import {LogLevel} from '$lib/log';
 import {exports} from '$lib/exports';

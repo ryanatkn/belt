@@ -1,29 +1,28 @@
 <script lang="ts">
-	import Message from '@feltcoop/felt/ui/Message.svelte';
+	import Message from '@feltcoop/felt/Message.svelte';
 
 	import {exports} from '$lib/exports';
 	import {stripStart} from '$lib/string';
 
 	// TODO glob import and print API?
 
-	const exps = exports.map((e) => `@feltcoop/util/${stripStart(e, 'lib/')}`).filter(Boolean);
+	const exps = exports.map((e) => `@feltjs/util/${stripStart(e, 'lib/')}`).filter(Boolean);
 </script>
 
 <main class="column">
 	<section class="padded-xl">
 		<header>
 			<h1 class="centered-hz">
-				<a href="https://github.com/feltcoop">💚</a>@feltcoop/util<a
-					href="https://github.com/feltcoop/util">🦕🐋</a
+				<a href="https://github.com/feltjs">💚</a>@feltjs/util<a
+					href="https://github.com/feltjs/util">🦕🐋</a
 				>
 			</h1>
 		</header>
 	</section>
 	<section class="padded-xl">
 		<Message
-			><a href="https://github.com/feltcoop/util" slot="icon">🐙😺</a><span
-				><a href="https://www.npmjs.com/package/@feltcoop/util"
-					><code>npm i -D @feltcoop/util</code></a
+			><a href="https://github.com/feltjs/util" slot="icon">🐙😺</a><span
+				><a href="https://www.npmjs.com/package/@feltjs/util"><code>npm i -D @feltjs/util</code></a
 				></span
 			></Message
 		>
@@ -32,14 +31,14 @@
 		{#each exps as exp, i}<li class="markup">
 				<code class="padded-sm"
 					>import {'{'}...} from '<a
-						href="https://github.com/feltcoop/util/blob/main/src/{exports[i]}">{exp.trim()}</a
+						href="https://github.com/feltjs/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
 			</li>{/each}
 	</section>
 	<footer class="centered">
-		<a href="https://github.com/feltcoop/util" title="source code on github">🐙😺</a>
-		<a href="https://github.com/feltcoop">💚</a>
+		<a href="https://github.com/feltjs/util" title="source code on github">🐙😺</a>
+		<a href="https://github.com/feltjs">💚</a>
 	</footer>
 </main>
 
