@@ -3,6 +3,7 @@
 ## 0.5.3
 
 - change all `$lib/` paths to be direct
+  ([commit](https://github.com/feltjs/util/commit/c845c45a89a75cb4d2b56c4cde1bc0d4ef090f8a))
 
 ## 0.5.2
 
