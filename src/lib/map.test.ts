@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {sortMap} from '$lib/map.js';
+import {sortMap} from './map.js';
 
 /* test__sortMap */
 const test__sortMap = suite('sortMap');

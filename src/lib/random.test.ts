@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {randomFloat, randomInt, randomItem} from '$lib/random.js';
+import {randomFloat, randomInt, randomItem} from './random.js';
 
 /* test__randomFloat */
 const test__randomFloat = suite('randomFloat');

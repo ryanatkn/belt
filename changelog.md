@@ -1,5 +1,9 @@
 # changelog
 
+## 0.5.3
+
+- change all `$lib/` paths to be direct
+
 ## 0.5.2
 
 - fix published version for @feltjs this time for real

@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toCounter} from '$lib/counter.js';
+import {toCounter} from './counter.js';
 
 /* test__toCounter */
 const test__toCounter = suite('toCounter');

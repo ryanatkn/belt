@@ -1,8 +1,8 @@
 import {gray, white, green, yellow, blue, cyan, magenta} from 'kleur/colors';
 
-import {round} from '$lib/maths.js';
-import type {Timings} from '$lib/timings.js';
-import type {Logger} from '$lib/log.js';
+import {round} from './maths.js';
+import type {Timings} from './timings.js';
+import type {Logger} from './log.js';
 
 export const printKeyValue = (key: string, val: string | number): string =>
 	gray(`${key}(`) + val + gray(')');

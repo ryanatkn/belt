@@ -1,4 +1,4 @@
-import type {OmitStrict} from '$lib/types.js';
+import type {OmitStrict} from './types.js';
 
 // Iterated keys in `for..in` are always returned as strings,
 // so to prevent usage errors the key type of `mapper` is always a string.

@@ -1,5 +1,5 @@
-import type {Flavored} from '$lib/types.js';
-import {toCounter} from '$lib/counter';
+import type {Flavored} from './types.js';
+import {toCounter} from './counter';
 
 export type Uuid = Flavored<string, 'Uuid'>;
 

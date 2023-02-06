@@ -33,7 +33,7 @@ THE SOFTWARE.
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toRandomAlea} from '$lib/random-alea.js';
+import {toRandomAlea} from './random-alea.js';
 
 /* test__toRandomAlea */
 const test__toRandomAlea = suite('toRandomAlea');

@@ -1,8 +1,8 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {replaceExtension, toPathStem, toCommonBaseDir} from '$lib/path.js';
-import {toPathParts, toPathPieces, toPathSegments} from '$lib/path-parsing.js';
+import {replaceExtension, toPathStem, toCommonBaseDir} from './path.js';
+import {toPathParts, toPathPieces, toPathSegments} from './path-parsing.js';
 
 /* test__replaceExtension */
 const test__replaceExtension = suite('replaceExtension');

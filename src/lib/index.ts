@@ -3,5 +3,5 @@
 
 // The public API for `@feltjs/util`:
 
-export * from '$lib/result.js';
-export * from '$lib/types.js';
+export * from './result.js';
+export * from './types.js';

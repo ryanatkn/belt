@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {Logger, LogLevel, type LoggerState} from '$lib/log.js';
+import {Logger, LogLevel, type LoggerState} from './log.js';
 
 /* test__Logger */
 interface TestLoggerContext {

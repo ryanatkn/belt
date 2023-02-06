@@ -2,9 +2,9 @@ import {spawn as spawnChildProcess} from 'child_process';
 import type {SpawnOptions, ChildProcess} from 'child_process';
 import {gray, green, red} from 'kleur/colors';
 
-import {printLogLabel, SystemLogger} from '$lib/log.js';
-import {printError, printKeyValue} from '$lib/print.js';
-import type {Result} from '$lib/result.js';
+import {printLogLabel, SystemLogger} from './log.js';
+import {printError, printKeyValue} from './print.js';
+import type {Result} from './result.js';
 
 const log = new SystemLogger(printLogLabel('process'));
 

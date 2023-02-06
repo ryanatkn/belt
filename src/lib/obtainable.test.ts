@@ -1,8 +1,8 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toObtainable} from '$lib/obtainable.js';
-import {noop} from '$lib/function.js';
+import {toObtainable} from './obtainable.js';
+import {noop} from './function.js';
 
 /* test__toObtainable */
 const test__toObtainable = suite('toObtainable');

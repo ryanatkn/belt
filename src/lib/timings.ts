@@ -1,4 +1,4 @@
-import {round} from '$lib/maths.js';
+import {round} from './maths.js';
 
 export interface Stopwatch {
 	(reset?: boolean): number;

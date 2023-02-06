@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toArray} from '$lib/array.js';
+import {toArray} from './array.js';
 
 /* test__toArray */
 const test__toArray = suite('toArray');

@@ -12,7 +12,7 @@ import {
 	ensureEnd,
 	deindent,
 	toGraphemeCount,
-} from '$lib/string.js';
+} from './string.js';
 
 /* test__truncate */
 const test__truncate = suite('truncate');
