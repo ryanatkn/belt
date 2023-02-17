@@ -3,7 +3,7 @@
 ## 0.6.0
 
 - **break**: change `LogLevel` from an enum to a string type union,
-  and add `toLogLevelValue` to convert it to a number
+  change its default to `info`, and add `toLogLevelValue` to convert it to a number
   ([#11](https://github.com/feltjs/util/pull/11))
 
 ## 0.5.3
