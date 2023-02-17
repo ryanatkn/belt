@@ -7,13 +7,20 @@ import {EMPTY_ARRAY, toArray} from './array.js';
 // TODO track warnings/errors (or anything above a certain threshold)
 // and report at the end of each build (and other tasks)
 
-export enum LogLevel {
-	Off = 0,
-	Error = 1,
-	Warn = 2,
-	Info = 3,
-	Trace = 4,
-}
+export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'trace';
+
+const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
+	off: 0,
+	error: 1,
+	warn: 2,
+	info: 3,
+	trace: 4,
+};
+
+export const toLogLevelValue = (level: LogLevel): number => LOG_LEVEL_VALUES[level] ?? 4;
+
+const shouldLog = (max: LogLevel, level: LogLevel): boolean =>
+	toLogLevelValue(max) >= toLogLevelValue(level);
 
 /**
  * Sets the log level for both the main and system loggers.
@@ -34,16 +41,9 @@ export const configureLogLevel = (
 	}
 };
 
-// Accepts both sides of the enum, e.g. both `'0'` and `'Off'` parse to `0`.
-const parseLogLevel = (logLevel: unknown): LogLevel | undefined => {
-	const v = (LogLevel as any)[logLevel + ''];
-	if (v === undefined) return undefined;
-	if (typeof v === 'number') return v;
-	const v2 = (LogLevel as any)[v];
-	return typeof v2 === 'number' ? v2 : undefined;
-};
-
-const DEFAULT_LOG_LEVEL = parseLogLevel(import.meta.env?.PUBLIC_LOG_LEVEL) ?? LogLevel.Trace;
+const DEFAULT_LOG_LEVEL: LogLevel = import.meta.env?.PUBLIC_LOG_LEVEL
+	? import.meta.env.PUBLIC_LOG_LEVEL
+	: 'trace';
 
 /*
 
@@ -110,7 +110,7 @@ export class BaseLogger {
 	}
 
 	error(...args: unknown[]): void {
-		if (this.state.level < LogLevel.Error) return;
+		if (!shouldLog(this.state.level, 'error')) return;
 		this.state.log(
 			...resolveValues(
 				this.state.prefixes,
@@ -125,7 +125,7 @@ export class BaseLogger {
 	}
 
 	warn(...args: unknown[]): void {
-		if (this.state.level < LogLevel.Warn) return;
+		if (!shouldLog(this.state.level, 'warn')) return;
 		this.state.log(
 			...resolveValues(
 				this.state.prefixes,
@@ -140,7 +140,7 @@ export class BaseLogger {
 	}
 
 	info(...args: unknown[]): void {
-		if (this.state.level < LogLevel.Info) return;
+		if (!shouldLog(this.state.level, 'info')) return;
 		this.state.log(
 			...resolveValues(
 				this.state.prefixes,
@@ -155,7 +155,7 @@ export class BaseLogger {
 	}
 
 	trace(...args: unknown[]): void {
-		if (this.state.level < LogLevel.Trace) return;
+		if (!shouldLog(this.state.level, 'trace')) return;
 		this.state.log(
 			...resolveValues(
 				this.state.prefixes,
