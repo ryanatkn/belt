@@ -4,9 +4,6 @@ import {EMPTY_ARRAY, toArray} from './array.js';
 
 // TODO could use some refactoring
 
-// TODO track warnings/errors (or anything above a certain threshold)
-// and report at the end of each build (and other tasks)
-
 export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'trace';
 
 const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
