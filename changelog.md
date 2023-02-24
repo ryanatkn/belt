@@ -1,5 +1,9 @@
 # changelog
 
+## 0.7.0
+
+- **break**: remove the type `ClientId` and make it a plain string
+
 ## 0.6.0
 
 - **break**: change `LogLevel` from an enum to a string type union,
