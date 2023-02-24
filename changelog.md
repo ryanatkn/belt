@@ -2,7 +2,8 @@
 
 ## 0.7.0
 
-- **break**: remove the type `ClientId` and make it a plain string
+- **break**: remove the type `ClientId` and make it a plain string\
+  ([commit](https://github.com/feltjs/util/commit/b02ffa709e08b56d15988be4292928a24893695f))
 
 ## 0.6.0
 
