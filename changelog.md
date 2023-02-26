@@ -2,7 +2,7 @@
 
 ## 0.7.1
 
-- **break**: make `select` elements count for `isEditable`
+- make `select` elements count for `isEditable`
   ([commit](https://github.com/feltjs/util/commit/202026ad248b0f337d84ff3521948fd299104d6e))
 
 ## 0.7.0
