@@ -1,5 +1,9 @@
 # changelog
 
+## 0.7.1
+
+- **break**: make `select` elements count for `isEditable`
+
 ## 0.7.0
 
 - **break**: remove the type `ClientId` and make it a plain string

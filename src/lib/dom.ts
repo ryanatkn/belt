@@ -1,8 +1,10 @@
-export const isEditable = (el: any): boolean =>
-	!!el &&
-	(el.tagName === 'INPUT'
+export const isEditable = (el: any): boolean => {
+	if (!el) return false;
+	const {tagName} = el;
+	return tagName === 'INPUT'
 		? el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'range'
-		: el.tagName === 'TEXTAREA' || el.contentEditable === 'true');
+		: tagName === 'TEXTAREA' || tagName === 'SELECT' || el.contentEditable === 'true';
+};
 
 /**
  * Stops an event from bubbling and doing default behavior.
