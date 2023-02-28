@@ -3,6 +3,7 @@
 ## 0.7.2
 
 - add `handleTargetValue` to `$lib/dom.ts`
+  ([commit](https://github.com/feltjs/util/commit/37d99fc73c577229ae5c5fc87dde8d238950826e))
 
 ## 0.7.1
 
