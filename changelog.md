@@ -1,5 +1,9 @@
 # changelog
 
+## 0.7.2
+
+- add `handleTargetValue` to `$lib/dom.ts`
+
 ## 0.7.1
 
 - make `select` elements count for `isEditable`

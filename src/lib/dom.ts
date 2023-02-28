@@ -22,3 +22,11 @@ export const swallow = <T extends Event>(event: T, immediate = true, preventDefa
 	}
 	return event;
 };
+
+// TODO improve these types, the motivation was the strictness of Svelte DOM types
+export const handleTargetValue =
+	(cb: (value: any, event: any) => void, swallowEvent = true) =>
+	(e: any): void => {
+		if (swallowEvent) swallow(e);
+		cb(e.target.value, e);
+	};
