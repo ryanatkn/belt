@@ -1,5 +1,9 @@
 # changelog
 
+## 0.7.3
+
+- publish everything from the root
+
 ## 0.7.2
 
 - add `handleTargetValue` to `$lib/dom.ts`

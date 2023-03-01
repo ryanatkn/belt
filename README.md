@@ -18,15 +18,17 @@ design:
 > [`npm i -D @feltjs/util`](https://www.npmjs.com/package/@feltjs/util)
 
 ```ts
-// a few things are exported from the root:
-import {type Result, unwrap} from '@feltjs/util';
+// you can import from the root:
+import {type Result, unwrap, randomInt} from '@feltjs/util';
 
-// usually you'll import full module paths:
+// or import full module paths:
+import {type Result, unwrap} from '@feltjs/util/result.js';
 import {randomInt} from '@feltjs/util/random.js';
 ```
 
-see the available modules at [util.felt.dev](https://util.felt.dev)
-and [src/lib/exports](src/lib/exports.ts)
+see the available modules at [util.felt.dev](https://util.felt.dev),
+[src/lib/index.ts](src/lib/index.ts),
+and [src/lib/exports.ts](src/lib/exports.ts)
 
 ## build
 
