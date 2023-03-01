@@ -13,10 +13,10 @@ export * from './map';
 export * from './maths';
 export * from './object';
 export * from './obtainable';
-export * from './path';
+// excluding lib/path.ts
 export * from './path-parsing';
 export * from './print';
-export * from './process';
+// excluding lib/process.ts
 export * from './random';
 export * from './random-alea';
 export * from './result';

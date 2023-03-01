@@ -1,5 +1,9 @@
 # changelog
 
+## 0.7.5
+
+- fix root exports to omit modules with Node dependencies
+
 ## 0.7.4
 
 - fix root exports to not use `$lib`
