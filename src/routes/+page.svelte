@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Message from '@feltjs/felt-ui/Message.svelte';
-
 	import {exports} from '$lib/exports';
 	import {stripEnd, stripStart} from '$lib/string';
 
@@ -12,24 +10,29 @@
 </script>
 
 <main class="column">
-	<section class="padded-xl">
+	<section class="padded-md">
 		<header>
-			<h1 class="centered-hz">
-				<a href="https://github.com/feltjs">💚</a>@feltjs/util<a
-					href="https://github.com/feltjs/util">🦕🐋</a
-				>
-			</h1>
+			<h1 class="centered-hz">@feltjs/util</h1>
 		</header>
 	</section>
-	<section class="padded-xl">
-		<Message
-			><a href="https://github.com/feltjs/util" slot="icon">🐙😺</a><span
-				><a href="https://www.npmjs.com/package/@feltjs/util"><code>npm i -D @feltjs/util</code></a
-				></span
-			></Message
+	<section class="padded-md centered-hz">
+		<code style:margin-right="var(--spacing_md)"
+			><a class="padded-md" href="https://github.com/feltjs/util">source</a></code
+		>
+		<code
+			><a class="padded-md" href="https://www.npmjs.com/package/@feltjs/util"
+				>npm i -D @feltjs/util</a
+			></code
 		>
 	</section>
-	<section class="padded-xl">
+	<section class="markup padded-md">
+		<aside>
+			This docs website is under construction. For now please see <a
+				href="https://github.com/feltjs/util">the GitHub repo</a
+			>.
+		</aside>
+	</section>
+	<section class="padded-md">
 		{#each exps as exp, i}<li class="markup">
 				<code class="padded-sm"
 					>import {'{'}...} from '<a
