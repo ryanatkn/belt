@@ -3,6 +3,7 @@
 ## 0.7.5
 
 - fix root exports to omit modules with Node dependencies
+  ([commit](https://github.com/feltjs/util/commit/7fb6fd1279df284bbb319a984c299018d4472c80))
 
 ## 0.7.4
 
