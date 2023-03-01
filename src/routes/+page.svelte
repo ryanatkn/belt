@@ -2,11 +2,13 @@
 	import Message from '@feltjs/felt-ui/Message.svelte';
 
 	import {exports} from '$lib/exports';
-	import {stripStart} from '$lib/string';
+	import {stripEnd, stripStart} from '$lib/string';
 
 	// TODO glob import and print API?
 
-	const exps = exports.map((e) => `@feltjs/util/${stripStart(e, 'lib/')}`).filter(Boolean);
+	const exps = exports
+		.map((e) => stripEnd(`@feltjs/util/${stripStart(e, 'lib/')}`, '/index.ts'))
+		.filter(Boolean);
 </script>
 
 <main class="column">
