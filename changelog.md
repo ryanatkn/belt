@@ -3,7 +3,7 @@
 ## 0.7.4
 
 - fix root exports to not use `$lib`
-  ([commit](https://github.com/feltjs/util/commit/8a7b3b0e16908b27f52563c9b3151eda47615ba5))
+  ([commit](https://github.com/feltjs/util/commit/ae12e44814b2331883820413080ea9570d57fa5c))
 
 ## 0.7.3
 
