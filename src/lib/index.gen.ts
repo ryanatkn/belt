@@ -11,7 +11,7 @@ export const gen: Gen = ({originId, log}) => {
 			.map((file) => {
 				if (file.endsWith('.ts')) {
 					if (file.endsWith('index.ts')) return '';
-					return `export * from '$${file.slice(0, -3)}';`;
+					return `export * from '.${file.slice(3, -3)}';`;
 				} else {
 					log.warn('unknown file', file);
 					return '';

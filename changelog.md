@@ -1,5 +1,10 @@
 # changelog
 
+## 0.7.4
+
+- fix root exports to not use `$lib`
+  ([commit](https://github.com/feltjs/util/commit/8a7b3b0e16908b27f52563c9b3151eda47615ba5))
+
 ## 0.7.3
 
 - publish everything from the root
