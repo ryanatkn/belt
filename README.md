@@ -1,6 +1,6 @@
 # @feltjs/util
 
-> a collection of JS utilities to complement the modern web platform 🦕🐋
+> JS utilities to complement the modern web platform 🦕🐋
 > [util.felt.dev](https://util.felt.dev)
 
 design:

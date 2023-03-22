@@ -1,6 +1,6 @@
 {
   "name": "@feltjs/util",
-  "description": "a collection of JS utilities to complement the modern web platform 🦕🐋",
+  "description": "JS utilities to complement the modern web platform 🦕🐋",
   "version": "0.7.5",
   "license": "MIT",
   "homepage": "https://util.felt.dev/",
