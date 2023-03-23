@@ -4,14 +4,14 @@ import {EMPTY_ARRAY, toArray} from './array.js';
 
 // TODO could use some refactoring
 
-export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'trace';
+export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
 const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
 	off: 0,
 	error: 1,
 	warn: 2,
 	info: 3,
-	trace: 4,
+	debug: 4,
 };
 
 export const toLogLevelValue = (level: LogLevel): number => LOG_LEVEL_VALUES[level] ?? 4;
@@ -88,7 +88,7 @@ export interface LoggerState extends LogLevelDefaults {
 	error: LogLevelDefaults;
 	warn: LogLevelDefaults;
 	info: LogLevelDefaults;
-	trace: LogLevelDefaults;
+	debug: LogLevelDefaults;
 }
 
 interface LogLevelDefaults {
@@ -152,16 +152,16 @@ export class BaseLogger {
 		);
 	}
 
-	trace(...args: unknown[]): void {
-		if (!shouldLog(this.state.level, 'trace')) return;
+	debug(...args: unknown[]): void {
+		if (!shouldLog(this.state.level, 'debug')) return;
 		this.state.log(
 			...resolveValues(
 				this.state.prefixes,
-				this.state.trace.prefixes,
+				this.state.debug.prefixes,
 				this.prefixes,
 				args,
 				this.suffixes,
-				this.state.trace.suffixes,
+				this.state.debug.suffixes,
 				this.state.suffixes,
 			),
 		);
@@ -214,7 +214,7 @@ export class Logger extends BaseLogger {
 		prefixes: [gray('➤')],
 		suffixes: [],
 	};
-	static trace: LogLevelDefaults = {
+	static debug: LogLevelDefaults = {
 		prefixes: [gray('—')],
 		suffixes: [],
 	};
@@ -250,7 +250,7 @@ export class SystemLogger extends BaseLogger {
 	static error = Logger.error;
 	static warn = Logger.warn;
 	static info = Logger.info;
-	static trace = Logger.trace;
+	static debug = Logger.debug;
 }
 
 export const printLogLabel = (label: string, color = magenta): string =>

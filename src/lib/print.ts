@@ -47,6 +47,6 @@ export const printTiming = (key: string | number, timing: number): string =>
 
 export const printTimings = (timings: Timings, log: Logger): void => {
 	for (const [key, timing] of timings.getAll()) {
-		log.trace(printTiming(key, timing));
+		log.debug(printTiming(key, timing));
 	}
 };

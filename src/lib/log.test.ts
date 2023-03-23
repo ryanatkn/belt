@@ -12,7 +12,7 @@ const createTest__loggerContext = (): TestLoggerContext => {
 	const ctx: TestLoggerContext = {
 		loggedArgs: undefined, // stores the result of the latest log call
 		loggerState: {
-			level: 'trace',
+			level: 'debug',
 			log: (...logArgs: any[]) => {
 				ctx.loggedArgs = logArgs;
 			},
@@ -30,9 +30,9 @@ const createTest__loggerContext = (): TestLoggerContext => {
 				prefixes: ['infoP1', 'infoP2'],
 				suffixes: ['infoS1', 'infoS2'],
 			},
-			trace: {
-				prefixes: ['traceP1', 'traceP2'],
-				suffixes: ['traceS1', 'traceS2'],
+			debug: {
+				prefixes: ['debugP1', 'debugP2'],
+				suffixes: ['debugS1', 'debugS2'],
 			},
 		},
 	};
@@ -94,19 +94,19 @@ test__Logger('prefixes and suffixes', (ctx) => {
 	]);
 	ctx.loggedArgs = undefined;
 
-	log.trace('foo', 36);
+	log.debug('foo', 36);
 	assert.equal(ctx.loggedArgs, [
 		'pre',
-		'traceP1',
-		'traceP2',
+		'debugP1',
+		'debugP2',
 		'p1',
 		'p2',
 		'foo',
 		36,
 		's1',
 		's2',
-		'traceS1',
-		'traceS2',
+		'debugS1',
+		'debugS2',
 		'post',
 	]);
 	ctx.loggedArgs = undefined;

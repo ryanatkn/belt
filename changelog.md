@@ -1,5 +1,10 @@
 # changelog
 
+## 0.8.0
+
+- rename log's `trace` to `debug`
+  ([#12](https://github.com/feltjs/util/pull/12))
+
 ## 0.7.5
 
 - fix root exports to omit modules with Node dependencies
