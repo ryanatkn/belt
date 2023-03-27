@@ -90,7 +90,7 @@ export const registerGlobalSpawn = (child: ChildProcess): (() => void) => {
 export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	let resolve: (v: SpawnResult) => void;
 	const closed = new Promise<SpawnResult>((r) => (resolve = r));
-	log.trace('despawning', printChildProcess(child));
+	log.debug('despawning', printChildProcess(child));
 	child.once('close', (code, signal) => {
 		resolve(code ? {ok: false, code, signal} : {ok: true, signal});
 	});
