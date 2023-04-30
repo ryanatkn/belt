@@ -5,7 +5,7 @@
 
 design:
 
-- kitchen-sink utilities library (sorry, we wish it weren't so)
+- kitchen-sink utilities library (sorry, we wish it weren't so, JS made us do it)
 - mix of JS module environments - browser-only, Node-only, universal
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
