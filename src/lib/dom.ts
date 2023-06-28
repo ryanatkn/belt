@@ -13,7 +13,13 @@ export const isEditable = (el: any): boolean => {
  * @param preventDefault Defaults to `true`.
  * @returns
  */
-export const swallow = <T extends Event>(event: T, immediate = true, preventDefault = true): T => {
+export const swallow = <
+	T extends Pick<Event, 'preventDefault' | 'stopPropagation' | 'stopImmediatePropagation'>,
+>(
+	event: T,
+	immediate = true,
+	preventDefault = true,
+): T => {
 	if (preventDefault) event.preventDefault();
 	if (immediate) {
 		event.stopImmediatePropagation();
