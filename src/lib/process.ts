@@ -1,5 +1,4 @@
-import {spawn as spawnChildProcess} from 'child_process';
-import type {SpawnOptions, ChildProcess} from 'child_process';
+import {spawn as spawnChildProcess, type SpawnOptions, type ChildProcess} from 'node:child_process';
 import {gray, green, red} from 'kleur/colors';
 
 import {printLogLabel, SystemLogger} from './log.js';

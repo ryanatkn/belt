@@ -87,7 +87,7 @@ export const undefineds: {[key: string]: undefined} = new Proxy(
 	},
 );
 
-export const EMPTY_OBJECT: Record<string | number | symbol, any> = Object.freeze({}) as any;
+export const EMPTY_OBJECT: Record<string | number | symbol, any> & object = Object.freeze({});
 
 /**
  * Performs a depth-first traversal of an object's enumerable properties,

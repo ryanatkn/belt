@@ -1,5 +1,10 @@
 # changelog
 
+## 0.8.1
+
+- loosen the types of `EMPTY_OBJECT` and `swallow`
+  ([#13](https://github.com/feltjs/util/pull/13))
+
 ## 0.8.0
 
 - rename log's `trace` to `debug`

@@ -9,40 +9,40 @@
 		.filter(Boolean);
 </script>
 
-<main class="column">
-	<section class="padded-md">
+<main class="box width_md">
+	<section class="padded_md">
 		<header>
-			<h1 class="centered-hz">@feltjs/util</h1>
+			<h1 class="row">@feltjs/util</h1>
 		</header>
 	</section>
-	<section class="padded-md centered-hz">
-		<code style:margin-right="var(--spacing_md)"
-			><a class="padded-md" href="https://github.com/feltjs/util">source</a></code
-		>
+	<section class="box padded_md">
+		<blockquote style:padding="0" class="spaced">
+			<a class="padded_md" href="https://github.com/feltjs/util">source on GitHub</a>
+		</blockquote>
 		<code
-			><a class="padded-md" href="https://www.npmjs.com/package/@feltjs/util"
+			><a class="padded_md" href="https://www.npmjs.com/package/@feltjs/util"
 				>npm i -D @feltjs/util</a
 			></code
 		>
 	</section>
-	<section class="markup padded-md">
+	<section class="prose padded_md width_sm">
 		<aside>
 			This docs website is under construction. For now please see <a
 				href="https://github.com/feltjs/util">the GitHub repo</a
 			>.
 		</aside>
 	</section>
-	<section class="padded-md">
-		{#each exps as exp, i}<li class="markup">
-				<code class="padded-sm"
+	<section class="padded_md">
+		{#each exps as exp, i}<li class="prose">
+				<code class="padded_sm"
 					>import {'{'}...} from '<a
 						href="https://github.com/feltjs/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
 			</li>{/each}
 	</section>
-	<footer class="centered">
-		<a href="https://github.com/feltjs/util" title="source code on github">🐙😺</a>
+	<footer class="box padded_md spaced">
+		<a href="https://github.com/feltjs/util" title="source code on github">source</a>
 		<a href="https://github.com/feltjs">💚</a>
 	</footer>
 </main>
