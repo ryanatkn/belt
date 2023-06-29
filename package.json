@@ -43,6 +43,7 @@
     "@feltjs/gro": "^0.78.1",
     "@sveltejs/adapter-static": "^2.0.2",
     "@sveltejs/kit": "^1.21.0",
+    "@types/node": "^20.3.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "eslint": "^8.43.0",

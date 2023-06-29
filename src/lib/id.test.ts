@@ -1,6 +1,6 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
-import {randomUUID} from 'crypto';
+import {randomUUID} from 'node:crypto';
 
 import {isUuid, toToClientId} from './id.js';
 

@@ -1,4 +1,4 @@
-import {extname, basename, dirname} from 'path';
+import {extname, basename, dirname} from 'node:path';
 
 export const stripTrailingSlash = (p: string): string =>
 	p.endsWith('/') ? p.substring(0, p.length - 1) : p;
