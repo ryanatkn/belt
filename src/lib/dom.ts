@@ -36,3 +36,15 @@ export const handleTargetValue =
 		if (swallowEvent) swallow(e);
 		cb(e.target.value, e);
 	};
+
+/**
+ * Returns a boolean indicating if the current browser window, if any, is iframed inside of another.
+ */
+export const isIframed = (): boolean => {
+	if (typeof window === 'undefined') return false;
+	try {
+		return window.self !== window.top; // some browsers may throw here due to the same origin policy
+	} catch (err) {
+		return false;
+	}
+};

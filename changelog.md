@@ -1,5 +1,10 @@
 # changelog
 
+## 0.8.2
+
+- add `isIframed` helper to `$lib/dom.ts`
+  ([#14](https://github.com/feltjs/util/pull/14))
+
 ## 0.8.1
 
 - loosen the types of `EMPTY_OBJECT` and `swallow`
