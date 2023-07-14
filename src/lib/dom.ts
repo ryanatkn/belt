@@ -6,8 +6,8 @@ export const isEditable = (el: any): boolean => {
 		return (
 			type === 'text' ||
 			type === 'number' ||
-			type === 'email' ||
 			type === 'password' ||
+			type === 'email' ||
 			type === 'search' ||
 			type === 'url'
 		);
