@@ -1,9 +1,18 @@
 export const isEditable = (el: any): boolean => {
 	if (!el) return false;
 	const {tagName} = el;
-	return tagName === 'INPUT'
-		? el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'range'
-		: tagName === 'TEXTAREA' || tagName === 'SELECT' || el.contentEditable === 'true';
+	if (tagName === 'INPUT') {
+		const {type} = el;
+		return (
+			type === 'text' ||
+			type === 'number' ||
+			type === 'password' ||
+			type === 'email' ||
+			type === 'search' ||
+			type === 'url'
+		);
+	}
+	return tagName === 'TEXTAREA' || el.contentEditable === 'true';
 };
 
 /**
