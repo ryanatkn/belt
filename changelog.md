@@ -1,5 +1,10 @@
 # changelog
 
+## 0.8.3
+
+- fix `isEditable` to return `true` only for actually editable inputs
+  ([#15](https://github.com/feltjs/util/pull/15))
+
 ## 0.8.2
 
 - add `isIframed` helper to `$lib/dom.ts`
