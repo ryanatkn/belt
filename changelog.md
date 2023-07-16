@@ -1,5 +1,10 @@
 # changelog
 
+## 0.9.0
+
+- **break**: support only deep imports
+  ([#16](https://github.com/feltjs/util/pull/16))
+
 ## 0.8.3
 
 - fix `isEditable` to return `true` only for actually editable inputs
