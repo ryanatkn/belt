@@ -1,8 +1,5 @@
 export const exports = [
-	// top level API: `import {...} from '@feltjs/util';`
 	'lib/index.ts',
-
-	// deep imports available to external consumers
 
 	'lib/array.ts',
 	'lib/async.ts',

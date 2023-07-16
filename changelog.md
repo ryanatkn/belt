@@ -4,6 +4,8 @@
 
 - **break**: support only deep imports
   ([#16](https://github.com/feltjs/util/pull/16))
+- **break**: remove `nulls` and `undefineds` from `$lib/object.ts`
+  ([#16](https://github.com/feltjs/util/pull/16))
 
 ## 0.8.3
 
