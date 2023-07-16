@@ -19,17 +19,9 @@ design:
 > [`npm i -D @feltjs/util`](https://www.npmjs.com/package/@feltjs/util)
 
 ```ts
-// import anything from the root, except the modules that rely on Node-only dependencies -
-// see $lib/index.ts for more
-import {type Result, unwrap, randomInt} from '@feltjs/util';
-
-// or import full module paths:
+// import full module paths:
 import {type Result, unwrap} from '@feltjs/util/result.js';
 import {randomInt} from '@feltjs/util/random.js';
-
-// these aren't exported from the root:
-import {toPathStem} from '@feltjs/util/path.js';
-import {spawn} from '@feltjs/util/process.js';
 ```
 
 see the available modules at [util.felt.dev](https://util.felt.dev),

@@ -41,13 +41,22 @@ export const pickBy = <T extends Record<K, any>, K extends string | number>(
 	return result;
 };
 
-// `omitUndefined` is a commonly used form of `pickBy`
-// See this issue for why it's used so much:
-// https://github.com/Microsoft/TypeScript/issues/13195
+/**
+ * `omitUndefined` is a commonly used form of `pickBy`.
+ * See this issue for why it's used so much:
+ * https://github.com/Microsoft/TypeScript/issues/13195
+ * @param obj
+ * @returns `obj` with all `undefined` properties removed
+ */
 export const omitUndefined = <T extends Record<string | number, any>>(obj: T): T =>
 	pickBy(obj, (v) => v !== undefined) as T;
 
-// A more explicit form of `{putThisFirst: obj.putThisFirst, ...obj}`
+/**
+ * A more explicit form of `{putThisFirst: obj.putThisFirst, ...obj}`.
+ * @param obj
+ * @param keys
+ * @returns
+ */
 export const reorder = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
 	keys: K[],
@@ -59,33 +68,6 @@ export const reorder = <T extends Record<K, any>, K extends string | number>(
 	for (const k in obj) result[k] = obj[k];
 	return result;
 };
-
-/*
-
-This `nulls` thing allows easier destructuring of `null`s from potentially error-causing values:
-
-`const {a, b} = maybeUndestructureable() || nulls;`
-
-If `thing()` returns a non-destructureable value, the `|| nulls` ensures `a` and `b` default to `null`.
-
-*/
-export const nulls: {[key: string]: null} = new Proxy(
-	{},
-	{
-		get() {
-			return null;
-		},
-	},
-);
-// sure:
-export const undefineds: {[key: string]: undefined} = new Proxy(
-	{},
-	{
-		get() {
-			return undefined;
-		},
-	},
-);
 
 export const EMPTY_OBJECT: Record<string | number | symbol, any> & object = Object.freeze({});
 
