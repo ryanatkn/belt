@@ -3,6 +3,7 @@
 ## 0.9.1
 
 - add `noop_async` and `resolved` function helpers
+  ([commit](https://github.com/feltjs/util/commit/a1f53ec07e50ffdb9763e1fcaf1a02af97302157))
 
 ## 0.9.0
 
