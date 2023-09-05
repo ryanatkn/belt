@@ -1,5 +1,9 @@
 # changelog
 
+## 0.9.1
+
+- add `noop_async` and `resolved` function helpers
+
 ## 0.9.0
 
 - **break**: support only deep imports

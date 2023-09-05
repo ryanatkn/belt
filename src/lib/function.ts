@@ -1,4 +1,8 @@
-export const noop: (...args: any[]) => void = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+export const noop: (...args: any[]) => any = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+
+export const noop_async: (...args: any[]) => Promise<any> = () => resolved;
+
+export const resolved = Promise.resolve();
 
 export const identity = <T>(t: T): T => t;
 
