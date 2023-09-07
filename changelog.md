@@ -1,5 +1,10 @@
 # changelog
 
+## 0.10.0
+
+- **break**: remove `$lib/path.ts`
+  ([#17](https://github.com/feltjs/util/pull/17))
+
 ## 0.9.1
 
 - add `noop_async` and `resolved` function helpers
