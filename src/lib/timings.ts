@@ -6,10 +6,10 @@ export interface Stopwatch {
 
 // tracks elapsed time in milliseconds
 export const createStopwatch = (decimals = 2): Stopwatch => {
-	let start = process.hrtime.bigint();
+	let start = performance.now();
 	return (reset = false) => {
-		const end = process.hrtime.bigint();
-		const elapsed = round(Number(end - start) / 1_000_000, decimals);
+		const end = performance.now();
+		const elapsed = round(Number(end - start), decimals);
 		if (reset) start = end;
 		return elapsed;
 	};
