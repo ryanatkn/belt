@@ -16,8 +16,6 @@ export interface SpawnedProcess {
  * This is just a convenient promise wrapper around `spawnProcess`
  * that's intended for commands that have an end, not long running-processes like watchers.
  * Any more advanced usage should use `spawnProcess` directly for access to the `child` process.
- * @param args
- * @returns
  */
 export const spawn = (...args: Parameters<typeof spawnProcess>): Promise<SpawnResult> =>
 	spawnProcess(...args).closed;
@@ -25,11 +23,7 @@ export const spawn = (...args: Parameters<typeof spawnProcess>): Promise<SpawnRe
 /**
  * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
  * Also returns a convenient `closed` promise.
- * If you only need `closed`, prefer the shorthand function `spawnProcess`.
- * @param command
- * @param args
- * @param options
- * @returns
+ * If you only need `closed`, prefer the shorthand function `spawn`.
  */
 export const spawnProcess = (
 	command: string,
@@ -83,8 +77,6 @@ export const registerGlobalSpawn = (child: ChildProcess): (() => void) => {
 
 /**
  * Kills a child process and returns a `SpawnResult`.
- * @param child
- * @returns
  */
 export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	let resolve: (v: SpawnResult) => void;
@@ -138,10 +130,6 @@ export interface RestartableProcess {
 /**
  * Like `spawnProcess` but with `restart` and `kill`,
  * handling many concurrent `restart` calls gracefully.
- * @param command
- * @param args
- * @param options
- * @returns
  */
 export const spawnRestartableProcess = (
 	command: string,
