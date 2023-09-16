@@ -66,7 +66,7 @@ export class Timings<T extends string | number = string | number> {
 	// toJSON() {} ?????
 }
 
-// TODO BLOCK increment
+// TODO BLOCK increment - coerce number keys to strings
 const to_timing_key = (timings: Timings, key: string): (() => number) => {
 	let i = 0;
 	while (true) {
