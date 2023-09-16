@@ -23,6 +23,7 @@ export class Timings<T extends string | number = string | number> {
 
 	start(key: T, replace = false, decimals = this.decimals): () => number {
 		if (!replace && this.stopwatches.has(key)) {
+			// TODO BLOCK probably don't want to throw here, but how to handle stop? probably just increment a counter for collisions
 			throw Error(`Timing key is already in use: ${key}`);
 		}
 		this.stopwatches.set(key, createStopwatch(decimals));
@@ -64,3 +65,15 @@ export class Timings<T extends string | number = string | number> {
 	// }
 	// toJSON() {} ?????
 }
+
+// TODO BLOCK increment
+const to_timing_key = (timings: Timings, key: string): (() => number) => {
+	let i = 0;
+	while (true) {
+		try {
+			return timings.start(key + (i ? ' ' + i : ''));
+		} catch (err) {
+			i++;
+		}
+	}
+};
