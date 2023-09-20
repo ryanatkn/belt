@@ -125,7 +125,7 @@
 - **break**: change `getJsonType` in `$lib/json` to return `undefined` instead of throwing
   ([#2](https://github.com/feltjs/util/pull/2))
 - **break**: rename camelCase filenames to dash-case,
-  `$lib/path-parsing` from `$lib/pathParsing` and
+  `$lib/path` from `$lib/pathParsing` and
   `$lib/random-seeded` from `$lib/randomSeed`
   ([#2](https://github.com/feltjs/util/pull/2))
 
