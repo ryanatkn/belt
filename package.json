@@ -138,7 +138,7 @@
     },
     "./path-parsing.js": {
       "default": "./dist/path-parsing.js",
-      "types": "./dist/path.d.ts"
+      "types": "./dist/path-parsing.d.ts"
     },
     "./print.js": {
       "default": "./dist/print.js",
