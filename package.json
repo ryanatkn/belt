@@ -136,8 +136,8 @@
       "default": "./dist/obtainable.js",
       "types": "./dist/obtainable.d.ts"
     },
-    "./path.js": {
-      "default": "./dist/path.js",
+    "./path-parsing.js": {
+      "default": "./dist/path-parsing.js",
       "types": "./dist/path.d.ts"
     },
     "./print.js": {
