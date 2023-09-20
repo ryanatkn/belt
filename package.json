@@ -19,7 +19,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=18.6.0"
+    "node": ">=20.5"
   },
   "scripts": {
     "start": "gro dev",
