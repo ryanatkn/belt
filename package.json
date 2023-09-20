@@ -82,5 +82,99 @@
         }
       }
     ]
+  },
+  "exports": {
+    "./array.js": {
+      "default": "./dist/array.js",
+      "types": "./dist/array.d.ts"
+    },
+    "./async.js": {
+      "default": "./dist/async.js",
+      "types": "./dist/async.d.ts"
+    },
+    "./counter.js": {
+      "default": "./dist/counter.js",
+      "types": "./dist/counter.d.ts"
+    },
+    "./dom.js": {
+      "default": "./dist/dom.js",
+      "types": "./dist/dom.d.ts"
+    },
+    "./error.js": {
+      "default": "./dist/error.js",
+      "types": "./dist/error.d.ts"
+    },
+    "./function.js": {
+      "default": "./dist/function.js",
+      "types": "./dist/function.d.ts"
+    },
+    "./id.js": {
+      "default": "./dist/id.js",
+      "types": "./dist/id.d.ts"
+    },
+    "./json.js": {
+      "default": "./dist/json.js",
+      "types": "./dist/json.d.ts"
+    },
+    "./log.js": {
+      "default": "./dist/log.js",
+      "types": "./dist/log.d.ts"
+    },
+    "./map.js": {
+      "default": "./dist/map.js",
+      "types": "./dist/map.d.ts"
+    },
+    "./maths.js": {
+      "default": "./dist/maths.js",
+      "types": "./dist/maths.d.ts"
+    },
+    "./object.js": {
+      "default": "./dist/object.js",
+      "types": "./dist/object.d.ts"
+    },
+    "./obtainable.js": {
+      "default": "./dist/obtainable.js",
+      "types": "./dist/obtainable.d.ts"
+    },
+    "./path-parsing.js": {
+      "default": "./dist/path-parsing.js",
+      "types": "./dist/path-parsing.d.ts"
+    },
+    "./print.js": {
+      "default": "./dist/print.js",
+      "types": "./dist/print.d.ts"
+    },
+    "./process.js": {
+      "default": "./dist/process.js",
+      "types": "./dist/process.d.ts"
+    },
+    "./random-alea.js": {
+      "default": "./dist/random-alea.js",
+      "types": "./dist/random-alea.d.ts"
+    },
+    "./random.js": {
+      "default": "./dist/random.js",
+      "types": "./dist/random.d.ts"
+    },
+    "./regexp.js": {
+      "default": "./dist/regexp.js",
+      "types": "./dist/regexp.d.ts"
+    },
+    "./result.js": {
+      "default": "./dist/result.js",
+      "types": "./dist/result.d.ts"
+    },
+    "./string.js": {
+      "default": "./dist/string.js",
+      "types": "./dist/string.d.ts"
+    },
+    "./timings.js": {
+      "default": "./dist/timings.js",
+      "types": "./dist/timings.d.ts"
+    },
+    "./types.js": {
+      "default": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
   }
 }
