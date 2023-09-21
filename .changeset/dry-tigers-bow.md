@@ -1,5 +1,5 @@
 ---
-'@feltjs/util': minor
+'@grogarden/util': minor
 ---
 
 upgrade gro

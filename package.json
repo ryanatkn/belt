@@ -1,5 +1,5 @@
 {
-  "name": "@feltjs/util",
+  "name": "@grogarden/util",
   "description": "JS utilities to complement the modern web platform 🦕🐋",
   "version": "0.9.1",
   "license": "MIT",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feltjs/util.git"
+    "url": "git+https://github.com/grogarden/util.git"
   },
   "bugs": {
-    "url": "https://github.com/feltjs/util/issues",
+    "url": "https://github.com/grogarden/util/issues",
     "email": "team@felt.social"
   },
   "type": "module",
