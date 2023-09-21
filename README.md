@@ -1,7 +1,7 @@
 # @grogarden/util
 
 > JS utilities to complement the modern web platform 🦕🐋
-> [util.felt.dev](https://util.felt.dev)
+> [util.grogarden.org](https://util.grogarden.org)
 
 design:
 
@@ -25,7 +25,7 @@ import {type Result, unwrap} from '@grogarden/util/result.js';
 import {randomInt} from '@grogarden/util/random.js';
 ```
 
-see the available modules at [util.felt.dev](https://util.felt.dev),
+see the available modules at [util.grogarden.org](https://util.grogarden.org),
 [src/lib/index.ts](src/lib/index.ts),
 and [src/lib/exports.ts](src/lib/exports.ts)
 
