@@ -1,11 +1,11 @@
 import {spawn as spawnChildProcess, type SpawnOptions, type ChildProcess} from 'node:child_process';
 import {gray, green, red} from 'kleur/colors';
 
-import {printLogLabel, SystemLogger} from './log.js';
-import {printError, printKeyValue} from './print.js';
+import {print_log_label, SystemLogger} from './log.js';
+import {print_error, print_key_value} from './print.js';
 import type {Result} from './result.js';
 
-const log = new SystemLogger(printLogLabel('process'));
+const log = new SystemLogger(print_log_label('process'));
 
 export interface SpawnedProcess {
 	child: ChildProcess;
@@ -96,7 +96,7 @@ export const attachProcessErrorHandlers = (toErrorLabel?: ToErrorLabel): void =>
 };
 
 const handleFatalError = async (err: Error, label = 'handleFatalError'): Promise<void> => {
-	new SystemLogger(printLogLabel(label, red)).error(printError(err));
+	new SystemLogger(print_log_label(label, red)).error(print_error(err));
 	await Promise.all(Array.from(globalSpawn).map((child) => despawn(child)));
 	process.exit(1);
 };
@@ -116,8 +116,8 @@ interface ToErrorLabel {
 
 export const printSpawnResult = (result: SpawnResult): string => {
 	if (result.ok) return 'ok';
-	let text = result.code === null ? '' : printKeyValue('code', result.code);
-	if (result.signal !== null) text += (text ? ' ' : '') + printKeyValue('signal', result.signal);
+	let text = result.code === null ? '' : print_key_value('code', result.code);
+	if (result.signal !== null) text += (text ? ' ' : '') + print_key_value('signal', result.signal);
 	return text;
 };
 

@@ -46,12 +46,12 @@ export class ResultError extends Error {
 
 /**
  * A helper that does the opposite of `unwrap`, throwing if the `Result` is ok.
- * Note that while `unwrap` returns the wrapped `value`, `unwrapError` returns the entire result.
+ * Note that while `unwrap` returns the wrapped `value`, `unwrap_error` returns the entire result.
  * @param result Some `Result` object.
  * @param message Optional custom error message.
  * @returns The type-narrowed result.
  */
-export const unwrapError = <TError extends object>(
+export const unwrap_error = <TError extends object>(
 	result: Result<object, TError>,
 	message = 'Failed to unwrap result error',
 ): {ok: false} & TError => {

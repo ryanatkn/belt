@@ -4,14 +4,14 @@ import * as assert from 'uvu/assert';
 import {
 	plural,
 	truncate,
-	stripStart,
-	stripEnd,
-	stripAfter,
-	stripBefore,
-	ensureStart,
-	ensureEnd,
+	strip_start,
+	strip_end,
+	strip_after,
+	strip_before,
+	ensure_start,
+	ensure_end,
 	deindent,
-	toGraphemeCount,
+	to_grapheme_count,
 } from './string.js';
 
 /* test__truncate */
@@ -56,249 +56,249 @@ test__truncate('length shorter than suffix returns empty string', () => {
 test__truncate.run();
 /* test__truncate */
 
-/* test__stripStart */
-const test__stripStart = suite('stripStart');
+/* test__strip_start */
+const test__strip_start = suite('strip_start');
 
-test__stripStart('basic behavior', () => {
-	assert.is(stripStart('foobar', 'foo'), 'bar');
+test__strip_start('basic behavior', () => {
+	assert.is(strip_start('foobar', 'foo'), 'bar');
 });
 
-test__stripStart('single character', () => {
-	assert.is(stripStart('foobar', 'f'), 'oobar');
+test__strip_start('single character', () => {
+	assert.is(strip_start('foobar', 'f'), 'oobar');
 });
 
-test__stripStart('single character of multiple', () => {
-	assert.is(stripStart('ffoobar', 'f'), 'foobar');
+test__strip_start('single character of multiple', () => {
+	assert.is(strip_start('ffoobar', 'f'), 'foobar');
 });
 
-test__stripStart('noop for partial match', () => {
-	assert.is(stripStart('foobar', 'fob'), 'foobar');
+test__strip_start('noop for partial match', () => {
+	assert.is(strip_start('foobar', 'fob'), 'foobar');
 });
 
-test__stripStart('noop for matching end but not start', () => {
-	assert.is(stripStart('foobar', 'bar'), 'foobar');
+test__strip_start('noop for matching end but not start', () => {
+	assert.is(strip_start('foobar', 'bar'), 'foobar');
 });
 
-test__stripStart('noop for empty string', () => {
-	assert.is(stripStart('foobar', ''), 'foobar');
+test__strip_start('noop for empty string', () => {
+	assert.is(strip_start('foobar', ''), 'foobar');
 });
 
-test__stripStart.run();
-/* test__stripStart */
+test__strip_start.run();
+/* test__strip_start */
 
-/* test__stripEnd */
-const test__stripEnd = suite('stripEnd');
+/* test__strip_end */
+const test__strip_end = suite('strip_end');
 
-test__stripEnd('basic behavior', () => {
-	assert.is(stripEnd('foobar', 'bar'), 'foo');
+test__strip_end('basic behavior', () => {
+	assert.is(strip_end('foobar', 'bar'), 'foo');
 });
 
-test__stripEnd('single character', () => {
-	assert.is(stripEnd('foobar', 'r'), 'fooba');
+test__strip_end('single character', () => {
+	assert.is(strip_end('foobar', 'r'), 'fooba');
 });
 
-test__stripEnd('single character of multiple', () => {
-	assert.is(stripEnd('foobarr', 'r'), 'foobar');
+test__strip_end('single character of multiple', () => {
+	assert.is(strip_end('foobarr', 'r'), 'foobar');
 });
 
-test__stripEnd('noop for partial match', () => {
-	assert.is(stripEnd('foobar', 'oar'), 'foobar');
+test__strip_end('noop for partial match', () => {
+	assert.is(strip_end('foobar', 'oar'), 'foobar');
 });
 
-test__stripEnd('noop for matching start but not end', () => {
-	assert.is(stripEnd('foobar', 'foo'), 'foobar');
+test__strip_end('noop for matching start but not end', () => {
+	assert.is(strip_end('foobar', 'foo'), 'foobar');
 });
 
-test__stripEnd('noop for empty string', () => {
-	assert.is(stripEnd('foobar', ''), 'foobar');
+test__strip_end('noop for empty string', () => {
+	assert.is(strip_end('foobar', ''), 'foobar');
 });
 
-test__stripEnd.run();
-/* test__stripEnd */
+test__strip_end.run();
+/* test__strip_end */
 
-/* test__stripAfter */
-const test__stripAfter = suite('stripAfter');
+/* test__strip_after */
+const test__strip_after = suite('strip_after');
 
-test__stripAfter('basic behavior', () => {
-	assert.is(stripAfter('foobar', 'oo'), 'f');
+test__strip_after('basic behavior', () => {
+	assert.is(strip_after('foobar', 'oo'), 'f');
 });
 
-test__stripAfter('starting characters', () => {
-	assert.is(stripAfter('foobar', 'foo'), '');
+test__strip_after('starting characters', () => {
+	assert.is(strip_after('foobar', 'foo'), '');
 });
 
-test__stripAfter('ending characters', () => {
-	assert.is(stripAfter('foobar', 'bar'), 'foo');
+test__strip_after('ending characters', () => {
+	assert.is(strip_after('foobar', 'bar'), 'foo');
 });
 
-test__stripAfter('single character', () => {
-	assert.is(stripAfter('foobar', 'b'), 'foo');
+test__strip_after('single character', () => {
+	assert.is(strip_after('foobar', 'b'), 'foo');
 });
 
-test__stripAfter('first of many characters', () => {
-	assert.is(stripAfter('foobar', 'o'), 'f');
+test__strip_after('first of many characters', () => {
+	assert.is(strip_after('foobar', 'o'), 'f');
 });
 
-test__stripAfter('strips after first character', () => {
-	assert.is(stripAfter('foobar', 'f'), '');
+test__strip_after('strips after first character', () => {
+	assert.is(strip_after('foobar', 'f'), '');
 });
 
-test__stripAfter('strips last character', () => {
-	assert.is(stripAfter('foobar', 'r'), 'fooba');
+test__strip_after('strips last character', () => {
+	assert.is(strip_after('foobar', 'r'), 'fooba');
 });
 
-test__stripAfter('noop for missing character', () => {
-	assert.is(stripAfter('foobar', 'x'), 'foobar');
+test__strip_after('noop for missing character', () => {
+	assert.is(strip_after('foobar', 'x'), 'foobar');
 });
 
-test__stripAfter('noop for partial match', () => {
-	assert.is(stripAfter('foobar', 'bo'), 'foobar');
+test__strip_after('noop for partial match', () => {
+	assert.is(strip_after('foobar', 'bo'), 'foobar');
 });
 
-test__stripAfter('empty string', () => {
-	assert.is(stripAfter('foobar', ''), 'foobar');
+test__strip_after('empty string', () => {
+	assert.is(strip_after('foobar', ''), 'foobar');
 });
 
-test__stripAfter.run();
-/* test__stripAfter */
+test__strip_after.run();
+/* test__strip_after */
 
-/* test__stripBefore */
-const test__stripBefore = suite('stripBefore');
+/* test__strip_before */
+const test__strip_before = suite('strip_before');
 
-test__stripBefore('basic behavior', () => {
-	assert.is(stripBefore('foobar', 'oo'), 'bar');
+test__strip_before('basic behavior', () => {
+	assert.is(strip_before('foobar', 'oo'), 'bar');
 });
 
-test__stripBefore('starting characters', () => {
-	assert.is(stripBefore('foobar', 'foo'), 'bar');
+test__strip_before('starting characters', () => {
+	assert.is(strip_before('foobar', 'foo'), 'bar');
 });
 
-test__stripBefore('ending characters', () => {
-	assert.is(stripBefore('foobar', 'bar'), '');
+test__strip_before('ending characters', () => {
+	assert.is(strip_before('foobar', 'bar'), '');
 });
 
-test__stripBefore('single character', () => {
-	assert.is(stripBefore('foobar', 'b'), 'ar');
+test__strip_before('single character', () => {
+	assert.is(strip_before('foobar', 'b'), 'ar');
 });
 
-test__stripBefore('first of many characters', () => {
-	assert.is(stripBefore('foobar', 'o'), 'obar');
+test__strip_before('first of many characters', () => {
+	assert.is(strip_before('foobar', 'o'), 'obar');
 });
 
-test__stripBefore('strips after first character', () => {
-	assert.is(stripBefore('foobar', 'f'), 'oobar');
+test__strip_before('strips after first character', () => {
+	assert.is(strip_before('foobar', 'f'), 'oobar');
 });
 
-test__stripBefore('strips last character', () => {
-	assert.is(stripBefore('foobar', 'r'), '');
+test__strip_before('strips last character', () => {
+	assert.is(strip_before('foobar', 'r'), '');
 });
 
-test__stripBefore('noop for missing character', () => {
-	assert.is(stripBefore('foobar', 'x'), 'foobar');
+test__strip_before('noop for missing character', () => {
+	assert.is(strip_before('foobar', 'x'), 'foobar');
 });
 
-test__stripBefore('noop for partial match', () => {
-	assert.is(stripBefore('foobar', 'bo'), 'foobar');
+test__strip_before('noop for partial match', () => {
+	assert.is(strip_before('foobar', 'bo'), 'foobar');
 });
 
-test__stripBefore('empty string', () => {
-	assert.is(stripBefore('foobar', ''), 'foobar');
+test__strip_before('empty string', () => {
+	assert.is(strip_before('foobar', ''), 'foobar');
 });
 
-test__stripBefore.run();
-/* test__stripBefore */
+test__strip_before.run();
+/* test__strip_before */
 
-/* test__ensureStart */
-const test__ensureStart = suite('ensureStart');
+/* test__ensure_start */
+const test__ensure_start = suite('ensure_start');
 
-test__ensureStart('basic behavior', () => {
-	assert.is(ensureStart('foobar', 'food'), 'foodfoobar');
+test__ensure_start('basic behavior', () => {
+	assert.is(ensure_start('foobar', 'food'), 'foodfoobar');
 });
 
-test__ensureStart('existing text', () => {
-	assert.is(ensureStart('foobar', 'foo'), 'foobar');
+test__ensure_start('existing text', () => {
+	assert.is(ensure_start('foobar', 'foo'), 'foobar');
 });
 
-test__ensureStart('existing character', () => {
-	assert.is(ensureStart('foobar', 'f'), 'foobar');
+test__ensure_start('existing character', () => {
+	assert.is(ensure_start('foobar', 'f'), 'foobar');
 });
 
-test__ensureStart('second character', () => {
-	assert.is(ensureStart('foobar', 'o'), 'ofoobar');
+test__ensure_start('second character', () => {
+	assert.is(ensure_start('foobar', 'o'), 'ofoobar');
 });
 
-test__ensureStart('empty string', () => {
-	assert.is(ensureStart('foobar', ''), 'foobar');
+test__ensure_start('empty string', () => {
+	assert.is(ensure_start('foobar', ''), 'foobar');
 });
 
-test__ensureStart('whole string', () => {
-	assert.is(ensureStart('foobar', 'foobar'), 'foobar');
+test__ensure_start('whole string', () => {
+	assert.is(ensure_start('foobar', 'foobar'), 'foobar');
 });
 
-test__ensureStart('whole string plus a start character', () => {
-	assert.is(ensureStart('foobar', 'xfoobar'), 'xfoobarfoobar');
+test__ensure_start('whole string plus a start character', () => {
+	assert.is(ensure_start('foobar', 'xfoobar'), 'xfoobarfoobar');
 });
 
-test__ensureStart('whole string plus an end character', () => {
-	assert.is(ensureStart('foobar', 'foobarx'), 'foobarxfoobar');
+test__ensure_start('whole string plus an end character', () => {
+	assert.is(ensure_start('foobar', 'foobarx'), 'foobarxfoobar');
 });
 
-test__ensureStart('empty strings', () => {
-	assert.is(ensureStart('', ''), '');
+test__ensure_start('empty strings', () => {
+	assert.is(ensure_start('', ''), '');
 });
 
-test__ensureStart('empty source string', () => {
-	assert.is(ensureStart('', 'foo'), 'foo');
+test__ensure_start('empty source string', () => {
+	assert.is(ensure_start('', 'foo'), 'foo');
 });
 
-test__ensureStart.run();
-/* test__ensureStart */
+test__ensure_start.run();
+/* test__ensure_start */
 
-/* test__ensureEnd */
-const test__ensureEnd = suite('ensureEnd');
+/* test__ensure_end */
+const test__ensure_end = suite('ensure_end');
 
-test__ensureEnd('basic behavior', () => {
-	assert.is(ensureEnd('foobar', 'abar'), 'foobarabar');
+test__ensure_end('basic behavior', () => {
+	assert.is(ensure_end('foobar', 'abar'), 'foobarabar');
 });
 
-test__ensureEnd('existing text', () => {
-	assert.is(ensureEnd('foobar', 'bar'), 'foobar');
+test__ensure_end('existing text', () => {
+	assert.is(ensure_end('foobar', 'bar'), 'foobar');
 });
 
-test__ensureEnd('existing character', () => {
-	assert.is(ensureEnd('foobar', 'r'), 'foobar');
+test__ensure_end('existing character', () => {
+	assert.is(ensure_end('foobar', 'r'), 'foobar');
 });
 
-test__ensureEnd('second to last character', () => {
-	assert.is(ensureEnd('foobar', 'a'), 'foobara');
+test__ensure_end('second to last character', () => {
+	assert.is(ensure_end('foobar', 'a'), 'foobara');
 });
 
-test__ensureEnd('empty string', () => {
-	assert.is(ensureEnd('foobar', ''), 'foobar');
+test__ensure_end('empty string', () => {
+	assert.is(ensure_end('foobar', ''), 'foobar');
 });
 
-test__ensureEnd('whole string', () => {
-	assert.is(ensureEnd('foobar', 'foobar'), 'foobar');
+test__ensure_end('whole string', () => {
+	assert.is(ensure_end('foobar', 'foobar'), 'foobar');
 });
 
-test__ensureEnd('whole string plus a start character', () => {
-	assert.is(ensureEnd('foobar', 'xfoobar'), 'foobarxfoobar');
+test__ensure_end('whole string plus a start character', () => {
+	assert.is(ensure_end('foobar', 'xfoobar'), 'foobarxfoobar');
 });
 
-test__ensureEnd('whole string plus an end character', () => {
-	assert.is(ensureEnd('foobar', 'foobarx'), 'foobarfoobarx');
+test__ensure_end('whole string plus an end character', () => {
+	assert.is(ensure_end('foobar', 'foobarx'), 'foobarfoobarx');
 });
 
-test__ensureEnd('empty strings', () => {
-	assert.is(ensureEnd('', ''), '');
+test__ensure_end('empty strings', () => {
+	assert.is(ensure_end('', ''), '');
 });
 
-test__ensureEnd('empty source string', () => {
-	assert.is(ensureEnd('', 'foo'), 'foo');
+test__ensure_end('empty source string', () => {
+	assert.is(ensure_end('', 'foo'), 'foo');
 });
 
-test__ensureEnd.run();
-/* test__ensureEnd */
+test__ensure_end.run();
+/* test__ensure_end */
 
 /* test__deindent */
 const test__deindent = suite('deindent');
@@ -354,15 +354,18 @@ test__plural('does not pluralize 1', () => {
 test__plural.run();
 /* test__plural */
 
-/* test__toGraphemeCount */
-const test__toGraphemeCount = suite('toGraphemeCount');
+/* test__to_grapheme_count */
+const test__to_grapheme_count = suite('to_grapheme_count');
 
-test__toGraphemeCount('counts graphemes of a string, where compound emoji are one grapheme', () => {
-	assert.is(toGraphemeCount('👩‍👩‍👧‍👦'), 1);
-	assert.is(toGraphemeCount('🙋‍♂️'), 1);
-	assert.is(toGraphemeCount('👩‍👩‍👧‍👦🙋‍♂️👩‍👩‍👧‍👦'), 3);
-	assert.is(toGraphemeCount('a👩‍👩‍👧‍👦5🙋‍♂️👩‍❤️‍💋‍👩~'), 6);
-});
+test__to_grapheme_count(
+	'counts graphemes of a string, where compound emoji are one grapheme',
+	() => {
+		assert.is(to_grapheme_count('👩‍👩‍👧‍👦'), 1);
+		assert.is(to_grapheme_count('🙋‍♂️'), 1);
+		assert.is(to_grapheme_count('👩‍👩‍👧‍👦🙋‍♂️👩‍👩‍👧‍👦'), 3);
+		assert.is(to_grapheme_count('a👩‍👩‍👧‍👦5🙋‍♂️👩‍❤️‍💋‍👩~'), 6);
+	},
+);
 
-test__toGraphemeCount.run();
-/* test__toGraphemeCount */
+test__to_grapheme_count.run();
+/* test__to_grapheme_count */

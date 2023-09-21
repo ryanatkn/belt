@@ -34,12 +34,12 @@
 
 ## 0.8.3
 
-- fix `isEditable` to return `true` only for actually editable inputs
+- fix `is_editable` to return `true` only for actually editable inputs
   ([#15](https://github.com/grogarden/util/pull/15))
 
 ## 0.8.2
 
-- add `isIframed` helper to `$lib/dom.ts`
+- add `is_iframed` helper to `$lib/dom.ts`
   ([#14](https://github.com/grogarden/util/pull/14))
 
 ## 0.8.1
@@ -69,12 +69,12 @@
 
 ## 0.7.2
 
-- add `handleTargetValue` to `$lib/dom.ts`
+- add `handle_target_value` to `$lib/dom.ts`
   ([commit](https://github.com/grogarden/util/commit/37d99fc73c577229ae5c5fc87dde8d238950826e))
 
 ## 0.7.1
 
-- make `select` elements count for `isEditable`
+- make `select` elements count for `is_editable`
   ([commit](https://github.com/grogarden/util/commit/202026ad248b0f337d84ff3521948fd299104d6e))
 
 ## 0.7.0
@@ -85,7 +85,7 @@
 ## 0.6.0
 
 - **break**: change `LogLevel` from an enum to a string type union,
-  change its default to `info`, and add `toLogLevelValue` to convert it to a number
+  change its default to `info`, and add `to_log_level_value` to convert it to a number
   ([#11](https://github.com/grogarden/util/pull/11))
 
 ## 0.5.3
@@ -114,13 +114,13 @@
 
 ## 0.4.1
 
-- add `toNext` to `$lib/array`
+- add `to_next` to `$lib/array`
   ([#5](https://github.com/grogarden/util/pull/5))
 
 ## 0.4.0
 
 - **break**: rename `$lib/random-alea` from `$lib/random-seeded`
-  and `toRandomAlea` from `toRandomSeeded`
+  and `create_random_alea` from `toRandomSeeded`
 
 ## 0.3.0
 
@@ -137,7 +137,7 @@
 
 - **break**: require fully qualified imports for almost everything
   ([#2](https://github.com/grogarden/util/pull/2))
-- **break**: change `getJsonType` in `$lib/json` to return `undefined` instead of throwing
+- **break**: change `to_json_type` in `$lib/json` to return `undefined` instead of throwing
   ([#2](https://github.com/grogarden/util/pull/2))
 - **break**: rename camelCase filenames to dash-case,
   `$lib/path` from `$lib/pathParsing` and

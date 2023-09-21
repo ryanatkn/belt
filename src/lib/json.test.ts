@@ -1,27 +1,27 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {getJsonType} from './json.js';
+import {to_json_type} from './json.js';
 import {noop} from './function.js';
 
-/* test__getJsonType */
-const test__getJsonType = suite('getJsonType');
+/* test__to_json_type */
+const test__to_json_type = suite('to_json_type');
 
-test__getJsonType('basic behavior', () => {
-	assert.is(getJsonType(''), 'string');
-	assert.is(getJsonType('1'), 'string');
-	assert.is(getJsonType(1), 'number');
-	assert.is(getJsonType(NaN), 'number');
-	assert.is(getJsonType(Infinity), 'number');
-	assert.is(getJsonType(false), 'boolean');
-	assert.is(getJsonType({}), 'object');
-	assert.is(getJsonType(null), 'null');
-	assert.is(getJsonType([]), 'array');
-	assert.is(getJsonType(undefined as any), undefined);
-	assert.is(getJsonType(noop as any), undefined);
-	assert.is(getJsonType(BigInt(9000) as any), undefined);
-	assert.is(getJsonType(Symbol() as any), undefined);
+test__to_json_type('basic behavior', () => {
+	assert.is(to_json_type(''), 'string');
+	assert.is(to_json_type('1'), 'string');
+	assert.is(to_json_type(1), 'number');
+	assert.is(to_json_type(NaN), 'number');
+	assert.is(to_json_type(Infinity), 'number');
+	assert.is(to_json_type(false), 'boolean');
+	assert.is(to_json_type({}), 'object');
+	assert.is(to_json_type(null), 'null');
+	assert.is(to_json_type([]), 'array');
+	assert.is(to_json_type(undefined as any), undefined);
+	assert.is(to_json_type(noop as any), undefined);
+	assert.is(to_json_type(BigInt(9000) as any), undefined);
+	assert.is(to_json_type(Symbol() as any), undefined);
 });
 
-test__getJsonType.run();
-/* test__getJsonType */
+test__to_json_type.run();
+/* test__to_json_type */

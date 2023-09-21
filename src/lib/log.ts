@@ -1,6 +1,6 @@
 import {red, yellow, gray, black, magenta, bgYellow, bgRed} from 'kleur/colors';
 
-import {EMPTY_ARRAY, toArray} from './array.js';
+import {EMPTY_ARRAY, to_array} from './array.js';
 
 // TODO could use some refactoring
 
@@ -14,26 +14,26 @@ const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
 	debug: 4,
 };
 
-export const toLogLevelValue = (level: LogLevel): number => LOG_LEVEL_VALUES[level] ?? 4;
+export const to_log_level_value = (level: LogLevel): number => LOG_LEVEL_VALUES[level] ?? 4;
 
-const shouldLog = (max: LogLevel, level: LogLevel): boolean =>
-	toLogLevelValue(max) >= toLogLevelValue(level);
+const should_log = (max: LogLevel, level: LogLevel): boolean =>
+	to_log_level_value(max) >= to_log_level_value(level);
 
 /**
  * Sets the log level for both the main and system loggers.
  * @param level The desired log level.
- * @param configureMainLogger Set the `Logger` log level? Defaults to true.
- * @param configureSystemLogger Set the `SystemLogger` log level? Defaults to true.
+ * @param configure_main_logger Set the `Logger` log level? Defaults to true.
+ * @param configure_system_logger Set the `SystemLogger` log level? Defaults to true.
  */
-export const configureLogLevel = (
+export const configure_log_level = (
 	level: LogLevel,
-	configureMainLogger = true,
-	configureSystemLogger = true,
+	configure_main_logger = true,
+	configure_system_logger = true,
 ): void => {
-	if (configureMainLogger) {
+	if (configure_main_logger) {
 		Logger.level = level;
 	}
-	if (configureSystemLogger) {
+	if (configure_system_logger) {
 		SystemLogger.level = level;
 	}
 };
@@ -101,15 +101,15 @@ export class BaseLogger {
 	state: LoggerState; // can be the implementing class constructor
 
 	constructor(prefixes: unknown, suffixes: unknown, state: LoggerState) {
-		this.prefixes = toArray(prefixes);
-		this.suffixes = toArray(suffixes);
+		this.prefixes = to_array(prefixes);
+		this.suffixes = to_array(suffixes);
 		this.state = state;
 	}
 
 	error(...args: unknown[]): void {
-		if (!shouldLog(this.state.level, 'error')) return;
+		if (!should_log(this.state.level, 'error')) return;
 		this.state.log(
-			...resolveValues(
+			...resolve_values(
 				this.state.prefixes,
 				this.state.error.prefixes,
 				this.prefixes,
@@ -122,9 +122,9 @@ export class BaseLogger {
 	}
 
 	warn(...args: unknown[]): void {
-		if (!shouldLog(this.state.level, 'warn')) return;
+		if (!should_log(this.state.level, 'warn')) return;
 		this.state.log(
-			...resolveValues(
+			...resolve_values(
 				this.state.prefixes,
 				this.state.warn.prefixes,
 				this.prefixes,
@@ -137,9 +137,9 @@ export class BaseLogger {
 	}
 
 	info(...args: unknown[]): void {
-		if (!shouldLog(this.state.level, 'info')) return;
+		if (!should_log(this.state.level, 'info')) return;
 		this.state.log(
-			...resolveValues(
+			...resolve_values(
 				this.state.prefixes,
 				this.state.info.prefixes,
 				this.prefixes,
@@ -152,9 +152,9 @@ export class BaseLogger {
 	}
 
 	debug(...args: unknown[]): void {
-		if (!shouldLog(this.state.level, 'debug')) return;
+		if (!should_log(this.state.level, 'debug')) return;
 		this.state.log(
-			...resolveValues(
+			...resolve_values(
 				this.state.prefixes,
 				this.state.debug.prefixes,
 				this.prefixes,
@@ -167,7 +167,7 @@ export class BaseLogger {
 	}
 
 	plain(...args: unknown[]): void {
-		this.state.log(...resolveValues(args));
+		this.state.log(...resolve_values(args));
 	}
 
 	newline(count = 1): void {
@@ -175,7 +175,7 @@ export class BaseLogger {
 	}
 }
 
-const resolveValues = (...arrays: any[]): any[] => {
+const resolve_values = (...arrays: any[]): any[] => {
 	const resolved: any[] = [];
 	for (const array of arrays) {
 		for (const value of array) {
@@ -197,7 +197,7 @@ export class Logger extends BaseLogger {
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `LoggerState` for more.
-	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `SystemLogger` value, see `configureLogLevel`
+	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `SystemLogger` value, see `configure_log_level`
 	static log: Log = console.log.bind(console);
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
@@ -241,7 +241,7 @@ export class SystemLogger extends BaseLogger {
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `LoggerState` for more.
-	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configureLogLevel`
+	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configure_log_level`
 	static log: Log = console.log.bind(console);
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;
@@ -252,5 +252,5 @@ export class SystemLogger extends BaseLogger {
 	static debug = Logger.debug;
 }
 
-export const printLogLabel = (label: string, color = magenta): string =>
+export const print_log_label = (label: string, color = magenta): string =>
 	`${gray('[')}${color(label)}${gray(']')}`;

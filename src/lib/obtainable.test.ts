@@ -1,67 +1,67 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {toObtainable} from './obtainable.js';
+import {create_obtainable} from './obtainable.js';
 import {noop} from './function.js';
 
-/* test__toObtainable */
-const test__toObtainable = suite('toObtainable');
+/* test__create_obtainable */
+const test__create_obtainable = suite('create_obtainable');
 
-test__toObtainable('unobtain out of order', async () => {
+test__create_obtainable('unobtain out of order', async () => {
 	let thing: symbol | undefined;
-	let isUnobtained = false;
-	const obtainThing = toObtainable(
+	let unobtained = false;
+	const obtain_thing = create_obtainable(
 		() => {
 			assert.is(thing, undefined);
 			thing = Symbol();
 			return thing;
 		},
-		(thingUnobtained) => {
-			isUnobtained = true;
-			assert.is(thingUnobtained, thing);
+		(thing_unobtained) => {
+			unobtained = true;
+			assert.is(thing_unobtained, thing);
 		},
 	);
 
-	const [thing1, unobtain1] = obtainThing();
+	const [thing1, unobtain1] = obtain_thing();
 	assert.is(thing1, thing);
-	assert.not.ok(isUnobtained);
+	assert.not.ok(unobtained);
 
-	const [thing2, unobtain2] = obtainThing();
+	const [thing2, unobtain2] = obtain_thing();
 	assert.is(thing2, thing);
-	assert.not.ok(isUnobtained);
+	assert.not.ok(unobtained);
 	assert.is.not(unobtain1, unobtain2); // unobtain function refs should not be the same
 
-	const [thing3, unobtain3] = obtainThing();
+	const [thing3, unobtain3] = obtain_thing();
 	assert.is(thing3, thing);
-	assert.not.ok(isUnobtained);
+	assert.not.ok(unobtained);
 
 	unobtain2();
-	assert.not.ok(isUnobtained);
+	assert.not.ok(unobtained);
 
 	unobtain3();
 	unobtain3(); // call unobtain additional times to make sure it's idempotent
 	unobtain3();
-	assert.not.ok(isUnobtained);
+	assert.not.ok(unobtained);
 
 	unobtain1();
-	assert.ok(isUnobtained);
+	assert.ok(unobtained);
 
-	const originalThing = thing;
+	const original_thing = thing;
 	thing = undefined;
-	isUnobtained = false;
-	const [thing4, unobtain4] = obtainThing();
+	unobtained = false;
+	const [thing4, unobtain4] = obtain_thing();
 	assert.ok(thing4);
 	assert.is(thing4, thing);
-	assert.is.not(thing4, originalThing);
-	assert.not.ok(isUnobtained);
+	assert.is.not(thing4, original_thing);
+	assert.not.ok(unobtained);
 	unobtain4();
-	assert.ok(isUnobtained);
+	assert.ok(unobtained);
 });
 
-test__toObtainable('cannot obtain undefined', () => {
-	const obtainThing = toObtainable(() => undefined, noop);
-	assert.throws(() => obtainThing());
+test__create_obtainable('cannot obtain undefined', () => {
+	const obtain_thing = create_obtainable(() => undefined, noop);
+	assert.throws(() => obtain_thing());
 });
 
-test__toObtainable.run();
-/* test__toObtainable */
+test__create_obtainable.run();
+/* test__create_obtainable */

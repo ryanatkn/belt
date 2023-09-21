@@ -1,4 +1,4 @@
-export const isEditable = (el: any): boolean => {
+export const is_editable = (el: any): boolean => {
 	if (!el) return false;
 	const {tagName} = el;
 	if (tagName === 'INPUT') {
@@ -39,17 +39,17 @@ export const swallow = <
 };
 
 // TODO improve these types, the motivation was the strictness of Svelte DOM types
-export const handleTargetValue =
-	(cb: (value: any, event: any) => void, swallowEvent = true) =>
+export const handle_target_value =
+	(cb: (value: any, event: any) => void, swallow_event = true) =>
 	(e: any): void => {
-		if (swallowEvent) swallow(e);
+		if (swallow_event) swallow(e);
 		cb(e.target.value, e);
 	};
 
 /**
  * Returns a boolean indicating if the current browser window, if any, is iframed inside of another.
  */
-export const isIframed = (): boolean => {
+export const is_iframed = (): boolean => {
 	if (typeof window === 'undefined') return false;
 	try {
 		return window.self !== window.top; // some browsers may throw here due to the same origin policy

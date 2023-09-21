@@ -11,7 +11,7 @@ design:
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
-  see <a href="https://github.com/fuz-dev/fuz">felt-ui</a>
+  see <a href="https://github.com/fuz-dev/fuz">@fuz.dev/fuz</a>
 - complement the modern web platform, stay evergreen
 - kinda minimal in many ways but also not
 
@@ -22,7 +22,7 @@ design:
 ```ts
 // import full module paths:
 import {type Result, unwrap} from '@grogarden/util/result.js';
-import {randomInt} from '@grogarden/util/random.js';
+import {random_int} from '@grogarden/util/random.js';
 ```
 
 see the available modules at [util.grogarden.org](https://util.grogarden.org),

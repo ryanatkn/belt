@@ -1,9 +1,7 @@
 /*
 
-This is the Alea pseudo-random number generator by Johannes Baagøe
-
-Security disclaimer: Felt cannot vouch for the cryotographic security of this code.
-Use Node/browser/platform crypto APIs instead of this when security matters.
+DO NOT USE when security is needed, use webcrypto APIs instead.
+This is the Alea pseudo-random number generator by Johannes Baagøe.
 
 From http://baagoe.com/en/RandomMusings/javascript/
 via https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -38,15 +36,14 @@ export interface Alea {
 	seeds: unknown[];
 }
 
-export const toRandomAlea = (...args: unknown[]): Alea => {
-	// Johannes Baagøe <baagoe@baagoe.com>, 2010
+export const create_random_alea = (...args: unknown[]): Alea => {
 	let s0 = 0;
 	let s1 = 0;
 	let s2 = 0;
 	let c = 1;
 
 	const seeds = args.length ? args : [Date.now()];
-	let mash: Mash | null = toMash();
+	let mash: Mash | null = masher();
 	s0 = mash(' ');
 	s1 = mash(' ');
 	s2 = mash(' ');
@@ -82,9 +79,11 @@ interface Mash {
 	(data: any): number;
 }
 
-// From http://baagoe.com/en/RandomMusings/javascript/
-// Johannes Baagøe <baagoe@baagoe.com>, 2010
-export const toMash = (): Mash => {
+/**
+ * @source http://baagoe.com/en/RandomMusings/javascript/
+ * @copyright Johannes Baagøe <baagoe@baagoe.com>, 2010
+ */
+export const masher = (): Mash => {
 	let n = 0xefc8249d;
 	return (data) => {
 		const d = data + '';
