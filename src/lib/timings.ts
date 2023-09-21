@@ -35,7 +35,7 @@ export class Timings {
 		let i = 2;
 		while (true) {
 			const next = key + '' + i++;
-			if (!this.stopwatches.has(next)) return next as TimingsKey;
+			if (!this.stopwatches.has(next)) return next;
 		}
 	}
 
