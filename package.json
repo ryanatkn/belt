@@ -41,6 +41,7 @@
     "kleur": "^4.0.0"
   },
   "devDependencies": {
+    "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.0",
     "@feltjs/felt-ui": "^0.66.2",
     "@feltjs/gro": "^0.82.7",
