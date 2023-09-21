@@ -1,12 +1,12 @@
 <script lang="ts">
-	import {exports} from '$lib/exports';
-	import {stripEnd, stripStart} from '$lib/string';
+	// import {exports} from '$lib/exports';
+	// import {stripEnd, stripStart} from '$lib/string';
 
 	// TODO glob import and print API?
 
-	const exps = exports
-		.map((e) => stripEnd(`@feltjs/util/${stripStart(e, 'lib/')}`, '/index.ts'))
-		.filter(Boolean);
+	// const exps = exports
+	// 	.map((e) => stripEnd(`@feltjs/util/${stripStart(e, 'lib/')}`, '/index.ts'))
+	// 	.filter(Boolean);
 </script>
 
 <main class="box width_md">
@@ -33,13 +33,14 @@
 		</aside>
 	</section>
 	<section class="padded_md">
-		{#each exps as exp, i}<li class="prose">
+		coming soon
+		<!-- {#each exps as exp, i}<li class="prose">
 				<code class="padded_sm"
 					>import {'{'}...} from '<a
 						href="https://github.com/feltjs/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
-			</li>{/each}
+			</li>{/each} -->
 	</section>
 	<footer class="box padded_md spaced">
 		<a href="https://github.com/feltjs/util" title="source code on github">source</a>
