@@ -34,12 +34,12 @@
 
 ## 0.8.3
 
-- fix `isEditable` to return `true` only for actually editable inputs
+- fix `is_editable` to return `true` only for actually editable inputs
   ([#15](https://github.com/grogarden/util/pull/15))
 
 ## 0.8.2
 
-- add `isIframed` helper to `$lib/dom.ts`
+- add `is_iframed` helper to `$lib/dom.ts`
   ([#14](https://github.com/grogarden/util/pull/14))
 
 ## 0.8.1
@@ -69,12 +69,12 @@
 
 ## 0.7.2
 
-- add `handleTargetValue` to `$lib/dom.ts`
+- add `handle_target_value` to `$lib/dom.ts`
   ([commit](https://github.com/grogarden/util/commit/37d99fc73c577229ae5c5fc87dde8d238950826e))
 
 ## 0.7.1
 
-- make `select` elements count for `isEditable`
+- make `select` elements count for `is_editable`
   ([commit](https://github.com/grogarden/util/commit/202026ad248b0f337d84ff3521948fd299104d6e))
 
 ## 0.7.0
@@ -114,7 +114,7 @@
 
 ## 0.4.1
 
-- add `toNext` to `$lib/array`
+- add `to_next` to `$lib/array`
   ([#5](https://github.com/grogarden/util/pull/5))
 
 ## 0.4.0

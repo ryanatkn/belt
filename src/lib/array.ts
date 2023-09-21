@@ -1,8 +1,8 @@
 export const EMPTY_ARRAY: any[] = Object.freeze([]) as any;
 
-export const toArray = <T>(value: T | T[]): T[] => (Array.isArray(value) ? value : [value]);
+export const to_array = <T>(value: T | T[]): T[] => (Array.isArray(value) ? value : [value]);
 
-export const removeUnordered = (array: any[], index: number): void => {
+export const remove_unordered = (array: any[], index: number): void => {
 	array[index] = array[array.length - 1];
 	array.pop();
 };
@@ -13,7 +13,7 @@ export const removeUnordered = (array: any[], index: number): void => {
  * @param array
  * @returns A function that returns the next item in the `array`
  */
-export const toNext = <T>(array: T[]): (() => T) => {
+export const to_next = <T>(array: T[]): (() => T) => {
 	let i = -1;
 	return () => {
 		i++;

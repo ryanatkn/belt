@@ -1,6 +1,6 @@
 import {red, yellow, gray, black, magenta, bgYellow, bgRed} from 'kleur/colors';
 
-import {EMPTY_ARRAY, toArray} from './array.js';
+import {EMPTY_ARRAY, to_array} from './array.js';
 
 // TODO could use some refactoring
 
@@ -101,8 +101,8 @@ export class BaseLogger {
 	state: LoggerState; // can be the implementing class constructor
 
 	constructor(prefixes: unknown, suffixes: unknown, state: LoggerState) {
-		this.prefixes = toArray(prefixes);
-		this.suffixes = toArray(suffixes);
+		this.prefixes = to_array(prefixes);
+		this.suffixes = to_array(suffixes);
 		this.state = state;
 	}
 
