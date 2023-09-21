@@ -72,15 +72,3 @@ export class Timings {
 	// }
 	// toJSON() {} ?????
 }
-
-// TODO BLOCK increment - coerce number keys to strings
-const to_timing_key = (timings: Timings, key: string): (() => number) => {
-	let i = 0;
-	while (true) {
-		try {
-			return timings.start(key + (i ? ' ' + i : ''));
-		} catch (err) {
-			i++;
-		}
-	}
-};
