@@ -11,7 +11,7 @@ design:
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
-  see <a href="https://github.com/fuz-dev/fuz">felt-ui</a>
+  see <a href="https://github.com/fuz-dev/fuz">@fuz.dev/fuz</a>
 - complement the modern web platform, stay evergreen
 - kinda minimal in many ways but also not
 
