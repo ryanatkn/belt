@@ -5,7 +5,6 @@ import {writeFile} from 'node:fs/promises';
 const ENV_CONTENTS = `PUBLIC_LOG_LEVEL=info`;
 
 const config: GroConfigCreator = async (default_config) => {
-	console.log('CONFIG');
 	if (!(await exists('.env'))) {
 		await writeFile('.env', ENV_CONTENTS);
 	}
