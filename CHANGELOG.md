@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.11.0
+
+### Minor Changes
+
+- d7f4dc9: increment timing keys instead of throwing
+
 ## 0.10.1
 
 ### Patch Changes
