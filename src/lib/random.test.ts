@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {random_float, random_int, random_item} from './random.js';
+import {random_boolean, random_float, random_int, random_item} from './random.js';
 
 /* test__random_float */
 const test__random_float = suite('random_float');
@@ -65,6 +65,18 @@ test__random_int('2 to 2', () => {
 
 test__random_int.run();
 /* test__random_int */
+
+/* test__random_boolean */
+const test__random_boolean = suite('random_boolean');
+
+test__random_boolean('-5.5 to 7', () => {
+	for (let i = 0; i < 20; i++) {
+		assert.is(typeof random_boolean(), 'boolean');
+	}
+});
+
+test__random_boolean.run();
+/* test__random_boolean */
 
 /* test__random_item */
 const test__random_item = suite('random_item');
