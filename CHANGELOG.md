@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.13.1
+
+### Patch Changes
+
+- d62b1bf: fix exports
+
 ## 0.13.0
 
 ### Minor Changes

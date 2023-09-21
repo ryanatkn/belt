@@ -1,7 +1,7 @@
 {
   "name": "@grogarden/util",
   "description": "JS utilities to complement the modern web platform 🦕🐋",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "license": "MIT",
   "homepage": "https://util.grogarden.org/",
   "author": {
