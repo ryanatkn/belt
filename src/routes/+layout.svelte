@@ -1,9 +1,9 @@
 <script lang="ts">
-	import '@feltjs/felt-ui/style.css';
-	import '@feltjs/felt-ui/theme.css';
+	import '@fuz.dev/fuz/style.css';
+	import '@fuz.dev/fuz/theme.css';
 	import '$routes/style.css';
 
-	import Themed from '@feltjs/felt-ui/Themed.svelte';
+	import Themed from '@fuz.dev/fuz/Themed.svelte';
 	import {base} from '$app/paths';
 </script>
 

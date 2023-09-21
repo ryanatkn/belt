@@ -46,7 +46,7 @@ export const printTiming = (key: string | number, timing: number): string =>
 	`${printMs(timing)} ${gray('←')} ${gray(key)}`;
 
 export const printTimings = (timings: Timings, log: Logger): void => {
-	for (const [key, timing] of timings.getAll()) {
+	for (const [key, timing] of timings.entries()) {
 		log.debug(printTiming(key, timing));
 	}
 };
