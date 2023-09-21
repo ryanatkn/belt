@@ -1,19 +1,19 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {createStopwatch, Timings} from './timings.js';
+import {create_stopwatch, Timings} from './timings.js';
 
-/* test__createStopwatch */
-const test__createStopwatch = suite('createStopwatch');
+/* test__create_stopwatch */
+const test__create_stopwatch = suite('create_stopwatch');
 
-test__createStopwatch('basic behavior', () => {
-	const stopwatch = createStopwatch(4);
+test__create_stopwatch('basic behavior', () => {
+	const stopwatch = create_stopwatch(4);
 	const elapsed = stopwatch();
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
 });
 
-test__createStopwatch.run();
-/* test__createStopwatch */
+test__create_stopwatch.run();
+/* test__create_stopwatch */
 
 /* test__Timings */
 const test__Timings = suite('Timings');

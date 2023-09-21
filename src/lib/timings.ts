@@ -5,7 +5,7 @@ export interface Stopwatch {
 }
 
 // tracks elapsed time in milliseconds
-export const createStopwatch = (decimals = 2): Stopwatch => {
+export const create_stopwatch = (decimals = 2): Stopwatch => {
 	let start = performance.now();
 	return (reset = false) => {
 		const end = performance.now();
@@ -25,7 +25,7 @@ export class Timings {
 
 	start(key: TimingsKey, decimals = this.decimals): () => number {
 		const final_key = this.next_key(key);
-		this.stopwatches.set(final_key, createStopwatch(decimals));
+		this.stopwatches.set(final_key, create_stopwatch(decimals));
 		this.timings.set(final_key, undefined!); // initializing to preserve order
 		return () => this.stop(final_key);
 	}
