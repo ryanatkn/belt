@@ -54,14 +54,14 @@ export class Timings {
 		return timing;
 	}
 
-	getAll(): IterableIterator<[TimingsKey, number]> {
+	entries(): IterableIterator<[TimingsKey, number]> {
 		return this.timings.entries();
 	}
 
 	// Merges other timings into this one,
 	// adding together values with identical keys.
 	merge(timings: Timings): void {
-		for (const [key, timing] of timings.getAll()) {
+		for (const [key, timing] of timings.entries()) {
 			this.timings.set(key, (this.timings.get(key) || 0) + timing);
 		}
 	}

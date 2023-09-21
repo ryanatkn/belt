@@ -22,7 +22,7 @@ test__Timings('start and stop', () => {
 	const timings = new Timings(4);
 	const timing = timings.start('foo');
 	const timing2 = timings.start('foo');
-	assert.is(Array.from(timings.getAll()).length, 2);
+	assert.is(Array.from(timings.entries()).length, 2);
 	timing();
 	timing();
 	timing2();
