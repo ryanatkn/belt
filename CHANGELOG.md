@@ -14,11 +14,6 @@
 - 87109aa: upgrade gro
 - 87109aa: rename to `@grogarden/util` from `@feltjs/util`
 
-## 0.9.0
-
-- **break**: increment timing keys instead of throwing
-  ([#18](https://github.com/feltjs/util/pull/18))
-
 ## 0.9.1
 
 - add `noop_async` and `resolved` function helpers
