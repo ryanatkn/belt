@@ -2,13 +2,13 @@ export type Json = string | number | boolean | null | {[prop: string]: Json} | J
 
 export type JsonType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
-export const getJsonType = (value: Json): JsonType | undefined => {
-	const valueType = typeof value;
-	switch (valueType) {
+export const get_json_type = (value: Json): JsonType | undefined => {
+	const type = typeof value;
+	switch (type) {
 		case 'string':
 		case 'number':
 		case 'boolean':
-			return valueType;
+			return type;
 		case 'object': {
 			return value === null ? 'null' : Array.isArray(value) ? 'array' : 'object';
 		}
