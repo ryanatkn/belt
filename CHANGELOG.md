@@ -1,5 +1,12 @@
 # @grogarden/util
 
+## 0.10.1
+
+### Patch Changes
+
+- 286aa46: fix PUBLIC_LOG_LEVEL env var usage
+- db08052: move to util.grogarden.org from util.felt.dev
+
 ## 0.10.0
 
 ### Minor Changes
