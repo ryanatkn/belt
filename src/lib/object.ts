@@ -54,7 +54,7 @@ export const omit_undefined = <T extends Record<string | number, any>>(obj: T): 
 	pick_by(obj, (v) => v !== undefined) as T;
 
 /**
- * A more explicit form of `{putThisFirst: obj.putThisFirst, ...obj}`.
+ * A more explicit form of `{put_this_first: obj.put_this_first, ...obj}`.
  */
 export const reorder = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
