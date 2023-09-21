@@ -1,9 +1,11 @@
 import type {OmitStrict} from './types.js';
 
-// Iterated keys in `for..in` are always returned as strings,
-// so to prevent usage errors the key type of `mapper` is always a string.
-// Symbols are not enumerable as keys, so they're excluded.
-export const mapRecord = <T, K extends string | number, U>(
+/**
+ * Iterated keys in `for..in` are always returned as strings,
+ * so to prevent usage errors the key type of `mapper` is always a string.
+ * Symbols are not enumerable as keys, so they're excluded.
+ */
+export const map_record = <T, K extends string | number, U>(
 	obj: Record<K, T>,
 	mapper: (value: T, key: string) => U,
 ): Record<K, U> => {
@@ -27,14 +29,14 @@ export const omit = <T extends Record<K, any>, K extends keyof T>(
 	return result;
 };
 
-export const pickBy = <T extends Record<K, any>, K extends string | number>(
+export const pick_by = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
-	shouldPick: (value: any, key: K) => boolean,
+	should_pick: (value: any, key: K) => boolean,
 ): Partial<T> => {
 	const result = {} as Partial<T>;
 	for (const key in obj) {
 		const value = obj[key];
-		if (shouldPick(value, key as any)) {
+		if (should_pick(value, key as any)) {
 			result[key] = value;
 		}
 	}
@@ -42,20 +44,17 @@ export const pickBy = <T extends Record<K, any>, K extends string | number>(
 };
 
 /**
- * `omitUndefined` is a commonly used form of `pickBy`.
+ * `omit_undefined` is a commonly used form of `pick_by`.
  * See this issue for why it's used so much:
  * https://github.com/Microsoft/TypeScript/issues/13195
  * @param obj
  * @returns `obj` with all `undefined` properties removed
  */
-export const omitUndefined = <T extends Record<string | number, any>>(obj: T): T =>
-	pickBy(obj, (v) => v !== undefined) as T;
+export const omit_undefined = <T extends Record<string | number, any>>(obj: T): T =>
+	pick_by(obj, (v) => v !== undefined) as T;
 
 /**
  * A more explicit form of `{putThisFirst: obj.putThisFirst, ...obj}`.
- * @param obj
- * @param keys
- * @returns
  */
 export const reorder = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
@@ -74,9 +73,8 @@ export const EMPTY_OBJECT: Record<string | number | symbol, any> & object = Obje
 /**
  * Performs a depth-first traversal of an object's enumerable properties,
  * calling `cb` for every key and value with the current `obj` context.
- * @param obj Any object with enumerable properties.
- * @param cb Receives the key, value, and `obj` for every enumerable property on `obj` and its descendents.
- * @returns
+ * @param obj - any object with enumerable properties
+ * @param cb - receives the key, value, and `obj` for every enumerable property on `obj` and its descendents
  */
 export const traverse = (obj: any, cb: (key: string, value: any, obj: any) => void): void => {
 	if (!obj || typeof obj !== 'object') return;
