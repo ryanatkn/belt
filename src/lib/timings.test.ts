@@ -18,11 +18,12 @@ test__createStopwatch.run();
 /* test__Timings */
 const test__Timings = suite('Timings');
 
-test__Timings('start and stop', () => {
+test__Timings('start and stop multiple overlapping timings', () => {
 	const timings = new Timings(4);
 	const timing = timings.start('foo');
 	const timing2 = timings.start('foo');
-	assert.is(Array.from(timings.entries()).length, 2);
+	timings.start('foo_3');
+	assert.is(Array.from(timings.entries()).length, 3);
 	timing();
 	timing();
 	timing2();
@@ -30,6 +31,10 @@ test__Timings('start and stop', () => {
 	const elapsed = timings.get('foo');
 	timings.get('bar');
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
+	assert.equal(
+		Array.from(timings.entries()).map((e) => e[0]),
+		['foo', 'foo_2', 'foo_3'],
+	);
 });
 
 test__Timings('merge timings', () => {
