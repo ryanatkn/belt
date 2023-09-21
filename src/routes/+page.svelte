@@ -2,12 +2,12 @@
 	import {base} from '$app/paths';
 
 	// import {exports} from '$lib/exports';
-	// import {stripEnd, stripStart} from '$lib/string';
+	// import {strip_end, strip_start} from '$lib/string';
 
 	// TODO glob import and print API?
 
 	// const exps = exports
-	// 	.map((e) => stripEnd(`@grogarden/util/${stripStart(e, 'lib/')}`, '/index.ts'))
+	// 	.map((e) => strip_end(`@grogarden/util/${strip_start(e, 'lib/')}`, '/index.ts'))
 	// 	.filter(Boolean);
 </script>
 
