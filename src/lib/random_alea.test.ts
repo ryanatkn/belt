@@ -52,17 +52,17 @@ test('another seed', () => {
 });
 
 test('seeded random uint32', () => {
-	const randomUint32 = create_random_alea('').uint32;
-	assert.is(randomUint32(), 715789690);
-	assert.is(randomUint32(), 2091287642);
-	assert.is(randomUint32(), 486307);
+	const random_uint32 = create_random_alea('').uint32;
+	assert.is(random_uint32(), 715789690);
+	assert.is(random_uint32(), 2091287642);
+	assert.is(random_uint32(), 486307);
 });
 
 test('seeded random fract53', () => {
-	const randomFract53 = create_random_alea('').fract53;
-	assert.is(randomFract53(), 0.16665777435687268);
-	assert.is(randomFract53(), 0.00011322738143160205);
-	assert.is(randomFract53(), 0.17695781631176488);
+	const random_fract53 = create_random_alea('').fract53;
+	assert.is(random_fract53(), 0.16665777435687268);
+	assert.is(random_fract53(), 0.00011322738143160205);
+	assert.is(random_fract53(), 0.17695781631176488);
 });
 
 test.run();
