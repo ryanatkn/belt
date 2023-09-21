@@ -55,7 +55,7 @@ export class Timings {
 	}
 
 	getAll(): IterableIterator<[TimingsKey, number]> {
-		return this.timings.entries() as IterableIterator<[TimingsKey, number]>;
+		return this.timings.entries();
 	}
 
 	// Merges other timings into this one,
