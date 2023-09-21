@@ -120,7 +120,7 @@
 ## 0.4.0
 
 - **break**: rename `$lib/random-alea` from `$lib/random-seeded`
-  and `toRandomAlea` from `toRandomSeeded`
+  and `create_random_alea` from `toRandomSeeded`
 
 ## 0.3.0
 
