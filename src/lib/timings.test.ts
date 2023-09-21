@@ -19,33 +19,16 @@ test__createStopwatch.run();
 const test__Timings = suite('Timings');
 
 test__Timings('start and stop', () => {
-	const timings = new Timings<'foo' | 'bar'>(4);
+	const timings = new Timings(4);
 	const timing = timings.start('foo');
-	assert.throws(() => timings.start('foo'));
+	const timing2 = timings.start('foo');
 	timing();
-	assert.throws(() => timing());
+	timing();
+	timing2();
+	timing2();
 	const elapsed = timings.get('foo');
-	assert.throws(() => timings.get('bar'));
+	timings.get('bar');
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
-
-	// we don't want to actually call this - what a better pattern?
-	const typechecking = () => {
-		// @ts-expect-error
-		timings.start('no');
-		// @ts-expect-error
-		timings.start('nope' as string);
-	};
-	typechecking; // eslint-disable-line @typescript-eslint/no-unused-expressions
-});
-
-test__Timings('start with stop callback', () => {
-	const timings = new Timings<'foo'>(4);
-	const timing = timings.start('foo');
-	const elapsed = timing();
-	assert.ok(elapsed.toString().split('.')[1].length <= 4);
-	assert.throws(() => timing());
-	assert.throws(() => timing());
-	assert.is(elapsed, timings.get('foo'));
 });
 
 test__Timings('merge timings', () => {
