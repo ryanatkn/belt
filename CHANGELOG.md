@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.13.0
+
+### Minor Changes
+
+- e373d3a: missed a spot renaming create_stopwatch
+
 ## 0.12.0
 
 ### Minor Changes
