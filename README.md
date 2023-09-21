@@ -22,7 +22,7 @@ design:
 ```ts
 // import full module paths:
 import {type Result, unwrap} from '@grogarden/util/result.js';
-import {randomInt} from '@grogarden/util/random.js';
+import {random_int} from '@grogarden/util/random.js';
 ```
 
 see the available modules at [util.grogarden.org](https://util.grogarden.org),

@@ -1,30 +1,30 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {randomFloat, randomInt, randomItem} from './random.js';
+import {random_float, random_int, random_item} from './random.js';
 
-/* test__randomFloat */
-const test__randomFloat = suite('randomFloat');
+/* test__random_float */
+const test__random_float = suite('random_float');
 
-test__randomFloat('-5.5 to 7', () => {
+test__random_float('-5.5 to 7', () => {
 	for (let i = 0; i < 20; i++) {
-		const result = randomFloat(-5.5, 7);
+		const result = random_float(-5.5, 7);
 		assert.ok(result >= -5.5);
 		assert.ok(result < 7);
 	}
 });
 
-test__randomFloat.run();
-/* test__randomFloat */
+test__random_float.run();
+/* test__random_float */
 
-/* test__randomInt */
-const test__randomInt = suite('randomInt');
+/* test__random_int */
+const test__random_int = suite('random_int');
 
-test__randomInt('0 to 1', () => {
+test__random_int('0 to 1', () => {
 	const items = [0, 1];
 	const results = [];
 	for (let i = 0; i < 20; i++) {
-		const result = randomInt(0, 1);
+		const result = random_int(0, 1);
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -33,11 +33,11 @@ test__randomInt('0 to 1', () => {
 	}
 });
 
-test__randomInt('1 to 5', () => {
+test__random_int('1 to 5', () => {
 	const items = [1, 2, 3, 4, 5];
 	const results = [];
 	for (let i = 0; i < 100; i++) {
-		const result = randomInt(1, 5);
+		const result = random_int(1, 5);
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -46,11 +46,11 @@ test__randomInt('1 to 5', () => {
 	}
 });
 
-test__randomInt('-3 to 2', () => {
+test__random_int('-3 to 2', () => {
 	const items = [-3, -2, -1, 0, 1, 2];
 	const results = [];
 	for (let i = 0; i < 100; i++) {
-		const result = randomInt(-3, 2);
+		const result = random_int(-3, 2);
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -59,21 +59,21 @@ test__randomInt('-3 to 2', () => {
 	}
 });
 
-test__randomInt('2 to 2', () => {
-	assert.is(randomInt(2, 2), 2);
+test__random_int('2 to 2', () => {
+	assert.is(random_int(2, 2), 2);
 });
 
-test__randomInt.run();
-/* test__randomInt */
+test__random_int.run();
+/* test__random_int */
 
-/* test__randomItem */
-const test__randomItem = suite('randomItem');
+/* test__random_item */
+const test__random_item = suite('random_item');
 
-test__randomItem('a and b', () => {
+test__random_item('a and b', () => {
 	const items = ['a', 'b'];
 	const results = [];
 	for (let i = 0; i < 20; i++) {
-		const result = randomItem(items)!;
+		const result = random_item(items)!;
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -81,11 +81,11 @@ test__randomItem('a and b', () => {
 		assert.ok(results.includes(item));
 	}
 });
-test__randomItem('1 to 5', () => {
+test__random_item('1 to 5', () => {
 	const items = [1, 2, 3, 4, 5];
 	const results = [];
 	for (let i = 0; i < 100; i++) {
-		const result = randomItem(items)!;
+		const result = random_item(items)!;
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -93,9 +93,9 @@ test__randomItem('1 to 5', () => {
 		assert.ok(results.includes(item));
 	}
 });
-test__randomItem('empty array', () => {
-	assert.is(randomItem([]), undefined);
+test__random_item('empty array', () => {
+	assert.is(random_item([]), undefined);
 });
 
-test__randomItem.run();
-/* test__randomItem */
+test__random_item.run();
+/* test__random_item */
