@@ -39,7 +39,6 @@ export const configureLogLevel = (
 };
 
 const DEFAULT_LOG_LEVEL: LogLevel =
-	// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 	(typeof process !== 'undefined' && (process.env?.PUBLIC_LOG_LEVEL as LogLevel | undefined)) ||
 	'info';
 
