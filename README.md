@@ -11,7 +11,7 @@ design:
 - near-zero non-platform third party dependencies,
   currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
-  see <a href="https://github.com/feltjs/felt-ui">felt-ui</a>
+  see <a href="https://github.com/fuz-dev/fuz">felt-ui</a>
 - complement the modern web platform, stay evergreen
 - kinda minimal in many ways but also not
 
@@ -71,7 +71,7 @@ made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [TypeScript](https://github.com/microsoft/TypeScript) ∙
 [ESLint](https://github.com/eslint/eslint) ∙
 [Prettier](https://github.com/prettier/prettier) ∙
-[FeltUI](https://github.com/feltjs/felt-ui) ∙
+[FeltUI](https://github.com/fuz-dev/fuz) ∙
 [Gro](https://github.com/feltjs/gro)
 & [more](package.json)
 
