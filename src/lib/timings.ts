@@ -34,7 +34,7 @@ export class Timings {
 		if (!this.stopwatches.has(key)) return key;
 		let i = 2;
 		while (true) {
-			const next = key + '' + i++;
+			const next = key + '_' + i++;
 			if (!this.stopwatches.has(next)) return next;
 		}
 	}
