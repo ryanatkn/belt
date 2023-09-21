@@ -1,4 +1,6 @@
 <script lang="ts">
+	import {base} from '$app/paths';
+
 	// import {exports} from '$lib/exports';
 	// import {stripEnd, stripStart} from '$lib/string';
 
@@ -43,8 +45,16 @@
 			</li>{/each} -->
 	</section>
 	<footer class="box padded_md spaced">
-		<a href="https://github.com/grogarden/util" title="source code on github">source</a>
-		<a href="https://github.com/feltjs">💚</a>
+		<a class="chip spaced" href="https://github.com/grogarden/util" title="source code on github"
+			>source</a
+		>
+		<a href="https://www.grogarden.org/"
+			><img
+				class="icon"
+				src="{base}/favicon.png"
+				alt="a pixelated green oak acorn with a glint of sun"
+			/></a
+		>
 	</footer>
 </main>
 
@@ -63,5 +73,9 @@
 	}
 	footer > *:first-child {
 		font-size: var(--font_size_xl5);
+	}
+	.icon {
+		width: 64px;
+		height: 64px;
 	}
 </style>
