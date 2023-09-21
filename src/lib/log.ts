@@ -39,8 +39,7 @@ export const configureLogLevel = (
 };
 
 const DEFAULT_LOG_LEVEL: LogLevel =
-	(typeof process !== 'undefined' && process.env?.PUBLIC_LOG_LEVEL) ??
-	import.meta.env?.PUBLIC_LOG_LEVEL ??
+	(typeof process !== 'undefined' && (process.env?.PUBLIC_LOG_LEVEL as LogLevel | undefined)) ||
 	'info';
 
 /*

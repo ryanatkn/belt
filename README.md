@@ -1,7 +1,7 @@
-# @feltjs/util
+# @grogarden/util
 
 > JS utilities to complement the modern web platform 🦕🐋
-> [util.felt.dev](https://util.felt.dev)
+> [util.grogarden.org](https://util.grogarden.org)
 
 design:
 
@@ -17,15 +17,15 @@ design:
 
 ## usage
 
-> [`npm i -D @feltjs/util`](https://www.npmjs.com/package/@feltjs/util)
+> [`npm i -D @grogarden/util`](https://www.npmjs.com/package/@grogarden/util)
 
 ```ts
 // import full module paths:
-import {type Result, unwrap} from '@feltjs/util/result.js';
-import {randomInt} from '@feltjs/util/random.js';
+import {type Result, unwrap} from '@grogarden/util/result.js';
+import {randomInt} from '@grogarden/util/random.js';
 ```
 
-see the available modules at [util.felt.dev](https://util.felt.dev),
+see the available modules at [util.grogarden.org](https://util.grogarden.org),
 [src/lib/index.ts](src/lib/index.ts),
 and [src/lib/exports.ts](src/lib/exports.ts)
 

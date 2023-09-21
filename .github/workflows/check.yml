@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.6]
+        node-version: [20.5]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,5 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - run: npx gro # init for this repo because it uses $env vars
       - run: npx gro check
       - run: npx gro build
