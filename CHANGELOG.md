@@ -137,7 +137,7 @@
 
 - **break**: require fully qualified imports for almost everything
   ([#2](https://github.com/grogarden/util/pull/2))
-- **break**: change `get_json_type` in `$lib/json` to return `undefined` instead of throwing
+- **break**: change `to_json_type` in `$lib/json` to return `undefined` instead of throwing
   ([#2](https://github.com/grogarden/util/pull/2))
 - **break**: rename camelCase filenames to dash-case,
   `$lib/path` from `$lib/pathParsing` and
