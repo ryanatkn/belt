@@ -44,7 +44,7 @@
     "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.0",
     "@feltjs/gro": "^0.83.0",
-    "@fuz.dev/fuz": "^0.67.0",
+    "@fuz.dev/fuz": "^0.69.0",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.25.0",
     "@sveltejs/package": "^2.2.2",
@@ -137,10 +137,6 @@
       "default": "./dist/obtainable.js",
       "types": "./dist/obtainable.d.ts"
     },
-    "./path-parsing.js": {
-      "default": "./dist/path-parsing.js",
-      "types": "./dist/path-parsing.d.ts"
-    },
     "./path.js": {
       "default": "./dist/path.js",
       "types": "./dist/path.d.ts"
@@ -153,9 +149,9 @@
       "default": "./dist/process.js",
       "types": "./dist/process.d.ts"
     },
-    "./random-alea.js": {
-      "default": "./dist/random-alea.js",
-      "types": "./dist/random-alea.d.ts"
+    "./random_alea.js": {
+      "default": "./dist/random_alea.js",
+      "types": "./dist/random_alea.d.ts"
     },
     "./random.js": {
       "default": "./dist/random.js",
