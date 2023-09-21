@@ -1,5 +1,5 @@
 {
-  "name": "@feltjs/util",
+  "name": "@grogarden/util",
   "description": "JS utilities to complement the modern web platform 🦕🐋",
   "version": "0.9.1",
   "license": "MIT",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feltjs/util.git"
+    "url": "git+https://github.com/grogarden/util.git"
   },
   "bugs": {
-    "url": "https://github.com/feltjs/util/issues",
+    "url": "https://github.com/grogarden/util/issues",
     "email": "team@felt.social"
   },
   "type": "module",
   "engines": {
-    "node": ">=18.6.0"
+    "node": ">=20.5"
   },
   "scripts": {
     "start": "gro dev",
@@ -34,43 +34,46 @@
     "utilities",
     "web"
   ],
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "kleur": "^4.0.0"
   },
   "devDependencies": {
-    "@feltjs/eslint-config": "^0.3.0",
-    "@feltjs/felt-ui": "^0.61.0",
-    "@feltjs/gro": "^0.78.1",
-    "@sveltejs/adapter-static": "^2.0.2",
-    "@sveltejs/kit": "^1.21.0",
-    "@types/node": "^20.3.2",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.43.0",
-    "eslint-plugin-svelte": "^2.32.0",
+    "@changesets/changelog-git": "^0.1.14",
+    "@feltjs/eslint-config": "^0.4.0",
+    "@feltjs/felt-ui": "^0.66.2",
+    "@feltjs/gro": "^0.82.8",
+    "@sveltejs/adapter-static": "^2.0.3",
+    "@sveltejs/kit": "^1.25.0",
+    "@sveltejs/package": "^2.2.2",
+    "@types/node": "^20.6.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-plugin-svelte": "^2.33.2",
     "kleur": "^4.1.5",
-    "prettier": "^2.8.8",
-    "prettier-plugin-svelte": "^2.10.1",
-    "svelte": "^4.0.0",
-    "svelte-check": "^3.4.4",
+    "prettier": "^3.0.3",
+    "prettier-plugin-svelte": "^3.0.3",
+    "svelte": "^4.2.1",
+    "svelte-check": "^3.5.2",
     "svelte-preprocess-esbuild": "^3.0.1",
-    "tslib": "^2.6.0",
-    "typescript": "^5.1.6",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
     "uvu": "^0.5.6"
   },
   "eslintConfig": {
     "root": true,
-    "extends": "@feltjs",
-    "ignorePatterns": [
-      "svelte.config.js",
-      "vite.config.js"
-    ]
+    "extends": "@feltjs"
   },
   "prettier": {
+    "plugins": [
+      "prettier-plugin-svelte"
+    ],
     "useTabs": true,
     "printWidth": 100,
     "singleQuote": true,
-    "trailingComma": "all",
     "bracketSpacing": false,
     "overrides": [
       {
@@ -80,5 +83,103 @@
         }
       }
     ]
+  },
+  "exports": {
+    "./array.js": {
+      "default": "./dist/array.js",
+      "types": "./dist/array.d.ts"
+    },
+    "./async.js": {
+      "default": "./dist/async.js",
+      "types": "./dist/async.d.ts"
+    },
+    "./counter.js": {
+      "default": "./dist/counter.js",
+      "types": "./dist/counter.d.ts"
+    },
+    "./dom.js": {
+      "default": "./dist/dom.js",
+      "types": "./dist/dom.d.ts"
+    },
+    "./error.js": {
+      "default": "./dist/error.js",
+      "types": "./dist/error.d.ts"
+    },
+    "./function.js": {
+      "default": "./dist/function.js",
+      "types": "./dist/function.d.ts"
+    },
+    "./id.js": {
+      "default": "./dist/id.js",
+      "types": "./dist/id.d.ts"
+    },
+    "./json.js": {
+      "default": "./dist/json.js",
+      "types": "./dist/json.d.ts"
+    },
+    "./log.js": {
+      "default": "./dist/log.js",
+      "types": "./dist/log.d.ts"
+    },
+    "./map.js": {
+      "default": "./dist/map.js",
+      "types": "./dist/map.d.ts"
+    },
+    "./maths.js": {
+      "default": "./dist/maths.js",
+      "types": "./dist/maths.d.ts"
+    },
+    "./object.js": {
+      "default": "./dist/object.js",
+      "types": "./dist/object.d.ts"
+    },
+    "./obtainable.js": {
+      "default": "./dist/obtainable.js",
+      "types": "./dist/obtainable.d.ts"
+    },
+    "./path-parsing.js": {
+      "default": "./dist/path-parsing.js",
+      "types": "./dist/path-parsing.d.ts"
+    },
+    "./path.js": {
+      "default": "./dist/path.js",
+      "types": "./dist/path.d.ts"
+    },
+    "./print.js": {
+      "default": "./dist/print.js",
+      "types": "./dist/print.d.ts"
+    },
+    "./process.js": {
+      "default": "./dist/process.js",
+      "types": "./dist/process.d.ts"
+    },
+    "./random-alea.js": {
+      "default": "./dist/random-alea.js",
+      "types": "./dist/random-alea.d.ts"
+    },
+    "./random.js": {
+      "default": "./dist/random.js",
+      "types": "./dist/random.d.ts"
+    },
+    "./regexp.js": {
+      "default": "./dist/regexp.js",
+      "types": "./dist/regexp.d.ts"
+    },
+    "./result.js": {
+      "default": "./dist/result.js",
+      "types": "./dist/result.d.ts"
+    },
+    "./string.js": {
+      "default": "./dist/string.js",
+      "types": "./dist/string.d.ts"
+    },
+    "./timings.js": {
+      "default": "./dist/timings.js",
+      "types": "./dist/timings.d.ts"
+    },
+    "./types.js": {
+      "default": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
   }
 }

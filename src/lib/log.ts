@@ -1,4 +1,5 @@
 import {red, yellow, gray, black, magenta, bgYellow, bgRed} from 'kleur/colors';
+import {PUBLIC_LOG_LEVEL} from '$env/static/public';
 
 import {EMPTY_ARRAY, toArray} from './array.js';
 
@@ -38,10 +39,7 @@ export const configureLogLevel = (
 	}
 };
 
-const DEFAULT_LOG_LEVEL: LogLevel =
-	(typeof process !== 'undefined' && process.env?.PUBLIC_LOG_LEVEL) ??
-	import.meta.env?.PUBLIC_LOG_LEVEL ??
-	'info';
+const DEFAULT_LOG_LEVEL: LogLevel = (PUBLIC_LOG_LEVEL as LogLevel) ?? 'info';
 
 /*
 

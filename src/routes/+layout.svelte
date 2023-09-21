@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>@feltjs/util</title>
+	<title>@grogarden/util</title>
 	<link rel="icon" href="{base}/favicon.png" />
 </svelte:head>
 
