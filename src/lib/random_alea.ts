@@ -1,9 +1,7 @@
 /*
 
-This is the Alea pseudo-random number generator by Johannes Baagøe
-
-Security disclaimer: Felt cannot vouch for the cryotographic security of this code.
-Use Node/browser/platform crypto APIs instead of this when security matters.
+DO NOT USE when security is needed, use webcrypto APIs instead.
+This is the Alea pseudo-random number generator by Johannes Baagøe.
 
 From http://baagoe.com/en/RandomMusings/javascript/
 via https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -39,7 +37,6 @@ export interface Alea {
 }
 
 export const create_random_alea = (...args: unknown[]): Alea => {
-	// Johannes Baagøe <baagoe@baagoe.com>, 2010
 	let s0 = 0;
 	let s1 = 0;
 	let s2 = 0;
