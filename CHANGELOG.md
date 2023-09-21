@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.12.0
+
+### Minor Changes
+
+- 823d8ab: switch to `snake_case`
+
 ## 0.11.0
 
 ### Minor Changes
