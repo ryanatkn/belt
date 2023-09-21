@@ -1,45 +1,49 @@
-// TODO these probably belong in `./path.ts` but we need to shim Node's `path` for the browser:
-// https://www.npmjs.com/package/path-browserify
-// until then these are tested in `./path.test.ts`
-
-// Designed for the `cheap-watch` API.
-// toPathParts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
-export const toPathParts = (path: string): string[] => {
-	const segments = toPathSegments(path);
-	let currentPath = path.startsWith('/') ? '/' : '';
+/**
+ * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
+ */
+export const parse_path_parts = (path: string): string[] => {
+	const segments = parse_path_segments(path);
+	let current_path = path.startsWith('/') ? '/' : '';
 	return segments.map((segment) => {
-		if (currentPath && currentPath !== '/') {
-			currentPath += '/';
+		if (current_path && current_path !== '/') {
+			current_path += '/';
 		}
-		currentPath += segment;
-		return currentPath;
+		current_path += segment;
+		return current_path;
 	});
 };
 
-// Gets the individual parts of a path, ignoring dots and separators.
-// toPathSegments('/foo/bar/baz.ts') => ['foo', 'bar', 'baz.ts']
-export const toPathSegments = (path: string): string[] =>
+/**
+ * Gets the individual parts of a path, ignoring dots and separators.
+ * @example parse_path_segments('/foo/bar/baz.ts') => ['foo', 'bar', 'baz.ts']
+ * @param path
+ * @returns
+ */
+export const parse_path_segments = (path: string): string[] =>
 	path.split('/').filter((s) => s && s !== '.' && s !== '..');
 
-// Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
-// TODO maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
-export const toPathPieces = (rawPath: string): PathPiece[] => {
+/**
+ * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
+ * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
+ */
+export const parse_path_pieces = (raw_path: string): PathPiece[] => {
 	const pieces: PathPiece[] = [];
-	const pathSegments = toPathSegments(rawPath);
-	if (pathSegments.length) {
+	const path_segments = parse_path_segments(raw_path);
+	if (path_segments.length) {
 		pieces.push({type: 'separator', path: '/'});
 	}
 	let path = '';
-	for (let i = 0; i < pathSegments.length; i++) {
-		const pathSegment = pathSegments[i];
-		path += '/' + pathSegment;
-		pieces.push({type: 'piece', name: pathSegment, path});
-		if (i !== pathSegments.length - 1) {
+	for (let i = 0; i < path_segments.length; i++) {
+		const path_segment = path_segments[i];
+		path += '/' + path_segment;
+		pieces.push({type: 'piece', name: path_segment, path});
+		if (i !== path_segments.length - 1) {
 			pieces.push({type: 'separator', path});
 		}
 	}
 	return pieces;
 };
+
 export type PathPiece =
 	| {
 			type: 'piece';
