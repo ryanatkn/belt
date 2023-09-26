@@ -19,7 +19,7 @@ export interface SpawnedProcess {
 // TODO are `code` and `signal` more related than that?
 // e.g. should this be a union type where one is always `null`?
 export type SpawnResult = Result<
-	{child: ChildProcess; signal: NodeJS.Signals | null},
+	{child: ChildProcess; signal: NodeJS.Signals | null; code: number | null},
 	{child: ChildProcess; signal: NodeJS.Signals | null; code: number | null}
 >;
 
@@ -74,7 +74,7 @@ export const spawn_process = (
 	const unregister = register_global_spawn(child);
 	child.once('close', (code, signal) => {
 		unregister();
-		resolve(code ? {ok: false, code, signal, child} : {ok: true, signal, child});
+		resolve(code ? {ok: false, child, code, signal} : {ok: true, child, code, signal});
 	});
 	return {closed, child};
 };
@@ -114,7 +114,7 @@ export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	const closed = new Promise<SpawnResult>((r) => (resolve = r));
 	log.debug('despawning', printChildProcess(child));
 	child.once('close', (code, signal) => {
-		resolve(code ? {ok: false, code, signal} : {ok: true, signal});
+		resolve(code ? {ok: false, child, code, signal} : {ok: true, child, code, signal});
 	});
 	child.kill();
 	return closed;
