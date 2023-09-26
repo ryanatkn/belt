@@ -82,7 +82,7 @@ export const spawn_process = (
 	return {closed, child};
 };
 
-export const printChildProcess = (child: ChildProcess): string =>
+export const print_child_process = (child: ChildProcess): string =>
 	`${gray('pid(')}${child.pid}${gray(')')} ← ${green(child.spawnargs.join(' '))}`;
 
 /**
@@ -98,12 +98,12 @@ export const globalSpawn: Set<ChildProcess> = new Set();
  */
 export const register_global_spawn = (child: ChildProcess): (() => void) => {
 	if (globalSpawn.has(child)) {
-		log.error(red('already registered global spawn:'), printChildProcess(child));
+		log.error(red('already registered global spawn:'), print_child_process(child));
 	}
 	globalSpawn.add(child);
 	return () => {
 		if (!globalSpawn.has(child)) {
-			log.error(red('spawn not registered:'), printChildProcess(child));
+			log.error(red('spawn not registered:'), print_child_process(child));
 		}
 		globalSpawn.delete(child);
 	};
@@ -115,7 +115,7 @@ export const register_global_spawn = (child: ChildProcess): (() => void) => {
 export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	let resolve: (v: SpawnResult) => void;
 	const closed = new Promise<SpawnResult>((r) => (resolve = r));
-	log.debug('despawning', printChildProcess(child));
+	log.debug('despawning', print_child_process(child));
 	child.once('close', (code, signal) => {
 		resolve(code ? {ok: false, child, code, signal} : {ok: true, child, code, signal});
 	});
