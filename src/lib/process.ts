@@ -1,4 +1,8 @@
-import {spawn as spawnChildProcess, type SpawnOptions, type ChildProcess} from 'node:child_process';
+import {
+	spawn as spawn_child_process,
+	type SpawnOptions,
+	type ChildProcess,
+} from 'node:child_process';
 import {gray, green, red} from 'kleur/colors';
 
 import {print_log_label, SystemLogger} from './log.js';
@@ -15,12 +19,12 @@ export interface SpawnedProcess {
 // TODO are `code` and `signal` more related than that?
 // e.g. should this be a union type where one is always `null`?
 export type SpawnResult = Result<
-	{signal: NodeJS.Signals | null},
-	{signal: NodeJS.Signals | null; code: number | null}
+	{child: ChildProcess; signal: NodeJS.Signals | null},
+	{child: ChildProcess; signal: NodeJS.Signals | null; code: number | null}
 >;
 
 /**
- * This is just a convenient promise wrapper around `spawn_process`
+ * A convenient promise wrapper around `spawn_process`
  * that's intended for commands that have an end, not long running-processes like watchers.
  * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
  */
@@ -34,12 +38,25 @@ export interface SpawnedOut {
 }
 
 /**
- * This is just a convenient promise wrapper around `spawn_process`
- * that's intended for commands that have an end, not long running-processes like watchers.
- * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
+ * Similar to `spawn` but buffers and returns `stdout` and `stderr` as strings.
  */
-export const spawn_out = (...args: Parameters<typeof spawn_process>): Promise<SpawnedOut> =>
-	spawn_process(...args).closed;
+export const spawn_out = async (
+	command: string,
+	args: readonly string[] = [],
+	options?: SpawnOptions,
+): Promise<SpawnedOut> => {
+	const {child, closed} = spawn_process(command, args, {...options, stdio: 'pipe'});
+	let stdout: string | null = null;
+	child.stdout!.on('data', (data: Buffer) => {
+		stdout = (stdout ?? '') + data.toString();
+	});
+	let stderr: string | null = null;
+	child.stderr!.on('data', (data: Buffer) => {
+		stderr = (stderr ?? '') + data.toString();
+	});
+	const result = await closed;
+	return {result, stdout, stderr};
+};
 
 /**
  * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
@@ -53,11 +70,11 @@ export const spawn_process = (
 ): SpawnedProcess => {
 	let resolve: (v: SpawnResult) => void;
 	const closed = new Promise<SpawnResult>((r) => (resolve = r));
-	const child = spawnChildProcess(command, args, {stdio: 'inherit', ...options});
-	const unregister = registerGlobalSpawn(child);
+	const child = spawn_child_process(command, args, {stdio: 'inherit', ...options});
+	const unregister = register_global_spawn(child);
 	child.once('close', (code, signal) => {
 		unregister();
-		resolve(code ? {ok: false, code, signal} : {ok: true, signal});
+		resolve(code ? {ok: false, code, signal, child} : {ok: true, signal, child});
 	});
 	return {closed, child};
 };
@@ -76,7 +93,7 @@ export const globalSpawn: Set<ChildProcess> = new Set();
  * @param child
  * @returns
  */
-export const registerGlobalSpawn = (child: ChildProcess): (() => void) => {
+export const register_global_spawn = (child: ChildProcess): (() => void) => {
 	if (globalSpawn.has(child)) {
 		log.error(red('already registered global spawn:'), printChildProcess(child));
 	}
