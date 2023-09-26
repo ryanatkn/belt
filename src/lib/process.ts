@@ -16,12 +16,15 @@ export interface SpawnedProcess {
 	closed: Promise<SpawnResult>;
 }
 
+export interface Spawned {
+	child: ChildProcess;
+	signal: NodeJS.Signals | null;
+	code: number | null;
+}
+
 // TODO are `code` and `signal` more related than that?
 // e.g. should this be a union type where one is always `null`?
-export type SpawnResult = Result<
-	{child: ChildProcess; signal: NodeJS.Signals | null; code: number | null},
-	{child: ChildProcess; signal: NodeJS.Signals | null; code: number | null}
->;
+export type SpawnResult = Result<Spawned, Spawned>;
 
 /**
  * A convenient promise wrapper around `spawn_process`
@@ -120,32 +123,32 @@ export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	return closed;
 };
 
-export const attachProcessErrorHandlers = (toErrorLabel?: ToErrorLabel): void => {
+export const attach_process_error_handlers = (to_error_label?: ToErrorLabel): void => {
 	process
-		.on('uncaughtException', handleFatalError)
-		.on('unhandledRejection', handleUnhandledRejection(toErrorLabel));
+		.on('uncaughtException', handle_fatal_error)
+		.on('unhandledRejection', handle_unhandled_rejection(to_error_label));
 };
 
-const handleFatalError = async (err: Error, label = 'handleFatalError'): Promise<void> => {
+const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
 	new SystemLogger(print_log_label(label, red)).error(print_error(err));
 	await Promise.all(Array.from(globalSpawn).map((child) => despawn(child)));
 	process.exit(1);
 };
 
-const handleUnhandledRejection =
-	(toErrorLabel?: ToErrorLabel) =>
+const handle_unhandled_rejection =
+	(to_error_label?: ToErrorLabel) =>
 	(err: any): Promise<void> => {
-		const label = toErrorLabel?.(err) || 'unhandledRejection';
+		const label = to_error_label?.(err) || 'unhandledRejection';
 		return err instanceof Error
-			? handleFatalError(err, label)
-			: handleFatalError(new Error(err), label);
+			? handle_fatal_error(err, label)
+			: handle_fatal_error(new Error(err), label);
 	};
 
 interface ToErrorLabel {
 	(err: any): string | null;
 }
 
-export const printSpawnResult = (result: SpawnResult): string => {
+export const print_spawn_result = (result: SpawnResult): string => {
 	if (result.ok) return 'ok';
 	let text = result.code === null ? '' : print_key_value('code', result.code);
 	if (result.signal !== null) text += (text ? ' ' : '') + print_key_value('signal', result.signal);
