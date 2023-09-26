@@ -25,7 +25,7 @@ export type SpawnResult = Result<
 
 /**
  * A convenient promise wrapper around `spawn_process`
- * that's intended for commands that have an end, not long running-processes like watchers.
+ * intended for commands that have an end, not long running-processes like watchers.
  * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
  */
 export const spawn = (...args: Parameters<typeof spawn_process>): Promise<SpawnResult> =>
