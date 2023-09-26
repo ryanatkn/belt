@@ -165,7 +165,7 @@ export interface RestartableProcess {
  * Like `spawn_process` but with `restart` and `kill`,
  * handling many concurrent `restart` calls gracefully.
  */
-export const spawnRestartableProcess = (
+export const spawn_restartable_process = (
 	command: string,
 	args: readonly string[] = [],
 	options?: SpawnOptions,
