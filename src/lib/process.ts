@@ -12,20 +12,41 @@ export interface SpawnedProcess {
 	closed: Promise<SpawnResult>;
 }
 
+// TODO are `code` and `signal` more related than that?
+// e.g. should this be a union type where one is always `null`?
+export type SpawnResult = Result<
+	{signal: NodeJS.Signals | null},
+	{signal: NodeJS.Signals | null; code: number | null}
+>;
+
 /**
- * This is just a convenient promise wrapper around `spawnProcess`
+ * This is just a convenient promise wrapper around `spawn_process`
  * that's intended for commands that have an end, not long running-processes like watchers.
- * Any more advanced usage should use `spawnProcess` directly for access to the `child` process.
+ * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
  */
-export const spawn = (...args: Parameters<typeof spawnProcess>): Promise<SpawnResult> =>
-	spawnProcess(...args).closed;
+export const spawn = (...args: Parameters<typeof spawn_process>): Promise<SpawnResult> =>
+	spawn_process(...args).closed;
+
+export interface SpawnedOut {
+	result: SpawnResult;
+	stdout: string | null;
+	stderr: string | null;
+}
+
+/**
+ * This is just a convenient promise wrapper around `spawn_process`
+ * that's intended for commands that have an end, not long running-processes like watchers.
+ * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
+ */
+export const spawn_out = (...args: Parameters<typeof spawn_process>): Promise<SpawnedOut> =>
+	spawn_process(...args).closed;
 
 /**
  * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
  * Also returns a convenient `closed` promise.
  * If you only need `closed`, prefer the shorthand function `spawn`.
  */
-export const spawnProcess = (
+export const spawn_process = (
 	command: string,
 	args: readonly string[] = [],
 	options?: SpawnOptions,
@@ -40,13 +61,6 @@ export const spawnProcess = (
 	});
 	return {closed, child};
 };
-
-// TODO are `code` and `signal` more related than that?
-// e.g. should this be a union type where one is always `null`?
-export type SpawnResult = Result<
-	{signal: NodeJS.Signals | null},
-	{signal: NodeJS.Signals | null; code: number | null}
->;
 
 export const printChildProcess = (child: ChildProcess): string =>
 	`${gray('pid(')}${child.pid}${gray(')')} ← ${green(child.spawnargs.join(' '))}`;
@@ -128,7 +142,7 @@ export interface RestartableProcess {
 }
 
 /**
- * Like `spawnProcess` but with `restart` and `kill`,
+ * Like `spawn_process` but with `restart` and `kill`,
  * handling many concurrent `restart` calls gracefully.
  */
 export const spawnRestartableProcess = (
@@ -149,7 +163,7 @@ export const spawnRestartableProcess = (
 	const restart = async (): Promise<void> => {
 		if (restarting) return restarting;
 		if (spawned) await close();
-		spawned = spawnProcess(command, args, {stdio: 'inherit', ...options});
+		spawned = spawn_process(command, args, {stdio: 'inherit', ...options});
 	};
 	const kill = async (): Promise<void> => {
 		if (restarting) await restarting;
