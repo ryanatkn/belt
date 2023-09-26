@@ -1,5 +1,5 @@
-import type {GroConfigCreator} from '@feltjs/gro';
-import {exists} from '@feltjs/gro/util/exists.js';
+import type {GroConfigCreator} from '@grogarden/gro';
+import {exists} from '@grogarden/gro/exists.js';
 import {writeFile} from 'node:fs/promises';
 
 const ENV_CONTENTS = `PUBLIC_LOG_LEVEL=info`;
