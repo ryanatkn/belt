@@ -1,5 +1,15 @@
 # @grogarden/util
 
+## 0.15.0
+
+### Minor Changes
+
+- 530641a: fix global_spawn name
+
+### Patch Changes
+
+- d123ff9: deprecate obtainable
+
 ## 0.14.0
 
 ### Minor Changes
