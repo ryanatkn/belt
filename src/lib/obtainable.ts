@@ -20,6 +20,7 @@ See the tests for usage examples - ./obtainable.test.ts
 */
 /**
  * don't use
+ * @see https://devblogs.microsoft.com/typescript/announcing-typescript-5-2/#using-declarations-and-explicit-resource-management
  * @deprecated
  */
 export const create_obtainable = <T>(
