@@ -25,5 +25,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npx gro # init for this repo because it uses $env vars
-      - run: npx gro check
+      - run: npx gro check --workspace
       - run: npx gro build
