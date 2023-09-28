@@ -89,7 +89,7 @@ export const print_child_process = (child: ChildProcess): string =>
  * We register spawned processes gloabally so we can gracefully exit child processes.
  * Otherwise, errors can cause zombie processes, sometimes blocking ports even!
  */
-export const globalSpawn: Set<ChildProcess> = new Set();
+export const global_spawn: Set<ChildProcess> = new Set();
 
 /**
  * Returns a function that unregisters the `child`.
@@ -97,15 +97,15 @@ export const globalSpawn: Set<ChildProcess> = new Set();
  * @returns
  */
 export const register_global_spawn = (child: ChildProcess): (() => void) => {
-	if (globalSpawn.has(child)) {
+	if (global_spawn.has(child)) {
 		log.error(red('already registered global spawn:'), print_child_process(child));
 	}
-	globalSpawn.add(child);
+	global_spawn.add(child);
 	return () => {
-		if (!globalSpawn.has(child)) {
+		if (!global_spawn.has(child)) {
 			log.error(red('spawn not registered:'), print_child_process(child));
 		}
-		globalSpawn.delete(child);
+		global_spawn.delete(child);
 	};
 };
 
@@ -131,7 +131,7 @@ export const attach_process_error_handlers = (to_error_label?: ToErrorLabel): vo
 
 const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
 	new SystemLogger(print_log_label(label, red)).error(print_error(err));
-	await Promise.all(Array.from(globalSpawn).map((child) => despawn(child)));
+	await Promise.all(Array.from(global_spawn).map((child) => despawn(child)));
 	process.exit(1);
 };
 
