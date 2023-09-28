@@ -4,7 +4,9 @@ export interface Stopwatch {
 	(reset?: boolean): number;
 }
 
-// tracks elapsed time in milliseconds
+/**
+ * Tracks elapsed time in milliseconds.
+ */
 export const create_stopwatch = (decimals = 2): Stopwatch => {
 	let start = performance.now();
 	return (reset = false) => {
@@ -58,8 +60,10 @@ export class Timings {
 		return this.timings.entries();
 	}
 
-	// Merges other timings into this one,
-	// adding together values with identical keys.
+	/**
+	 * Merges other timings into this one,
+	 * adding together values with identical keys.
+	 */
 	merge(timings: Timings): void {
 		for (const [key, timing] of timings.entries()) {
 			this.timings.set(key, (this.timings.get(key) || 0) + timing);
