@@ -44,7 +44,7 @@
     "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.0",
     "@fuz.dev/fuz": "^0.69.1",
-    "@grogarden/gro": "^0.90.3",
+    "@grogarden/gro": "^0.91.0",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.25.1",
     "@sveltejs/package": "^2.2.2",
