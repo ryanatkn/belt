@@ -1,6 +1,10 @@
 export type Unobtain = () => void;
 
+// TODO delete this for
+// https://devblogs.microsoft.com/typescript/announcing-typescript-5-2/#using-declarations-and-explicit-resource-management
+
 /*
+
 
 This is a higher order function that tracks obtained references to a thing
 and calls `teardown_obtainable_value` when all obtainers have let go of their references.
@@ -14,6 +18,10 @@ The motivating use case was reusing a database connection across multiple tasks.
 See the tests for usage examples - ./obtainable.test.ts
 
 */
+/**
+ * don't use
+ * @deprecated
+ */
 export const create_obtainable = <T>(
 	create_obtainable_value: () => T,
 	teardown_obtainable_value?: (obtainable: T) => unknown,
