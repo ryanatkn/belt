@@ -1,6 +1,6 @@
 /*
 
-DO NOT USE when security is needed, use webcrypto APIs instead.
+DO NOT USE when security matters, use webcrypto APIs instead.
 This is the Alea pseudo-random number generator by Johannes Baagøe.
 
 From http://baagoe.com/en/RandomMusings/javascript/
@@ -36,6 +36,9 @@ export interface Alea {
 	seeds: unknown[];
 }
 
+/**
+ * DO NOT USE when security matters, use webcrypto APIs instead.
+ */
 export const create_random_alea = (...args: unknown[]): Alea => {
 	let s0 = 0;
 	let s1 = 0;
