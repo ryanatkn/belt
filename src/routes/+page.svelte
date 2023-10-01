@@ -34,26 +34,23 @@
 			>.
 		</aside>
 	</section>
-	<section class="padded_md">
-		coming soon
-		<!-- {#each exps as exp, i}<li class="prose">
+	<!-- <section class="padded_md"> -->
+	<!-- {#each exps as exp, i}<li class="prose">
 				<code class="padded_sm"
 					>import {'{'}...} from '<a
 						href="https://github.com/grogarden/util/blob/main/src/{exports[i]}">{exp.trim()}</a
 					>'</code
 				>
 			</li>{/each} -->
-	</section>
-	<footer class="box padded_md spaced">
-		<a class="chip spaced" href="https://github.com/grogarden/util" title="source code on github"
-			>source</a
-		>
-		<a href="https://www.grogarden.org/"
+	<!-- </section> -->
+	<footer class="box">
+		<a href="https://www.grogarden.org/" title="grogarden.org" class="box padded_md panel spaced"
 			><img
 				class="icon"
 				src="{base}/favicon.png"
 				alt="a pixelated green oak acorn with a glint of sun"
-			/></a
+			/>
+			<div>grogarden.org</div></a
 		>
 	</footer>
 </main>
@@ -70,6 +67,7 @@
 	}
 	footer {
 		font-size: var(--font_size_xl);
+		margin-top: var(--spacing_xl5);
 	}
 	footer > *:first-child {
 		font-size: var(--font_size_xl5);
@@ -77,5 +75,6 @@
 	.icon {
 		width: 64px;
 		height: 64px;
+		margin-bottom: var(--spacing_sm);
 	}
 </style>
