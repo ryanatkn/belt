@@ -43,8 +43,9 @@
   "devDependencies": {
     "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.0",
-    "@fuz.dev/fuz": "^0.70.0",
-    "@grogarden/gro": "^0.92.5",
+    "@fuz.dev/fuz": "^0.70.1",
+    "@fuz.dev/fuz_library": "^0.8.0",
+    "@grogarden/gro": "^0.93.1",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.25.1",
     "@sveltejs/package": "^2.2.2",
