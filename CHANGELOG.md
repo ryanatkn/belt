@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.15.1
+
+### Patch Changes
+
+- 753a787: publish $lib/package.ts
+
 ## 0.15.0
 
 ### Minor Changes
