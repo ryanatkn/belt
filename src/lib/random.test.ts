@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {random_boolean, random_float, random_int, random_item} from './random.js';
+import {random_boolean, random_float, random_int, random_item, shuffle} from './random.js';
 
 /* test__random_float */
 const test__random_float = suite('random_float');
@@ -111,3 +111,20 @@ test__random_item('empty array', () => {
 
 test__random_item.run();
 /* test__random_item */
+
+/* test__shuffle */
+const test__shuffle = suite('shuffle');
+
+test__shuffle('shuffles an array', () => {
+	const original_items = ['a', 'b', 'c'];
+	const items = original_items.slice();
+	const shuffled = shuffle(items);
+	assert.is(items, shuffled); // mutated not cloned
+	assert.is(shuffled.length, 3);
+	for (const item of original_items) {
+		assert.ok(shuffled.includes(item));
+	}
+});
+
+test__shuffle.run();
+/* test__shuffle */
