@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.15.2
+
+### Patch Changes
+
+- 5c6dd69: add shuffle
+
 ## 0.15.1
 
 ### Patch Changes
