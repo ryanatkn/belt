@@ -23,7 +23,7 @@ const should_log = (max: LogLevel, level: LogLevel): boolean =>
  * Sets the log level for both the main and system loggers.
  * @param level The desired log level.
  * @param configure_main_logger Set the `Logger` log level? Defaults to true.
- * @param configure_system_logger Set the `SystemLogger` log level? Defaults to true.
+ * @param configure_system_logger Set the `System_Logger` log level? Defaults to true.
  */
 export const configure_log_level = (
 	level: LogLevel,
@@ -34,7 +34,7 @@ export const configure_log_level = (
 		Logger.level = level;
 	}
 	if (configure_system_logger) {
-		SystemLogger.level = level;
+		System_Logger.level = level;
 	}
 };
 
@@ -61,7 +61,7 @@ to affect all loggers that get instantiated with the default state,
 but loggers can also be instantiated with other state
 that isn't affected by these globally mutable values.
 
-Custom loggers like `SystemLogger` (see below)
+Custom loggers like `System_Logger` (see below)
 demonstrate extending `Logger` to partition logging concerns.
 User code is given a lot of control and flexibility.
 
@@ -197,7 +197,7 @@ export class Logger extends BaseLogger {
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `LoggerState` for more.
-	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `SystemLogger` value, see `configure_log_level`
+	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
 	static log: Log = console.log.bind(console);
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
@@ -221,19 +221,19 @@ export class Logger extends BaseLogger {
 
 /*
 
-The `SystemLogger` is distinct from the `Logger`
+The `System_Logger` is distinct from the `Logger`
 to cleanly separate Felt's logging from user logging, decoupling their log levels.
-Felt internally uses `SystemLogger`, not `Logger` directly.
+Felt internally uses `System_Logger`, not `Logger` directly.
 This allows user code to simply import and use `Logger`.
-`SystemLogger` is still made available to user code,
+`System_Logger` is still made available to user code,
 and users can always extend `Logger` with their own custom versions.
 
 */
-export class SystemLogger extends BaseLogger {
+export class System_Logger extends BaseLogger {
 	constructor(
 		prefixes: unknown = EMPTY_ARRAY,
 		suffixes: unknown = EMPTY_ARRAY,
-		state: LoggerState = SystemLogger,
+		state: LoggerState = System_Logger,
 	) {
 		super(prefixes, suffixes, state);
 	}
