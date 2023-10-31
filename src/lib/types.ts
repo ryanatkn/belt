@@ -8,19 +8,19 @@ TODO probably make this `.d.ts` when we make a proper build process
 
 */
 
-export type OmitStrict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Omit_Strict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 // these were thrown together quickly - is there a better way to do this?
 // there are probably better names for them!
 // see `Required`, `Exclude` and `Extract` for possible leads for improvements
-export type PartialExcept<T, K extends keyof T> = {[P in K]: T[P]} & {
+export type Partial_Except<T, K extends keyof T> = {[P in K]: T[P]} & {
 	[P in Exclude<keyof T, K>]?: T[P];
 };
-export type PartialOnly<T, K extends keyof T> = {[P in K]?: T[P]} & {
+export type Partial_Only<T, K extends keyof T> = {[P in K]?: T[P]} & {
 	[P in Exclude<keyof T, K>]: T[P];
 };
 
-export type PartialValues<T> = {
+export type Partial_Values<T> = {
 	[P in keyof T]: Partial<T[P]>;
 };
 

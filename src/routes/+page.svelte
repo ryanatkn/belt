@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {parse_package_meta} from '@fuz.dev/fuz_library/package_meta.js';
-	import LibraryHeader from '@fuz.dev/fuz_library/LibraryHeader.svelte';
-	import LibraryFooter from '@fuz.dev/fuz_library/LibraryFooter.svelte';
+	import Library_Header from '@fuz.dev/fuz_library/Library_Header.svelte';
+	import Library_Footer from '@fuz.dev/fuz_library/Library_Footer.svelte';
 	import {base} from '$app/paths';
 
 	import {package_json} from '$lib/package.js';
@@ -13,7 +13,7 @@
 <main class="box width_full">
 	<div class="box width_md">
 		<section>
-			<LibraryHeader {pkg} />
+			<Library_Header {pkg} />
 		</section>
 		<section class="padded_md width_sm">
 			<a href="{base}/about" class="box padded_md panel"
@@ -22,7 +22,7 @@
 			>
 		</section>
 		<section>
-			<LibraryFooter {pkg} root_url="https://www.grogarden.org/" />
+			<Library_Footer {pkg} root_url="https://www.grogarden.org/" />
 		</section>
 	</div>
 </main>
