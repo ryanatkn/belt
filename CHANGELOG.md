@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.15.3
+
+### Patch Changes
+
+- 4b0fc13: upgrade `@grogarden/gro` which adds `modules` to `package.ts`
+
 ## 0.15.2
 
 ### Patch Changes
