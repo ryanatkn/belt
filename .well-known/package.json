@@ -1,7 +1,7 @@
 {
   "name": "@grogarden/util",
   "description": "JS utilities to complement the modern web platform 🦕🐋",
-  "version": "0.15.4",
+  "version": "0.16.0",
   "public": true,
   "license": "MIT",
   "homepage": "https://util.grogarden.org/",
@@ -44,13 +44,13 @@
   "devDependencies": {
     "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.1",
-    "@fuz.dev/fuz": "^0.77.1",
-    "@fuz.dev/fuz_library": "^0.17.1",
-    "@grogarden/gro": "^0.98.1",
+    "@fuz.dev/fuz": "^0.79.1",
+    "@fuz.dev/fuz_library": "^0.18.1",
+    "@grogarden/gro": "^0.99.0",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.27.2",
     "@sveltejs/package": "^2.2.2",
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "eslint": "^8.52.0",
@@ -213,7 +213,7 @@
       "path": "async.ts",
       "declarations": [
         {
-          "name": "AsyncStatus",
+          "name": "Async_Status",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -260,7 +260,7 @@
       "path": "error.ts",
       "declarations": [
         {
-          "name": "UnreachableError",
+          "name": "Unreachable_Error",
           "kind": "ClassDeclaration"
         }
       ]
@@ -310,7 +310,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "ClientIdCreator",
+          "name": "Client_Id_Creator",
           "kind": "InterfaceDeclaration"
         },
         {
@@ -327,7 +327,7 @@
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "JsonType",
+          "name": "Json_Type",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -340,7 +340,7 @@
       "path": "log.ts",
       "declarations": [
         {
-          "name": "LogLevel",
+          "name": "Log_Level",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -356,11 +356,11 @@
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "LoggerState",
+          "name": "Logger_State",
           "kind": "InterfaceDeclaration"
         },
         {
-          "name": "BaseLogger",
+          "name": "Base_Logger",
           "kind": "ClassDeclaration"
         },
         {
@@ -368,7 +368,7 @@
           "kind": "ClassDeclaration"
         },
         {
-          "name": "SystemLogger",
+          "name": "System_Logger",
           "kind": "ClassDeclaration"
         },
         {
@@ -410,71 +410,71 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GRi",
+          "name": "GR_i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR2",
+          "name": "GR_2",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR2i",
+          "name": "GR_2i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR3",
+          "name": "GR_3",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR3i",
+          "name": "GR_3i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR4",
+          "name": "GR_4",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR4i",
+          "name": "GR_4i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR5",
+          "name": "GR_5",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR5i",
+          "name": "GR_5i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR6",
+          "name": "GR_6",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR6i",
+          "name": "GR_6i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR7",
+          "name": "GR_7",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR7i",
+          "name": "GR_7i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR8",
+          "name": "GR_8",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR8i",
+          "name": "GR_8i",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR9",
+          "name": "GR_9",
           "kind": "VariableDeclaration"
         },
         {
-          "name": "GR9i",
+          "name": "GR_9i",
           "kind": "VariableDeclaration"
         }
       ]
@@ -554,7 +554,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "PathPiece",
+          "name": "Path_Piece",
           "kind": "TypeAliasDeclaration"
         }
       ]
@@ -608,7 +608,7 @@
       "path": "process.ts",
       "declarations": [
         {
-          "name": "SpawnedProcess",
+          "name": "Spawned_Process",
           "kind": "InterfaceDeclaration"
         },
         {
@@ -616,7 +616,7 @@
           "kind": "InterfaceDeclaration"
         },
         {
-          "name": "SpawnResult",
+          "name": "Spawn_Result",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -624,7 +624,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "SpawnedOut",
+          "name": "Spawned_Out",
           "kind": "InterfaceDeclaration"
         },
         {
@@ -660,7 +660,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "RestartableProcess",
+          "name": "Restartable_Process",
           "kind": "InterfaceDeclaration"
         },
         {
@@ -740,7 +740,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "ResultError",
+          "name": "Result_Error",
           "kind": "ClassDeclaration"
         },
         {
@@ -806,7 +806,7 @@
           "kind": "VariableDeclaration"
         },
         {
-          "name": "TimingsKey",
+          "name": "Timings_Key",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -819,19 +819,19 @@
       "path": "types.ts",
       "declarations": [
         {
-          "name": "OmitStrict",
+          "name": "Omit_Strict",
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "PartialExcept",
+          "name": "Partial_Except",
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "PartialOnly",
+          "name": "Partial_Only",
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "PartialValues",
+          "name": "Partial_Values",
           "kind": "TypeAliasDeclaration"
         },
         {
@@ -843,7 +843,7 @@
           "kind": "TypeAliasDeclaration"
         },
         {
-          "name": "NotNull",
+          "name": "Not_Null",
           "kind": "TypeAliasDeclaration"
         },
         {
