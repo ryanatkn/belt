@@ -5,7 +5,7 @@ import type {PackageJson} from '@grogarden/gro/package_json.js';
 export const package_json = {
 	name: '@grogarden/util',
 	description: 'JS utilities to complement the modern web platform 🦕🐋',
-	version: '0.15.3',
+	version: '0.15.4',
 	public: true,
 	license: 'MIT',
 	homepage: 'https://util.grogarden.org/',

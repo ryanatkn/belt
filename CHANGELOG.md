@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.15.4
+
+### Patch Changes
+
+- 47e32d6: add `public: true,` to `package.json`
+
 ## 0.15.3
 
 ### Patch Changes
