@@ -6,6 +6,7 @@ export const package_json = {
 	name: '@grogarden/util',
 	description: 'JS utilities to complement the modern web platform 🦕🐋',
 	version: '0.15.3',
+	public: true,
 	license: 'MIT',
 	homepage: 'https://util.grogarden.org/',
 	author: {name: 'Felt Co-op', email: 'team@felt.social', url: 'https://www.felt.social/'},
