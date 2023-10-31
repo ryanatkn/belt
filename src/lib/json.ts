@@ -1,8 +1,8 @@
 export type Json = string | number | boolean | null | {[prop: string]: Json} | Json[];
 
-export type JsonType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
+export type Json_Type = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
-export const to_json_type = (value: Json): JsonType | undefined => {
+export const to_json_type = (value: Json): Json_Type | undefined => {
 	const type = typeof value;
 	switch (type) {
 		case 'string':

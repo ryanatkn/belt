@@ -5,15 +5,15 @@ import {
 } from 'node:child_process';
 import {gray, green, red} from 'kleur/colors';
 
-import {print_log_label, SystemLogger} from './log.js';
+import {print_log_label, System_Logger} from './log.js';
 import {print_error, print_key_value} from './print.js';
 import type {Result} from './result.js';
 
-const log = new SystemLogger(print_log_label('process'));
+const log = new System_Logger(print_log_label('process'));
 
-export interface SpawnedProcess {
+export interface Spawned_Process {
 	child: ChildProcess;
-	closed: Promise<SpawnResult>;
+	closed: Promise<Spawn_Result>;
 }
 
 export interface Spawned {
@@ -24,18 +24,18 @@ export interface Spawned {
 
 // TODO are `code` and `signal` more related than that?
 // e.g. should this be a union type where one is always `null`?
-export type SpawnResult = Result<Spawned, Spawned>;
+export type Spawn_Result = Result<Spawned, Spawned>;
 
 /**
  * A convenient promise wrapper around `spawn_process`
  * intended for commands that have an end, not long running-processes like watchers.
  * Any more advanced usage should use `spawn_process` directly for access to the `child` process.
  */
-export const spawn = (...args: Parameters<typeof spawn_process>): Promise<SpawnResult> =>
+export const spawn = (...args: Parameters<typeof spawn_process>): Promise<Spawn_Result> =>
 	spawn_process(...args).closed;
 
-export interface SpawnedOut {
-	result: SpawnResult;
+export interface Spawned_Out {
+	result: Spawn_Result;
 	stdout: string | null;
 	stderr: string | null;
 }
@@ -47,7 +47,7 @@ export const spawn_out = async (
 	command: string,
 	args: readonly string[] = [],
 	options?: SpawnOptions,
-): Promise<SpawnedOut> => {
+): Promise<Spawned_Out> => {
 	const {child, closed} = spawn_process(command, args, {...options, stdio: 'pipe'});
 	let stdout: string | null = null;
 	child.stdout!.on('data', (data: Buffer) => {
@@ -70,9 +70,9 @@ export const spawn_process = (
 	command: string,
 	args: readonly string[] = [],
 	options?: SpawnOptions,
-): SpawnedProcess => {
-	let resolve: (v: SpawnResult) => void;
-	const closed = new Promise<SpawnResult>((r) => (resolve = r));
+): Spawned_Process => {
+	let resolve: (v: Spawn_Result) => void;
+	const closed = new Promise<Spawn_Result>((r) => (resolve = r));
 	const child = spawn_child_process(command, args, {stdio: 'inherit', ...options});
 	const unregister = register_global_spawn(child);
 	child.once('close', (code, signal) => {
@@ -110,11 +110,11 @@ export const register_global_spawn = (child: ChildProcess): (() => void) => {
 };
 
 /**
- * Kills a child process and returns a `SpawnResult`.
+ * Kills a child process and returns a `Spawn_Result`.
  */
-export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
-	let resolve: (v: SpawnResult) => void;
-	const closed = new Promise<SpawnResult>((r) => (resolve = r));
+export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
+	let resolve: (v: Spawn_Result) => void;
+	const closed = new Promise<Spawn_Result>((r) => (resolve = r));
 	log.debug('despawning', print_child_process(child));
 	child.once('close', (code, signal) => {
 		resolve(code ? {ok: false, child, code, signal} : {ok: true, child, code, signal});
@@ -123,20 +123,20 @@ export const despawn = (child: ChildProcess): Promise<SpawnResult> => {
 	return closed;
 };
 
-export const attach_process_error_handlers = (to_error_label?: ToErrorLabel): void => {
+export const attach_process_error_handlers = (to_error_label?: To_Error_Label): void => {
 	process
 		.on('uncaughtException', handle_fatal_error)
 		.on('unhandledRejection', handle_unhandled_rejection(to_error_label));
 };
 
 const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
-	new SystemLogger(print_log_label(label, red)).error(print_error(err));
+	new System_Logger(print_log_label(label, red)).error(print_error(err));
 	await Promise.all(Array.from(global_spawn).map((child) => despawn(child)));
 	process.exit(1);
 };
 
 const handle_unhandled_rejection =
-	(to_error_label?: ToErrorLabel) =>
+	(to_error_label?: To_Error_Label) =>
 	(err: any): Promise<void> => {
 		const label = to_error_label?.(err) || 'unhandledRejection';
 		return err instanceof Error
@@ -144,11 +144,11 @@ const handle_unhandled_rejection =
 			: handle_fatal_error(new Error(err), label);
 	};
 
-interface ToErrorLabel {
+interface To_Error_Label {
 	(err: any): string | null;
 }
 
-export const print_spawn_result = (result: SpawnResult): string => {
+export const print_spawn_result = (result: Spawn_Result): string => {
 	if (result.ok) return 'ok';
 	let text = result.code === null ? '' : print_key_value('code', result.code);
 	if (result.signal !== null) text += (text ? ' ' : '') + print_key_value('signal', result.signal);
@@ -156,7 +156,7 @@ export const print_spawn_result = (result: SpawnResult): string => {
 };
 
 // TODO might want to expand this API for some use cases - assumes always running
-export interface RestartableProcess {
+export interface Restartable_Process {
 	restart: () => void;
 	kill: () => Promise<void>;
 }
@@ -169,8 +169,8 @@ export const spawn_restartable_process = (
 	command: string,
 	args: readonly string[] = [],
 	options?: SpawnOptions,
-): RestartableProcess => {
-	let spawned: SpawnedProcess | null = null;
+): Restartable_Process => {
+	let spawned: Spawned_Process | null = null;
 	let restarting: Promise<any> | null = null;
 	const close = async (): Promise<void> => {
 		if (!spawned) return;

@@ -1,13 +1,10 @@
-import {suite} from 'uvu';
+import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
 import {to_json_type} from './json.js';
 import {noop} from './function.js';
 
-/* test__to_json_type */
-const test__to_json_type = suite('to_json_type');
-
-test__to_json_type('basic behavior', () => {
+test('basic behavior', () => {
 	assert.is(to_json_type(''), 'string');
 	assert.is(to_json_type('1'), 'string');
 	assert.is(to_json_type(1), 'number');
@@ -23,5 +20,4 @@ test__to_json_type('basic behavior', () => {
 	assert.is(to_json_type(Symbol() as any), undefined);
 });
 
-test__to_json_type.run();
-/* test__to_json_type */
+test.run();

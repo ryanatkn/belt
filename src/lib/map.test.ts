@@ -1,12 +1,9 @@
-import {suite} from 'uvu';
+import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
 import {sort_map} from './map.js';
 
-/* test__sort_map */
-const test__sort_map = suite('sort_map');
-
-test__sort_map('basic behavior', () => {
+test('basic behavior', () => {
 	assert.equal(
 		Array.from(
 			sort_map(
@@ -35,7 +32,7 @@ test__sort_map('basic behavior', () => {
 	);
 });
 
-test__sort_map('custom comparator', () => {
+test('custom comparator', () => {
 	assert.equal(
 		sort_map(
 			new Map([
@@ -55,5 +52,4 @@ test__sort_map('custom comparator', () => {
 	);
 });
 
-test__sort_map.run();
-/* test__sort_map */
+test.run();

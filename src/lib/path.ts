@@ -26,8 +26,8 @@ export const parse_path_segments = (path: string): string[] =>
  * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
  * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
  */
-export const parse_path_pieces = (raw_path: string): PathPiece[] => {
-	const pieces: PathPiece[] = [];
+export const parse_path_pieces = (raw_path: string): Path_Piece[] => {
+	const pieces: Path_Piece[] = [];
 	const path_segments = parse_path_segments(raw_path);
 	if (path_segments.length) {
 		pieces.push({type: 'separator', path: '/'});
@@ -44,7 +44,7 @@ export const parse_path_pieces = (raw_path: string): PathPiece[] => {
 	return pieces;
 };
 
-export type PathPiece =
+export type Path_Piece =
 	| {
 			type: 'piece';
 			path: string;

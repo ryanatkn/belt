@@ -10,8 +10,6 @@ export const remove_unordered = (array: any[], index: number): void => {
 /**
  * Returns a function that returns the next item in the `array`
  * in a linear sequence, looping back to index 0 when it reaches the end.
- * @param array
- * @returns A function that returns the next item in the `array`
  */
 export const to_next = <T>(array: T[]): (() => T) => {
 	let i = -1;

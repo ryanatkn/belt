@@ -1,13 +1,10 @@
-import {suite} from 'uvu';
+import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
 import {create_obtainable} from './obtainable.js';
 import {noop} from './function.js';
 
-/* test__create_obtainable */
-const test__create_obtainable = suite('create_obtainable');
-
-test__create_obtainable('unobtain out of order', async () => {
+test('unobtain out of order', async () => {
 	let thing: symbol | undefined;
 	let unobtained = false;
 	const obtain_thing = create_obtainable(
@@ -58,10 +55,9 @@ test__create_obtainable('unobtain out of order', async () => {
 	assert.ok(unobtained);
 });
 
-test__create_obtainable('cannot obtain undefined', () => {
+test('cannot obtain undefined', () => {
 	const obtain_thing = create_obtainable(() => undefined, noop);
 	assert.throws(() => obtain_thing());
 });
 
-test__create_obtainable.run();
-/* test__create_obtainable */
+test.run();

@@ -1,24 +1,15 @@
-import {suite} from 'uvu';
+import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
 import {create_stopwatch, Timings} from './timings.js';
 
-/* test__create_stopwatch */
-const test__create_stopwatch = suite('create_stopwatch');
-
-test__create_stopwatch('basic behavior', () => {
+test('stopwatch', () => {
 	const stopwatch = create_stopwatch(4);
 	const elapsed = stopwatch();
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
 });
 
-test__create_stopwatch.run();
-/* test__create_stopwatch */
-
-/* test__Timings */
-const test__Timings = suite('Timings');
-
-test__Timings('start and stop multiple overlapping timings', () => {
+test('start and stop multiple overlapping timings', () => {
 	const timings = new Timings(4);
 	const timing = timings.start('foo');
 	const timing2 = timings.start('foo');
@@ -37,7 +28,7 @@ test__Timings('start and stop multiple overlapping timings', () => {
 	);
 });
 
-test__Timings('merge timings', () => {
+test('merge timings', () => {
 	const a = new Timings(10);
 	const b = new Timings(10);
 	const timingA = a.start('test');
@@ -51,5 +42,4 @@ test__Timings('merge timings', () => {
 	assert.is(b.get('test'), bTiming);
 });
 
-test__Timings.run();
-/* test__Timings */
+test.run();

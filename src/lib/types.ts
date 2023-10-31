@@ -8,19 +8,19 @@ TODO probably make this `.d.ts` when we make a proper build process
 
 */
 
-export type OmitStrict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Omit_Strict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 // these were thrown together quickly - is there a better way to do this?
 // there are probably better names for them!
 // see `Required`, `Exclude` and `Extract` for possible leads for improvements
-export type PartialExcept<T, K extends keyof T> = {[P in K]: T[P]} & {
+export type Partial_Except<T, K extends keyof T> = {[P in K]: T[P]} & {
 	[P in Exclude<keyof T, K>]?: T[P];
 };
-export type PartialOnly<T, K extends keyof T> = {[P in K]?: T[P]} & {
+export type Partial_Only<T, K extends keyof T> = {[P in K]?: T[P]} & {
 	[P in Exclude<keyof T, K>]: T[P];
 };
 
-export type PartialValues<T> = {
+export type Partial_Values<T> = {
 	[P in keyof T]: Partial<T[P]>;
 };
 
@@ -29,7 +29,7 @@ export type Assignable<T, K extends keyof T = keyof T> = {
 };
 
 export type Defined<T> = T extends undefined ? never : T;
-export type NotNull<T> = T extends null ? never : T;
+export type Not_Null<T> = T extends null ? never : T;
 
 /*
 
@@ -53,13 +53,13 @@ const email2: Email = 'foo' as Address; // error!
 ```
 
 */
-export type Branded<TValue, TName> = TValue & Brand<TName>;
-export type Flavored<TValue, TName> = TValue & Flavor<TName>;
-declare const BrandedSymbol: unique symbol;
-declare const FlavoredSymbol: unique symbol;
+export type Branded<T_Value, T_Name> = T_Value & Brand<T_Name>;
+export type Flavored<T_Value, T_Name> = T_Value & Flavor<T_Name>;
+declare const Branded_Symbol: unique symbol;
+declare const Flavored_Symbol: unique symbol;
 export interface Brand<T> {
-	readonly [BrandedSymbol]: T;
+	readonly [Branded_Symbol]: T;
 }
 export interface Flavor<T> {
-	readonly [FlavoredSymbol]?: T;
+	readonly [Flavored_Symbol]?: T;
 }
