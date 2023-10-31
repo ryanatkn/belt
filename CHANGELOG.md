@@ -145,7 +145,7 @@
 
 ## 0.6.0
 
-- **break**: change `LogLevel` from an enum to a string type union,
+- **break**: change `Log_Level` from an enum to a string type union,
   change its default to `info`, and add `to_log_level_value` to convert it to a number
   ([#11](https://github.com/grogarden/util/pull/11))
 

@@ -4,9 +4,9 @@ import {EMPTY_ARRAY, to_array} from './array.js';
 
 // TODO could use some refactoring
 
-export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
+export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
-const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
+const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
 	off: 0,
 	error: 1,
 	warn: 2,
@@ -14,9 +14,9 @@ const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
 	debug: 4,
 };
 
-export const to_log_level_value = (level: LogLevel): number => LOG_LEVEL_VALUES[level] ?? 4;
+export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4;
 
-const should_log = (max: LogLevel, level: LogLevel): boolean =>
+const should_log = (max: Log_Level, level: Log_Level): boolean =>
 	to_log_level_value(max) >= to_log_level_value(level);
 
 /**
@@ -26,7 +26,7 @@ const should_log = (max: LogLevel, level: LogLevel): boolean =>
  * @param configure_system_logger Set the `System_Logger` log level? Defaults to true.
  */
 export const configure_log_level = (
-	level: LogLevel,
+	level: Log_Level,
 	configure_main_logger = true,
 	configure_system_logger = true,
 ): void => {
@@ -38,8 +38,8 @@ export const configure_log_level = (
 	}
 };
 
-const DEFAULT_LOG_LEVEL: LogLevel =
-	(typeof process !== 'undefined' && (process.env?.PUBLIC_LOG_LEVEL as LogLevel | undefined)) ||
+const DEFAULT_LOG_LEVEL: Log_Level =
+	(typeof process !== 'undefined' && (process.env?.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ||
 	'info';
 
 /*
@@ -48,12 +48,12 @@ const DEFAULT_LOG_LEVEL: LogLevel =
 to achieve a good mix of convenience and flexibility
 both for Felt and user code.
 It uses late binding to allow runtime mutations
-and it accepts a `LoggerState` argument for custom behavior.
+and it accepts a `Logger_State` argument for custom behavior.
 Though the code is more verbose and slower as a result,
 the tradeoffs make sense for logging in development.
 TODO use a different logger in production
 
-The default `LoggerState` is the `Logger` class itself.
+The default `Logger_State` is the `Logger` class itself.
 This pattern allows us to have globally mutable logger state
 without locking the code into the singleton pattern.
 Properties like the static `Logger.level` can be mutated
@@ -81,26 +81,26 @@ TODO !
 
 export type Log = (...args: any[]) => void;
 
-export interface LoggerState extends LogLevelDefaults {
-	level: LogLevel;
+export interface Logger_State extends Log_Level_Defaults {
+	level: Log_Level;
 	log: Log;
-	error: LogLevelDefaults;
-	warn: LogLevelDefaults;
-	info: LogLevelDefaults;
-	debug: LogLevelDefaults;
+	error: Log_Level_Defaults;
+	warn: Log_Level_Defaults;
+	info: Log_Level_Defaults;
+	debug: Log_Level_Defaults;
 }
 
-interface LogLevelDefaults {
+interface Log_Level_Defaults {
 	prefixes: unknown[];
 	suffixes: unknown[];
 }
 
-export class BaseLogger {
+export class Base_Logger {
 	prefixes: readonly unknown[];
 	suffixes: readonly unknown[];
-	state: LoggerState; // can be the implementing class constructor
+	state: Logger_State; // can be the implementing class constructor
 
-	constructor(prefixes: unknown, suffixes: unknown, state: LoggerState) {
+	constructor(prefixes: unknown, suffixes: unknown, state: Logger_State) {
 		this.prefixes = to_array(prefixes);
 		this.suffixes = to_array(suffixes);
 		this.state = state;
@@ -185,35 +185,35 @@ const resolve_values = (...arrays: any[]): any[] => {
 	return resolved;
 };
 
-export class Logger extends BaseLogger {
+export class Logger extends Base_Logger {
 	constructor(
 		prefixes: unknown = EMPTY_ARRAY,
 		suffixes: unknown = EMPTY_ARRAY,
-		state: LoggerState = Logger,
+		state: Logger_State = Logger,
 	) {
 		super(prefixes, suffixes, state);
 	}
 
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
-	// See the comment on `LoggerState` for more.
-	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
+	// See the comment on `Logger_State` for more.
+	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
 	static log: Log = console.log.bind(console);
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
-	static error: LogLevelDefaults = {
+	static error: Log_Level_Defaults = {
 		prefixes: [red('➤'), black(bgRed(' 🞩 error 🞩 ')), red('\n➤')],
 		suffixes: ['\n ', black(bgRed(' 🞩🞩 '))],
 	};
-	static warn: LogLevelDefaults = {
+	static warn: Log_Level_Defaults = {
 		prefixes: [yellow('➤'), black(bgYellow(' ⚑ warning ⚑ ')), '\n' + yellow('➤')],
 		suffixes: ['\n ', black(bgYellow(' ⚑ '))],
 	};
-	static info: LogLevelDefaults = {
+	static info: Log_Level_Defaults = {
 		prefixes: [gray('➤')],
 		suffixes: [],
 	};
-	static debug: LogLevelDefaults = {
+	static debug: Log_Level_Defaults = {
 		prefixes: [gray('—')],
 		suffixes: [],
 	};
@@ -229,19 +229,19 @@ This allows user code to simply import and use `Logger`.
 and users can always extend `Logger` with their own custom versions.
 
 */
-export class System_Logger extends BaseLogger {
+export class System_Logger extends Base_Logger {
 	constructor(
 		prefixes: unknown = EMPTY_ARRAY,
 		suffixes: unknown = EMPTY_ARRAY,
-		state: LoggerState = System_Logger,
+		state: Logger_State = System_Logger,
 	) {
 		super(prefixes, suffixes, state);
 	}
 
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
-	// See the comment on `LoggerState` for more.
-	static level: LogLevel = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configure_log_level`
+	// See the comment on `Logger_State` for more.
+	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configure_log_level`
 	static log: Log = console.log.bind(console);
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;

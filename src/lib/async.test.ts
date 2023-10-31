@@ -1,16 +1,12 @@
-import {suite} from 'uvu';
+import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
 import {wait} from './async.js';
 
-/* test__wait */
-const test__wait = suite('wait');
-
-test__wait('basic behavior', async () => {
+test('basic behavior', async () => {
 	await wait();
 	await wait(10);
 	assert.ok(true);
 });
 
-test__wait.run();
-/* test__wait */
+test.run();

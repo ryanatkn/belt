@@ -12,7 +12,7 @@ export const is_uuid = (str: string): str is Uuid => uuid_matcher.test(str);
  */
 export const uuid_matcher = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/iu;
 
-export interface ClientIdCreator {
+export interface Client_Id_Creator {
 	(): string;
 }
 
@@ -23,7 +23,7 @@ export const create_client_id_creator = (
 	name: string,
 	count?: number,
 	separator = '_',
-): ClientIdCreator => {
+): Client_Id_Creator => {
 	const counter = create_counter(count);
 	return () => `${name}${separator}${counter()}`;
 };

@@ -96,7 +96,7 @@ export const package_json = {
 		'./async.js': {
 			path: 'async.ts',
 			declarations: [
-				{name: 'AsyncStatus', kind: 'TypeAliasDeclaration'},
+				{name: 'Async_Status', kind: 'TypeAliasDeclaration'},
 				{name: 'wait', kind: 'VariableDeclaration'},
 			],
 		},
@@ -118,7 +118,7 @@ export const package_json = {
 		},
 		'./error.js': {
 			path: 'error.ts',
-			declarations: [{name: 'UnreachableError', kind: 'ClassDeclaration'}],
+			declarations: [{name: 'Unreachable_Error', kind: 'ClassDeclaration'}],
 		},
 		'./function.js': {
 			path: 'function.ts',
@@ -137,7 +137,7 @@ export const package_json = {
 				{name: 'Uuid', kind: 'TypeAliasDeclaration'},
 				{name: 'is_uuid', kind: 'VariableDeclaration'},
 				{name: 'uuid_matcher', kind: 'VariableDeclaration'},
-				{name: 'ClientIdCreator', kind: 'InterfaceDeclaration'},
+				{name: 'Client_Id_Creator', kind: 'InterfaceDeclaration'},
 				{name: 'create_client_id_creator', kind: 'VariableDeclaration'},
 			],
 		},
@@ -145,19 +145,19 @@ export const package_json = {
 			path: 'json.ts',
 			declarations: [
 				{name: 'Json', kind: 'TypeAliasDeclaration'},
-				{name: 'JsonType', kind: 'TypeAliasDeclaration'},
+				{name: 'Json_Type', kind: 'TypeAliasDeclaration'},
 				{name: 'to_json_type', kind: 'VariableDeclaration'},
 			],
 		},
 		'./log.js': {
 			path: 'log.ts',
 			declarations: [
-				{name: 'LogLevel', kind: 'TypeAliasDeclaration'},
+				{name: 'Log_Level', kind: 'TypeAliasDeclaration'},
 				{name: 'to_log_level_value', kind: 'VariableDeclaration'},
 				{name: 'configure_log_level', kind: 'VariableDeclaration'},
 				{name: 'Log', kind: 'TypeAliasDeclaration'},
-				{name: 'LoggerState', kind: 'InterfaceDeclaration'},
-				{name: 'BaseLogger', kind: 'ClassDeclaration'},
+				{name: 'Logger_State', kind: 'InterfaceDeclaration'},
+				{name: 'Base_Logger', kind: 'ClassDeclaration'},
 				{name: 'Logger', kind: 'ClassDeclaration'},
 				{name: 'System_Logger', kind: 'ClassDeclaration'},
 				{name: 'print_log_label', kind: 'VariableDeclaration'},
