@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.16.0
+
+### Minor Changes
+
+- 3990a7f: rename to `Proper_Snakes`
+
 ## 0.15.4
 
 ### Patch Changes
