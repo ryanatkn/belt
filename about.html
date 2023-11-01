@@ -6,16 +6,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		<link href="./_app/immutable/assets/0.c5941760.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/3.8c0fdfca.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.ac63fa5d.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.76b75b93.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.8e48fe63.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.6278b050.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/paths.e9f89030.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.bad1c020.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.c46bcac0.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/0.af2287cf.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/3.f4381cbd.js"><title>@grogarden/util</title><!-- HEAD_svelte-l1wn0q_START --><link rel="icon" href="/favicon.png"><!-- HEAD_svelte-l1wn0q_END --><!-- HEAD_svelte-1qw2uo0_START --><meta name="color-scheme" content="light dark"> <meta name="theme-color" content="#257e25"> <script><!-- HTML_TAG_START -->
+		<link href="./_app/immutable/assets/3.eb3fb974.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/Favicon.8d63661c.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.b36f345c.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.27461ed5.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.7625667e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/paths.a2ad15f2.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.74b65de5.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.5989552b.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.7fbc4eb2.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3.6c111b61.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/stores.13d78c9e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Favicon.b2b4f590.js"><title>@grogarden/util</title><!-- HEAD_svelte-l1wn0q_START --><link rel="icon" href="/favicon.png"><!-- HEAD_svelte-l1wn0q_END --><!-- HEAD_svelte-1qw2uo0_START --><meta name="color-scheme" content="light dark"> <meta name="theme-color" content="#257e25"> <script><!-- HTML_TAG_START -->
 	try {
 		let c = localStorage.getItem('color-scheme');
 		if (c === 'auto' || (c !== 'dark' && c !== 'light')) {
@@ -26,11 +28,901 @@
 <!-- HTML_TAG_END --></script><!-- HEAD_svelte-1qw2uo0_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">     <main class="width_md svelte-pzajmm" data-svelte-h="svelte-1jgsc1w"><div class="prose"><section><header class="box"></header> </section></div> <section class="box width_full spaced"><div class="panel padded_md width_md"></div></section> <section class="box"></section> <section class="box spaced"></section> </main> 
+		<div style="display: contents">     <main class="width_md svelte-pzajmm"><div class="prose"><section><header class="box"><h1>util</h1></header> <div class="breadcrumb svelte-g6c005"> <a href="/" class="svelte-g6c005"><img src="/favicon.png" width="16" height="16" alt="the Gro icon, a 16 by 16 pixelated green oak acorn with a glint of sun"></a><span class="separator svelte-g6c005">/</span><a href="/about" class="svelte-g6c005 selected">about</a> </div></section></div> <section class="box width_full spaced"><div class="panel padded_md width_md"><div class="package_detail svelte-15ke0tz"> <header class="spaced"><div class="repo_name svelte-15ke0tz">util</div></header>  <blockquote class="spaced">JS utilities to complement the modern web platform 🦕🐋</blockquote> <blockquote class="npm_url spaced svelte-15ke0tz">npm i -D @grogarden/util</blockquote> <section class="properties width_full spaced svelte-15ke0tz"> <div class="row svelte-15ke0tz">homepage:
+					<a class="chip row svelte-15ke0tz" href="https://util.grogarden.org/"><img src="https://util.grogarden.org/favicon.png" alt="favicon to homepage at https://util.grogarden.org/" style="width: 16px; height: 16px; margin-right: var(--spacing_xs);"> util.grogarden.org</a></div>  <div class="row svelte-15ke0tz">repo: <a class="chip svelte-15ke0tz" title="repo" href="https://github.com/grogarden/util">util</a></div> <div class="row svelte-15ke0tz">npm: <a class="chip svelte-15ke0tz" title="npm" href="https://www.npmjs.com/package/@grogarden/util">@grogarden/util</a></div> <div class="row svelte-15ke0tz">version: <a class="chip svelte-15ke0tz" title="version" href="https://github.com/grogarden/util/blob/main/CHANGELOG.md">0.16.0</a></div> <div class="row svelte-15ke0tz">license: <a class="chip svelte-15ke0tz" title="license" href="git+https://github.com/grogarden/util.git/blob/main/LICENSE">MIT</a></div> <section class="row spaced svelte-15ke0tz">data:
+				<a class="chip svelte-15ke0tz" title="data" href="https://util.grogarden.org/.well-known/package.json">package.json</a></section></section> <section class="width_full spaced"><menu>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/array.ts">array.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">EMPTY_ARRAY </li><li class="declaration chip svelte-15ke0tz variable_declaration">to_array </li><li class="declaration chip svelte-15ke0tz variable_declaration">remove_unordered </li><li class="declaration chip svelte-15ke0tz variable_declaration">to_next </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/async.ts">async.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Async_Status </li><li class="declaration chip svelte-15ke0tz variable_declaration">wait </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/counter.ts">counter.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Counter </li><li class="declaration chip svelte-15ke0tz variable_declaration">create_counter </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/dom.ts">dom.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">is_editable </li><li class="declaration chip svelte-15ke0tz variable_declaration">swallow </li><li class="declaration chip svelte-15ke0tz variable_declaration">handle_target_value </li><li class="declaration chip svelte-15ke0tz variable_declaration">is_iframed </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/error.ts">error.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz   class_declaration">Unreachable_Error </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/function.ts">function.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">noop </li><li class="declaration chip svelte-15ke0tz variable_declaration">noop_async </li><li class="declaration chip svelte-15ke0tz variable_declaration">resolved </li><li class="declaration chip svelte-15ke0tz variable_declaration">identity </li><li class="declaration chip svelte-15ke0tz  type_declaration">Lazy </li><li class="declaration chip svelte-15ke0tz variable_declaration">lazy </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/id.ts">id.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Uuid </li><li class="declaration chip svelte-15ke0tz variable_declaration">is_uuid </li><li class="declaration chip svelte-15ke0tz variable_declaration">uuid_matcher </li><li class="declaration chip svelte-15ke0tz  type_declaration">Client_Id_Creator </li><li class="declaration chip svelte-15ke0tz variable_declaration">create_client_id_creator </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/json.ts">json.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Json </li><li class="declaration chip svelte-15ke0tz  type_declaration">Json_Type </li><li class="declaration chip svelte-15ke0tz variable_declaration">to_json_type </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/log.ts">log.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Log_Level </li><li class="declaration chip svelte-15ke0tz variable_declaration">to_log_level_value </li><li class="declaration chip svelte-15ke0tz variable_declaration">configure_log_level </li><li class="declaration chip svelte-15ke0tz  type_declaration">Log </li><li class="declaration chip svelte-15ke0tz  type_declaration">Logger_State </li><li class="declaration chip svelte-15ke0tz   class_declaration">Base_Logger </li><li class="declaration chip svelte-15ke0tz   class_declaration">Logger </li><li class="declaration chip svelte-15ke0tz   class_declaration">System_Logger </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_log_label </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/map.ts">map.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">sort_map </li><li class="declaration chip svelte-15ke0tz variable_declaration">compare_simple_map_entries </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/maths.ts">maths.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">clamp </li><li class="declaration chip svelte-15ke0tz variable_declaration">lerp </li><li class="declaration chip svelte-15ke0tz variable_declaration">round </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_2 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_2i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_3 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_3i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_4 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_4i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_5 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_5i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_6 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_6i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_7 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_7i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_8 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_8i </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_9 </li><li class="declaration chip svelte-15ke0tz variable_declaration">GR_9i </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/object.ts">object.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">map_record </li><li class="declaration chip svelte-15ke0tz variable_declaration">omit </li><li class="declaration chip svelte-15ke0tz variable_declaration">pick_by </li><li class="declaration chip svelte-15ke0tz variable_declaration">omit_undefined </li><li class="declaration chip svelte-15ke0tz variable_declaration">reorder </li><li class="declaration chip svelte-15ke0tz variable_declaration">EMPTY_OBJECT </li><li class="declaration chip svelte-15ke0tz variable_declaration">traverse </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/obtainable.ts">obtainable.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Unobtain </li><li class="declaration chip svelte-15ke0tz variable_declaration">create_obtainable </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/package.gen.ts">package.gen.js</a></div> <ul class="declarations svelte-15ke0tz"> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/package.ts">package.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">package_json </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/path.ts">path.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">parse_path_parts </li><li class="declaration chip svelte-15ke0tz variable_declaration">parse_path_segments </li><li class="declaration chip svelte-15ke0tz variable_declaration">parse_path_pieces </li><li class="declaration chip svelte-15ke0tz  type_declaration">Path_Piece </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/print.ts">print.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">print_key_value </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_ms </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_causes </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_string </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_number </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_boolean </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_value </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_error </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_timing </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_timings </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/process.ts">process.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Spawned_Process </li><li class="declaration chip svelte-15ke0tz  type_declaration">Spawned </li><li class="declaration chip svelte-15ke0tz  type_declaration">Spawn_Result </li><li class="declaration chip svelte-15ke0tz variable_declaration">spawn </li><li class="declaration chip svelte-15ke0tz  type_declaration">Spawned_Out </li><li class="declaration chip svelte-15ke0tz variable_declaration">spawn_out </li><li class="declaration chip svelte-15ke0tz variable_declaration">spawn_process </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_child_process </li><li class="declaration chip svelte-15ke0tz variable_declaration">global_spawn </li><li class="declaration chip svelte-15ke0tz variable_declaration">register_global_spawn </li><li class="declaration chip svelte-15ke0tz variable_declaration">despawn </li><li class="declaration chip svelte-15ke0tz variable_declaration">attach_process_error_handlers </li><li class="declaration chip svelte-15ke0tz variable_declaration">print_spawn_result </li><li class="declaration chip svelte-15ke0tz  type_declaration">Restartable_Process </li><li class="declaration chip svelte-15ke0tz variable_declaration">spawn_restartable_process </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/random_alea.ts">random_alea.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Alea </li><li class="declaration chip svelte-15ke0tz variable_declaration">create_random_alea </li><li class="declaration chip svelte-15ke0tz variable_declaration">masher </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/random.ts">random.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">random_float </li><li class="declaration chip svelte-15ke0tz variable_declaration">random_int </li><li class="declaration chip svelte-15ke0tz variable_declaration">random_boolean </li><li class="declaration chip svelte-15ke0tz variable_declaration">random_item </li><li class="declaration chip svelte-15ke0tz variable_declaration">shuffle </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/regexp.ts">regexp.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">escape_regexp </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/result.ts">result.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Result </li><li class="declaration chip svelte-15ke0tz variable_declaration">OK </li><li class="declaration chip svelte-15ke0tz variable_declaration">NOT_OK </li><li class="declaration chip svelte-15ke0tz variable_declaration">unwrap </li><li class="declaration chip svelte-15ke0tz   class_declaration">Result_Error </li><li class="declaration chip svelte-15ke0tz variable_declaration">unwrap_error </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/string.ts">string.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz variable_declaration">truncate </li><li class="declaration chip svelte-15ke0tz variable_declaration">strip_start </li><li class="declaration chip svelte-15ke0tz variable_declaration">strip_end </li><li class="declaration chip svelte-15ke0tz variable_declaration">strip_after </li><li class="declaration chip svelte-15ke0tz variable_declaration">strip_before </li><li class="declaration chip svelte-15ke0tz variable_declaration">ensure_start </li><li class="declaration chip svelte-15ke0tz variable_declaration">ensure_end </li><li class="declaration chip svelte-15ke0tz variable_declaration">deindent </li><li class="declaration chip svelte-15ke0tz variable_declaration">plural </li><li class="declaration chip svelte-15ke0tz variable_declaration">to_grapheme_count </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/timings.ts">timings.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Stopwatch </li><li class="declaration chip svelte-15ke0tz variable_declaration">create_stopwatch </li><li class="declaration chip svelte-15ke0tz  type_declaration">Timings_Key </li><li class="declaration chip svelte-15ke0tz   class_declaration">Timings </li> </ul> </li>   <li class="module svelte-15ke0tz ts"><div><a class="chip svelte-15ke0tz" href="https://github.com/grogarden/util/blob/main/src/lib/types.ts">types.js</a></div> <ul class="declarations svelte-15ke0tz"><li class="declaration chip svelte-15ke0tz  type_declaration">Omit_Strict </li><li class="declaration chip svelte-15ke0tz  type_declaration">Partial_Except </li><li class="declaration chip svelte-15ke0tz  type_declaration">Partial_Only </li><li class="declaration chip svelte-15ke0tz  type_declaration">Partial_Values </li><li class="declaration chip svelte-15ke0tz  type_declaration">Assignable </li><li class="declaration chip svelte-15ke0tz  type_declaration">Defined </li><li class="declaration chip svelte-15ke0tz  type_declaration">Not_Null </li><li class="declaration chip svelte-15ke0tz  type_declaration">Branded </li><li class="declaration chip svelte-15ke0tz  type_declaration">Flavored </li><li class="declaration chip svelte-15ke0tz  type_declaration">Brand </li><li class="declaration chip svelte-15ke0tz  type_declaration">Flavor </li> </ul> </li></menu></section> <section class="width_full spaced"><details><summary data-svelte-h="svelte-k220bw">raw data for <code>pkg: Package_Meta</code></summary> <pre class="svelte-15ke0tz"><code>{
+	"url": "https://util.grogarden.org/",
+	"package_json": {
+		"name": "@grogarden/util",
+		"description": "JS utilities to complement the modern web platform 🦕🐋",
+		"version": "0.16.0",
+		"public": true,
+		"license": "MIT",
+		"homepage": "https://util.grogarden.org/",
+		"author": {
+			"name": "Felt Co-op",
+			"email": "team@felt.social",
+			"url": "https://www.felt.social/"
+		},
+		"repository": {
+			"type": "git",
+			"url": "git+https://github.com/grogarden/util.git"
+		},
+		"bugs": {
+			"url": "https://github.com/grogarden/util/issues",
+			"email": "team@felt.social"
+		},
+		"type": "module",
+		"engines": {
+			"node": ">=20.7"
+		},
+		"scripts": {
+			"start": "gro dev",
+			"dev": "gro dev",
+			"build": "gro build",
+			"test": "gro test",
+			"deploy": "gro deploy"
+		},
+		"keywords": [
+			"js",
+			"typescript",
+			"utilities",
+			"web"
+		],
+		"files": [
+			"dist"
+		],
+		"peerDependencies": {
+			"kleur": "^4.0.0"
+		},
+		"devDependencies": {
+			"@changesets/changelog-git": "^0.1.14",
+			"@feltjs/eslint-config": "^0.4.1",
+			"@fuz.dev/fuz": "^0.79.1",
+			"@fuz.dev/fuz_library": "^0.19.1",
+			"@grogarden/gro": "^0.100.1",
+			"@sveltejs/adapter-static": "^2.0.3",
+			"@sveltejs/kit": "^1.27.2",
+			"@sveltejs/package": "^2.2.2",
+			"@types/node": "^20.8.10",
+			"@typescript-eslint/eslint-plugin": "^6.9.1",
+			"@typescript-eslint/parser": "^6.9.1",
+			"eslint": "^8.52.0",
+			"eslint-plugin-svelte": "^2.34.0",
+			"kleur": "^4.1.5",
+			"prettier": "^3.0.3",
+			"prettier-plugin-svelte": "^3.0.3",
+			"svelte": "^4.2.2",
+			"svelte-check": "^3.5.2",
+			"tslib": "^2.6.2",
+			"typescript": "^5.2.2",
+			"uvu": "^0.5.6"
+		},
+		"eslintConfig": {
+			"root": true,
+			"extends": "@feltjs"
+		},
+		"prettier": {
+			"plugins": [
+				"prettier-plugin-svelte"
+			],
+			"useTabs": true,
+			"printWidth": 100,
+			"singleQuote": true,
+			"bracketSpacing": false,
+			"overrides": [
+				{
+					"files": "package.json",
+					"options": {
+						"useTabs": false
+					}
+				}
+			]
+		},
+		"exports": {
+			"./array.js": {
+				"default": "./dist/array.js",
+				"types": "./dist/array.d.ts"
+			},
+			"./async.js": {
+				"default": "./dist/async.js",
+				"types": "./dist/async.d.ts"
+			},
+			"./counter.js": {
+				"default": "./dist/counter.js",
+				"types": "./dist/counter.d.ts"
+			},
+			"./dom.js": {
+				"default": "./dist/dom.js",
+				"types": "./dist/dom.d.ts"
+			},
+			"./error.js": {
+				"default": "./dist/error.js",
+				"types": "./dist/error.d.ts"
+			},
+			"./function.js": {
+				"default": "./dist/function.js",
+				"types": "./dist/function.d.ts"
+			},
+			"./id.js": {
+				"default": "./dist/id.js",
+				"types": "./dist/id.d.ts"
+			},
+			"./json.js": {
+				"default": "./dist/json.js",
+				"types": "./dist/json.d.ts"
+			},
+			"./log.js": {
+				"default": "./dist/log.js",
+				"types": "./dist/log.d.ts"
+			},
+			"./map.js": {
+				"default": "./dist/map.js",
+				"types": "./dist/map.d.ts"
+			},
+			"./maths.js": {
+				"default": "./dist/maths.js",
+				"types": "./dist/maths.d.ts"
+			},
+			"./object.js": {
+				"default": "./dist/object.js",
+				"types": "./dist/object.d.ts"
+			},
+			"./obtainable.js": {
+				"default": "./dist/obtainable.js",
+				"types": "./dist/obtainable.d.ts"
+			},
+			"./package.gen.js": {
+				"default": "./dist/package.gen.js",
+				"types": "./dist/package.gen.d.ts"
+			},
+			"./package.js": {
+				"default": "./dist/package.js",
+				"types": "./dist/package.d.ts"
+			},
+			"./path.js": {
+				"default": "./dist/path.js",
+				"types": "./dist/path.d.ts"
+			},
+			"./print.js": {
+				"default": "./dist/print.js",
+				"types": "./dist/print.d.ts"
+			},
+			"./process.js": {
+				"default": "./dist/process.js",
+				"types": "./dist/process.d.ts"
+			},
+			"./random_alea.js": {
+				"default": "./dist/random_alea.js",
+				"types": "./dist/random_alea.d.ts"
+			},
+			"./random.js": {
+				"default": "./dist/random.js",
+				"types": "./dist/random.d.ts"
+			},
+			"./regexp.js": {
+				"default": "./dist/regexp.js",
+				"types": "./dist/regexp.d.ts"
+			},
+			"./result.js": {
+				"default": "./dist/result.js",
+				"types": "./dist/result.d.ts"
+			},
+			"./string.js": {
+				"default": "./dist/string.js",
+				"types": "./dist/string.d.ts"
+			},
+			"./timings.js": {
+				"default": "./dist/timings.js",
+				"types": "./dist/timings.d.ts"
+			},
+			"./types.js": {
+				"default": "./dist/types.js",
+				"types": "./dist/types.d.ts"
+			}
+		},
+		"modules": {
+			"./array.js": {
+				"path": "array.ts",
+				"declarations": [
+					{
+						"name": "EMPTY_ARRAY",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "to_array",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "remove_unordered",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "to_next",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./async.js": {
+				"path": "async.ts",
+				"declarations": [
+					{
+						"name": "Async_Status",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "wait",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./counter.js": {
+				"path": "counter.ts",
+				"declarations": [
+					{
+						"name": "Counter",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "create_counter",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./dom.js": {
+				"path": "dom.ts",
+				"declarations": [
+					{
+						"name": "is_editable",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "swallow",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "handle_target_value",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "is_iframed",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./error.js": {
+				"path": "error.ts",
+				"declarations": [
+					{
+						"name": "Unreachable_Error",
+						"kind": "ClassDeclaration"
+					}
+				]
+			},
+			"./function.js": {
+				"path": "function.ts",
+				"declarations": [
+					{
+						"name": "noop",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "noop_async",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "resolved",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "identity",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Lazy",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "lazy",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./id.js": {
+				"path": "id.ts",
+				"declarations": [
+					{
+						"name": "Uuid",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "is_uuid",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "uuid_matcher",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Client_Id_Creator",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "create_client_id_creator",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./json.js": {
+				"path": "json.ts",
+				"declarations": [
+					{
+						"name": "Json",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Json_Type",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "to_json_type",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./log.js": {
+				"path": "log.ts",
+				"declarations": [
+					{
+						"name": "Log_Level",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "to_log_level_value",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "configure_log_level",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Log",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Logger_State",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "Base_Logger",
+						"kind": "ClassDeclaration"
+					},
+					{
+						"name": "Logger",
+						"kind": "ClassDeclaration"
+					},
+					{
+						"name": "System_Logger",
+						"kind": "ClassDeclaration"
+					},
+					{
+						"name": "print_log_label",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./map.js": {
+				"path": "map.ts",
+				"declarations": [
+					{
+						"name": "sort_map",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "compare_simple_map_entries",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./maths.js": {
+				"path": "maths.ts",
+				"declarations": [
+					{
+						"name": "clamp",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "lerp",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "round",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_2",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_2i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_3",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_3i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_4",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_4i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_5",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_5i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_6",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_6i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_7",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_7i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_8",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_8i",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_9",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "GR_9i",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./object.js": {
+				"path": "object.ts",
+				"declarations": [
+					{
+						"name": "map_record",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "omit",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "pick_by",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "omit_undefined",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "reorder",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "EMPTY_OBJECT",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "traverse",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./obtainable.js": {
+				"path": "obtainable.ts",
+				"declarations": [
+					{
+						"name": "Unobtain",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "create_obtainable",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./package.gen.js": {
+				"path": "package.gen.ts",
+				"declarations": []
+			},
+			"./package.js": {
+				"path": "package.ts",
+				"declarations": [
+					{
+						"name": "package_json",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./path.js": {
+				"path": "path.ts",
+				"declarations": [
+					{
+						"name": "parse_path_parts",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "parse_path_segments",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "parse_path_pieces",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Path_Piece",
+						"kind": "TypeAliasDeclaration"
+					}
+				]
+			},
+			"./print.js": {
+				"path": "print.ts",
+				"declarations": [
+					{
+						"name": "print_key_value",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_ms",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_causes",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_string",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_number",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_boolean",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_value",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_error",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_timing",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_timings",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./process.js": {
+				"path": "process.ts",
+				"declarations": [
+					{
+						"name": "Spawned_Process",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "Spawned",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "Spawn_Result",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "spawn",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Spawned_Out",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "spawn_out",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "spawn_process",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_child_process",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "global_spawn",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "register_global_spawn",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "despawn",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "attach_process_error_handlers",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "print_spawn_result",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Restartable_Process",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "spawn_restartable_process",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./random_alea.js": {
+				"path": "random_alea.ts",
+				"declarations": [
+					{
+						"name": "Alea",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "create_random_alea",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "masher",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./random.js": {
+				"path": "random.ts",
+				"declarations": [
+					{
+						"name": "random_float",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "random_int",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "random_boolean",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "random_item",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "shuffle",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./regexp.js": {
+				"path": "regexp.ts",
+				"declarations": [
+					{
+						"name": "escape_regexp",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./result.js": {
+				"path": "result.ts",
+				"declarations": [
+					{
+						"name": "Result",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "OK",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "NOT_OK",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "unwrap",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Result_Error",
+						"kind": "ClassDeclaration"
+					},
+					{
+						"name": "unwrap_error",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./string.js": {
+				"path": "string.ts",
+				"declarations": [
+					{
+						"name": "truncate",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "strip_start",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "strip_end",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "strip_after",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "strip_before",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "ensure_start",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "ensure_end",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "deindent",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "plural",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "to_grapheme_count",
+						"kind": "VariableDeclaration"
+					}
+				]
+			},
+			"./timings.js": {
+				"path": "timings.ts",
+				"declarations": [
+					{
+						"name": "Stopwatch",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "create_stopwatch",
+						"kind": "VariableDeclaration"
+					},
+					{
+						"name": "Timings_Key",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Timings",
+						"kind": "ClassDeclaration"
+					}
+				]
+			},
+			"./types.js": {
+				"path": "types.ts",
+				"declarations": [
+					{
+						"name": "Omit_Strict",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Partial_Except",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Partial_Only",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Partial_Values",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Assignable",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Defined",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Not_Null",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Branded",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Flavored",
+						"kind": "TypeAliasDeclaration"
+					},
+					{
+						"name": "Brand",
+						"kind": "InterfaceDeclaration"
+					},
+					{
+						"name": "Flavor",
+						"kind": "InterfaceDeclaration"
+					}
+				]
+			}
+		}
+	},
+	"name": "@grogarden/util",
+	"repo_name": "util",
+	"repo_url": "https://github.com/grogarden/util",
+	"owner_name": "grogarden",
+	"homepage_url": "https://util.grogarden.org/",
+	"npm_url": "https://www.npmjs.com/package/@grogarden/util",
+	"changelog_url": "https://github.com/grogarden/util/blob/main/CHANGELOG.md",
+	"published": true
+}</code></pre></details></section>  </div> </div></section> <section class="box"><footer class="panel padded_lg svelte-1o3q16b"> <div class="logo svelte-1o3q16b"><a href="https://github.com/grogarden/util" rel="me" class="svelte-1o3q16b"><svg xmlns="http://www.w3.org/2000/svg" aria-label="GitHub icon" viewBox="0 0 1024 1024" fill="none" style="width: var(--spacing_7, 64px); height: var(--spacing_7, 64px);"><path fill="var(--color, #000)" fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02
+		15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32
+		12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12
+		11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33
+		11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74
+		5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95
+		7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31
+		12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12
+		7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01
+		13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71
+		14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)"></path></svg></a></div>  </footer></section> <section class="box spaced"><div class="breadcrumb svelte-g6c005"> <a href="/" class="svelte-g6c005"><img src="/favicon.png" width="16" height="16" alt="the Gro icon, a 16 by 16 pixelated green oak acorn with a glint of sun"></a><span class="separator svelte-g6c005">/</span><a href="/about" class="svelte-g6c005 selected">about</a> </div></section> </main> 
 			
 			<script>
 				{
-					__sveltekit_pw4ett = {
+					__sveltekit_1mvub8 = {
 						base: new URL(".", location).pathname.slice(0, -1),
 						env: {"PUBLIC_LOG_LEVEL":"info"}
 					};
@@ -40,8 +932,8 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("./_app/immutable/entry/start.ac63fa5d.js"),
-						import("./_app/immutable/entry/app.bad1c020.js")
+						import("./_app/immutable/entry/start.b36f345c.js"),
+						import("./_app/immutable/entry/app.74b65de5.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
