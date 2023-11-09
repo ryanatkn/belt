@@ -44,17 +44,17 @@
   "devDependencies": {
     "@changesets/changelog-git": "^0.1.14",
     "@feltjs/eslint-config": "^0.4.1",
-    "@fuz.dev/fuz": "^0.79.1",
-    "@fuz.dev/fuz_library": "^0.19.1",
-    "@grogarden/gro": "^0.100.1",
+    "@fuz.dev/fuz": "^0.79.3",
+    "@fuz.dev/fuz_library": "^0.20.0",
+    "@grogarden/gro": "^0.101.0",
     "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.27.2",
+    "@sveltejs/kit": "^1.27.3",
     "@sveltejs/package": "^2.2.2",
-    "@types/node": "^20.8.10",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.52.0",
-    "eslint-plugin-svelte": "^2.34.0",
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-svelte": "^2.35.0",
     "kleur": "^4.1.5",
     "prettier": "^3.0.3",
     "prettier-plugin-svelte": "^3.0.3",
@@ -193,19 +193,19 @@
       "declarations": [
         {
           "name": "EMPTY_ARRAY",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "to_array",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "remove_unordered",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "to_next",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -214,11 +214,11 @@
       "declarations": [
         {
           "name": "Async_Status",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "wait",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -227,11 +227,11 @@
       "declarations": [
         {
           "name": "Counter",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "create_counter",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -240,19 +240,19 @@
       "declarations": [
         {
           "name": "is_editable",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "swallow",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "handle_target_value",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "is_iframed",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -261,7 +261,7 @@
       "declarations": [
         {
           "name": "Unreachable_Error",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         }
       ]
     },
@@ -270,27 +270,27 @@
       "declarations": [
         {
           "name": "noop",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "noop_async",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "resolved",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "identity",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Lazy",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "lazy",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -299,23 +299,23 @@
       "declarations": [
         {
           "name": "Uuid",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "is_uuid",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "uuid_matcher",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "Client_Id_Creator",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "create_client_id_creator",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -324,15 +324,15 @@
       "declarations": [
         {
           "name": "Json",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Json_Type",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "to_json_type",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -341,39 +341,39 @@
       "declarations": [
         {
           "name": "Log_Level",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "to_log_level_value",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "configure_log_level",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Log",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Logger_State",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "Base_Logger",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         },
         {
           "name": "Logger",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         },
         {
           "name": "System_Logger",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         },
         {
           "name": "print_log_label",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -382,11 +382,11 @@
       "declarations": [
         {
           "name": "sort_map",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "compare_simple_map_entries",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -395,87 +395,87 @@
       "declarations": [
         {
           "name": "clamp",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "lerp",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "round",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "GR",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_2",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_2i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_3",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_3i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_4",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_4i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_5",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_5i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_6",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_6i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_7",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_7i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_8",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_8i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_9",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "GR_9i",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         }
       ]
     },
@@ -484,31 +484,31 @@
       "declarations": [
         {
           "name": "map_record",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "omit",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "pick_by",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "omit_undefined",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "reorder",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "EMPTY_OBJECT",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "traverse",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -517,11 +517,11 @@
       "declarations": [
         {
           "name": "Unobtain",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "create_obtainable",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -534,7 +534,7 @@
       "declarations": [
         {
           "name": "package_json",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         }
       ]
     },
@@ -543,19 +543,19 @@
       "declarations": [
         {
           "name": "parse_path_parts",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "parse_path_segments",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "parse_path_pieces",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Path_Piece",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         }
       ]
     },
@@ -564,43 +564,43 @@
       "declarations": [
         {
           "name": "print_key_value",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_ms",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_causes",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_string",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_number",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_boolean",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_value",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_error",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_timing",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_timings",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -609,63 +609,63 @@
       "declarations": [
         {
           "name": "Spawned_Process",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "Spawned",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "Spawn_Result",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "spawn",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Spawned_Out",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "spawn_out",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "spawn_process",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_child_process",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "global_spawn",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "register_global_spawn",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "despawn",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "attach_process_error_handlers",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "print_spawn_result",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Restartable_Process",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "spawn_restartable_process",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -674,15 +674,15 @@
       "declarations": [
         {
           "name": "Alea",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "create_random_alea",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "masher",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -691,23 +691,23 @@
       "declarations": [
         {
           "name": "random_float",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "random_int",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "random_boolean",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "random_item",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "shuffle",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -716,7 +716,7 @@
       "declarations": [
         {
           "name": "escape_regexp",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -725,27 +725,27 @@
       "declarations": [
         {
           "name": "Result",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "OK",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "NOT_OK",
-          "kind": "VariableDeclaration"
+          "kind": "variable"
         },
         {
           "name": "unwrap",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Result_Error",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         },
         {
           "name": "unwrap_error",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -754,43 +754,43 @@
       "declarations": [
         {
           "name": "truncate",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "strip_start",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "strip_end",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "strip_after",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "strip_before",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "ensure_start",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "ensure_end",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "deindent",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "plural",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "to_grapheme_count",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         }
       ]
     },
@@ -799,19 +799,19 @@
       "declarations": [
         {
           "name": "Stopwatch",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "create_stopwatch",
-          "kind": "VariableDeclaration"
+          "kind": "function"
         },
         {
           "name": "Timings_Key",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Timings",
-          "kind": "ClassDeclaration"
+          "kind": "class"
         }
       ]
     },
@@ -820,47 +820,47 @@
       "declarations": [
         {
           "name": "Omit_Strict",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Partial_Except",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Partial_Only",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Partial_Values",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Assignable",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Defined",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Not_Null",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Branded",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Flavored",
-          "kind": "TypeAliasDeclaration"
+          "kind": "type"
         },
         {
           "name": "Brand",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         },
         {
           "name": "Flavor",
-          "kind": "InterfaceDeclaration"
+          "kind": "type"
         }
       ]
     }
