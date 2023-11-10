@@ -1,0 +1,686 @@
+{
+  "name": "@grogarden/util",
+  "version": "0.16.0",
+  "modules": {
+    "./array.js": {
+      "path": "array.ts",
+      "declarations": [
+        {
+          "name": "EMPTY_ARRAY",
+          "kind": "variable"
+        },
+        {
+          "name": "to_array",
+          "kind": "function"
+        },
+        {
+          "name": "remove_unordered",
+          "kind": "function"
+        },
+        {
+          "name": "to_next",
+          "kind": "function"
+        }
+      ]
+    },
+    "./async.js": {
+      "path": "async.ts",
+      "declarations": [
+        {
+          "name": "Async_Status",
+          "kind": "type"
+        },
+        {
+          "name": "wait",
+          "kind": "function"
+        }
+      ]
+    },
+    "./counter.js": {
+      "path": "counter.ts",
+      "declarations": [
+        {
+          "name": "Counter",
+          "kind": "type"
+        },
+        {
+          "name": "create_counter",
+          "kind": "function"
+        }
+      ]
+    },
+    "./dom.js": {
+      "path": "dom.ts",
+      "declarations": [
+        {
+          "name": "is_editable",
+          "kind": "function"
+        },
+        {
+          "name": "swallow",
+          "kind": "function"
+        },
+        {
+          "name": "handle_target_value",
+          "kind": "function"
+        },
+        {
+          "name": "is_iframed",
+          "kind": "function"
+        }
+      ]
+    },
+    "./error.js": {
+      "path": "error.ts",
+      "declarations": [
+        {
+          "name": "Unreachable_Error",
+          "kind": "class"
+        }
+      ]
+    },
+    "./function.js": {
+      "path": "function.ts",
+      "declarations": [
+        {
+          "name": "noop",
+          "kind": "function"
+        },
+        {
+          "name": "noop_async",
+          "kind": "function"
+        },
+        {
+          "name": "resolved",
+          "kind": "variable"
+        },
+        {
+          "name": "identity",
+          "kind": "function"
+        },
+        {
+          "name": "Lazy",
+          "kind": "type"
+        },
+        {
+          "name": "lazy",
+          "kind": "function"
+        }
+      ]
+    },
+    "./id.js": {
+      "path": "id.ts",
+      "declarations": [
+        {
+          "name": "Uuid",
+          "kind": "type"
+        },
+        {
+          "name": "is_uuid",
+          "kind": "function"
+        },
+        {
+          "name": "uuid_matcher",
+          "kind": "variable"
+        },
+        {
+          "name": "Client_Id_Creator",
+          "kind": "type"
+        },
+        {
+          "name": "create_client_id_creator",
+          "kind": "function"
+        }
+      ]
+    },
+    "./json.js": {
+      "path": "json.ts",
+      "declarations": [
+        {
+          "name": "Json",
+          "kind": "type"
+        },
+        {
+          "name": "Json_Type",
+          "kind": "type"
+        },
+        {
+          "name": "to_json_type",
+          "kind": "function"
+        }
+      ]
+    },
+    "./log.js": {
+      "path": "log.ts",
+      "declarations": [
+        {
+          "name": "Log_Level",
+          "kind": "type"
+        },
+        {
+          "name": "to_log_level_value",
+          "kind": "function"
+        },
+        {
+          "name": "configure_log_level",
+          "kind": "function"
+        },
+        {
+          "name": "Log",
+          "kind": "type"
+        },
+        {
+          "name": "Logger_State",
+          "kind": "type"
+        },
+        {
+          "name": "Base_Logger",
+          "kind": "class"
+        },
+        {
+          "name": "Logger",
+          "kind": "class"
+        },
+        {
+          "name": "System_Logger",
+          "kind": "class"
+        },
+        {
+          "name": "print_log_label",
+          "kind": "function"
+        }
+      ]
+    },
+    "./map.js": {
+      "path": "map.ts",
+      "declarations": [
+        {
+          "name": "sort_map",
+          "kind": "function"
+        },
+        {
+          "name": "compare_simple_map_entries",
+          "kind": "function"
+        }
+      ]
+    },
+    "./maths.js": {
+      "path": "maths.ts",
+      "declarations": [
+        {
+          "name": "clamp",
+          "kind": "function"
+        },
+        {
+          "name": "lerp",
+          "kind": "function"
+        },
+        {
+          "name": "round",
+          "kind": "function"
+        },
+        {
+          "name": "GR",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_2",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_2i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_3",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_3i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_4",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_4i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_5",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_5i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_6",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_6i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_7",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_7i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_8",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_8i",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_9",
+          "kind": "variable"
+        },
+        {
+          "name": "GR_9i",
+          "kind": "variable"
+        }
+      ]
+    },
+    "./object.js": {
+      "path": "object.ts",
+      "declarations": [
+        {
+          "name": "map_record",
+          "kind": "function"
+        },
+        {
+          "name": "omit",
+          "kind": "function"
+        },
+        {
+          "name": "pick_by",
+          "kind": "function"
+        },
+        {
+          "name": "omit_undefined",
+          "kind": "function"
+        },
+        {
+          "name": "reorder",
+          "kind": "function"
+        },
+        {
+          "name": "EMPTY_OBJECT",
+          "kind": "variable"
+        },
+        {
+          "name": "traverse",
+          "kind": "function"
+        }
+      ]
+    },
+    "./obtainable.js": {
+      "path": "obtainable.ts",
+      "declarations": [
+        {
+          "name": "Unobtain",
+          "kind": "type"
+        },
+        {
+          "name": "create_obtainable",
+          "kind": "function"
+        }
+      ]
+    },
+    "./package.gen.js": {
+      "path": "package.gen.ts",
+      "declarations": []
+    },
+    "./package.js": {
+      "path": "package.ts",
+      "declarations": [
+        {
+          "name": "package_json",
+          "kind": "variable"
+        },
+        {
+          "name": "src_json",
+          "kind": "variable"
+        }
+      ]
+    },
+    "./path.js": {
+      "path": "path.ts",
+      "declarations": [
+        {
+          "name": "parse_path_parts",
+          "kind": "function"
+        },
+        {
+          "name": "parse_path_segments",
+          "kind": "function"
+        },
+        {
+          "name": "parse_path_pieces",
+          "kind": "function"
+        },
+        {
+          "name": "Path_Piece",
+          "kind": "type"
+        }
+      ]
+    },
+    "./print.js": {
+      "path": "print.ts",
+      "declarations": [
+        {
+          "name": "print_key_value",
+          "kind": "function"
+        },
+        {
+          "name": "print_ms",
+          "kind": "function"
+        },
+        {
+          "name": "print_causes",
+          "kind": "function"
+        },
+        {
+          "name": "print_string",
+          "kind": "function"
+        },
+        {
+          "name": "print_number",
+          "kind": "function"
+        },
+        {
+          "name": "print_boolean",
+          "kind": "function"
+        },
+        {
+          "name": "print_value",
+          "kind": "function"
+        },
+        {
+          "name": "print_error",
+          "kind": "function"
+        },
+        {
+          "name": "print_timing",
+          "kind": "function"
+        },
+        {
+          "name": "print_timings",
+          "kind": "function"
+        }
+      ]
+    },
+    "./process.js": {
+      "path": "process.ts",
+      "declarations": [
+        {
+          "name": "Spawned_Process",
+          "kind": "type"
+        },
+        {
+          "name": "Spawned",
+          "kind": "type"
+        },
+        {
+          "name": "Spawn_Result",
+          "kind": "type"
+        },
+        {
+          "name": "spawn",
+          "kind": "function"
+        },
+        {
+          "name": "Spawned_Out",
+          "kind": "type"
+        },
+        {
+          "name": "spawn_out",
+          "kind": "function"
+        },
+        {
+          "name": "spawn_process",
+          "kind": "function"
+        },
+        {
+          "name": "print_child_process",
+          "kind": "function"
+        },
+        {
+          "name": "global_spawn",
+          "kind": "variable"
+        },
+        {
+          "name": "register_global_spawn",
+          "kind": "function"
+        },
+        {
+          "name": "despawn",
+          "kind": "function"
+        },
+        {
+          "name": "attach_process_error_handlers",
+          "kind": "function"
+        },
+        {
+          "name": "print_spawn_result",
+          "kind": "function"
+        },
+        {
+          "name": "Restartable_Process",
+          "kind": "type"
+        },
+        {
+          "name": "spawn_restartable_process",
+          "kind": "function"
+        }
+      ]
+    },
+    "./random_alea.js": {
+      "path": "random_alea.ts",
+      "declarations": [
+        {
+          "name": "Alea",
+          "kind": "type"
+        },
+        {
+          "name": "create_random_alea",
+          "kind": "function"
+        },
+        {
+          "name": "masher",
+          "kind": "function"
+        }
+      ]
+    },
+    "./random.js": {
+      "path": "random.ts",
+      "declarations": [
+        {
+          "name": "random_float",
+          "kind": "function"
+        },
+        {
+          "name": "random_int",
+          "kind": "function"
+        },
+        {
+          "name": "random_boolean",
+          "kind": "function"
+        },
+        {
+          "name": "random_item",
+          "kind": "function"
+        },
+        {
+          "name": "shuffle",
+          "kind": "function"
+        }
+      ]
+    },
+    "./regexp.js": {
+      "path": "regexp.ts",
+      "declarations": [
+        {
+          "name": "escape_regexp",
+          "kind": "function"
+        }
+      ]
+    },
+    "./result.js": {
+      "path": "result.ts",
+      "declarations": [
+        {
+          "name": "Result",
+          "kind": "type"
+        },
+        {
+          "name": "OK",
+          "kind": "variable"
+        },
+        {
+          "name": "NOT_OK",
+          "kind": "variable"
+        },
+        {
+          "name": "unwrap",
+          "kind": "function"
+        },
+        {
+          "name": "Result_Error",
+          "kind": "class"
+        },
+        {
+          "name": "unwrap_error",
+          "kind": "function"
+        }
+      ]
+    },
+    "./string.js": {
+      "path": "string.ts",
+      "declarations": [
+        {
+          "name": "truncate",
+          "kind": "function"
+        },
+        {
+          "name": "strip_start",
+          "kind": "function"
+        },
+        {
+          "name": "strip_end",
+          "kind": "function"
+        },
+        {
+          "name": "strip_after",
+          "kind": "function"
+        },
+        {
+          "name": "strip_before",
+          "kind": "function"
+        },
+        {
+          "name": "ensure_start",
+          "kind": "function"
+        },
+        {
+          "name": "ensure_end",
+          "kind": "function"
+        },
+        {
+          "name": "deindent",
+          "kind": "function"
+        },
+        {
+          "name": "plural",
+          "kind": "function"
+        },
+        {
+          "name": "to_grapheme_count",
+          "kind": "function"
+        }
+      ]
+    },
+    "./timings.js": {
+      "path": "timings.ts",
+      "declarations": [
+        {
+          "name": "Stopwatch",
+          "kind": "type"
+        },
+        {
+          "name": "create_stopwatch",
+          "kind": "function"
+        },
+        {
+          "name": "Timings_Key",
+          "kind": "type"
+        },
+        {
+          "name": "Timings",
+          "kind": "class"
+        }
+      ]
+    },
+    "./types.js": {
+      "path": "types.ts",
+      "declarations": [
+        {
+          "name": "Omit_Strict",
+          "kind": "type"
+        },
+        {
+          "name": "Partial_Except",
+          "kind": "type"
+        },
+        {
+          "name": "Partial_Only",
+          "kind": "type"
+        },
+        {
+          "name": "Partial_Values",
+          "kind": "type"
+        },
+        {
+          "name": "Assignable",
+          "kind": "type"
+        },
+        {
+          "name": "Defined",
+          "kind": "type"
+        },
+        {
+          "name": "Not_Null",
+          "kind": "type"
+        },
+        {
+          "name": "Branded",
+          "kind": "type"
+        },
+        {
+          "name": "Flavored",
+          "kind": "type"
+        },
+        {
+          "name": "Brand",
+          "kind": "type"
+        },
+        {
+          "name": "Flavor",
+          "kind": "type"
+        }
+      ]
+    }
+  }
+}
