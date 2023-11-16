@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -521,6 +521,10 @@
         },
         {
           "name": "random_item",
+          "kind": "function"
+        },
+        {
+          "name": "random_char",
           "kind": "function"
         },
         {
