@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.16.1
+
+### Patch Changes
+
+- 8353169: add `random_char` helper
+
 ## 0.16.0
 
 ### Minor Changes
