@@ -34,7 +34,7 @@
 
 ### Patch Changes
 
-- 753a787: publish $lib/package.ts
+- 753a787: publish $routes/package.ts
 
 ## 0.15.0
 
