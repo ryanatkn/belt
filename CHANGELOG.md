@@ -51,7 +51,7 @@
 ### Minor Changes
 
 - be72efa: fix some snake_case
-- be72efa: bump node engine to 20.7
+- be72efa: bump node engine to 20.10
 - be72efa: upgrade to @grogarden/gro@0.86 from @feltjs/gro@0.83
 - be72efa: add `spawn_out` to process
 

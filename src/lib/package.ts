@@ -14,7 +14,7 @@ export const package_json = {
 	repository: {type: 'git', url: 'git+https://github.com/grogarden/util.git'},
 	bugs: {url: 'https://github.com/grogarden/util/issues', email: 'team@felt.social'},
 	type: 'module',
-	engines: {node: '>=20.7'},
+	engines: {node: '>=20.10'},
 	scripts: {
 		start: 'gro dev',
 		dev: 'gro dev',
