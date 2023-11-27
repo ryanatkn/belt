@@ -339,23 +339,6 @@
         }
       ]
     },
-    "./package.gen.js": {
-      "path": "package.gen.ts",
-      "declarations": []
-    },
-    "./package.js": {
-      "path": "package.ts",
-      "declarations": [
-        {
-          "name": "package_json",
-          "kind": "variable"
-        },
-        {
-          "name": "src_json",
-          "kind": "variable"
-        }
-      ]
-    },
     "./path.js": {
       "path": "path.ts",
       "declarations": [
