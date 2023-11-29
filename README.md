@@ -1,6 +1,6 @@
 # @grogarden/util
 
-> JS utilities to complement the modern web platform 🦕🐋
+> JS utilities to complement the modern web platform 🦕
 > [util.grogarden.org](https://util.grogarden.org)
 
 design:
