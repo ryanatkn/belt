@@ -5,8 +5,9 @@ import type {Src_Json} from '@grogarden/gro/src_json.js';
 
 export const package_json = {
 	name: '@grogarden/util',
-	description: 'JS utilities to complement the modern web platform 🦕🐋',
 	version: '0.17.0',
+	description: 'JS utilities to complement the modern web platform',
+	icon: '🦕',
 	public: true,
 	license: 'MIT',
 	homepage: 'https://util.grogarden.org/',
