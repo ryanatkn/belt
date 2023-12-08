@@ -1,6 +1,11 @@
 export const random_float = (min: number, max: number, random = Math.random): number =>
 	random() * (max - min) + min;
 
+/**
+ * Returns a random integer between `min` and `max` inclusive.
+ * Node's `randomInt` is similar but exclusive of the max value, and makes `min` optional -
+ * https://nodejs.org/docs/latest-v20.x/api/crypto.html#cryptorandomintmin-max-callback
+ */
 export const random_int = (min: number, max: number, random = Math.random): number =>
 	Math.floor(random() * (max - min + 1)) + min;
 
