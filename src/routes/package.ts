@@ -276,7 +276,6 @@ export const src_json = {
 				{name: 'random_int', kind: 'function'},
 				{name: 'random_boolean', kind: 'function'},
 				{name: 'random_item', kind: 'function'},
-				{name: 'random_char', kind: 'function'},
 				{name: 'shuffle', kind: 'function'},
 			],
 		},

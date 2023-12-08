@@ -14,11 +14,6 @@ export const random_boolean = (random = Math.random): boolean => random() > 0.5;
 export const random_item = <T>(arr: T[], random = Math.random): T =>
 	arr[random_int(0, arr.length - 1, random)];
 
-export const random_char = (chars = alphanumerics, random = Math.random): string =>
-	random_item(chars, random);
-
-const alphanumerics = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('');
-
 /**
  * Mutates `array` with random ordering.
  */
