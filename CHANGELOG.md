@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.18.0
+
+### Minor Changes
+
+- fc99da6: remove random_char
+
 ## 0.17.0
 
 ### Minor Changes
