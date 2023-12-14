@@ -68,7 +68,7 @@ export const reorder = <T extends Record<K, any>, K extends string | number>(
 	return result;
 };
 
-export const EMPTY_OBJECT: Record<string | number | symbol, any> & object = Object.freeze({});
+export const EMPTY_OBJECT: Record<string | number | symbol, undefined> & object = Object.freeze({});
 
 /**
  * Performs a depth-first traversal of an object's enumerable properties,
