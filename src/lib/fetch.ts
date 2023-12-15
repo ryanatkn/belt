@@ -25,7 +25,7 @@ export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undef
 	log?: Logger;
 }
 
-export type Fetch_Type = 'json' | 'text' | 'html';
+export type Fetch_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
 
 // TODO refactor with `fetch_github_pull_requests`
 export const fetch_json = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
@@ -165,6 +165,17 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	const parsed = schema ? schema.parse(fetched) : fetched;
 	log?.info('[fetch_data] fetched json', url, parsed);
 	// responses.push({url, data: parsed}); // TODO history
+
+	const result: Fetch_Cache_Item = {
+		url,
+		params: null, // TODO BLOCK method, body (rename params->body probably)
+		key,
+		etag: res.headers.get('etag'),
+		last_modified: res.headers.get('last-modified'),
+		data: parsed, // TODO BLOCK store raw result, or parsed? currently mismatched
+	};
+	cache?.set(result.key, result);
+
 	return parsed;
 };
 
