@@ -58,6 +58,8 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
 	// was returned early by `github_fetch_commit_prs`
 
+	// TODO BLOCK add other headers for the GitHub API like the version?
+
 	const headers = new Headers(request?.headers);
 	if (!headers.has('accept')) {
 		const accept = to_accept_header(url, type);
