@@ -7,10 +7,6 @@ import {EMPTY_OBJECT} from './object.js';
 import {wait} from './async.js';
 import type {Result} from './result.js';
 
-// TODO BLOCK should we manually track ratelimiting? this is broken for multiple domains
-let ratelimit_remaining: number | null = null;
-let ratelimit_reset: Date | null = null;
-
 const RETRY_DELAY = 1000 * 60 * 2; // TODO exponential backoff
 const CACHE_NETWORK_DELAY = 0; // set this to like 1000 to see how the animations behave
 
@@ -39,13 +35,27 @@ caching behaviors
 - orc: always make request, send etag/last_modified, return cached if 304
 - fuz_mastodon: return early by url, and don't update the cache, is a caller concern
 
-- headers to handle:
-	- "x-ratelimit-limit": "300"
-	- "x-ratelimit-remaining": "297"
-
 */
 
-// TODO BLOCK name?
+/**
+ * Calls `fetch` with some additional features:
+ *
+ * - optional Zod schema parsing
+ * - optional cache (different from the browser cache, caller can serialize so e.g. dev setups can avoid hitting the network)
+ * - optional simplified API for authorization and data types (you can still provide headers directly)
+ * - basic ratelimit handling to mitigate unintentional abuse
+ *
+ * Throws on ratelimits (status code 429)
+ * to halt whatever is happpening in its tracks to avoid accidental abuse,
+ * but returns a `Result` in all other cases.
+ * Handling ratelimit headers with more sophistication gets tricky because behavior
+ * differs across services.
+ * (e.g. Mastodon returns an ISO string for `x-ratelimit-reset`,
+ * but GitHub returns `Date.now()/1000`,
+ * and other services may do whatever, or even use a different header)
+ *
+ * @todo fully extend `fetch` by accepting a `Request` arg as an alternative to `url`+`options.request`
+ */
 export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
 	url: string, // TODO probably want to support `string | Request` like `fetch`, but then does `options.request` need to be ignored? maybe just error if both
 	options?: Fetch_Options<T_Schema>,
@@ -58,16 +68,6 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 		log?.info('[fetch_data] cached', cached);
 		if (CACHE_NETWORK_DELAY) await wait(CACHE_NETWORK_DELAY);
 		return Promise.resolve(cached.data);
-	}
-
-	// rate limiting
-	log?.info('[fetch_data] ratelimit status', {ratelimit_remaining, ratelimit_reset});
-	if (ratelimit_reset && (!ratelimit_remaining || ratelimit_remaining < 1)) {
-		if (new Date() > ratelimit_reset) {
-			ratelimit_reset = null; // reset the ratelimit
-		} else {
-			return {ok: false, status: 429, message: 'rate limited'};
-		}
 	}
 
 	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
@@ -115,6 +115,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 			Number(h['x-ratelimit-remaining']) || -1,
 			ratelimit_remaining ?? Infinity,
 		);
+		// TODO BLOCK doesn't work
 		const updated_ratelimit_reset = new Date(h['x-ratelimit-reset'] || Date.now() + RETRY_DELAY);
 		// might be out of order, this is like `Math.max` without coercing
 		if (!ratelimit_reset || ratelimit_reset < updated_ratelimit_reset) {
