@@ -6,7 +6,6 @@ import type {Logger} from './log.js';
 import {EMPTY_OBJECT} from './object.js';
 import {wait} from './async.js';
 import type {Result} from './result.js';
-import {Unreachable_Error} from './error.js';
 
 let ratelimit_remaining: number | null = null;
 let ratelimit_reset: Date | null = null;
@@ -18,8 +17,12 @@ const CACHE_NETWORK_DELAY = 0; // set this to like 1000 to see how the animation
 // TODO BLOCK replace `fetch_json`, `fetch_data`, and `github_fetch_commit_prs`
 
 export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undefined> {
+	/**
+	 * The `request.headers` take precedence over the headers computed from other options.
+	 */
 	request?: RequestInit; // TODO BLOCK or make this a second arg?
 	schema?: T_Schema;
+	token?: string;
 	type?: Fetch_Type;
 	cache?: Fetch_Cache_Data; // TODO BLOCK Mastodon_Cache
 	log?: Logger;
@@ -32,7 +35,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	url: string,
 	options?: Fetch_Options<T_Schema>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
-	const {request, schema, type = 'json', cache, log} = options ?? EMPTY_OBJECT;
+	const {request, schema, token, type = 'json', cache, log} = options ?? EMPTY_OBJECT;
 
 	// local cache?
 	const cached = cache?.get(url);
@@ -55,29 +58,28 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
 	// was returned early by `github_fetch_commit_prs`
 
-	const headers: Record<string, string> = {
-		accept: to_accept_header(url, type),
-		// TODO BLOCK include this? if not get? or just let it be assumed?
-		// 'content-type': 'application/json',
-		...request?.headers, // TODO BLOCK need to extend  `[string, string][] | Record<string, string> | Headers`, maybe change `headers` to `Headers` from the record?
-	};
-	if (token) {
-		headers.authorization = 'Bearer ' + token;
+	const headers = new Headers(request?.headers);
+	if (!headers.has('accept')) {
+		const accept = to_accept_header(url, type);
+		if (accept) headers.set('accept', accept);
+	}
+	if (token && !headers.has('authorization')) {
+		headers.set('authorization', 'Bearer ' + token);
 	}
 	const key = to_fetch_cache_key(url, null);
 	const cached = cache?.get(key);
 	const etag = cached?.etag;
-	if (etag) {
-		headers['if-none-match'] = etag;
+	if (etag && !headers.has('if-none-match')) {
+		headers.set('if-none-match', etag);
 	}
 	const last_modified = cached?.last_modified;
-	if (last_modified) {
-		headers['if-modified-since'] = last_modified;
+	if (last_modified && !headers.has('if-modified-since')) {
+		headers.set('if-modified-since', last_modified);
 	}
 
 	let res: Response;
 	try {
-		log?.info('[fetch_data] fetching url with headers', url, headers);
+		log?.info('[fetch_data] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token, hm
 		res = await fetch(url, {...request, headers});
 		log?.info('[fetch_data] fetched res', url, res);
 	} catch (err) {
@@ -120,7 +122,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 		return cached.data; // TODO BLOCK how to handle 304s when we don't actually have a cached value?
 	}
 
-	const fetched = await res.json(); // TODO BLOCK support text too
+	const fetched = await (type === 'json' ? res.json() : res.text());
 	const parsed = schema ? schema.parse(fetched) : fetched;
 	log?.info('[fetch_data] fetched json', url, parsed);
 	// responses.push({url, data: parsed}); // TODO history
@@ -138,7 +140,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	return parsed;
 };
 
-const to_accept_header = (url: string, type: Fetch_Type): string => {
+const to_accept_header = (url: string, type: Fetch_Type): string | undefined => {
 	if (type === 'html') {
 		return 'text/html';
 	} else if (type === 'text') {
@@ -150,7 +152,7 @@ const to_accept_header = (url: string, type: Fetch_Type): string => {
 			return 'application/json';
 		}
 	}
-	throw new Unreachable_Error(type);
+	return undefined;
 };
 
 const is_github_url = (url: string): boolean => {
