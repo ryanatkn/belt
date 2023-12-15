@@ -7,6 +7,7 @@ import {EMPTY_OBJECT} from './object.js';
 import {wait} from './async.js';
 import type {Result} from './result.js';
 
+// TODO BLOCK should we manually track ratelimiting? look at how it works for mastodon and github
 let ratelimit_remaining: number | null = null;
 let ratelimit_reset: Date | null = null;
 
@@ -29,6 +30,17 @@ export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undef
 }
 
 export type Fetch_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
+
+/*
+
+caching behaviors
+
+- gro: return early by url, update the cache from the result
+- orc: always make request, send etag/last_modified, return cached if 304
+- fuz_mastodon: return early by url, and don't update the cache, is a caller concern
+
+
+*/
 
 // TODO BLOCK name?
 export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
@@ -81,7 +93,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 
 	let res: Response;
 	try {
-		log?.info('[fetch_data] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token, hm
+		log?.info('[fetch_data] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token, hm - helper?
 		res = await fetch(url, {...request, headers});
 		log?.info('[fetch_data] fetched res', url, res);
 	} catch (err) {
@@ -178,9 +190,11 @@ export type Fetch_Cache_Data = Map<Fetch_Cache_Key, Fetch_Cache_Item>;
 
 export const Fetch_Cache_Item = z.object({
 	url: Url,
+	// TODO BLOCK rename to `body`?
 	params: z.any(), // TODO object | null?
 	key: Fetch_Cache_Key,
 	etag: z.string().nullable(),
+	last_modified: z.string().nullable(),
 	data: z.any(), // TODO type?
 });
 // TODO use `z.infer<typeof Fetch_Cache_Item>`, how with generic?
