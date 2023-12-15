@@ -27,56 +27,6 @@ export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undef
 
 export type Fetch_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
 
-// TODO refactor with `fetch_github_pull_requests`
-export const fetch_json = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
-	url: string,
-	options?: Fetch_Options<T_Schema>,
-): Promise<Fetch_Cache_Item<T_Schema | null>> => {
-	const {schema, cache, log} = options || EMPTY_OBJECT;
-	const headers: Record<string, string> = {
-		'content-type': 'application/json',
-		accept: 'application/json',
-	};
-	const key = to_fetch_cache_key(url, null);
-	const cached = cache?.get(key);
-	const etag = cached?.etag;
-	if (etag) {
-		headers['if-none-match'] = etag;
-	}
-	const last_modified = cached?.last_modified;
-	if (last_modified) {
-		headers['if-modified-since'] = last_modified;
-	}
-	try {
-		const res = await fetch(url, {headers}); // TODO handle `retry-after` @see https://docs.github.com/en/rest/guides/best-practices-for-using-the-rest-api
-		if (res.status === 304) {
-			return cached.data;
-		}
-		const fetched = await res.json();
-		const parsed = schema ? schema.parse(fetched) : fetched;
-		const result: Fetch_Cache_Item = {
-			url,
-			params: null,
-			key,
-			etag: res.headers.get('etag'),
-			last_modified: res.headers.get('last-modified'),
-			data: parsed, // TODO BLOCK store raw result, or parsed? currently mismatched
-		};
-		cache?.set(result.key, result);
-		return result;
-	} catch (err) {
-		const result: Fetch_Cache_Item<T_Schema | null> = {
-			url,
-			params: null,
-			key,
-			etag: null,
-			last_modified: null,
-			data: null,
-		}; // TODO better error
-		return result;
-	}
-};
-
 // TODO BLOCK name?
 export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
 	url: string,
