@@ -18,9 +18,9 @@ const CACHE_NETWORK_DELAY = 0; // set this to like 1000 to see how the animation
 // TODO BLOCK replace `fetch_json`, `fetch_data`, and `github_fetch_commit_prs`
 
 export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undefined> {
+	request?: RequestInit; // TODO BLOCK or make this a second arg?
 	schema?: T_Schema;
 	type?: Fetch_Type;
-	accept?: string;
 	cache?: Fetch_Cache_Data; // TODO BLOCK Mastodon_Cache
 	log?: Logger;
 }
@@ -50,7 +50,7 @@ export const fetch_json = async <T_Schema extends z.ZodTypeAny | undefined = und
 	try {
 		const res = await fetch(url, {headers}); // TODO handle `retry-after` @see https://docs.github.com/en/rest/guides/best-practices-for-using-the-rest-api
 		if (res.status === 304) {
-			return cached;
+			return cached.data;
 		}
 		const fetched = await res.json();
 		const parsed = schema ? schema.parse(fetched) : fetched;
@@ -77,11 +77,12 @@ export const fetch_json = async <T_Schema extends z.ZodTypeAny | undefined = und
 	}
 };
 
+// TODO BLOCK name?
 export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
 	url: string,
 	options?: Fetch_Options<T_Schema>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
-	const {schema, type = 'json', accept, cache, log} = options ?? EMPTY_OBJECT;
+	const {request, schema, type = 'json', cache, log} = options ?? EMPTY_OBJECT;
 
 	// local cache?
 	const cached = cache?.get(url);
@@ -101,10 +102,14 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 		}
 	}
 
+	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
+	// was returned early by `github_fetch_commit_prs`
+
 	const headers: Record<string, string> = {
-		accept: accept ?? to_accept_header(url, type),
+		accept: to_accept_header(url, type),
 		// TODO BLOCK include this? if not get? or just let it be assumed?
 		// 'content-type': 'application/json',
+		...request?.headers, // TODO BLOCK need to extend  `[string, string][] | Record<string, string> | Headers`, maybe change `headers` to `Headers` from the record?
 	};
 	if (token) {
 		headers.authorization = 'Bearer ' + token;
@@ -123,7 +128,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	let res: Response;
 	try {
 		log?.info('[fetch_data] fetching url with headers', url, headers);
-		res = await fetch(url, {headers});
+		res = await fetch(url, {...request, headers});
 		log?.info('[fetch_data] fetched res', url, res);
 	} catch (err) {
 		return {ok: false, status: 500, message: 'network error'};
@@ -159,6 +164,10 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 
 	if (!res.ok) {
 		return {ok: false, status: res.status, message: res.statusText};
+	}
+
+	if (res.status === 304) {
+		return cached.data; // TODO BLOCK how to handle 304s when we don't actually have a cached value?
 	}
 
 	const fetched = await res.json(); // TODO BLOCK support text too
@@ -197,44 +206,6 @@ const to_accept_header = (url: string, type: Fetch_Type): string => {
 const is_github_url = (url: string): boolean => {
 	const {hostname} = new URL(url);
 	return hostname === 'github.com' || hostname.endsWith('.github.com');
-};
-
-/**
- *@see https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-pull-requests-associated-with-a-commit
- */
-export const github_fetch_commit_prs = async (
-	owner: string,
-	repo: string,
-	commit_sha: string,
-	token?: string,
-	log?: Logger,
-	cache?: Record<string, any>,
-): Promise<Github_Pull_Request[] | undefined> => {
-	const url = `https://api.github.com/repos/${owner}/${repo}/commits/${commit_sha}/pulls`;
-
-	// TODO BLOCK use fetch_data/json from this url
-
-	if (cache) {
-		const cached: Github_Pull_Request[] | undefined = cache[url];
-		if (cached) {
-			return schema ? schema.parse(cached) : cached;
-		}
-	}
-
-	const headers: Record<string, string> = {accept: 'application/vnd.github+json'};
-	if (token) {
-		headers.authorization = 'Bearer ' + token;
-	}
-
-	const res = await fetch(url, {headers});
-
-	const fetched = await res.json();
-
-	if (cache) cache[url] = fetched;
-
-	const parsed = schema ? schema.parse(fetched) : fetched;
-
-	return parsed;
 };
 
 export interface Fetch_Cache {
