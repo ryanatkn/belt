@@ -4,14 +4,10 @@ import type {Flavored} from '@grogarden/util/types.js';
 
 import type {Logger} from './log.js';
 import {EMPTY_OBJECT} from './object.js';
-import {wait} from './async.js';
 import type {Result} from './result.js';
 
-const RETRY_DELAY = 1000 * 60 * 2; // TODO exponential backoff
-const CACHE_NETWORK_DELAY = 0; // set this to like 1000 to see how the animations behave
-
 // TODO BLOCK should we cache the data parsed or raw? I think it's a little more convenient to have it be raw, but at what cost/complexity? means you also need the schema to lookup
-// TODO BLOCK replace `fetch_json`, `fetch_data`, and `github_fetch_commit_prs`
+// TODO BLOCK replace `fetch_json`, `fetch_quirky`, and `github_fetch_commit_prs`
 
 export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undefined> {
 	/**
@@ -23,6 +19,7 @@ export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undef
 	type?: Fetch_Type;
 	cache?: Fetch_Cache_Data; // TODO BLOCK Mastodon_Cache
 	log?: Logger;
+	fetch?: typeof globalThis.fetch;
 }
 
 export type Fetch_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
@@ -38,15 +35,15 @@ caching behaviors
 */
 
 /**
- * Calls `fetch` with some additional features:
+ * Extends `fetch` with some slightly different behavior and additional features:
  *
  * - optional Zod schema parsing
  * - optional cache (different from the browser cache,
  * 	 the caller can serialize it so e.g. dev setups can avoid hitting the network)
  * - optional simplified API for authorization and data types (you can still provide headers directly)
- * - basic ratelimit handling to mitigate unintentional abuse
+ * - throws on ratelimit errors to mitigate unintentional abuse
  *
- * Throws on ratelimits (status code 429)
+ * Unlike `fetch`, this throws on ratelimits (status code 429)
  * to halt whatever is happpening in its tracks to avoid accidental abuse,
  * but returns a `Result` in all other cases.
  * Handling ratelimit headers with more sophistication gets tricky because behavior
@@ -55,19 +52,27 @@ caching behaviors
  * but GitHub returns `Date.now()/1000`,
  * and other services may do whatever, or even use a different header)
  *
- * @todo fully extend `fetch` by accepting a `Request` arg as an alternative to `url`+`options.request`
+ * It's also stateless to avoid the complexity and bugs,
+ * so we don't try to track `x-ratelimit-remaining` per domain.
  */
-export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
+export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
 	url: string, // TODO probably want to support `string | Request` like `fetch`, but then does `options.request` need to be ignored? maybe just error if both
 	options?: Fetch_Options<T_Schema>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
-	const {request, schema, token, type = 'json', cache, log} = options ?? EMPTY_OBJECT;
+	const {
+		request,
+		schema,
+		token,
+		type = 'json',
+		cache,
+		log,
+		fetch = globalThis.fetch,
+	} = options ?? EMPTY_OBJECT;
 
 	// local cache?
 	const cached = cache?.get(url);
 	if (cached) {
-		log?.info('[fetch_data] cached', cached);
-		if (CACHE_NETWORK_DELAY) await wait(CACHE_NETWORK_DELAY);
+		log?.info('[fetch_quirky] cached', cached);
 		return Promise.resolve(cached.data);
 	}
 
@@ -97,42 +102,16 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 		}
 	}
 
-	let res: Response;
-	try {
-		log?.info('[fetch_data] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token, hm - helper?
-		res = await fetch(url, {...request, headers});
-		log?.info('[fetch_data] fetched res', url, res);
-	} catch (err) {
-		return {ok: false, status: 500, message: 'network error'};
-	}
+	log?.info('[fetch_quirky] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token - helper?
+	const res = await fetch(url, {...request, headers}); // don't catch network errors
+	log?.info('[fetch_quirky] fetched res', url, res);
 
 	const h = Object.fromEntries(res.headers.entries());
-	log?.info('[fetch_data] fetched headers', url, h);
+	log?.info('[fetch_quirky] fetched headers', url, h);
 
-	// rate limiting
-	if ('x-ratelimit-remaining' in h || 'x-ratelimit-reset' in h) {
-		// might be out of order, so use `Math.min`
-		ratelimit_remaining = Math.min(
-			Number(h['x-ratelimit-remaining']) || -1,
-			ratelimit_remaining ?? Infinity,
-		);
-		// TODO BLOCK doesn't work
-		const updated_ratelimit_reset = new Date(h['x-ratelimit-reset'] || Date.now() + RETRY_DELAY);
-		// might be out of order, this is like `Math.max` without coercing
-		if (!ratelimit_reset || ratelimit_reset < updated_ratelimit_reset) {
-			ratelimit_reset = updated_ratelimit_reset;
-		}
-		log?.info('[fetch_data] ratelimit status updated', url, {
-			ratelimit_remaining,
-			ratelimit_reset,
-		});
-	} else if (res.status === 429) {
-		// manual ratelimiting for a 429
-		ratelimit_remaining = 0;
-		const updated_ratelimit_reset = new Date(Date.now() + RETRY_DELAY);
-		if (!ratelimit_reset || ratelimit_reset < updated_ratelimit_reset) {
-			ratelimit_reset = updated_ratelimit_reset;
-		}
+	// throw on ratelimit
+	if (res.status === 429) {
+		throw Error('ratelimited exceeded fetching url ' + url);
 	}
 
 	if (!res.ok) {
@@ -145,7 +124,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 
 	const fetched = await (type === 'json' ? res.json() : res.text());
 	const parsed = schema ? schema.parse(fetched) : fetched;
-	log?.info('[fetch_data] fetched json', url, parsed);
+	log?.info('[fetch_quirky] fetched json', url, parsed);
 	// responses.push({url, data: parsed}); // TODO history
 
 	const result: Fetch_Cache_Item = {
@@ -167,18 +146,13 @@ const to_accept_header = (url: string, type: Fetch_Type): string | undefined => 
 	} else if (type === 'text') {
 		return 'text/plain';
 	} else if (type === 'json') {
-		if (is_github_url(url)) {
+		if (new URL(url).hostname === 'api.github.com') {
 			return 'application/vnd.github+json';
 		} else {
 			return 'application/json';
 		}
 	}
 	return undefined;
-};
-
-const is_github_url = (url: string): boolean => {
-	const {hostname} = new URL(url);
-	return hostname === 'github.com' || hostname.endsWith('.github.com');
 };
 
 export interface Fetch_Cache {
