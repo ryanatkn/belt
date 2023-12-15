@@ -7,7 +7,7 @@ import {EMPTY_OBJECT} from './object.js';
 import {wait} from './async.js';
 import type {Result} from './result.js';
 
-// TODO BLOCK should we manually track ratelimiting? look at how it works for mastodon and github
+// TODO BLOCK should we manually track ratelimiting? this is broken for multiple domains
 let ratelimit_remaining: number | null = null;
 let ratelimit_reset: Date | null = null;
 
@@ -39,6 +39,9 @@ caching behaviors
 - orc: always make request, send etag/last_modified, return cached if 304
 - fuz_mastodon: return early by url, and don't update the cache, is a caller concern
 
+- headers to handle:
+	- "x-ratelimit-limit": "300"
+	- "x-ratelimit-remaining": "297"
 
 */
 
@@ -85,10 +88,12 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 	const etag = cached?.etag;
 	if (etag && !headers.has('if-none-match')) {
 		headers.set('if-none-match', etag);
-	}
-	const last_modified = cached?.last_modified;
-	if (last_modified && !headers.has('if-modified-since')) {
-		headers.set('if-modified-since', last_modified);
+	} else {
+		// fall back to last-modified, ignoring if there's an etag
+		const last_modified = cached?.last_modified;
+		if (last_modified && !headers.has('if-modified-since')) {
+			headers.set('if-modified-since', last_modified);
+		}
 	}
 
 	let res: Response;
@@ -146,7 +151,7 @@ export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = und
 		params: null, // TODO BLOCK method, body (rename params->body probably)
 		key,
 		etag: res.headers.get('etag'),
-		last_modified: res.headers.get('last-modified'),
+		last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		data: parsed, // TODO BLOCK store raw result, or parsed? currently mismatched
 	};
 	cache?.set(result.key, result);
