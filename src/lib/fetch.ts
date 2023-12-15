@@ -47,7 +47,7 @@ caching behaviors
 
 // TODO BLOCK name?
 export const fetch_data = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
-	url: string,
+	url: string, // TODO probably want to support `string | Request` like `fetch`, but then does `options.request` need to be ignored? maybe just error if both
 	options?: Fetch_Options<T_Schema>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
 	const {request, schema, token, type = 'json', cache, log} = options ?? EMPTY_OBJECT;
