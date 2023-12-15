@@ -41,7 +41,8 @@ caching behaviors
  * Calls `fetch` with some additional features:
  *
  * - optional Zod schema parsing
- * - optional cache (different from the browser cache, caller can serialize so e.g. dev setups can avoid hitting the network)
+ * - optional cache (different from the browser cache,
+ * 	 the caller can serialize it so e.g. dev setups can avoid hitting the network)
  * - optional simplified API for authorization and data types (you can still provide headers directly)
  * - basic ratelimit handling to mitigate unintentional abuse
  *
