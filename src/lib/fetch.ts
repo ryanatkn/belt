@@ -11,7 +11,7 @@ import type {Result} from './result.js';
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
 
-export interface Fetch_Options<
+export interface Fetch_Value_Options<
 	T_Schema extends z.ZodTypeAny | undefined = undefined,
 	T_Params = undefined,
 > {
@@ -22,13 +22,14 @@ export interface Fetch_Options<
 	params?: T_Params;
 	schema?: T_Schema;
 	token?: string;
-	type?: Fetch_Type;
-	cache?: Fetch_Cache_Data; // TODO BLOCK Mastodon_Cache
+	type?: Fetch_Value_Type;
+	cache?: Fetch_Cache_Data;
+	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
 }
 
-export type Fetch_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
+export type Fetch_Value_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
 
 /*
 
@@ -67,7 +68,7 @@ export const fetch_value = async <
 	T_Params = undefined,
 >(
 	url: string,
-	options?: Fetch_Options<T_Schema, T_Params>,
+	options?: Fetch_Value_Options<T_Schema, T_Params>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
 	const {
 		request,
@@ -76,6 +77,7 @@ export const fetch_value = async <
 		token,
 		type = 'json',
 		cache,
+		return_early_from_cache,
 		log,
 		fetch = globalThis.fetch,
 	} = options ?? EMPTY_OBJECT;
@@ -83,8 +85,8 @@ export const fetch_value = async <
 	// local cache?
 	const key = to_fetch_cache_key(url, params, request?.method ?? 'GET');
 	const cached = cache?.get(key);
-	if (cached && !cached.etag && !cached.last_modified) {
-		log?.info('[fetch_value] cached without etag or last-modified', cached);
+	if (return_early_from_cache && cached) {
+		log?.info('[fetch_value] cached', cached);
 		return Promise.resolve(cached.data);
 	}
 
@@ -151,7 +153,7 @@ export const fetch_value = async <
 	return parsed;
 };
 
-const add_accept_header = (headers: Headers, url: string, type: Fetch_Type): void => {
+const add_accept_header = (headers: Headers, url: string, type: Fetch_Value_Type): void => {
 	if (!headers.has('accept')) {
 		const accept = to_accept_header(url, type);
 		if (accept) headers.set('accept', accept);
@@ -164,7 +166,7 @@ const add_accept_header = (headers: Headers, url: string, type: Fetch_Type): voi
 	}
 };
 
-const to_accept_header = (url: string, type: Fetch_Type): string | undefined => {
+const to_accept_header = (url: string, type: Fetch_Value_Type): string | undefined => {
 	if (type === 'html') {
 		return 'text/html';
 	} else if (type === 'text') {
