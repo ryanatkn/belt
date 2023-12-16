@@ -67,7 +67,10 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": "@feltjs"
+    "extends": "@feltjs",
+    "rules": {
+      "no-console": 1
+    }
   },
   "prettier": {
     "plugins": [

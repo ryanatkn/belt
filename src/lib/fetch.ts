@@ -7,13 +7,16 @@ import {EMPTY_OBJECT} from './object.js';
 import type {Result} from './result.js';
 
 // TODO BLOCK should we cache the data parsed or raw? I think it's a little more convenient to have it be raw, but at what cost/complexity? means you also need the schema to lookup
-// TODO BLOCK replace `fetch_json`, `fetch_quirky`, and `github_fetch_commit_prs`
 
-export interface Fetch_Options<T_Schema extends z.ZodTypeAny | undefined = undefined> {
+export interface Fetch_Options<
+	T_Schema extends z.ZodTypeAny | undefined = undefined,
+	T_Params = undefined,
+> {
 	/**
 	 * The `request.headers` take precedence over the headers computed from other options.
 	 */
 	request?: RequestInit; // TODO BLOCK or make this a second arg?
+	params?: T_Params;
 	schema?: T_Schema;
 	token?: string;
 	type?: Fetch_Type;
@@ -35,12 +38,13 @@ caching behaviors
 */
 
 /**
- * Extends `fetch` with some slightly different behavior and additional features:
+ * Specializes `fetch` with some slightly different behavior and additional features:
  *
  * - optional Zod schema parsing
  * - optional cache (different from the browser cache,
  * 	 the caller can serialize it so e.g. dev setups can avoid hitting the network)
- * - optional simplified API for authorization and data types (you can still provide headers directly)
+ * - optional simplified API for authorization and data types
+ *   (you can still provide headers directly)
  * - throws on ratelimit errors to mitigate unintentional abuse
  *
  * Unlike `fetch`, this throws on ratelimits (status code 429)
@@ -55,12 +59,16 @@ caching behaviors
  * It's also stateless to avoid the complexity and bugs,
  * so we don't try to track `x-ratelimit-remaining` per domain.
  */
-export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = undefined>(
-	url: string, // TODO probably want to support `string | Request` like `fetch`, but then does `options.request` need to be ignored? maybe just error if both
-	options?: Fetch_Options<T_Schema>,
+export const fetch_value = async <
+	T_Schema extends z.ZodTypeAny | undefined = undefined,
+	T_Params = undefined,
+>(
+	url: string,
+	options?: Fetch_Options<T_Schema, T_Params>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
 	const {
 		request,
+		params,
 		schema,
 		token,
 		type = 'json',
@@ -70,9 +78,10 @@ export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = u
 	} = options ?? EMPTY_OBJECT;
 
 	// local cache?
-	const cached = cache?.get(url);
-	if (cached) {
-		log?.info('[fetch_quirky] cached', cached);
+	const key = to_fetch_cache_key(url, params, request?.method ?? 'GET');
+	const cached = cache?.get(key);
+	if (cached && !cached.etag && !cached.last_modified) {
+		log?.info('[fetch_value] cached without etag or last-modified', cached);
 		return Promise.resolve(cached.data);
 	}
 
@@ -89,8 +98,6 @@ export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = u
 	if (token && !headers.has('authorization')) {
 		headers.set('authorization', 'Bearer ' + token);
 	}
-	const key = to_fetch_cache_key(url, null);
-	const cached = cache?.get(key);
 	const etag = cached?.etag;
 	if (etag && !headers.has('if-none-match')) {
 		headers.set('if-none-match', etag);
@@ -102,12 +109,15 @@ export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = u
 		}
 	}
 
-	log?.info('[fetch_quirky] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token - helper?
-	const res = await fetch(url, {...request, headers}); // don't catch network errors
-	log?.info('[fetch_quirky] fetched res', url, res);
+	const req = new Request(url, {...request, headers});
+	console.log(`req.method`, req.method); // TODO BLOCK defaults correctly?
+
+	log?.info('[fetch_value] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token - helper?
+	const res = await fetch(req); // don't catch network errors
+	log?.info('[fetch_value] fetched res', url, res);
 
 	const h = Object.fromEntries(res.headers.entries());
-	log?.info('[fetch_quirky] fetched headers', url, h);
+	log?.info('[fetch_value] fetched headers', url, h);
 
 	// throw on ratelimit
 	if (res.status === 429) {
@@ -119,17 +129,18 @@ export const fetch_quirky = async <T_Schema extends z.ZodTypeAny | undefined = u
 	}
 
 	if (res.status === 304) {
+		if (!cached) throw Error('unexpected 304 status without a cached value');
 		return cached.data; // TODO BLOCK how to handle 304s when we don't actually have a cached value?
 	}
 
 	const fetched = await (type === 'json' ? res.json() : res.text());
 	const parsed = schema ? schema.parse(fetched) : fetched;
-	log?.info('[fetch_quirky] fetched json', url, parsed);
+	log?.info('[fetch_value] fetched json', url, parsed);
 	// responses.push({url, data: parsed}); // TODO history
 
 	const result: Fetch_Cache_Item = {
 		url,
-		params: null, // TODO BLOCK method, body (rename params->body probably)
+		params,
 		key,
 		etag: res.headers.get('etag'),
 		last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
@@ -171,7 +182,6 @@ export type Fetch_Cache_Data = Map<Fetch_Cache_Key, Fetch_Cache_Item>;
 
 export const Fetch_Cache_Item = z.object({
 	url: Url,
-	// TODO BLOCK rename to `body`?
 	params: z.any(), // TODO object | null?
 	key: Fetch_Cache_Key,
 	etag: z.string().nullable(),
@@ -190,8 +200,8 @@ export interface Fetch_Cache_Item<T_Data = any, T_Params = any> {
 
 export const CACHE_KEY_SEPARATOR = '::';
 
-// TODO canonical form to serialize params, start by sorting object keys
-export const to_fetch_cache_key = (url: Url, params: any, method = 'get'): Fetch_Cache_Key =>
+// TODO canonical form to serialize the params, start by sorting object keys
+export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch_Cache_Key =>
 	method + CACHE_KEY_SEPARATOR + url + CACHE_KEY_SEPARATOR + JSON.stringify(params);
 
 export const serialize_cache = (cache: Fetch_Cache_Data): string =>
