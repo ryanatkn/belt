@@ -82,7 +82,8 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		key = to_fetch_cache_key(url_obj.href, params, method);
 		cached = cache?.get(key);
 		if (return_early_from_cache && cached) {
-			log?.info('[fetch_value] cached', cached);
+			log?.info('[fetch_value] cached locally and returning early', url);
+			log?.debug('[fetch_value] cached value', cached);
 			return {ok: true, value: cached.value};
 		}
 	}
@@ -110,10 +111,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 
 	log?.info('[fetch_value] fetching url with headers', url, print_headers(headers));
 	const res = await fetch(req); // don't catch network errors
-	log?.info('[fetch_value] fetched res', url, res);
-
-	const h = Object.fromEntries(res.headers.entries());
-	log?.info('[fetch_value] fetched headers', url, h);
+	log?.info('[fetch_value] fetched', url, res.status, Object.fromEntries(res.headers.entries()));
 
 	// throw on ratelimit
 	if (res.status === 429) {
@@ -126,6 +124,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
+		log?.info('[fetch_value] cache hit', url);
 		return {ok: true, value: cached.value};
 	}
 
@@ -134,7 +133,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	const fetched = await (!content_type || content_type.includes('json') ? res.json() : res.text()); // TODO hacky
 
 	const parsed = parse ? parse(fetched) : fetched;
-	log?.info('[fetch_value] fetched json', url, parsed);
+	log?.debug('[fetch_value] fetched json', url, parsed);
 
 	if (cache) {
 		const result: Fetch_Cache_Item = {
