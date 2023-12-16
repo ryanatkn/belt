@@ -66,7 +66,7 @@ export const fetch_value = async <
 	const {
 		request,
 		params,
-		schema,
+		parse,
 		token,
 		cache,
 		return_early_from_cache,
@@ -136,7 +136,7 @@ export const fetch_value = async <
 
 	const fetched = await (!content_type || content_type.includes('json') ? res.json() : res.text()); // TODO hacky
 
-	const parsed = schema ? schema.parse(fetched) : fetched;
+	const parsed = parse ? parse(fetched) : fetched;
 	log?.info('[fetch_value] fetched json', url, parsed);
 
 	if (cache) {
