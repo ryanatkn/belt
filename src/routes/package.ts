@@ -49,7 +49,7 @@ export const package_json = {
 		typescript: '^5.3.3',
 		uvu: '^0.5.6',
 	},
-	eslintConfig: {root: true, extends: '@feltjs'},
+	eslintConfig: {root: true, extends: '@feltjs', rules: {'no-console': 1}},
 	prettier: {
 		plugins: ['prettier-plugin-svelte'],
 		useTabs: true,
@@ -64,6 +64,7 @@ export const package_json = {
 		'./counter.js': {default: './dist/counter.js', types: './dist/counter.d.ts'},
 		'./dom.js': {default: './dist/dom.js', types: './dist/dom.d.ts'},
 		'./error.js': {default: './dist/error.js', types: './dist/error.d.ts'},
+		'./fetch.js': {default: './dist/fetch.js', types: './dist/fetch.d.ts'},
 		'./function.js': {default: './dist/function.js', types: './dist/function.d.ts'},
 		'./id.js': {default: './dist/id.js', types: './dist/id.d.ts'},
 		'./json.js': {default: './dist/json.js', types: './dist/json.d.ts'},
@@ -122,6 +123,21 @@ export const src_json = {
 			],
 		},
 		'./error.js': {path: 'error.ts', declarations: [{name: 'Unreachable_Error', kind: 'class'}]},
+		'./fetch.js': {
+			path: 'fetch.ts',
+			declarations: [
+				{name: 'Fetch_Value_Options', kind: 'type'},
+				{name: 'fetch_value', kind: 'function'},
+				{name: 'Fetch_Cache', kind: 'type'},
+				{name: 'Fetch_Cache_Key', kind: 'variable'},
+				{name: 'Fetch_Cache_Data', kind: 'type'},
+				{name: 'Fetch_Cache_Item', kind: 'variable'},
+				{name: 'CACHE_KEY_SEPARATOR', kind: 'variable'},
+				{name: 'to_fetch_cache_key', kind: 'function'},
+				{name: 'serialize_cache', kind: 'function'},
+				{name: 'deserialize_cache', kind: 'function'},
+			],
+		},
 		'./function.js': {
 			path: 'function.ts',
 			declarations: [

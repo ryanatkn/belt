@@ -110,6 +110,10 @@
       "default": "./dist/error.js",
       "types": "./dist/error.d.ts"
     },
+    "./fetch.js": {
+      "default": "./dist/fetch.js",
+      "types": "./dist/fetch.d.ts"
+    },
     "./function.js": {
       "default": "./dist/function.js",
       "types": "./dist/function.d.ts"
