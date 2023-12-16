@@ -1,6 +1,13 @@
 import type {Omit_Strict} from './types.js';
 
 /**
+ * Returns a boolean indicating if `value` is
+ * a plain object, possibly created with `Object.create(null)`.
+ */
+export const is_plain_object = (value: any): boolean =>
+	value ? value.constructor === Object || value.constructor === undefined : false;
+
+/**
  * Iterated keys in `for..in` are always returned as strings,
  * so to prevent usage errors the key type of `mapper` is always a string.
  * Symbols are not enumerable as keys, so they're excluded.

@@ -5,6 +5,7 @@ import type {Flavored} from '@grogarden/util/types.js';
 import type {Logger} from './log.js';
 import {EMPTY_OBJECT} from './object.js';
 import type {Result} from './result.js';
+import {canonicalize} from './json.js';
 
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
@@ -210,9 +211,8 @@ export interface Fetch_Cache_Item<T_Data = any, T_Params = any> {
 
 export const CACHE_KEY_SEPARATOR = '::';
 
-// TODO canonical form to serialize the params, start by sorting object keys
 export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch_Cache_Key =>
-	method + CACHE_KEY_SEPARATOR + url + CACHE_KEY_SEPARATOR + JSON.stringify(params);
+	method + CACHE_KEY_SEPARATOR + url + CACHE_KEY_SEPARATOR + JSON.stringify(canonicalize(params));
 
 export const serialize_cache = (cache: Fetch_Cache_Data): string =>
 	JSON.stringify(Array.from(cache.values()));
