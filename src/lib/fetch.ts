@@ -197,8 +197,13 @@ export type Fetch_Cache_Data = z.infer<typeof Fetch_Cache_Data>;
 
 export const CACHE_KEY_SEPARATOR = '::';
 
-export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch_Cache_Key =>
-	method + CACHE_KEY_SEPARATOR + url + CACHE_KEY_SEPARATOR + JSON.stringify(canonicalize(params));
+export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch_Cache_Key => {
+	let key = method + CACHE_KEY_SEPARATOR + url;
+	if (params != null) {
+		key += CACHE_KEY_SEPARATOR + JSON.stringify(canonicalize(params));
+	}
+	return key;
+};
 
 export const serialize_cache = (cache: Fetch_Cache_Data): string =>
 	JSON.stringify(Array.from(cache.values()));
