@@ -16,7 +16,7 @@ export interface Fetch_Value_Options<
 	/**
 	 * The `request.headers` take precedence over the headers computed from other options.
 	 */
-	request?: RequestInit; // TODO BLOCK or make this a second arg?
+	request?: RequestInit;
 	params?: T_Params;
 	schema?: T_Schema;
 	token?: string;
@@ -25,8 +25,6 @@ export interface Fetch_Value_Options<
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
 }
-
-export type Fetch_Value_Type = 'json' | 'text' | 'html'; // TODO arrayBuffer()/ArrayBuffer, blob()/Blob, formData()/FormData
 
 /*
 
@@ -110,9 +108,12 @@ export const fetch_value = async <
 		}
 	}
 
-	const req = new Request(url_obj, {...request, headers, method});
+	const body =
+		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
 
-	log?.info('[fetch_value] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token - helper?
+	const req = new Request(url_obj, {...request, headers, method, body});
+
+	log?.info('[fetch_value] fetching url with headers', url, print_headers(headers));
 	const res = await fetch(req); // don't catch network errors
 	log?.info('[fetch_value] fetched res', url, res);
 
@@ -167,6 +168,12 @@ const add_accept_header = (headers: Headers, url: URL): void => {
 	) {
 		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
 	}
+};
+
+const print_headers = (headers: Headers): Record<string, string> => {
+	const h = Object.fromEntries(headers.entries());
+	if (h.authorization) h.authorization = '[REDACTED]';
+	return h;
 };
 
 export interface Fetch_Cache {
