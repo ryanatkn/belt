@@ -6,8 +6,6 @@ import type {Logger} from './log.js';
 import {EMPTY_OBJECT} from './object.js';
 import type {Result} from './result.js';
 
-// TODO BLOCK should we cache the data parsed or raw? I think it's a little more convenient to have it be raw, but at what cost/complexity? means you also need the schema to lookup
-
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
 
@@ -22,7 +20,6 @@ export interface Fetch_Value_Options<
 	params?: T_Params;
 	schema?: T_Schema;
 	token?: string;
-	type?: Fetch_Value_Type;
 	cache?: Fetch_Cache_Data;
 	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
@@ -44,12 +41,12 @@ caching behaviors
 /**
  * Specializes `fetch` with some slightly different behavior and additional features:
  *
- * - optional Zod schema parsing
+ * - throws on ratelimit errors to mitigate unintentional abuse
+ * - optional Zod schema parsing of the return value
  * - optional cache (different from the browser cache,
  * 	 the caller can serialize it so e.g. dev setups can avoid hitting the network)
  * - optional simplified API for authorization and data types
  *   (you can still provide headers directly)
- * - throws on ratelimit errors to mitigate unintentional abuse
  *
  * Unlike `fetch`, this throws on ratelimits (status code 429)
  * to halt whatever is happpening in its tracks to avoid accidental abuse,
@@ -67,7 +64,7 @@ export const fetch_value = async <
 	T_Schema extends z.ZodTypeAny | undefined = undefined,
 	T_Params = undefined,
 >(
-	url: string,
+	url: string | URL,
 	options?: Fetch_Value_Options<T_Schema, T_Params>,
 ): Promise<Result<T_Schema, {status: number; message: string}>> => {
 	const {
@@ -75,28 +72,30 @@ export const fetch_value = async <
 		params,
 		schema,
 		token,
-		type = 'json',
 		cache,
 		return_early_from_cache,
 		log,
 		fetch = globalThis.fetch,
 	} = options ?? EMPTY_OBJECT;
 
+	const url_obj = typeof url === 'string' ? new URL(url) : url;
+
+	const method = request?.method ?? (params ? 'POST' : 'GET');
+
 	// local cache?
-	const key = to_fetch_cache_key(url, params, request?.method ?? 'GET');
-	const cached = cache?.get(key);
-	if (return_early_from_cache && cached) {
-		log?.info('[fetch_value] cached', cached);
-		return Promise.resolve(cached.data);
+	let cached;
+	let key;
+	if (cache) {
+		key = to_fetch_cache_key(url_obj.href, params, method);
+		cached = cache?.get(key);
+		if (return_early_from_cache && cached) {
+			log?.info('[fetch_value] cached', cached);
+			return Promise.resolve(cached.data);
+		}
 	}
 
-	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
-	// was returned early by `github_fetch_commit_prs`
-
-	// TODO BLOCK add x-github-api-version?
-
 	const headers = new Headers(request?.headers);
-	add_accept_header(headers, url, type);
+	add_accept_header(headers, url_obj);
 	if (token && !headers.has('authorization')) {
 		headers.set('authorization', 'Bearer ' + token);
 	}
@@ -111,8 +110,7 @@ export const fetch_value = async <
 		}
 	}
 
-	const req = new Request(url, {...request, headers});
-	console.log(`req.method`, req.method); // TODO BLOCK defaults correctly?
+	const req = new Request(url_obj, {...request, headers, method});
 
 	log?.info('[fetch_value] fetching url with headers', url, Object.fromEntries(headers.entries())); // TODO BLOCK logs the token - helper?
 	const res = await fetch(req); // don't catch network errors
@@ -132,30 +130,35 @@ export const fetch_value = async <
 
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
-		return cached.data; // TODO BLOCK how to handle 304s when we don't actually have a cached value?
+		return cached.data;
 	}
 
-	const fetched = await (type === 'json' ? res.json() : res.text());
+	const content_type = res.headers.get('content-type');
+
+	const fetched = await (!content_type || content_type.includes('json') ? res.json() : res.text()); // TODO hacky
+
 	const parsed = schema ? schema.parse(fetched) : fetched;
 	log?.info('[fetch_value] fetched json', url, parsed);
-	// responses.push({url, data: parsed}); // TODO history
 
-	const result: Fetch_Cache_Item = {
-		url,
-		params,
-		key,
-		etag: res.headers.get('etag'),
-		last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
-		data: parsed, // TODO BLOCK store raw result, or parsed? currently mismatched
-	};
-	cache?.set(result.key, result);
+	if (cache) {
+		const result: Fetch_Cache_Item = {
+			key: key!, // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+			url: url_obj.href,
+			params,
+			data: parsed,
+			etag: res.headers.get('etag'),
+			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
+		};
+		cache.set(result.key, result);
+	}
 
 	return parsed;
 };
 
-const add_accept_header = (headers: Headers, url: string, type: Fetch_Value_Type): void => {
+const add_accept_header = (headers: Headers, url: URL): void => {
 	if (!headers.has('accept')) {
-		const accept = to_accept_header(url, type);
+		const accept =
+			url.hostname === 'api.github.com' ? DEFAULT_GITHUB_API_ACCEPT_HEADER : 'application/json';
 		if (accept) headers.set('accept', accept);
 	}
 	if (
@@ -164,21 +167,6 @@ const add_accept_header = (headers: Headers, url: string, type: Fetch_Value_Type
 	) {
 		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
 	}
-};
-
-const to_accept_header = (url: string, type: Fetch_Value_Type): string | undefined => {
-	if (type === 'html') {
-		return 'text/html';
-	} else if (type === 'text') {
-		return 'text/plain';
-	} else if (type === 'json') {
-		if (new URL(url).hostname === 'api.github.com') {
-			return DEFAULT_GITHUB_API_ACCEPT_HEADER;
-		} else {
-			return 'application/json';
-		}
-	}
-	return undefined;
 };
 
 export interface Fetch_Cache {
@@ -196,21 +184,21 @@ export type Fetch_Cache_Key = Flavored<z.infer<typeof Fetch_Cache_Key>, 'Fetch_C
 export type Fetch_Cache_Data = Map<Fetch_Cache_Key, Fetch_Cache_Item>;
 
 export const Fetch_Cache_Item = z.object({
-	url: Url,
-	params: z.any(), // TODO object | null?
 	key: Fetch_Cache_Key,
+	url: Url,
+	params: z.any(),
+	data: z.any(),
 	etag: z.string().nullable(),
 	last_modified: z.string().nullable(),
-	data: z.any(), // TODO type?
 });
 // TODO use `z.infer<typeof Fetch_Cache_Item>`, how with generic?
 export interface Fetch_Cache_Item<T_Data = any, T_Params = any> {
+	key: Fetch_Cache_Key;
 	url: Url;
 	params: T_Params;
-	key: Fetch_Cache_Key;
+	data: T_Data;
 	etag: string | null;
 	last_modified: string | null;
-	data: T_Data;
 }
 
 export const CACHE_KEY_SEPARATOR = '::';
