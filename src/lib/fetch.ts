@@ -182,8 +182,6 @@ export interface Fetch_Cache {
 export const Fetch_Cache_Key = z.string();
 export type Fetch_Cache_Key = Flavored<z.infer<typeof Fetch_Cache_Key>, 'Fetch_Cache_Key'>;
 
-export type Fetch_Cache_Data = Map<Fetch_Cache_Key, Fetch_Cache_Item>;
-
 export const Fetch_Cache_Item = z.object({
 	key: Fetch_Cache_Key,
 	url: Url,
@@ -192,15 +190,10 @@ export const Fetch_Cache_Item = z.object({
 	etag: z.string().nullable(),
 	last_modified: z.string().nullable(),
 });
-// TODO use `z.infer<typeof Fetch_Cache_Item>`, how with generic?
-export interface Fetch_Cache_Item<T_Value = any, T_Params = any> {
-	key: Fetch_Cache_Key;
-	url: Url;
-	params: T_Params;
-	value: T_Value;
-	etag: string | null;
-	last_modified: string | null;
-}
+export type Fetch_Cache_Item = z.infer<typeof Fetch_Cache_Item>;
+
+export const Fetch_Cache_Data = z.map(Fetch_Cache_Key, Fetch_Cache_Item);
+export type Fetch_Cache_Data = z.infer<typeof Fetch_Cache_Data>;
 
 export const CACHE_KEY_SEPARATOR = '::';
 
@@ -212,9 +205,5 @@ export const serialize_cache = (cache: Fetch_Cache_Data): string =>
 
 // TODO generic serialization, these are just maps
 export const deserialize_cache = (serialized: string): Fetch_Cache_Data => {
-	// TODO maybe take a `data_schema` param and `Fetch_Cache_Item.extend({data: data_schema}).parse(...)`
-	const parsed: Fetch_Cache_Item[] = JSON.parse(serialized).map((v: any) =>
-		Fetch_Cache_Item.parse(v),
-	);
-	return new Map(parsed.map((v) => [v.key, v]));
+	return Fetch_Cache_Data.parse(JSON.parse(serialized));
 };
