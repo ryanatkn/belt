@@ -8,6 +8,9 @@ import type {Result} from './result.js';
 
 // TODO BLOCK should we cache the data parsed or raw? I think it's a little more convenient to have it be raw, but at what cost/complexity? means you also need the schema to lookup
 
+const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
+const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
+
 export interface Fetch_Options<
 	T_Schema extends z.ZodTypeAny | undefined = undefined,
 	T_Params = undefined,
@@ -88,13 +91,10 @@ export const fetch_value = async <
 	// TODO BLOCK what's the logic from returning early from the cache? maybe if there's no etag/last_modified?
 	// was returned early by `github_fetch_commit_prs`
 
-	// TODO BLOCK add other headers for the GitHub API like the version?
+	// TODO BLOCK add x-github-api-version?
 
 	const headers = new Headers(request?.headers);
-	if (!headers.has('accept')) {
-		const accept = to_accept_header(url, type);
-		if (accept) headers.set('accept', accept);
-	}
+	add_accept_header(headers, url, type);
 	if (token && !headers.has('authorization')) {
 		headers.set('authorization', 'Bearer ' + token);
 	}
@@ -151,6 +151,19 @@ export const fetch_value = async <
 	return parsed;
 };
 
+const add_accept_header = (headers: Headers, url: string, type: Fetch_Type): void => {
+	if (!headers.has('accept')) {
+		const accept = to_accept_header(url, type);
+		if (accept) headers.set('accept', accept);
+	}
+	if (
+		headers.get('accept') === DEFAULT_GITHUB_API_ACCEPT_HEADER &&
+		!headers.has('x-github-api-version')
+	) {
+		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
+	}
+};
+
 const to_accept_header = (url: string, type: Fetch_Type): string | undefined => {
 	if (type === 'html') {
 		return 'text/html';
@@ -158,7 +171,7 @@ const to_accept_header = (url: string, type: Fetch_Type): string | undefined => 
 		return 'text/plain';
 	} else if (type === 'json') {
 		if (new URL(url).hostname === 'api.github.com') {
-			return 'application/vnd.github+json';
+			return DEFAULT_GITHUB_API_ACCEPT_HEADER;
 		} else {
 			return 'application/json';
 		}
