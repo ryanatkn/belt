@@ -10,16 +10,13 @@ import {canonicalize} from './json.js';
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
 
-export interface Fetch_Value_Options<
-	T_Schema extends z.ZodTypeAny | undefined = undefined,
-	T_Params = undefined,
-> {
+export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 	/**
 	 * The `request.headers` take precedence over the headers computed from other options.
 	 */
 	request?: RequestInit;
 	params?: T_Params;
-	schema?: T_Schema;
+	parse?: (v: any) => T_Value;
 	token?: string;
 	cache?: Fetch_Cache_Data;
 	return_early_from_cache?: boolean; // TODO name?
@@ -41,7 +38,7 @@ caching behaviors
  * Specializes `fetch` with some slightly different behavior and additional features:
  *
  * - throws on ratelimit errors to mitigate unintentional abuse
- * - optional Zod schema parsing of the return value
+ * - optional `parse` function called on the return value
  * - optional cache (different from the browser cache,
  * 	 the caller can serialize it so e.g. dev setups can avoid hitting the network)
  * - optional simplified API for authorization and data types
