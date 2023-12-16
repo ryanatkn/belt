@@ -56,13 +56,10 @@ caching behaviors
  * It's also stateless to avoid the complexity and bugs,
  * so we don't try to track `x-ratelimit-remaining` per domain.
  */
-export const fetch_value = async <
-	T_Schema extends z.ZodTypeAny | undefined = undefined,
-	T_Params = undefined,
->(
+export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	url: string | URL,
-	options?: Fetch_Value_Options<T_Schema, T_Params>,
-): Promise<Result<{value: T_Schema}, {status: number; message: string}>> => {
+	options?: Fetch_Value_Options<T_Value, T_Params>,
+): Promise<Result<{value: T_Value}, {status: number; message: string}>> => {
 	const {
 		request,
 		params,
