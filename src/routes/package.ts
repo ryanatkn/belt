@@ -165,6 +165,7 @@ export const src_json = {
 				{name: 'Json', kind: 'type'},
 				{name: 'Json_Type', kind: 'type'},
 				{name: 'to_json_type', kind: 'function'},
+				{name: 'canonicalize', kind: 'function'},
 			],
 		},
 		'./log.js': {
@@ -217,6 +218,7 @@ export const src_json = {
 		'./object.js': {
 			path: 'object.ts',
 			declarations: [
+				{name: 'is_plain_object', kind: 'function'},
 				{name: 'map_record', kind: 'function'},
 				{name: 'omit', kind: 'function'},
 				{name: 'pick_by', kind: 'function'},
