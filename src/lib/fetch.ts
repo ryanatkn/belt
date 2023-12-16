@@ -65,7 +65,7 @@ export const fetch_value = async <
 >(
 	url: string | URL,
 	options?: Fetch_Value_Options<T_Schema, T_Params>,
-): Promise<Result<T_Schema, {status: number; message: string}>> => {
+): Promise<Result<{value: T_Schema}, {status: number; message: string}>> => {
 	const {
 		request,
 		params,
@@ -89,7 +89,7 @@ export const fetch_value = async <
 		cached = cache?.get(key);
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached', cached);
-			return Promise.resolve(cached.data);
+			return {ok: true, value: cached.value};
 		}
 	}
 
@@ -132,7 +132,7 @@ export const fetch_value = async <
 
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
-		return cached.data;
+		return {ok: true, value: cached.value};
 	}
 
 	const content_type = res.headers.get('content-type');
@@ -147,14 +147,14 @@ export const fetch_value = async <
 			key: key!, // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 			url: url_obj.href,
 			params,
-			data: parsed,
+			value: parsed,
 			etag: res.headers.get('etag'),
 			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		};
 		cache.set(result.key, result);
 	}
 
-	return parsed;
+	return {ok: true, value: parsed};
 };
 
 const add_accept_header = (headers: Headers, url: URL): void => {
@@ -195,16 +195,16 @@ export const Fetch_Cache_Item = z.object({
 	key: Fetch_Cache_Key,
 	url: Url,
 	params: z.any(),
-	data: z.any(),
+	value: z.any(),
 	etag: z.string().nullable(),
 	last_modified: z.string().nullable(),
 });
 // TODO use `z.infer<typeof Fetch_Cache_Item>`, how with generic?
-export interface Fetch_Cache_Item<T_Data = any, T_Params = any> {
+export interface Fetch_Cache_Item<T_Value = any, T_Params = any> {
 	key: Fetch_Cache_Key;
 	url: Url;
 	params: T_Params;
-	data: T_Data;
+	value: T_Value;
 	etag: string | null;
 	last_modified: string | null;
 }

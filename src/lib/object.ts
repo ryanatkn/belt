@@ -3,6 +3,7 @@ import type {Omit_Strict} from './types.js';
 /**
  * Returns a boolean indicating if `value` is
  * a plain object, possibly created with `Object.create(null)`.
+ * But warning! This fails for some obscure corner cases, use a proper library for weird things.
  */
 export const is_plain_object = (value: any): boolean =>
 	value ? value.constructor === Object || value.constructor === undefined : false;
