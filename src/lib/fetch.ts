@@ -109,9 +109,11 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 
 	const req = new Request(url_obj, {...request, headers, method, body});
 
-	log?.info('[fetch_value] fetching url with headers', url, print_headers(headers));
+	log?.info('[fetch_value] fetching url with headers', url);
+	log?.debug('[fetch_value] fetching with headers', print_headers(headers));
 	const res = await fetch(req); // don't catch network errors
-	log?.info('[fetch_value] fetched', url, res.status, Object.fromEntries(res.headers.entries()));
+	log?.info('[fetch_value] fetched', url, res.status, print_ratelimit_headers(res.headers));
+	log?.debug('[fetch_value] fetched', Object.fromEntries(res.headers.entries()));
 
 	// throw on ratelimit
 	if (res.status === 429) {
@@ -169,6 +171,12 @@ const print_headers = (headers: Headers): Record<string, string> => {
 	const h = Object.fromEntries(headers.entries());
 	if (h.authorization) h.authorization = '[REDACTED]';
 	return h;
+};
+
+const print_ratelimit_headers = (headers: Headers): string => {
+	const limit = headers.get('x-ratelimit-limit');
+	const remaining = headers.get('x-ratelimit-remaining');
+	return `ratelimit ${remaining} of ${limit}`;
 };
 
 export interface Fetch_Cache {
