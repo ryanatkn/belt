@@ -23,16 +23,6 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 	fetch?: typeof globalThis.fetch;
 }
 
-/*
-
-caching behaviors
-
-- gro: return early by url, update the cache from the result
-- orc: always make request, send etag/last_modified, return cached if 304
-- fuz_mastodon: return early by url, and don't update the cache, is a caller concern
-
-*/
-
 /**
  * Specializes `fetch` with some slightly different behavior and additional features:
  *
@@ -215,7 +205,5 @@ export const to_fetch_value_cache_key = (
 export const serialize_cache = (cache: Fetch_Value_Cache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
-// TODO generic serialization, these are just maps
-export const deserialize_cache = (serialized: string): Fetch_Value_Cache => {
-	return Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
-};
+export const deserialize_cache = (serialized: string): Fetch_Value_Cache =>
+	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
