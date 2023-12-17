@@ -1,109 +1,115 @@
 # @grogarden/util
 
+## 0.18.1
+
+### Patch Changes
+
+- add `fetch_value` ([#22](https://github.com/grogarden/util/pull/22))
+
 ## 0.18.0
 
 ### Minor Changes
 
-- fc99da6: remove random_char
+- remove random_char ([fc99da6](https://github.com/grogarden/util/commit/fc99da6))
 
 ## 0.17.0
 
 ### Minor Changes
 
-- 6ff3df5: unpublish package.ts
+- unpublish package.ts ([6ff3df5](https://github.com/grogarden/util/commit/6ff3df5))
 
 ## 0.16.1
 
 ### Patch Changes
 
-- 8353169: add `random_char` helper
+- add `random_char` helper ([8353169](https://github.com/grogarden/util/commit/8353169))
 
 ## 0.16.0
 
 ### Minor Changes
 
-- 3990a7f: rename to `Proper_Snakes`
+- rename to `Proper_Snakes` ([#21](https://github.com/grogarden/util/pull/21))
 
 ## 0.15.4
 
 ### Patch Changes
 
-- 47e32d6: add `public: true,` to `package.json`
+- add `public: true,` to `package.json` ([47e32d6](https://github.com/grogarden/util/commit/47e32d6))
 
 ## 0.15.3
 
 ### Patch Changes
 
-- 4b0fc13: upgrade `@grogarden/gro` which adds `modules` to `package.ts`
+- upgrade `@grogarden/gro` which adds `modules` to `package.ts` ([4b0fc13](https://github.com/grogarden/util/commit/4b0fc13))
 
 ## 0.15.2
 
 ### Patch Changes
 
-- 5c6dd69: add shuffle
+- add shuffle ([5c6dd69](https://github.com/grogarden/util/commit/5c6dd69))
 
 ## 0.15.1
 
 ### Patch Changes
 
-- 753a787: publish $routes/package.ts
+- publish $routes/package.ts ([753a787](https://github.com/grogarden/util/commit/753a787))
 
 ## 0.15.0
 
 ### Minor Changes
 
-- 530641a: fix global_spawn name
+- fix global_spawn name ([530641a](https://github.com/grogarden/util/commit/530641a))
 
 ### Patch Changes
 
-- d123ff9: deprecate obtainable
+- deprecate obtainable ([d123ff9](https://github.com/grogarden/util/commit/d123ff9))
 
 ## 0.14.0
 
 ### Minor Changes
 
-- be72efa: fix some snake_case
-- be72efa: bump node engine to 20.10
-- be72efa: upgrade to @grogarden/gro@0.86 from @feltjs/gro@0.83
-- be72efa: add `spawn_out` to process
+- fix some snake_case ([#20](https://github.com/grogarden/util/pull/20))
+- bump node engine to 20.10 ([#20](https://github.com/grogarden/util/pull/20))
+- upgrade to @grogarden/gro@0.86 from @feltjs/gro@0.83 ([#20](https://github.com/grogarden/util/pull/20))
+- add `spawn_out` to process ([#20](https://github.com/grogarden/util/pull/20))
 
 ## 0.13.1
 
 ### Patch Changes
 
-- d62b1bf: fix exports
+- fix exports ([d62b1bf](https://github.com/grogarden/util/commit/d62b1bf))
 
 ## 0.13.0
 
 ### Minor Changes
 
-- e373d3a: missed a spot renaming create_stopwatch
+- missed a spot renaming create_stopwatch ([e373d3a](https://github.com/grogarden/util/commit/e373d3a))
 
 ## 0.12.0
 
 ### Minor Changes
 
-- 823d8ab: switch to `snake_case`
+- switch to `snake_case` ([#19](https://github.com/grogarden/util/pull/19))
 
 ## 0.11.0
 
 ### Minor Changes
 
-- d7f4dc9: increment timing keys instead of throwing
+- increment timing keys instead of throwing ([#18](https://github.com/grogarden/util/pull/18))
 
 ## 0.10.1
 
 ### Patch Changes
 
-- 286aa46: fix PUBLIC_LOG_LEVEL env var usage
-- db08052: move to util.grogarden.org from util.felt.dev
+- fix PUBLIC_LOG_LEVEL env var usage ([286aa46](https://github.com/grogarden/util/commit/286aa46))
+- move to util.grogarden.org from util.felt.dev ([db08052](https://github.com/grogarden/util/commit/db08052))
 
 ## 0.10.0
 
 ### Minor Changes
 
-- 87109aa: upgrade gro
-- 87109aa: rename to `@grogarden/util` from `@feltjs/util`
+- upgrade gro ([#17](https://github.com/grogarden/util/pull/17))
+- rename to `@grogarden/util` from `@feltjs/util` ([#17](https://github.com/grogarden/util/pull/17))
 
 ## 0.9.1
 
