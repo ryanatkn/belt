@@ -72,6 +72,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	} = options ?? EMPTY_OBJECT;
 
 	const url_obj = typeof url === 'string' ? new URL(url) : url;
+	const url_str: Url = url_obj.href;
 
 	const method = request?.method ?? (params ? 'POST' : 'GET');
 
@@ -79,10 +80,10 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	let cached;
 	let key;
 	if (cache) {
-		key = to_fetch_cache_key(url_obj.href, params, method);
+		key = to_fetch_cache_key(url_str, params, method);
 		cached = cache?.get(key);
 		if (return_early_from_cache && cached) {
-			log?.info('[fetch_value] cached locally and returning early', url);
+			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
 			return {ok: true, value: cached.value};
 		}
@@ -141,7 +142,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	if (key) {
 		const result: Fetch_Cache_Item = {
 			key,
-			url: url_obj.href,
+			url: url_str,
 			params,
 			value: parsed,
 			etag: res.headers.get('etag'),
