@@ -177,7 +177,7 @@ const print_headers = (headers: Headers): Record<string, string> => {
 const print_ratelimit_headers = (headers: Headers): string => {
 	const limit = headers.get('x-ratelimit-limit');
 	const remaining = headers.get('x-ratelimit-remaining');
-	return `ratelimit ${remaining} of ${limit}`;
+	return limit || remaining ? `ratelimit ${remaining} of ${limit}` : '';
 };
 
 export interface Fetch_Cache {
