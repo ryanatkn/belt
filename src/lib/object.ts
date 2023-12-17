@@ -1,6 +1,14 @@
 import type {Omit_Strict} from './types.js';
 
 /**
+ * Returns a boolean indicating if `value` is
+ * a plain object, possibly created with `Object.create(null)`.
+ * But warning! This fails for some obscure corner cases, use a proper library for weird things.
+ */
+export const is_plain_object = (value: any): boolean =>
+	value ? value.constructor === Object || value.constructor === undefined : false;
+
+/**
  * Iterated keys in `for..in` are always returned as strings,
  * so to prevent usage errors the key type of `mapper` is always a string.
  * Symbols are not enumerable as keys, so they're excluded.
@@ -68,7 +76,7 @@ export const reorder = <T extends Record<K, any>, K extends string | number>(
 	return result;
 };
 
-export const EMPTY_OBJECT: Record<string | number | symbol, any> & object = Object.freeze({});
+export const EMPTY_OBJECT: Record<string | number | symbol, undefined> & object = Object.freeze({});
 
 /**
  * Performs a depth-first traversal of an object's enumerable properties,
