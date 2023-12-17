@@ -18,7 +18,7 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 	params?: T_Params;
 	parse?: (v: any) => T_Value;
 	token?: string;
-	cache?: Fetch_Value_Cache;
+	cache?: Fetch_Value_Cache | null;
 	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
