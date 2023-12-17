@@ -87,7 +87,6 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			return {ok: true, value: cached.value};
 		}
 	}
-	console.log(`key`, !!cache, key, !!cached);
 
 	const headers = new Headers(request?.headers);
 	add_accept_header(headers, url_obj);
@@ -137,16 +136,16 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	const parsed = parse ? parse(fetched) : fetched;
 	log?.debug('[fetch_value] fetched json', url, parsed);
 
-	if (cache) {
+	if (key) {
 		const result: Fetch_Cache_Item = {
-			key: key!, // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+			key,
 			url: url_obj.href,
 			params,
 			value: parsed,
 			etag: res.headers.get('etag'),
 			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		};
-		cache.set(result.key, result);
+		cache!.set(result.key, result);
 	}
 
 	return {ok: true, value: parsed};
