@@ -198,7 +198,7 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
-	static log: Log = console.log.bind(console);
+	static log: Log = console.log.bind(console); // eslint-disable-line no-console
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
 	static error: Log_Level_Defaults = {
@@ -242,7 +242,7 @@ export class System_Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configure_log_level`
-	static log: Log = console.log.bind(console);
+	static log: Log = console.log.bind(console); // eslint-disable-line no-console
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;
 	static suffixes = Logger.suffixes;

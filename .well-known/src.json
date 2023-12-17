@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -79,6 +79,43 @@
         }
       ]
     },
+    "./fetch.js": {
+      "path": "fetch.ts",
+      "declarations": [
+        {
+          "name": "Fetch_Value_Options",
+          "kind": "type"
+        },
+        {
+          "name": "fetch_value",
+          "kind": "function"
+        },
+        {
+          "name": "Fetch_Value_Cache_Key",
+          "kind": "variable"
+        },
+        {
+          "name": "Fetch_Value_Cache_Item",
+          "kind": "variable"
+        },
+        {
+          "name": "Fetch_Value_Cache",
+          "kind": "variable"
+        },
+        {
+          "name": "to_fetch_value_cache_key",
+          "kind": "function"
+        },
+        {
+          "name": "serialize_cache",
+          "kind": "function"
+        },
+        {
+          "name": "deserialize_cache",
+          "kind": "function"
+        }
+      ]
+    },
     "./function.js": {
       "path": "function.ts",
       "declarations": [
@@ -146,6 +183,10 @@
         },
         {
           "name": "to_json_type",
+          "kind": "function"
+        },
+        {
+          "name": "canonicalize",
           "kind": "function"
         }
       ]
@@ -296,6 +337,10 @@
     "./object.js": {
       "path": "object.ts",
       "declarations": [
+        {
+          "name": "is_plain_object",
+          "kind": "function"
+        },
         {
           "name": "map_record",
           "kind": "function"
