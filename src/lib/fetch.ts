@@ -18,7 +18,7 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 	params?: T_Params;
 	parse?: (v: any) => T_Value;
 	token?: string;
-	cache?: Fetch_Cache_Data;
+	cache?: Fetch_Value_Cache_Data;
 	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
@@ -80,7 +80,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	let cached;
 	let key;
 	if (cache) {
-		key = to_fetch_cache_key(url_str, params, method);
+		key = to_fetch_value_cache_key(url_str, params, method);
 		cached = cache?.get(key);
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
@@ -140,7 +140,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	log?.debug('[fetch_value] fetched json', url, parsed);
 
 	if (key) {
-		const result: Fetch_Cache_Item = {
+		const result: Fetch_Value_Cache_Item = {
 			key,
 			url: url_str,
 			params,
@@ -180,45 +180,53 @@ const print_ratelimit_headers = (headers: Headers): string => {
 	return limit || remaining ? `ratelimit ${remaining} of ${limit}` : '';
 };
 
-export interface Fetch_Cache {
+// TODO BLOCK is not being used
+export interface Fetch_Value_Cache {
 	name: string;
-	data: Fetch_Cache_Data; // TODO probably expose an API for this instead of passing the map directly
+	data: Fetch_Value_Cache_Data; // TODO probably expose an API for this instead of passing the map directly
 	/**
 	 * @returns a boolean indicating if anything changed, returns `false` if it was a no-op
 	 */
 	save: () => Promise<boolean>;
 }
 
-export const Fetch_Cache_Key = z.string();
-export type Fetch_Cache_Key = Flavored<z.infer<typeof Fetch_Cache_Key>, 'Fetch_Cache_Key'>;
+export const Fetch_Value_Cache_Key = z.string();
+export type Fetch_Value_Cache_Key = Flavored<
+	z.infer<typeof Fetch_Value_Cache_Key>,
+	'Fetch_Value_Cache_Key'
+>;
 
-export const Fetch_Cache_Item = z.object({
-	key: Fetch_Cache_Key,
+export const Fetch_Value_Cache_Item = z.object({
+	key: Fetch_Value_Cache_Key,
 	url: Url,
 	params: z.any(),
 	value: z.any(),
 	etag: z.string().nullable(),
 	last_modified: z.string().nullable(),
 });
-export type Fetch_Cache_Item = z.infer<typeof Fetch_Cache_Item>;
+export type Fetch_Value_Cache_Item = z.infer<typeof Fetch_Value_Cache_Item>;
 
-export const Fetch_Cache_Data = z.map(Fetch_Cache_Key, Fetch_Cache_Item);
-export type Fetch_Cache_Data = z.infer<typeof Fetch_Cache_Data>;
+export const Fetch_Value_Cache_Data = z.map(Fetch_Value_Cache_Key, Fetch_Value_Cache_Item);
+export type Fetch_Value_Cache_Data = z.infer<typeof Fetch_Value_Cache_Data>;
 
-export const CACHE_KEY_SEPARATOR = '::';
+const KEY_SEPARATOR = '::';
 
-export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch_Cache_Key => {
-	let key = method + CACHE_KEY_SEPARATOR + url;
+export const to_fetch_value_cache_key = (
+	url: Url,
+	params: any,
+	method: string,
+): Fetch_Value_Cache_Key => {
+	let key = method + KEY_SEPARATOR + url;
 	if (params != null) {
-		key += CACHE_KEY_SEPARATOR + JSON.stringify(canonicalize(params));
+		key += KEY_SEPARATOR + JSON.stringify(canonicalize(params));
 	}
 	return key;
 };
 
-export const serialize_cache = (cache: Fetch_Cache_Data): string =>
+export const serialize_cache = (cache: Fetch_Value_Cache_Data): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
 // TODO generic serialization, these are just maps
-export const deserialize_cache = (serialized: string): Fetch_Cache_Data => {
-	return Fetch_Cache_Data.parse(new Map(JSON.parse(serialized)));
+export const deserialize_cache = (serialized: string): Fetch_Value_Cache_Data => {
+	return Fetch_Value_Cache_Data.parse(new Map(JSON.parse(serialized)));
 };
