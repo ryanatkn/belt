@@ -18,7 +18,7 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 	params?: T_Params;
 	parse?: (v: any) => T_Value;
 	token?: string;
-	cache?: Fetch_Value_Cache_Data;
+	cache?: Fetch_Value_Cache;
 	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
@@ -196,8 +196,8 @@ export const Fetch_Value_Cache_Item = z.object({
 });
 export type Fetch_Value_Cache_Item = z.infer<typeof Fetch_Value_Cache_Item>;
 
-export const Fetch_Value_Cache_Data = z.map(Fetch_Value_Cache_Key, Fetch_Value_Cache_Item);
-export type Fetch_Value_Cache_Data = z.infer<typeof Fetch_Value_Cache_Data>;
+export const Fetch_Value_Cache = z.map(Fetch_Value_Cache_Key, Fetch_Value_Cache_Item);
+export type Fetch_Value_Cache = z.infer<typeof Fetch_Value_Cache>;
 
 const KEY_SEPARATOR = '::';
 
@@ -213,10 +213,10 @@ export const to_fetch_value_cache_key = (
 	return key;
 };
 
-export const serialize_cache = (cache: Fetch_Value_Cache_Data): string =>
+export const serialize_cache = (cache: Fetch_Value_Cache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
 // TODO generic serialization, these are just maps
-export const deserialize_cache = (serialized: string): Fetch_Value_Cache_Data => {
-	return Fetch_Value_Cache_Data.parse(new Map(JSON.parse(serialized)));
+export const deserialize_cache = (serialized: string): Fetch_Value_Cache => {
+	return Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
 };

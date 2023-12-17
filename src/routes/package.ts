@@ -130,7 +130,7 @@ export const src_json = {
 				{name: 'fetch_value', kind: 'function'},
 				{name: 'Fetch_Value_Cache_Key', kind: 'variable'},
 				{name: 'Fetch_Value_Cache_Item', kind: 'variable'},
-				{name: 'Fetch_Value_Cache_Data', kind: 'variable'},
+				{name: 'Fetch_Value_Cache', kind: 'variable'},
 				{name: 'to_fetch_value_cache_key', kind: 'function'},
 				{name: 'serialize_cache', kind: 'function'},
 				{name: 'deserialize_cache', kind: 'function'},
