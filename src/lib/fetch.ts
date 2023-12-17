@@ -1,5 +1,4 @@
 import {z} from 'zod';
-import {Url} from '@grogarden/gro/paths.js';
 import type {Flavored} from '@grogarden/util/types.js';
 
 import type {Logger} from './log.js';
@@ -72,7 +71,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	} = options ?? EMPTY_OBJECT;
 
 	const url_obj = typeof url === 'string' ? new URL(url) : url;
-	const url_str: Url = url_obj.href;
+	const url_str = url_obj.href;
 
 	const method = request?.method ?? (params ? 'POST' : 'GET');
 
@@ -188,7 +187,7 @@ export type Fetch_Value_Cache_Key = Flavored<
 
 export const Fetch_Value_Cache_Item = z.object({
 	key: Fetch_Value_Cache_Key,
-	url: Url,
+	url: z.string(),
 	params: z.any(),
 	value: z.any(),
 	etag: z.string().nullable(),
@@ -202,7 +201,7 @@ export type Fetch_Value_Cache = z.infer<typeof Fetch_Value_Cache>;
 const KEY_SEPARATOR = '::';
 
 export const to_fetch_value_cache_key = (
-	url: Url,
+	url: string,
 	params: any,
 	method: string,
 ): Fetch_Value_Cache_Key => {
