@@ -2,4 +2,4 @@
 '@grogarden/util': patch
 ---
 
-add fetch helpers
+add `fetch_value`
