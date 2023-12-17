@@ -87,6 +87,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			return {ok: true, value: cached.value};
 		}
 	}
+	console.log(`key`, !!cache, key, !!cached);
 
 	const headers = new Headers(request?.headers);
 	add_accept_header(headers, url_obj);
@@ -206,9 +207,9 @@ export const to_fetch_cache_key = (url: Url, params: any, method: string): Fetch
 };
 
 export const serialize_cache = (cache: Fetch_Cache_Data): string =>
-	JSON.stringify(Array.from(cache.values()));
+	JSON.stringify(Array.from(cache.entries()));
 
 // TODO generic serialization, these are just maps
 export const deserialize_cache = (serialized: string): Fetch_Cache_Data => {
-	return Fetch_Cache_Data.parse(JSON.parse(serialized));
+	return Fetch_Cache_Data.parse(new Map(JSON.parse(serialized)));
 };
