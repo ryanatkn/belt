@@ -180,16 +180,6 @@ const print_ratelimit_headers = (headers: Headers): string => {
 	return limit || remaining ? `ratelimit ${remaining} of ${limit}` : '';
 };
 
-// TODO BLOCK is not being used
-export interface Fetch_Value_Cache {
-	name: string;
-	data: Fetch_Value_Cache_Data; // TODO probably expose an API for this instead of passing the map directly
-	/**
-	 * @returns a boolean indicating if anything changed, returns `false` if it was a no-op
-	 */
-	save: () => Promise<boolean>;
-}
-
 export const Fetch_Value_Cache_Key = z.string();
 export type Fetch_Value_Cache_Key = Flavored<
 	z.infer<typeof Fetch_Value_Cache_Key>,

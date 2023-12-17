@@ -128,7 +128,6 @@ export const src_json = {
 			declarations: [
 				{name: 'Fetch_Value_Options', kind: 'type'},
 				{name: 'fetch_value', kind: 'function'},
-				{name: 'Fetch_Value_Cache', kind: 'type'},
 				{name: 'Fetch_Value_Cache_Key', kind: 'variable'},
 				{name: 'Fetch_Value_Cache_Item', kind: 'variable'},
 				{name: 'Fetch_Value_Cache_Data', kind: 'variable'},
