@@ -119,14 +119,15 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		throw Error('ratelimited exceeded fetching url ' + url);
 	}
 
-	if (!res.ok) {
-		return {ok: false, status: res.status, message: res.statusText};
-	}
-
+	// return from cache if it hits
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
 		log?.info('[fetch_value] cache hit', url);
 		return {ok: true, value: cached.value};
+	}
+
+	if (!res.ok) {
+		return {ok: false, status: res.status, message: res.statusText};
 	}
 
 	const content_type = res.headers.get('content-type');
