@@ -145,7 +145,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			etag: res.headers.get('etag'),
 			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		};
-		cache!.set(result.key, result);
+		cache!.set(key, result);
 	}
 
 	return {ok: true, value: parsed};
