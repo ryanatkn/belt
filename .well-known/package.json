@@ -47,7 +47,7 @@
     "@feltjs/eslint-config": "^0.4.1",
     "@fuz.dev/fuz": "^0.81.0",
     "@fuz.dev/fuz_library": "^0.23.0",
-    "@grogarden/gro": "^0.106.0",
+    "@grogarden/gro": "^0.107.0",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.4",
     "@sveltejs/package": "^2.2.4",
