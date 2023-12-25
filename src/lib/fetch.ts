@@ -45,7 +45,8 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
  * It's also stateless to avoid the complexity and bugs,
  * so we don't try to track `x-ratelimit-remaining` per domain.
  *
- * If the `value` is cached, only a safe subset of the `headers` are returned.
+ * If the `value` is cached, only the cached safe subset of the `headers` are returned.
+ * (currently just `etag` and `last-modified`)
  * Otherwise the full `res.headers` are included.
  */
 export const fetch_value = async <T_Value = any, T_Params = undefined>(
