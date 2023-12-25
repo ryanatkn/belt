@@ -5,7 +5,7 @@ import type {Src_Json} from '@grogarden/gro/src_json.js';
 
 export const package_json = {
 	name: '@grogarden/util',
-	version: '0.18.2',
+	version: '0.18.3',
 	description: 'JS utilities to complement the modern web platform',
 	icon: '🦕',
 	public: true,
@@ -89,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@grogarden/util',
-	version: '0.18.2',
+	version: '0.18.3',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
