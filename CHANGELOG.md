@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.18.2
+
+### Patch Changes
+
+- add a default 'content-type' header for `fetch_value` ([2126d03](https://github.com/grogarden/util/commit/2126d03))
+
 ## 0.18.1
 
 ### Patch Changes
