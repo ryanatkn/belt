@@ -74,7 +74,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
-			return {ok: true, value: cached.value, headers: new Headers(cached.headers)};
+			return {ok: true, value: cached.value, headers: new Headers(TODO_reconstruct)};
 		}
 	}
 
@@ -128,7 +128,8 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
 		log?.info('[fetch_value] cache hit', url);
-		return {ok: true, value: cached.value, headers: new Headers(cached.headers)};
+		// TODO BLOCK construct headers using these values if cached
+		return {ok: true, value: cached.value, headers: new Headers(TODO_reconstruct)};
 	}
 
 	if (!res.ok) {
@@ -148,7 +149,6 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			url: url_str,
 			params,
 			value: parsed,
-			// TODO BLOCK if this includes headers, we don't need to cache these separately
 			etag: res.headers.get('etag'),
 			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		};
