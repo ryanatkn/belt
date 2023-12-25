@@ -74,7 +74,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
-			return {ok: true, value: cached.value, headers: new Headers(TODO_reconstruct)};
+			return {ok: true, value: cached.value, headers: to_cached_headers(cached)};
 		}
 	}
 
@@ -128,8 +128,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
 		log?.info('[fetch_value] cache hit', url);
-		// TODO BLOCK construct headers using these values if cached
-		return {ok: true, value: cached.value, headers: new Headers(TODO_reconstruct)};
+		return {ok: true, value: cached.value, headers: to_cached_headers(cached)};
 	}
 
 	if (!res.ok) {
@@ -156,6 +155,20 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	}
 
 	return {ok: true, value: parsed, headers: res.headers};
+};
+
+/**
+ * Returns a subset of headers that are safe to store in a `fetch_value` cache.
+ */
+const to_cached_headers = (cached: Fetch_Value_Cache_Item): Headers => {
+	const headers = new Headers();
+	if (cached.etag) {
+		headers.set('etag', cached.etag);
+	}
+	if (cached.last_modified) {
+		headers.set('last-modified', cached.last_modified);
+	}
+	return headers;
 };
 
 const print_headers = (headers: Headers): Record<string, string> => {
@@ -207,4 +220,4 @@ export const serialize_cache = (cache: Fetch_Value_Cache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
 export const deserialize_cache = (serialized: string): Fetch_Value_Cache =>
-	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized))); // TODO BLOCK include headers?
+	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
