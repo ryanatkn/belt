@@ -78,8 +78,25 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		}
 	}
 
+	const body =
+		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
+
 	const headers = new Headers(request?.headers);
-	add_accept_header(headers, url_obj);
+	if (!headers.has('accept')) {
+		headers.set(
+			'accept',
+			url_obj.hostname === 'api.github.com' ? DEFAULT_GITHUB_API_ACCEPT_HEADER : 'application/json',
+		);
+	}
+	if (
+		headers.get('accept') === DEFAULT_GITHUB_API_ACCEPT_HEADER &&
+		!headers.has('x-github-api-version')
+	) {
+		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
+	}
+	if (body && !headers.has('content-type')) {
+		headers.set('content-type', 'application/json');
+	}
 	if (token && !headers.has('authorization')) {
 		headers.set('authorization', 'Bearer ' + token);
 	}
@@ -93,9 +110,6 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			headers.set('if-modified-since', last_modified);
 		}
 	}
-
-	const body =
-		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
 
 	const req = new Request(url_obj, {...request, headers, method, body});
 
@@ -141,20 +155,6 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	}
 
 	return {ok: true, value: parsed};
-};
-
-const add_accept_header = (headers: Headers, url: URL): void => {
-	if (!headers.has('accept')) {
-		const accept =
-			url.hostname === 'api.github.com' ? DEFAULT_GITHUB_API_ACCEPT_HEADER : 'application/json';
-		if (accept) headers.set('accept', accept);
-	}
-	if (
-		headers.get('accept') === DEFAULT_GITHUB_API_ACCEPT_HEADER &&
-		!headers.has('x-github-api-version')
-	) {
-		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
-	}
 };
 
 const print_headers = (headers: Headers): Record<string, string> => {

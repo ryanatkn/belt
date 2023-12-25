@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "modules": {
     "./array.js": {
       "path": "array.ts",
