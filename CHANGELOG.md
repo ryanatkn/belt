@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.18.3
+
+### Patch Changes
+
+- return headers from `fetch_value` ([#24](https://github.com/grogarden/util/pull/24))
+
 ## 0.18.2
 
 ### Patch Changes
