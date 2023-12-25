@@ -48,7 +48,7 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
 export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	url: string | URL,
 	options?: Fetch_Value_Options<T_Value, T_Params>,
-): Promise<Result<{value: T_Value}, {status: number; message: string}>> => {
+): Promise<Result<{value: T_Value; headers: Headers}, {status: number; message: string}>> => {
 	const {
 		request,
 		params,
@@ -74,7 +74,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
-			return {ok: true, value: cached.value};
+			return {ok: true, value: cached.value, headers: new Headers(cached.headers)};
 		}
 	}
 
@@ -128,7 +128,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
 		log?.info('[fetch_value] cache hit', url);
-		return {ok: true, value: cached.value};
+		return {ok: true, value: cached.value, headers: new Headers(cached.headers)};
 	}
 
 	if (!res.ok) {
@@ -154,7 +154,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		cache!.set(key, result);
 	}
 
-	return {ok: true, value: parsed};
+	return {ok: true, value: parsed, headers: res.headers};
 };
 
 const print_headers = (headers: Headers): Record<string, string> => {
@@ -206,4 +206,4 @@ export const serialize_cache = (cache: Fetch_Value_Cache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
 export const deserialize_cache = (serialized: string): Fetch_Value_Cache =>
-	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
+	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized))); // TODO BLOCK include headers?
