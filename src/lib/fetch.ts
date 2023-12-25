@@ -148,6 +148,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			url: url_str,
 			params,
 			value: parsed,
+			// TODO BLOCK if this includes headers, we don't need to cache these separately
 			etag: res.headers.get('etag'),
 			last_modified: res.headers.get('etag') ? null : res.headers.get('last-modified'), // fall back to last-modified, ignoring if there's an etag
 		};
