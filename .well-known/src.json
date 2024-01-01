@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.18.3",
+  "version": "0.19.0",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -409,6 +409,30 @@
       "path": "print.ts",
       "declarations": [
         {
+          "name": "Colorize",
+          "kind": "type"
+        },
+        {
+          "name": "Colors",
+          "kind": "type"
+        },
+        {
+          "name": "kleur_colors",
+          "kind": "variable"
+        },
+        {
+          "name": "disabled_colors",
+          "kind": "variable"
+        },
+        {
+          "name": "get_colors",
+          "kind": "function"
+        },
+        {
+          "name": "set_colors",
+          "kind": "function"
+        },
+        {
           "name": "print_key_value",
           "kind": "function"
         },
@@ -417,7 +441,7 @@
           "kind": "function"
         },
         {
-          "name": "print_causes",
+          "name": "print_number_with_separators",
           "kind": "function"
         },
         {
