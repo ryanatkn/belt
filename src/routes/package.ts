@@ -5,7 +5,7 @@ import type {Src_Json} from '@grogarden/gro/src_json.js';
 
 export const package_json = {
 	name: '@grogarden/util',
-	version: '0.18.1',
+	version: '0.18.3',
 	description: 'JS utilities to complement the modern web platform',
 	icon: '🦕',
 	public: true,
@@ -31,17 +31,18 @@ export const package_json = {
 		'@feltjs/eslint-config': '^0.4.1',
 		'@fuz.dev/fuz': '^0.81.0',
 		'@fuz.dev/fuz_library': '^0.23.0',
-		'@grogarden/gro': '^0.105.4',
-		'@sveltejs/adapter-static': '^2.0.3',
-		'@sveltejs/kit': '^1.27.7',
-		'@sveltejs/package': '^2.2.3',
-		'@types/node': '^20.10.4',
-		'@typescript-eslint/eslint-plugin': '^6.13.2',
-		'@typescript-eslint/parser': '^6.13.2',
-		eslint: '^8.55.0',
+		'@grogarden/gro': '^0.107.0',
+		'@sveltejs/adapter-static': '^3.0.1',
+		'@sveltejs/kit': '^2.0.4',
+		'@sveltejs/package': '^2.2.4',
+		'@sveltejs/vite-plugin-svelte': '^3.0.1',
+		'@types/node': '^20.10.5',
+		'@typescript-eslint/eslint-plugin': '^6.15.0',
+		'@typescript-eslint/parser': '^6.15.0',
+		eslint: '^8.56.0',
 		'eslint-plugin-svelte': '^2.35.1',
 		kleur: '^4.1.5',
-		prettier: '^3.1.0',
+		prettier: '^3.1.1',
 		'prettier-plugin-svelte': '^3.1.2',
 		svelte: '^4.2.8',
 		'svelte-check': '^3.6.2',
@@ -88,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@grogarden/util',
-	version: '0.18.1',
+	version: '0.18.3',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',

@@ -44,11 +44,15 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
  *
  * It's also stateless to avoid the complexity and bugs,
  * so we don't try to track `x-ratelimit-remaining` per domain.
+ *
+ * If the `value` is cached, only the cached safe subset of the `headers` are returned.
+ * (currently just `etag` and `last-modified`)
+ * Otherwise the full `res.headers` are included.
  */
 export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	url: string | URL,
 	options?: Fetch_Value_Options<T_Value, T_Params>,
-): Promise<Result<{value: T_Value}, {status: number; message: string}>> => {
+): Promise<Result<{value: T_Value; headers: Headers}, {status: number; message: string}>> => {
 	const {
 		request,
 		params,
@@ -74,12 +78,29 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
-			return {ok: true, value: cached.value};
+			return {ok: true, value: cached.value, headers: to_cached_headers(cached)};
 		}
 	}
 
+	const body =
+		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
+
 	const headers = new Headers(request?.headers);
-	add_accept_header(headers, url_obj);
+	if (!headers.has('accept')) {
+		headers.set(
+			'accept',
+			url_obj.hostname === 'api.github.com' ? DEFAULT_GITHUB_API_ACCEPT_HEADER : 'application/json',
+		);
+	}
+	if (
+		headers.get('accept') === DEFAULT_GITHUB_API_ACCEPT_HEADER &&
+		!headers.has('x-github-api-version')
+	) {
+		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
+	}
+	if (body && !headers.has('content-type')) {
+		headers.set('content-type', 'application/json');
+	}
 	if (token && !headers.has('authorization')) {
 		headers.set('authorization', 'Bearer ' + token);
 	}
@@ -93,9 +114,6 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 			headers.set('if-modified-since', last_modified);
 		}
 	}
-
-	const body =
-		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
 
 	const req = new Request(url_obj, {...request, headers, method, body});
 
@@ -114,7 +132,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	if (res.status === 304) {
 		if (!cached) throw Error('unexpected 304 status without a cached value');
 		log?.info('[fetch_value] cache hit', url);
-		return {ok: true, value: cached.value};
+		return {ok: true, value: cached.value, headers: to_cached_headers(cached)};
 	}
 
 	if (!res.ok) {
@@ -140,21 +158,21 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 		cache!.set(key, result);
 	}
 
-	return {ok: true, value: parsed};
+	return {ok: true, value: parsed, headers: res.headers};
 };
 
-const add_accept_header = (headers: Headers, url: URL): void => {
-	if (!headers.has('accept')) {
-		const accept =
-			url.hostname === 'api.github.com' ? DEFAULT_GITHUB_API_ACCEPT_HEADER : 'application/json';
-		if (accept) headers.set('accept', accept);
+/**
+ * Returns a subset of headers that are safe to store in a `fetch_value` cache.
+ */
+const to_cached_headers = (cached: Fetch_Value_Cache_Item): Headers => {
+	const headers = new Headers();
+	if (cached.etag) {
+		headers.set('etag', cached.etag);
 	}
-	if (
-		headers.get('accept') === DEFAULT_GITHUB_API_ACCEPT_HEADER &&
-		!headers.has('x-github-api-version')
-	) {
-		headers.set('x-github-api-version', DEFAULT_GITHUB_API_VERSION_HEADER);
+	if (cached.last_modified) {
+		headers.set('last-modified', cached.last_modified);
 	}
+	return headers;
 };
 
 const print_headers = (headers: Headers): Record<string, string> => {
