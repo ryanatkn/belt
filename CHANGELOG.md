@@ -1,5 +1,17 @@
 # @grogarden/util
 
+## 0.19.0
+
+### Minor Changes
+
+- remove `print_causes` ([#25](https://github.com/grogarden/util/pull/25))
+
+### Patch Changes
+
+- change `print_ms` to include separators at thousands ([#25](https://github.com/grogarden/util/pull/25))
+- support custom colors for printing values ([#25](https://github.com/grogarden/util/pull/25))
+- change print_ms to include separators at thousands was provided ([#25](https://github.com/grogarden/util/pull/25))
+
 ## 0.18.3
 
 ### Patch Changes

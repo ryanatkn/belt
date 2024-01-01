@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.18.3",
+  "version": "0.19.0",
   "description": "JS utilities to complement the modern web platform",
   "icon": "🦕",
   "public": true,
