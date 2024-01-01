@@ -1,5 +1,5 @@
 ---
-"@grogarden/util": patch
+'@grogarden/util': patch
 ---
 
-change print_ms to include separators at thousands
+change `print_ms` to include separators at thousands
