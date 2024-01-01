@@ -52,6 +52,7 @@ export const print_ms = (
 };
 
 export const print_number_with_separators = (v: string, separator = ','): string => {
+	if (!separator) return v;
 	const decimal_index = v.indexOf('.');
 	const start_index = (decimal_index === -1 ? v.length : decimal_index) - 1;
 	let s = decimal_index === -1 ? '' : v.slice(start_index + 1);
