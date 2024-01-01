@@ -246,9 +246,13 @@ export const src_json = {
 		'./print.js': {
 			path: 'print.ts',
 			declarations: [
+				{name: 'Colorize', kind: 'type'},
+				{name: 'Colors', kind: 'type'},
+				{name: 'disabled_colors', kind: 'variable'},
+				{name: 'get_colors', kind: 'function'},
+				{name: 'set_colors', kind: 'function'},
 				{name: 'print_key_value', kind: 'function'},
 				{name: 'print_ms', kind: 'function'},
-				{name: 'print_causes', kind: 'function'},
 				{name: 'print_string', kind: 'function'},
 				{name: 'print_number', kind: 'function'},
 				{name: 'print_boolean', kind: 'function'},
