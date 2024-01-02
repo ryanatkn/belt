@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -714,6 +714,10 @@
         },
         {
           "name": "Not_Null",
+          "kind": "type"
+        },
+        {
+          "name": "Array_Element",
           "kind": "type"
         },
         {

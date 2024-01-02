@@ -31,6 +31,8 @@ export type Assignable<T, K extends keyof T = keyof T> = {
 export type Defined<T> = T extends undefined ? never : T;
 export type Not_Null<T> = T extends null ? never : T;
 
+export type Array_Element<T> = T extends ReadonlyArray<infer U> ? U : never;
+
 /*
 
 The `Flavored` and `Branded` type helpers add varying degrees of nominal typing to other types.
