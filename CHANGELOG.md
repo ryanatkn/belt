@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.19.1
+
+### Patch Changes
+
+- add `Array_Element` type helper ([940ec97](https://github.com/grogarden/util/commit/940ec97))
+
 ## 0.19.0
 
 ### Minor Changes
