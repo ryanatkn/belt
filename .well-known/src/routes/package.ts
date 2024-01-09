@@ -5,7 +5,7 @@ import type {Src_Json} from '@grogarden/gro/src_json.js';
 
 export const package_json = {
 	name: '@grogarden/util',
-	version: '0.19.1',
+	version: '0.19.2',
 	description: 'JS utilities to complement the modern web platform',
 	icon: '🦕',
 	public: true,
@@ -31,7 +31,7 @@ export const package_json = {
 		'@feltjs/eslint-config': '^0.4.1',
 		'@fuz.dev/fuz': '^0.81.0',
 		'@fuz.dev/fuz_library': '^0.23.0',
-		'@grogarden/gro': '^0.109.0',
+		'@grogarden/gro': '^0.109.1',
 		'@sveltejs/adapter-static': '^3.0.1',
 		'@sveltejs/kit': '^2.0.6',
 		'@sveltejs/package': '^2.2.5',
@@ -89,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@grogarden/util',
-	version: '0.19.1',
+	version: '0.19.2',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
@@ -342,6 +342,8 @@ export const src_json = {
 			path: 'types.ts',
 			declarations: [
 				{name: 'Omit_Strict', kind: 'type'},
+				{name: 'Pick_Union', kind: 'type'},
+				{name: 'Keyof_Union', kind: 'type'},
 				{name: 'Partial_Except', kind: 'type'},
 				{name: 'Partial_Only', kind: 'type'},
 				{name: 'Partial_Values', kind: 'type'},
@@ -349,10 +351,10 @@ export const src_json = {
 				{name: 'Defined', kind: 'type'},
 				{name: 'Not_Null', kind: 'type'},
 				{name: 'Array_Element', kind: 'type'},
-				{name: 'Branded', kind: 'type'},
 				{name: 'Flavored', kind: 'type'},
-				{name: 'Brand', kind: 'type'},
 				{name: 'Flavor', kind: 'type'},
+				{name: 'Branded', kind: 'type'},
+				{name: 'Brand', kind: 'type'},
 			],
 		},
 	},

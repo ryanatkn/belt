@@ -1,6 +1,6 @@
 {
   "name": "@grogarden/util",
-  "version": "0.19.1",
+  "version": "0.19.2",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -693,6 +693,14 @@
           "kind": "type"
         },
         {
+          "name": "Pick_Union",
+          "kind": "type"
+        },
+        {
+          "name": "Keyof_Union",
+          "kind": "type"
+        },
+        {
           "name": "Partial_Except",
           "kind": "type"
         },
@@ -721,19 +729,19 @@
           "kind": "type"
         },
         {
-          "name": "Branded",
-          "kind": "type"
-        },
-        {
           "name": "Flavored",
           "kind": "type"
         },
         {
-          "name": "Brand",
+          "name": "Flavor",
           "kind": "type"
         },
         {
-          "name": "Flavor",
+          "name": "Branded",
+          "kind": "type"
+        },
+        {
+          "name": "Brand",
           "kind": "type"
         }
       ]
