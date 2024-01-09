@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.19.2
+
+### Patch Changes
+
+- add `Pick_Union` and `Keyof_Union` type helpers ([6e6ac53](https://github.com/grogarden/util/commit/6e6ac53))
+
 ## 0.19.1
 
 ### Patch Changes
