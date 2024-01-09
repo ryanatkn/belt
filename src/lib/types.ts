@@ -10,6 +10,26 @@ TODO probably make this `.d.ts` when we make a proper build process
 
 export type Omit_Strict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+/**
+ * Like `Pick` but works for type unions.
+ *
+ * @see https://stackoverflow.com/questions/75271774/creating-a-type-using-pick-with-a-type-that-is-defined-as-a-union-of-types
+ * @see https://stackoverflow.com/users/5770132/oblosys
+ */
+export type Pick_Union<T, K extends Keyof_Union<T>> = T extends unknown
+	? K & keyof T extends never
+		? never
+		: Pick<T, K & keyof T>
+	: never;
+
+/**
+ * Like `keyof` but works for type unions.
+ *
+ * @see https://stackoverflow.com/questions/75271774/creating-a-type-using-pick-with-a-type-that-is-defined-as-a-union-of-types
+ * @see https://stackoverflow.com/users/5770132/oblosys
+ */
+export type Keyof_Union<T> = T extends unknown ? keyof T : never;
+
 // these were thrown together quickly - is there a better way to do this?
 // there are probably better names for them!
 // see `Required`, `Exclude` and `Extract` for possible leads for improvements
