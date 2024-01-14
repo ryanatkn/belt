@@ -85,7 +85,7 @@ test__random_item('a and b', () => {
 	const items = ['a', 'b'];
 	const results = [];
 	for (let i = 0; i < 20; i++) {
-		const result = random_item(items)!;
+		const result = random_item(items);
 		assert.ok(items.includes(result));
 		results.push(result);
 	}
@@ -97,7 +97,7 @@ test__random_item('1 to 5', () => {
 	const items = [1, 2, 3, 4, 5];
 	const results = [];
 	for (let i = 0; i < 100; i++) {
-		const result = random_item(items)!;
+		const result = random_item(items);
 		assert.ok(items.includes(result));
 		results.push(result);
 	}

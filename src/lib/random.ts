@@ -1,3 +1,5 @@
+import type {Array_Element} from '$lib/types.js';
+
 export const random_float = (min: number, max: number, random = Math.random): number =>
 	random() * (max - min) + min;
 
@@ -11,8 +13,10 @@ export const random_int = (min: number, max: number, random = Math.random): numb
 
 export const random_boolean = (random = Math.random): boolean => random() > 0.5;
 
-export const random_item = <T>(arr: T[], random = Math.random): T =>
-	arr[random_int(0, arr.length - 1, random)];
+export const random_item = <T extends readonly any[]>(
+	arr: T,
+	random = Math.random,
+): Array_Element<T> => arr[random_int(0, arr.length - 1, random)];
 
 /**
  * Mutates `array` with random ordering.
