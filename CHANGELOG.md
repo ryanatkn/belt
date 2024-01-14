@@ -1,5 +1,11 @@
 # @grogarden/util
 
+## 0.19.3
+
+### Patch Changes
+
+- improve some array types to handle readonly arrays ([23e739c](https://github.com/grogarden/util/commit/23e739c))
+
 ## 0.19.2
 
 ### Patch Changes
