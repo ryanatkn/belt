@@ -4,16 +4,16 @@ import type {Package_Json} from '@ryanatkn/gro/package_json.js';
 import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
-	name: '@ryanatkn/util',
+	name: '@ryanatkn/belt',
 	version: '0.20.0',
 	description: 'JS utilities to complement the modern web platform',
 	icon: '🦕',
 	public: true,
 	license: 'MIT',
-	homepage: 'https://util.ryanatkn.com/',
-	author: {name: 'Felt Co-op', email: 'team@felt.social', url: 'https://www.felt.social/'},
-	repository: {type: 'git', url: 'git+https://github.com/ryanatkn/util.git'},
-	bugs: {url: 'https://github.com/ryanatkn/util/issues', email: 'team@felt.social'},
+	homepage: 'https://belt.ryanatkn.com/',
+	author: {name: 'Ryan Atkinson', email: 'mail@ryanatkn.com', url: 'https://www.ryanatkn.com/'},
+	repository: {type: 'git', url: 'git+https://github.com/ryanatkn/belt.git'},
+	bugs: {url: 'https://github.com/ryanatkn/belt/issues', email: 'team@felt.social'},
 	type: 'module',
 	engines: {node: '>=20.10'},
 	scripts: {
@@ -88,7 +88,7 @@ export const package_json = {
 } satisfies Package_Json;
 
 export const src_json = {
-	name: '@ryanatkn/util',
+	name: '@ryanatkn/belt',
 	version: '0.20.0',
 	modules: {
 		'./array.js': {

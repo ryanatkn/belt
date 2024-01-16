@@ -1,7 +1,7 @@
-# @ryanatkn/util
+# @ryanatkn/belt
 
 > JS utilities to complement the modern web platform 🦕
-> [util.ryanatkn.com](https://util.ryanatkn.com)
+> [belt.ryanatkn.com](https://belt.ryanatkn.com)
 
 design:
 
@@ -17,15 +17,15 @@ design:
 
 ## usage
 
-> [`npm i -D @ryanatkn/util`](https://www.npmjs.com/package/@ryanatkn/util)
+> [`npm i -D @ryanatkn/belt`](https://www.npmjs.com/package/@ryanatkn/belt)
 
 ```ts
 // import full module paths:
-import {type Result, unwrap} from '@ryanatkn/util/result.js';
-import {random_int} from '@ryanatkn/util/random.js';
+import {type Result, unwrap} from '@ryanatkn/belt/result.js';
+import {random_int} from '@ryanatkn/belt/random.js';
 ```
 
-see the available modules at [util.ryanatkn.com](https://util.ryanatkn.com),
+see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com),
 [src/lib/index.ts](src/lib/index.ts),
 and [src/lib/exports.ts](src/lib/exports.ts)
 
