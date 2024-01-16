@@ -1,5 +1,11 @@
 # @ryanatkn/util
 
+## 0.20.0
+
+### Minor Changes
+
+- move orgs to @ryanatkn from @grogarden ([#26](https://github.com/ryanatkn/util/pull/26))
+
 ## 0.19.3
 
 ### Patch Changes

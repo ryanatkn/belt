@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/util',
-	version: '0.19.3',
+	version: '0.20.0',
 	description: 'JS utilities to complement the modern web platform',
 	icon: '🦕',
 	public: true,
@@ -89,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/util',
-	version: '0.19.3',
+	version: '0.20.0',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
