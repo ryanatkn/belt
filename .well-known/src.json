@@ -1,6 +1,6 @@
 {
-  "name": "@grogarden/util",
-  "version": "0.19.3",
+  "name": "@ryanatkn/util",
+  "version": "0.20.0",
   "modules": {
     "./array.js": {
       "path": "array.ts",

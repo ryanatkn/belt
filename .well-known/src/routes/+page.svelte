@@ -22,7 +22,7 @@
 			>
 		</section>
 		<section>
-			<Library_Footer {pkg} root_url="https://www.grogarden.org/" />
+			<Library_Footer {pkg} />
 		</section>
 	</div>
 </main>
