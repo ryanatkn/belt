@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>@ryanatkn/util</title>
+	<title>@ryanatkn/belt</title>
 	<link rel="icon" href="{base}/favicon.png" />
 </svelte:head>
 
