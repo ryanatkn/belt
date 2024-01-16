@@ -1,5 +1,5 @@
 {
-  "name": "@grogarden/util",
+  "name": "@ryanatkn/util",
   "version": "0.19.3",
   "description": "JS utilities to complement the modern web platform",
   "icon": "🦕",
@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grogarden/util.git"
+    "url": "git+https://github.com/ryanatkn/util.git"
   },
   "bugs": {
-    "url": "https://github.com/grogarden/util/issues",
+    "url": "https://github.com/ryanatkn/util/issues",
     "email": "team@felt.social"
   },
   "type": "module",
@@ -47,7 +47,7 @@
     "@feltjs/eslint-config": "^0.4.1",
     "@fuz.dev/fuz": "^0.81.0",
     "@fuz.dev/fuz_library": "^0.23.0",
-    "@grogarden/gro": "^0.109.1",
+    "@ryanatkn/gro": "^0.109.1",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.6",
     "@sveltejs/package": "^2.2.5",

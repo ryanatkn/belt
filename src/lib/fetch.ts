@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import type {Flavored} from '@grogarden/util/types.js';
+import type {Flavored} from '@ryanatkn/util/types.js';
 
 import type {Logger} from './log.js';
 import {EMPTY_OBJECT} from './object.js';
