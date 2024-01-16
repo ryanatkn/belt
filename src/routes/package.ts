@@ -28,9 +28,9 @@ export const package_json = {
 	peerDependencies: {kleur: '^4.0.0'},
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
-		'@feltjs/eslint-config': '^0.4.1',
 		'@fuz.dev/fuz': '^0.81.0',
 		'@fuz.dev/fuz_library': '^0.23.0',
+		'@ryanatkn/eslint-config': '^0.1.0',
 		'@ryanatkn/gro': '^0.112.0',
 		'@sveltejs/adapter-static': '^3.0.1',
 		'@sveltejs/kit': '^2.0.6',
@@ -50,7 +50,7 @@ export const package_json = {
 		typescript: '^5.3.3',
 		uvu: '^0.5.6',
 	},
-	eslintConfig: {root: true, extends: '@feltjs', rules: {'no-console': 1}},
+	eslintConfig: {root: true, extends: '@ryanatkn', rules: {'no-console': 1}},
 	prettier: {
 		plugins: ['prettier-plugin-svelte'],
 		useTabs: true,
