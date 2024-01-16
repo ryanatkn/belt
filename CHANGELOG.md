@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.1
+
+### Patch Changes
+
+- rename to belt ([a8ac0af](https://github.com/ryanatkn/belt/commit/a8ac0af))
+
 ## 0.20.0
 
 ### Minor Changes
