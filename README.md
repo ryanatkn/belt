@@ -8,8 +8,8 @@ design:
 - kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
 - mix of JS module environments - browser-only, Node-only, universal
 - mostly small, pure functions
-- near-zero non-platform third party dependencies,
-  currently the one exception is [`kleur`](https://github.com/lukeed/kleur)
+- near-zero third party dependencies,
+  the one exception is [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
   see <a href="https://github.com/fuz-dev/fuz">@fuz.dev/fuz</a>
 - complement the modern web platform, stay evergreen
