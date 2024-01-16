@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>@grogarden/util</title>
+	<title>@ryanatkn/util</title>
 	<link rel="icon" href="{base}/favicon.png" />
 </svelte:head>
 

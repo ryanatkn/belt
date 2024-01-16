@@ -1,7 +1,7 @@
-# @grogarden/util
+# @ryanatkn/util
 
 > JS utilities to complement the modern web platform 🦕
-> [util.grogarden.org](https://util.grogarden.org)
+> [util.ryanatkn.com](https://util.ryanatkn.com)
 
 design:
 
@@ -17,15 +17,15 @@ design:
 
 ## usage
 
-> [`npm i -D @grogarden/util`](https://www.npmjs.com/package/@grogarden/util)
+> [`npm i -D @ryanatkn/util`](https://www.npmjs.com/package/@ryanatkn/util)
 
 ```ts
 // import full module paths:
-import {type Result, unwrap} from '@grogarden/util/result.js';
-import {random_int} from '@grogarden/util/random.js';
+import {type Result, unwrap} from '@ryanatkn/util/result.js';
+import {random_int} from '@ryanatkn/util/random.js';
 ```
 
-see the available modules at [util.grogarden.org](https://util.grogarden.org),
+see the available modules at [util.ryanatkn.com](https://util.ryanatkn.com),
 [src/lib/index.ts](src/lib/index.ts),
 and [src/lib/exports.ts](src/lib/exports.ts)
 
