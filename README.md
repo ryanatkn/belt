@@ -5,7 +5,7 @@
 
 design:
 
-- kitchen-sink utilities library - sorry, we wish it weren't so, JS made me do it
+- kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
 - mix of JS module environments - browser-only, Node-only, universal
 - mostly small, pure functions
 - near-zero non-platform third party dependencies,
