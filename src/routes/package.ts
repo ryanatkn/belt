@@ -6,7 +6,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 export const package_json = {
 	name: '@ryanatkn/belt',
 	version: '0.20.1',
-	description: 'JS utilities to complement the modern web platform',
+	description: 'utility belt for JS',
 	icon: '🦕',
 	public: true,
 	license: 'MIT',

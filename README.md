@@ -1,6 +1,6 @@
 # @ryanatkn/belt
 
-> JS utilities to complement the modern web platform 🦕
+> utility belt for JS 🦕
 > [belt.ryanatkn.com](https://belt.ryanatkn.com)
 
 design:
