@@ -1,7 +1,7 @@
 # @ryanatkn/util
 
 > JS utilities to complement the modern web platform 🦕
-> [util.grogarden.org](https://util.grogarden.org)
+> [util.ryanatkn.com](https://util.ryanatkn.com)
 
 design:
 
@@ -25,7 +25,7 @@ import {type Result, unwrap} from '@ryanatkn/util/result.js';
 import {random_int} from '@ryanatkn/util/random.js';
 ```
 
-see the available modules at [util.grogarden.org](https://util.grogarden.org),
+see the available modules at [util.ryanatkn.com](https://util.ryanatkn.com),
 [src/lib/index.ts](src/lib/index.ts),
 and [src/lib/exports.ts](src/lib/exports.ts)
 

@@ -144,7 +144,7 @@
 ### Patch Changes
 
 - fix PUBLIC_LOG_LEVEL env var usage ([286aa46](https://github.com/ryanatkn/util/commit/286aa46))
-- move to util.grogarden.org from util.felt.dev ([db08052](https://github.com/ryanatkn/util/commit/db08052))
+- move to util.ryanatkn.com from util.felt.dev ([db08052](https://github.com/ryanatkn/util/commit/db08052))
 
 ## 0.10.0
 

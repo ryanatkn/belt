@@ -10,7 +10,7 @@ export const package_json = {
 	icon: '🦕',
 	public: true,
 	license: 'MIT',
-	homepage: 'https://util.grogarden.org/',
+	homepage: 'https://util.ryanatkn.com/',
 	author: {name: 'Felt Co-op', email: 'team@felt.social', url: 'https://www.felt.social/'},
 	repository: {type: 'git', url: 'git+https://github.com/ryanatkn/util.git'},
 	bugs: {url: 'https://github.com/ryanatkn/util/issues', email: 'team@felt.social'},
