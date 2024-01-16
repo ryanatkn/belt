@@ -5,7 +5,7 @@
 
 design:
 
-- kitchen-sink utilities library - sorry, we wish it weren't so, JS made us do it
+- kitchen-sink utilities library - sorry, we wish it weren't so, JS made me do it
 - mix of JS module environments - browser-only, Node-only, universal
 - mostly small, pure functions
 - near-zero non-platform third party dependencies,
@@ -71,7 +71,7 @@ made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [TypeScript](https://github.com/microsoft/TypeScript) ∙
 [ESLint](https://github.com/eslint/eslint) ∙
 [Prettier](https://github.com/prettier/prettier) ∙
-[FeltUI](https://github.com/fuz-dev/fuz) ∙
+[Fuz](https://github.com/fuz-dev/fuz) ∙
 [Gro](https://github.com/feltjs/gro)
 & [more](package.json)
 
