@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.2
+
+### Patch Changes
+
+- relax fetch_value token type to accept null ([a14e4ee](https://github.com/ryanatkn/belt/commit/a14e4ee))
+
 ## 0.20.1
 
 ### Patch Changes
