@@ -1,7 +1,7 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.1",
-  "description": "JS utilities to complement the modern web platform",
+  "version": "0.20.2",
+  "description": "utility belt for JS",
   "icon": "🦕",
   "public": true,
   "license": "MIT",
@@ -44,10 +44,10 @@
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.0",
-    "@feltjs/eslint-config": "^0.4.1",
     "@fuz.dev/fuz": "^0.81.0",
     "@fuz.dev/fuz_library": "^0.23.0",
-    "@ryanatkn/gro": "^0.111.0",
+    "@ryanatkn/eslint-config": "^0.1.0",
+    "@ryanatkn/gro": "^0.112.0",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.6",
     "@sveltejs/package": "^2.2.5",
@@ -68,7 +68,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": "@feltjs",
+    "extends": "@ryanatkn",
     "rules": {
       "no-console": 1
     }

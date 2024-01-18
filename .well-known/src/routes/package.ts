@@ -5,8 +5,8 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.1',
-	description: 'JS utilities to complement the modern web platform',
+	version: '0.20.2',
+	description: 'utility belt for JS',
 	icon: '🦕',
 	public: true,
 	license: 'MIT',
@@ -28,10 +28,10 @@ export const package_json = {
 	peerDependencies: {kleur: '^4.0.0'},
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
-		'@feltjs/eslint-config': '^0.4.1',
 		'@fuz.dev/fuz': '^0.81.0',
 		'@fuz.dev/fuz_library': '^0.23.0',
-		'@ryanatkn/gro': '^0.111.0',
+		'@ryanatkn/eslint-config': '^0.1.0',
+		'@ryanatkn/gro': '^0.112.0',
 		'@sveltejs/adapter-static': '^3.0.1',
 		'@sveltejs/kit': '^2.0.6',
 		'@sveltejs/package': '^2.2.5',
@@ -50,7 +50,7 @@ export const package_json = {
 		typescript: '^5.3.3',
 		uvu: '^0.5.6',
 	},
-	eslintConfig: {root: true, extends: '@feltjs', rules: {'no-console': 1}},
+	eslintConfig: {root: true, extends: '@ryanatkn', rules: {'no-console': 1}},
 	prettier: {
 		plugins: ['prettier-plugin-svelte'],
 		useTabs: true,
@@ -89,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.1',
+	version: '0.20.2',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
