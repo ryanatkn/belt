@@ -18,7 +18,7 @@
 		"importHelpers": true,
 		"skipLibCheck": true,
 		"allowJs": true,
-		"checkJs": true
+		"checkJs": true,
 	},
 	"include": [
 		"./gro.config.ts",
@@ -28,6 +28,6 @@
 		"./vite.config.ts",
 		"./src/**/*.js",
 		"./src/**/*.ts",
-		"./src/**/*.svelte"
-	]
+		"./src/**/*.svelte",
+	],
 }
