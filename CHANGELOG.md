@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.3
+
+### Patch Changes
+
+- use '\_' for print number separator instead of ',' ([9ef6700](https://github.com/ryanatkn/belt/commit/9ef6700))
+
 ## 0.20.2
 
 ### Patch Changes
