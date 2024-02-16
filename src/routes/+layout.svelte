@@ -1,9 +1,9 @@
 <script lang="ts">
-	import '@fuz.dev/fuz/style.css';
-	import '@fuz.dev/fuz/theme.css';
+	import '@ryanatkn/fuz/style.css';
+	import '@ryanatkn/fuz/theme.css';
 	import '$routes/style.css';
 
-	import Themed from '@fuz.dev/fuz/Themed.svelte';
+	import Themed from '@ryanatkn/fuz/Themed.svelte';
 	import {base} from '$app/paths';
 </script>
 
