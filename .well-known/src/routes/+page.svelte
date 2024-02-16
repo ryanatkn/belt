@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {parse_package_meta} from '@fuz.dev/fuz_library/package_meta.js';
-	import Library_Header from '@fuz.dev/fuz_library/Library_Header.svelte';
-	import Library_Footer from '@fuz.dev/fuz_library/Library_Footer.svelte';
+	import {parse_package_meta} from '@ryanatkn/fuz/package_meta.js';
+	import Library_Header from '@ryanatkn/fuz/Library_Header.svelte';
+	import Library_Footer from '@ryanatkn/fuz/Library_Footer.svelte';
 	import {base} from '$app/paths';
 
 	import {package_json, src_json} from '$routes/package.js';
