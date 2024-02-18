@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {parse_package_meta} from '@ryanatkn/fuz/package_meta.js';
+	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
 	import Library_Header from '@ryanatkn/fuz/Library_Header.svelte';
 	import Library_Footer from '@ryanatkn/fuz/Library_Footer.svelte';
 	import {base} from '$app/paths';
