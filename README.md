@@ -13,7 +13,7 @@ design:
 - all TypeScript, for styles and Svelte and SvelteKit
   see <a href="https://github.com/fuz-dev/fuz">@ryanatkn/fuz</a>
 - complement the modern web platform, stay evergreen
-- kinda minimal in many ways but also not
+- kinda minimal in many ways but also not, treeshakes well
 
 ## usage
 
