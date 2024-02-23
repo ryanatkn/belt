@@ -1,5 +1,7 @@
 import type {Flavored} from '@ryanatkn/belt/types.js';
 
+// TODO these aren't perfect because of rounding issues, see the tests
+
 // TODO for high-performance usecases, we may want to add variants for any that return a new array to reuse a single array
 // I've run into cases where this is a massive perceptible UX difference
 
@@ -25,9 +27,9 @@ export const hex_string_to_rgb = (hex: string): Rgb => {
 };
 
 export const rgb_to_hex_string = (r: number, g: number, b: number): string =>
-	'#' + to_hex(r) + to_hex(g) + to_hex(b);
+	'#' + to_hex_component(r) + to_hex_component(g) + to_hex_component(b);
 
-export const to_hex = (v: number): string => {
+export const to_hex_component = (v: number): string => {
 	const h = v.toString(16);
 	return h.length === 1 ? '0' + h : h;
 };
