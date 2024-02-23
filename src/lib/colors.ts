@@ -108,7 +108,7 @@ export const hsl_to_hex_string = (h: Hue, s: Saturation, l: Lightness): string =
 };
 
 export const hsl_to_string = (h: Hue, s: Saturation, l: Lightness): string =>
-	`hsl(${h * 360}, ${s * 100}%, ${l * 100}%)`;
+	`hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
 
 export const hex_string_to_hsl = (hex: string): Hsl => {
 	const rgb = hex_string_to_rgb(hex); // TODO could safely use the optimized variant
