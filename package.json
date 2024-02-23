@@ -98,6 +98,10 @@
       "default": "./dist/async.js",
       "types": "./dist/async.d.ts"
     },
+    "./colors.js": {
+      "default": "./dist/colors.js",
+      "types": "./dist/colors.d.ts"
+    },
     "./counter.js": {
       "default": "./dist/counter.js",
       "types": "./dist/counter.d.ts"
