@@ -42,6 +42,7 @@ test('conversions between hsl, rgb, and hex', () => {
 	assert.equal(rgb, [105, 158, 211]);
 	assert.equal(rgb, hsl_to_rgb(...hsl));
 	const hex_string = hsl_to_hex_string(...hsl);
+	assert.is(hex_string, '#699ed3');
 	assert.equal(hex_string_to_rgb(hex_string), rgb);
 	// TODO rounding is off but I'm not concerned about it right now
 	// assert.equal(hex_string_to_hsl(hex_string), hsl);
