@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.3",
+  "version": "0.20.4",
   "description": "utility belt for JS",
   "icon": "🦕",
   "public": true,
@@ -97,6 +97,10 @@
     "./async.js": {
       "default": "./dist/async.js",
       "types": "./dist/async.d.ts"
+    },
+    "./colors.js": {
+      "default": "./dist/colors.js",
+      "types": "./dist/colors.d.ts"
     },
     "./counter.js": {
       "default": "./dist/counter.js",
