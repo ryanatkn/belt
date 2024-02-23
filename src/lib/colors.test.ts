@@ -12,6 +12,8 @@ import {
 	hsl_to_hex_string,
 	hsl_to_rgb,
 	hsl_to_string,
+	rgb_to_hsl,
+	hex_string_to_hsl,
 } from '$lib/colors.js';
 
 test('hex_to_rgb and rgb_to_hex', () => {
@@ -42,12 +44,13 @@ test('conversions between hsl, rgb, and hex', () => {
 	assert.is(hex_string, '#699ed3');
 	const hex = hsl_to_hex(...hsl);
 	const rgb = hex_to_rgb(hex);
+	assert.is(rgb_to_hex_string(...rgb), hex_string);
+	assert.is(rgb_to_hex(...rgb), hex);
 	assert.equal(rgb, [105, 158, 211]);
 	assert.equal(rgb, hsl_to_rgb(...hsl));
 	assert.equal(hex_string_to_rgb(hex_string), rgb);
-	// TODO rounding
-	// assert.equal(hex_string_to_hsl(hex_string), hsl);
-	// assert.equal(rgb_to_hsl(...rgb), hsl);
+	assert.equal(hex_string_to_hsl(hex_string), hsl);
+	assert.equal(rgb_to_hsl(...rgb), hsl);
 });
 
 test.run();
