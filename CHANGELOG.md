@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.5
+
+### Patch Changes
+
+- change `parse_hsl_string` to parse values with alpha ([37e7094](https://github.com/ryanatkn/belt/commit/37e7094))
+
 ## 0.20.4
 
 ### Patch Changes
