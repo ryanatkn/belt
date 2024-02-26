@@ -115,7 +115,7 @@ export const hex_string_to_hsl = (hex: string): Hsl => {
 	return rgb_to_hsl(rgb[0], rgb[1], rgb[2]);
 };
 
-const hsl_string_matcher = /^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/u;
+const hsl_string_matcher = /^hsl\((\d+),\s*(\d+)%,\s*(\d+)%/u;
 
 export const parse_hsl_string = (hsl: string): Hsl => {
 	const match = hsl_string_matcher.exec(hsl);

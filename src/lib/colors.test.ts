@@ -33,8 +33,11 @@ test('rgb_to_hex_string and hex_string_to_rgb', () => {
 test('parse_hsl_string', () => {
 	const parsed = [210 / 360, 0.55, 0.62];
 	assert.equal(parse_hsl_string('hsl(210, 55%, 62%)'), parsed);
+	assert.equal(parse_hsl_string('hsl(210, 55%, 62%'), parsed);
 	assert.equal(parse_hsl_string('hsl(210,55%,62%)'), parsed);
 	assert.equal(parse_hsl_string('hsl(210,    55%,  62%)'), parsed);
+	assert.equal(parse_hsl_string('hsl(210, 55%, 62% / 0.5)'), parsed);
+	assert.equal(parse_hsl_string('hsl(210, 55%, 62% / 0.5'), parsed);
 });
 
 test('conversions between hsl, rgb, and hex', () => {
