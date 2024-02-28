@@ -10,14 +10,14 @@
 	const pkg = parse_package_meta(package_json.homepage, package_json, src_json);
 </script>
 
-<main class="box width_full">
+<main class="box w_100">
 	<div class="box width_md">
 		<section>
 			<Library_Header {pkg} />
 		</section>
-		<section class="padded_md width_sm">
-			<a href="{base}/about" class="box padded_md panel"
-				><div class="spaced">about</div>
+		<section class="p_md width_sm">
+			<a href="{base}/about" class="box p_md panel"
+				><div class="mb_lg">about</div>
 				<Favicon width={80} height={80} /></a
 			>
 		</section>
