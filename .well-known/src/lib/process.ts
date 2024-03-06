@@ -131,7 +131,7 @@ export const attach_process_error_handlers = (to_error_label?: To_Error_Label): 
 
 const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
 	new System_Logger(print_log_label(label, red)).error(print_error(err));
-	await Promise.all(Array.from(global_spawn).map((child) => despawn(child)));
+	await Promise.all(Array.from(global_spawn, (child) => despawn(child)));
 	process.exit(1);
 };
 

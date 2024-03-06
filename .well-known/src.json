@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.5",
+  "version": "0.20.6",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -32,6 +32,10 @@
         },
         {
           "name": "wait",
+          "kind": "function"
+        },
+        {
+          "name": "is_promise",
           "kind": "function"
         }
       ]
