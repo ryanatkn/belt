@@ -23,7 +23,7 @@ test('start and stop multiple overlapping timings', () => {
 	timings.get('bar');
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
 	assert.equal(
-		Array.from(timings.entries()).map((e) => e[0]),
+		Array.from(timings.entries(), (e) => e[0]),
 		['foo', 'foo_2', 'foo_3'],
 	);
 });
