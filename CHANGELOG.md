@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.6
+
+### Patch Changes
+
+- add `$lib/async.ts#is_promise` ([a5d3bb6](https://github.com/ryanatkn/belt/commit/a5d3bb6))
+
 ## 0.20.5
 
 ### Patch Changes
