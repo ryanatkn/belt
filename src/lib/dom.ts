@@ -12,7 +12,15 @@ export const is_editable = (el: any): boolean => {
 			type === 'url'
 		);
 	}
-	return tagName === 'TEXTAREA' || (!!el.contentEditable && el.contentEditable !== 'false');
+	return (
+		tagName === 'TEXTAREA' ||
+		(!!el.getAttribute('contenteditable') && el.getAttribute('contenteditable') !== 'false')
+	);
+};
+
+export const inside_editable = (el: HTMLElement | SVGElement): boolean => {
+	const found = el.closest('[contenteditable]');
+	return found !== null && found.getAttribute('contenteditable') !== 'false';
 };
 
 /**
