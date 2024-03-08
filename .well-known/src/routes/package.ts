@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.7',
+	version: '0.20.8',
 	description: 'utility belt for JS',
 	icon: '🦕',
 	public: true,
@@ -89,7 +89,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.7',
+	version: '0.20.8',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
@@ -145,6 +145,7 @@ export const src_json = {
 			path: 'dom.ts',
 			declarations: [
 				{name: 'is_editable', kind: 'function'},
+				{name: 'inside_editable', kind: 'function'},
 				{name: 'swallow', kind: 'function'},
 				{name: 'handle_target_value', kind: 'function'},
 				{name: 'is_iframed', kind: 'function'},

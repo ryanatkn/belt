@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.7",
+  "version": "0.20.8",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -147,6 +147,10 @@
       "declarations": [
         {
           "name": "is_editable",
+          "kind": "function"
+        },
+        {
+          "name": "inside_editable",
           "kind": "function"
         },
         {
