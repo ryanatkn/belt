@@ -12,7 +12,7 @@ export const is_editable = (el: any): boolean => {
 			type === 'url'
 		);
 	}
-	return tagName === 'TEXTAREA' || el.contentEditable === 'true';
+	return tagName === 'TEXTAREA' || (!!el.contentEditable && el.contentEditable !== 'false');
 };
 
 /**
