@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.7
+
+### Patch Changes
+
+- fix contentEditable detection in `is_editable` ([8ed886d](https://github.com/ryanatkn/belt/commit/8ed886d))
+
 ## 0.20.6
 
 ### Patch Changes
