@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.8
+
+### Patch Changes
+
+- add `inside_editable` and tweak `is_editable` logic to use `getAttribute` ([8dc7d81](https://github.com/ryanatkn/belt/commit/8dc7d81))
+
 ## 0.20.7
 
 ### Patch Changes
