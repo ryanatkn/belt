@@ -7,12 +7,11 @@ design:
 
 - kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
 - mix of JS module environments - browser-only, Node-only, universal
-- mostly small, pure functions
-- near-zero third party dependencies,
-  the one exception is [`kleur`](https://github.com/lukeed/kleur)
+- mostly small pure functions
+- one third party dependency on [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
   see <a href="https://github.com/fuz-dev/fuz">@ryanatkn/fuz</a>
-- complement the modern web platform, stay evergreen
+- complements the modern web platform, drops legacy quickly
 - kinda minimal in many ways but also not, treeshakes well
 
 ## usage
@@ -73,7 +72,7 @@ made with [Svelte](https://github.com/sveltejs/svelte) ∙
 [Prettier](https://github.com/prettier/prettier) ∙
 [Fuz](https://github.com/fuz-dev/fuz) ∙
 [Gro](https://github.com/feltjs/gro)
-& [more](package.json)
+and [more](package.json)
 
 ## license [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
 
