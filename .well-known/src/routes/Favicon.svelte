@@ -3,9 +3,11 @@
 
 	export let width = 16;
 	export let height = 16;
+	export let pixelated = true;
 </script>
 
 <img
+	class:pixelated
 	src="{base}/favicon.png"
 	{width}
 	{height}
