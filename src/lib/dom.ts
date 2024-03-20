@@ -14,7 +14,7 @@ export const is_editable = (el: any): boolean => {
 	}
 	return (
 		tagName === 'TEXTAREA' ||
-		(!!el.getAttribute('contenteditable') && el.getAttribute('contenteditable') !== 'false')
+		(!!el.getAttribute?.('contenteditable') && el.getAttribute('contenteditable') !== 'false')
 	);
 };
 
