@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.9
+
+### Patch Changes
+
+- fix `is_editable` ([ab395cd](https://github.com/ryanatkn/belt/commit/ab395cd))
+
 ## 0.20.8
 
 ### Patch Changes
