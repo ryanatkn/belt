@@ -15,10 +15,8 @@
     "type": "git",
     "url": "git+https://github.com/ryanatkn/belt.git"
   },
-  "bugs": {
-    "url": "https://github.com/ryanatkn/belt/issues",
-    "email": "team@felt.social"
-  },
+  "bugs": "https://github.com/ryanatkn/belt/issues",
+  "funding": "https://www.ryanatkn.com/funding",
   "type": "module",
   "engines": {
     "node": ">=20.10"
