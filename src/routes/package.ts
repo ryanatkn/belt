@@ -84,6 +84,7 @@ export const package_json = {
 		'./string.js': {default: './dist/string.js', types: './dist/string.d.ts'},
 		'./timings.js': {default: './dist/timings.js', types: './dist/timings.d.ts'},
 		'./types.js': {default: './dist/types.js', types: './dist/types.d.ts'},
+		'./url.js': {default: './dist/url.js', types: './dist/url.d.ts'},
 	},
 } satisfies Package_Json;
 
@@ -385,6 +386,7 @@ export const src_json = {
 				{name: 'Brand', kind: 'type'},
 			],
 		},
+		'./url.js': {path: 'url.ts', declarations: [{name: 'format_url', kind: 'function'}]},
 	},
 } satisfies Src_Json;
 

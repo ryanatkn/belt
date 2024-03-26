@@ -189,6 +189,10 @@
     "./types.js": {
       "default": "./dist/types.js",
       "types": "./dist/types.d.ts"
+    },
+    "./url.js": {
+      "default": "./dist/url.js",
+      "types": "./dist/url.d.ts"
     }
   }
 }
