@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.9',
+	version: '0.20.10',
 	description: 'utility belt for JS',
 	icon: '🦕',
 	public: true,
@@ -84,12 +84,13 @@ export const package_json = {
 		'./string.js': {default: './dist/string.js', types: './dist/string.d.ts'},
 		'./timings.js': {default: './dist/timings.js', types: './dist/timings.d.ts'},
 		'./types.js': {default: './dist/types.js', types: './dist/types.d.ts'},
+		'./url.js': {default: './dist/url.js', types: './dist/url.d.ts'},
 	},
 } satisfies Package_Json;
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.20.9',
+	version: '0.20.10',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
@@ -385,6 +386,7 @@ export const src_json = {
 				{name: 'Brand', kind: 'type'},
 			],
 		},
+		'./url.js': {path: 'url.ts', declarations: [{name: 'format_url', kind: 'function'}]},
 	},
 } satisfies Src_Json;
 

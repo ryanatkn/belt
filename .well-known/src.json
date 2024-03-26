@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.9",
+  "version": "0.20.10",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -840,6 +840,15 @@
         {
           "name": "Brand",
           "kind": "type"
+        }
+      ]
+    },
+    "./url.js": {
+      "path": "url.ts",
+      "declarations": [
+        {
+          "name": "format_url",
+          "kind": "function"
         }
       ]
     }

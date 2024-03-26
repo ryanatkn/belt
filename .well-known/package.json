@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.20.9",
+  "version": "0.20.10",
   "description": "utility belt for JS",
   "icon": "🦕",
   "public": true,
@@ -189,6 +189,10 @@
     "./types.js": {
       "default": "./dist/types.js",
       "types": "./dist/types.d.ts"
+    },
+    "./url.js": {
+      "default": "./dist/url.js",
+      "types": "./dist/url.d.ts"
     }
   }
 }
