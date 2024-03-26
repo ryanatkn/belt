@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.20.10
+
+### Patch Changes
+
+- add `format_url` and module `$lib/url.ts` ([1843c6c](https://github.com/ryanatkn/belt/commit/1843c6c))
+
 ## 0.20.9
 
 ### Patch Changes
