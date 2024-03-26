@@ -13,7 +13,8 @@ export const package_json = {
 	homepage: 'https://belt.ryanatkn.com/',
 	author: {name: 'Ryan Atkinson', email: 'mail@ryanatkn.com', url: 'https://www.ryanatkn.com/'},
 	repository: {type: 'git', url: 'git+https://github.com/ryanatkn/belt.git'},
-	bugs: {url: 'https://github.com/ryanatkn/belt/issues', email: 'team@felt.social'},
+	bugs: 'https://github.com/ryanatkn/belt/issues',
+	funding: 'https://www.ryanatkn.com/funding',
 	type: 'module',
 	engines: {node: '>=20.10'},
 	scripts: {
