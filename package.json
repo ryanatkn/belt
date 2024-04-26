@@ -124,6 +124,10 @@
       "default": "./dist/id.js",
       "types": "./dist/id.d.ts"
     },
+    "./iterator.js": {
+      "default": "./dist/iterator.js",
+      "types": "./dist/iterator.d.ts"
+    },
     "./json.js": {
       "default": "./dist/json.js",
       "types": "./dist/json.d.ts"

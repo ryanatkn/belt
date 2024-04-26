@@ -69,6 +69,7 @@ export const package_json = {
 		'./fetch.js': {default: './dist/fetch.js', types: './dist/fetch.d.ts'},
 		'./function.js': {default: './dist/function.js', types: './dist/function.d.ts'},
 		'./id.js': {default: './dist/id.js', types: './dist/id.d.ts'},
+		'./iterator.js': {default: './dist/iterator.js', types: './dist/iterator.d.ts'},
 		'./json.js': {default: './dist/json.js', types: './dist/json.d.ts'},
 		'./log.js': {default: './dist/log.js', types: './dist/log.d.ts'},
 		'./map.js': {default: './dist/map.js', types: './dist/map.d.ts'},
@@ -187,6 +188,10 @@ export const src_json = {
 				{name: 'Client_Id_Creator', kind: 'type'},
 				{name: 'create_client_id_creator', kind: 'function'},
 			],
+		},
+		'./iterator.js': {
+			path: 'iterator.ts',
+			declarations: [{name: 'count_iterator', kind: 'function'}],
 		},
 		'./json.js': {
 			path: 'json.ts',
@@ -356,7 +361,7 @@ export const src_json = {
 				{name: 'ensure_end', kind: 'function'},
 				{name: 'deindent', kind: 'function'},
 				{name: 'plural', kind: 'function'},
-				{name: 'to_grapheme_count', kind: 'function'},
+				{name: 'count_graphemes', kind: 'function'},
 			],
 		},
 		'./timings.js': {

@@ -11,7 +11,7 @@ import {
 	ensure_start,
 	ensure_end,
 	deindent,
-	to_grapheme_count,
+	count_graphemes,
 } from './string.js';
 
 /* test__truncate */
@@ -354,18 +354,15 @@ test__plural('does not pluralize 1', () => {
 test__plural.run();
 /* test__plural */
 
-/* test__to_grapheme_count */
-const test__to_grapheme_count = suite('to_grapheme_count');
+/* test__count_graphemes */
+const test__count_graphemes = suite('count_graphemes');
 
-test__to_grapheme_count(
-	'counts graphemes of a string, where compound emoji are one grapheme',
-	() => {
-		assert.is(to_grapheme_count('👩‍👩‍👧‍👦'), 1);
-		assert.is(to_grapheme_count('🙋‍♂️'), 1);
-		assert.is(to_grapheme_count('👩‍👩‍👧‍👦🙋‍♂️👩‍👩‍👧‍👦'), 3);
-		assert.is(to_grapheme_count('a👩‍👩‍👧‍👦5🙋‍♂️👩‍❤️‍💋‍👩~'), 6);
-	},
-);
+test__count_graphemes('counts graphemes of a string, where compound emoji are one grapheme', () => {
+	assert.is(count_graphemes('👩‍👩‍👧‍👦'), 1);
+	assert.is(count_graphemes('🙋‍♂️'), 1);
+	assert.is(count_graphemes('👩‍👩‍👧‍👦🙋‍♂️👩‍👩‍👧‍👦'), 3);
+	assert.is(count_graphemes('a👩‍👩‍👧‍👦5🙋‍♂️👩‍❤️‍💋‍👩~'), 6);
+});
 
-test__to_grapheme_count.run();
-/* test__to_grapheme_count */
+test__count_graphemes.run();
+/* test__count_graphemes */

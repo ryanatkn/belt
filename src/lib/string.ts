@@ -1,3 +1,5 @@
+import {count_iterator} from '$lib/iterator.js';
+
 export const truncate = (str: string, maxLength: number, suffix = '...'): string => {
 	if (maxLength < suffix.length) return '';
 	if (str.length > maxLength) {
@@ -69,5 +71,5 @@ export const plural = (count: number | undefined | null, suffix = 's'): string =
 /**
  * Returns the count of graphemes in a string, the individually rendered characters.
  */
-export const to_grapheme_count = (str: string): number =>
-	[...new Intl.Segmenter().segment(str)].length;
+export const count_graphemes = (str: string): number =>
+	count_iterator(new Intl.Segmenter().segment(str));
