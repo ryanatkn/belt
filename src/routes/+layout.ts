@@ -1,2 +1,2 @@
 export const prerender = true;
-export const ssr = false; // TODO reenable, Svelte 5 hydration problem
+export const ssr = false; // TODO re-enable, Svelte 5 hydration problem
