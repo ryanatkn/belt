@@ -1,3 +1,5 @@
+import {count_iterator} from '$lib/iterator.js';
+
 export const truncate = (str: string, maxLength: number, suffix = '...'): string => {
 	if (maxLength < suffix.length) return '';
 	if (str.length > maxLength) {
@@ -68,16 +70,6 @@ export const plural = (count: number | undefined | null, suffix = 's'): string =
 
 /**
  * Returns the count of graphemes in a string, the individually rendered characters.
- * @param str
  */
-export const to_grapheme_count = (str: string): number => {
-	try {
-		return [...new Intl.Segmenter().segment(str)].length;
-	} catch (err) {
-		// TODO The fallback code here is very broken,
-		// and currently returns down to 1/8 the correct number of graphemes.
-		// Remove it when Intl.Segmenter is supported in Firefox:
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter
-		return Math.ceil([...str].length / 8);
-	}
-};
+export const count_graphemes = (str: string): number =>
+	count_iterator(new Intl.Segmenter().segment(str));
