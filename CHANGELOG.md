@@ -1,5 +1,16 @@
 # @ryanatkn/belt
 
+## 0.21.0
+
+### Minor Changes
+
+- upgrade `node@22.3` ([#28](https://github.com/ryanatkn/belt/pull/28))
+- rename `count_graphemes` from `to_grapheme_count` and use `Intl.Segmenter` without a fallback ([f9f62e0](https://github.com/ryanatkn/belt/commit/f9f62e0))
+
+### Patch Changes
+
+- add `count_iterator` ([b02e33a](https://github.com/ryanatkn/belt/commit/b02e33a))
+
 ## 0.20.10
 
 ### Patch Changes
