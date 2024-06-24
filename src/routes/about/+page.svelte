@@ -5,21 +5,18 @@
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
 
 	import {package_json, src_json} from '$routes/package.js';
-	import Favicon from '$routes/Favicon.svelte';
 
 	// TODO hacky - maybe put in context?
 	const pkg = parse_package_meta(package_json.homepage, package_json, src_json);
 </script>
 
 <main class="width_md">
-	<div class="prose">
-		<section>
-			<header class="box">
-				<h1>{pkg.repo_name}</h1>
-			</header>
-			<Breadcrumb><Favicon /></Breadcrumb>
-		</section>
-	</div>
+	<section>
+		<header class="box">
+			<h1 class="mt_xl5">{pkg.repo_name}</h1>
+		</header>
+		<Breadcrumb>{package_json.icon}</Breadcrumb>
+	</section>
 	<section class="box w_100 mb_lg">
 		<div class="panel p_md width_md">
 			<Package_Detail {pkg} />
@@ -29,7 +26,7 @@
 		<Library_Footer {pkg} />
 	</section>
 	<section class="box mb_lg">
-		<Breadcrumb><Favicon /></Breadcrumb>
+		<Breadcrumb>{package_json.icon}</Breadcrumb>
 	</section>
 </main>
 
@@ -40,9 +37,4 @@
 		align-items: center;
 		margin: 0 auto;
 	}
-	/* h1 {
-		display: flex;
-		align-items: baseline;
-		text-align: center;
-	} */
 </style>
