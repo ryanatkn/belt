@@ -5,6 +5,13 @@
 
 	import Themed from '@ryanatkn/fuz/Themed.svelte';
 	import {base} from '$app/paths';
+	import type {Snippet} from 'svelte';
+
+	interface Props {
+		children: Snippet;
+	}
+
+	const {children}: Props = $props();
 </script>
 
 <svelte:head>
@@ -13,5 +20,5 @@
 </svelte:head>
 
 <Themed>
-	<slot />
+	{@render children()}
 </Themed>
