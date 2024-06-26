@@ -19,7 +19,7 @@
   "funding": "https://www.ryanatkn.com/funding",
   "type": "module",
   "engines": {
-    "node": ">=22.3"
+    "node": ">=20.12"
   },
   "scripts": {
     "start": "gro dev",

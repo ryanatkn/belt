@@ -16,7 +16,7 @@ export const package_json = {
 	bugs: 'https://github.com/ryanatkn/belt/issues',
 	funding: 'https://www.ryanatkn.com/funding',
 	type: 'module',
-	engines: {node: '>=22.3'},
+	engines: {node: '>=20.12'},
 	scripts: {
 		start: 'gro dev',
 		dev: 'gro dev',
