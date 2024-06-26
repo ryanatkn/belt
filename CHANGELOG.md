@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.21.1
+
+### Patch Changes
+
+- fix hsl parsing for modern comma-less form ([963c536](https://github.com/ryanatkn/belt/commit/963c536))
+
 ## 0.21.0
 
 ### Minor Changes
