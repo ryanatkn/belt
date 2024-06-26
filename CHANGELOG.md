@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.22.0
+
+### Minor Changes
+
+- support `node@20.12` and later ([8ee3346](https://github.com/ryanatkn/belt/commit/8ee3346))
+
 ## 0.21.1
 
 ### Patch Changes
