@@ -1,5 +1,5 @@
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-import {red, yellow, gray, black, magenta, bgYellow, bgRed} from '$lib/styletext.js';
+import {red, yellow, gray, black, magenta, bg_yellow, bg_red} from '$lib/styletext.js';
 
 // TODO could use some refactoring
 
@@ -201,12 +201,12 @@ export class Logger extends Base_Logger {
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
 	static error: Log_Level_Defaults = {
-		prefixes: [red('➤'), black(bgRed(' 🞩 error 🞩 ')), red('\n➤')],
-		suffixes: ['\n ', black(bgRed(' 🞩🞩 '))],
+		prefixes: [red('➤'), black(bg_red(' 🞩 error 🞩 ')), red('\n➤')],
+		suffixes: ['\n ', black(bg_red(' 🞩🞩 '))],
 	};
 	static warn: Log_Level_Defaults = {
-		prefixes: [yellow('➤'), black(bgYellow(' ⚑ warning ⚑ ')), '\n' + yellow('➤')],
-		suffixes: ['\n ', black(bgYellow(' ⚑ '))],
+		prefixes: [yellow('➤'), black(bg_yellow(' ⚑ warning ⚑ ')), '\n' + yellow('➤')],
+		suffixes: ['\n ', black(bg_yellow(' ⚑ '))],
 	};
 	static info: Log_Level_Defaults = {
 		prefixes: [gray('➤')],
