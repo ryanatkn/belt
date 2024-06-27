@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.23.0
+
+### Minor Changes
+
+- remove `kleur` dependency for Node's `styleText` and wrap it with `$lib/styletext.ts` ([#29](https://github.com/ryanatkn/belt/pull/29))
+
+### Patch Changes
+
+- upgrade gro with correctly formatted exports ([744b984](https://github.com/ryanatkn/belt/commit/744b984))
+
 ## 0.22.0
 
 ### Minor Changes
