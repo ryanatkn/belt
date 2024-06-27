@@ -5,9 +5,9 @@ import {
 } from 'node:child_process';
 import {gray, green, red} from 'kleur/colors';
 
-import {print_log_label, System_Logger} from './log.js';
-import {print_error, print_key_value} from './print.js';
-import type {Result} from './result.js';
+import {print_log_label, System_Logger} from '$lib/log.js';
+import {print_error, print_key_value} from '$lib/print.js';
+import type {Result} from '$lib/result.js';
 
 const log = new System_Logger(print_log_label('process'));
 

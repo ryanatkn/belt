@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {clamp, lerp, round} from './maths.js';
+import {clamp, lerp, round} from '$lib/maths.js';
 
 /* test__clamp */
 const test__clamp = suite('clamp');

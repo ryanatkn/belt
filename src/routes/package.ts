@@ -26,7 +26,6 @@ export const package_json = {
 	},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
 	files: ['dist'],
-	peerDependencies: {kleur: '^4.0.0'},
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
 		'@ryanatkn/eslint-config': '^0.1.3',
@@ -42,7 +41,6 @@ export const package_json = {
 		'@typescript-eslint/parser': '^7.13.1',
 		eslint: '^8.57.0',
 		'eslint-plugin-svelte': '^2.41.0',
-		kleur: '^4.1.5',
 		prettier: '^3.3.2',
 		'prettier-plugin-svelte': '^3.2.5',
 		svelte: '^5.0.0-next.165',
@@ -86,6 +84,7 @@ export const package_json = {
 		'./regexp.js': {types: './dist/regexp.d.ts', default: './dist/regexp.js'},
 		'./result.js': {types: './dist/result.d.ts', default: './dist/result.js'},
 		'./string.js': {types: './dist/string.d.ts', default: './dist/string.js'},
+		'./styletext.js': {types: './dist/styletext.d.ts', default: './dist/styletext.js'},
 		'./timings.js': {types: './dist/timings.d.ts', default: './dist/timings.js'},
 		'./types.js': {types: './dist/types.d.ts', default: './dist/types.js'},
 		'./url.js': {types: './dist/url.d.ts', default: './dist/url.js'},
@@ -367,6 +366,7 @@ export const src_json = {
 				{name: 'count_graphemes', kind: 'function'},
 			],
 		},
+		'./styletext.js': {path: 'styletext.ts', declarations: []},
 		'./timings.js': {
 			path: 'timings.ts',
 			declarations: [

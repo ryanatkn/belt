@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {create_counter} from './counter.js';
+import {create_counter} from '$lib/counter.js';
 
 test('basic behavior', () => {
 	const counter = create_counter();

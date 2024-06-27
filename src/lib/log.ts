@@ -1,6 +1,5 @@
-import {red, yellow, gray, black, magenta, bgYellow, bgRed} from 'kleur/colors';
-
-import {EMPTY_ARRAY, to_array} from './array.js';
+import {EMPTY_ARRAY, to_array} from '$lib/array.js';
+import {red, yellow, gray, black, magenta, bgYellow, bgRed} from '$lib/styletext.js';
 
 // TODO could use some refactoring
 

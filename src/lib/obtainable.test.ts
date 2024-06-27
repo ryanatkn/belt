@@ -1,8 +1,8 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {create_obtainable} from './obtainable.js';
-import {noop} from './function.js';
+import {create_obtainable} from '$lib/obtainable.js';
+import {noop} from '$lib/function.js';
 
 test('unobtain out of order', async () => {
 	let thing: symbol | undefined;

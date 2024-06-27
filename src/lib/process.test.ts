@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {spawn, spawn_out} from './process.js';
+import {spawn, spawn_out} from '$lib/process.js';
 
 test('spawn', async () => {
 	const result = await spawn('echo', ['a', 'b']);

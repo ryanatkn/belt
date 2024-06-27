@@ -1,4 +1,4 @@
-import {is_plain_object} from './object.js';
+import {is_plain_object} from '$lib/object.js';
 
 export type Json = string | number | boolean | null | {[prop: string]: Json} | Json[];
 
