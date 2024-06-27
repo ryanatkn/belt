@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {to_array} from './array.js';
+import {to_array} from '$lib/array.js';
 
 test('basic behavior', () => {
 	const array = [1, 2, 3];

@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {sort_map} from './map.js';
+import {sort_map} from '$lib/map.js';
 
 test('basic behavior', () => {
 	assert.equal(

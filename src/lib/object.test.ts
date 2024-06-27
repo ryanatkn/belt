@@ -1,7 +1,7 @@
 import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {map_record, omit, pick_by, omit_undefined, reorder, traverse} from './object.js';
+import {map_record, omit, pick_by, omit_undefined, reorder, traverse} from '$lib/object.js';
 
 /* test__map_record */
 const test__map_record = suite('map_record');

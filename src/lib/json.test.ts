@@ -1,8 +1,8 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {to_json_type} from './json.js';
-import {noop} from './function.js';
+import {to_json_type} from '$lib/json.js';
+import {noop} from '$lib/function.js';
 
 test('basic behavior', () => {
 	assert.is(to_json_type(''), 'string');

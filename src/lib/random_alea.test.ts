@@ -33,7 +33,7 @@ THE SOFTWARE.
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {create_random_alea} from './random_alea.js';
+import {create_random_alea} from '$lib/random_alea.js';
 
 test('Math.random() replacement', () => {
 	// From http://baagoe.com/en/RandomMusings/javascript/

@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {format_url} from './url.js';
+import {format_url} from '$lib/url.js';
 
 test('format_url', () => {
 	assert.is(format_url('https://www.fuz.dev/'), 'fuz.dev');

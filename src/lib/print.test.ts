@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {print_ms, disabled_colors, set_colors} from './print.js';
+import {print_ms, disabled_colors, set_colors} from '$lib/print.js';
 
 set_colors(disabled_colors);
 

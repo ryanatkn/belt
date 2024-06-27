@@ -1,14 +1,11 @@
-import {gray, white, green, yellow, blue, cyan, magenta} from 'kleur/colors';
-
-import {round} from './maths.js';
-import type {Timings} from './timings.js';
-import type {Logger} from './log.js';
-import {identity} from './function.js';
+import {gray, white, green, yellow, blue, cyan, magenta} from '$lib/styletext.js';
+import {round} from '$lib/maths.js';
+import type {Timings} from '$lib/timings.js';
+import type {Logger} from '$lib/log.js';
+import {identity} from '$lib/function.js';
 
 export interface Colorize {
-	(value: string | number | boolean): string;
-	(input: undefined): undefined;
-	(input: null): null;
+	(value: string): string;
 }
 
 export interface Colors {
@@ -21,8 +18,6 @@ export interface Colors {
 	magenta: Colorize;
 }
 
-export const kleur_colors: Colors = {gray, white, green, yellow, blue, cyan, magenta};
-
 export const disabled_colors: Colors = {
 	gray: identity,
 	white: identity,
@@ -33,7 +28,7 @@ export const disabled_colors: Colors = {
 	magenta: identity,
 };
 
-let colors: Colors = kleur_colors;
+let colors: Colors = {gray, white, green, yellow, blue, cyan, magenta};
 export const get_colors = (): Colors => colors;
 export const set_colors = (value: Colors): Colors => (colors = value);
 
@@ -66,8 +61,8 @@ export const print_number_with_separators = (v: string, separator = '_'): string
 };
 
 export const print_string = (v: string, c = colors): string => c.green(`'${v}'`);
-export const print_number = (v: number, c = colors): string => c.cyan(v);
-export const print_boolean = (v: boolean, c = colors): string => c.yellow(v);
+export const print_number = (v: number, c = colors): string => c.cyan(v + '');
+export const print_boolean = (v: boolean, c = colors): string => c.yellow(v + '');
 
 export const print_value = (value: unknown, c = colors): string => {
 	switch (typeof value) {
@@ -93,7 +88,7 @@ export const print_error = (err: Error, c = colors): string =>
 	);
 
 export const print_timing = (key: string | number, timing: number, c = colors): string =>
-	`${print_ms(timing, undefined, c)} ${c.gray('←')} ${c.gray(key)}`;
+	`${print_ms(timing, undefined, c)} ${c.gray('←')} ${c.gray(key + '')}`;
 
 export const print_timings = (timings: Timings, log: Logger, c = colors): void => {
 	for (const [key, timing] of timings.entries()) {

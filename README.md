@@ -5,10 +5,9 @@
 
 design:
 
-- kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
+- zero dependency kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
 - mix of JS module environments - browser-only, Node-only, universal
 - mostly small pure functions
-- one third party dependency on [`kleur`](https://github.com/lukeed/kleur)
 - all TypeScript, for styles and Svelte and SvelteKit
   see <a href="https://github.com/fuz-dev/fuz">@ryanatkn/fuz</a>
 - complements the modern web platform, drops legacy quickly
@@ -57,22 +56,6 @@ npm run deploy
 # or
 gro deploy
 ```
-
-## credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
-
-depends on [`kleur`](https://github.com/lukeed/kleur)
-
-made with [Svelte](https://github.com/sveltejs/svelte) ∙
-[SvelteKit](https://github.com/sveltejs/kit) ∙
-[Vite](https://github.com/vitejs/vite) ∙
-[esbuild](https://github.com/evanw/esbuild) ∙
-[uvu](https://github.com/lukeed/uvu) ∙
-[TypeScript](https://github.com/microsoft/TypeScript) ∙
-[ESLint](https://github.com/eslint/eslint) ∙
-[Prettier](https://github.com/prettier/prettier) ∙
-[Fuz](https://github.com/fuz-dev/fuz) ∙
-[Gro](https://github.com/feltjs/gro)
-and [more](package.json)
 
 ## license [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
 

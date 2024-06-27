@@ -2,7 +2,7 @@ import {suite} from 'uvu';
 import * as assert from 'uvu/assert';
 import {randomUUID} from 'node:crypto';
 
-import {is_uuid, create_client_id_creator} from './id.js';
+import {is_uuid, create_client_id_creator} from '$lib/id.js';
 
 /* test__is_uuid */
 const test__is_uuid = suite('is_uuid');
