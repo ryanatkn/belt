@@ -15,7 +15,7 @@
 		<header class="box">
 			<h1 class="mt_xl5">{pkg.repo_name}</h1>
 		</header>
-		<Breadcrumb>{package_json.icon}</Breadcrumb>
+		<Breadcrumb>{package_json.glyph}</Breadcrumb>
 	</section>
 	<section class="box w_100 mb_lg">
 		<div class="panel p_md width_md">
@@ -26,7 +26,7 @@
 		<Library_Footer {pkg} />
 	</section>
 	<section class="box mb_lg">
-		<Breadcrumb>{package_json.icon}</Breadcrumb>
+		<Breadcrumb>{package_json.glyph}</Breadcrumb>
 	</section>
 </main>
 
