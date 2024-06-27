@@ -3,8 +3,8 @@ import {
 	type SpawnOptions,
 	type ChildProcess,
 } from 'node:child_process';
-import {gray, green, red} from 'kleur/colors';
 
+import {gray, green, red} from '$lib/styletext.js';
 import {print_log_label, System_Logger} from '$lib/log.js';
 import {print_error, print_key_value} from '$lib/print.js';
 import type {Result} from '$lib/result.js';
