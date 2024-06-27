@@ -4,7 +4,7 @@ import {styleText} from 'node:util';
  * Re-exports Node's `styleText` util for convenience.
  */
 
-// TODO consider bright variants? any others?
+// TODO consider bright variants? (they don't seem to do much) - any others?
 
 export const black = styleText.bind(null, 'black');
 export const red = styleText.bind(null, 'red');
