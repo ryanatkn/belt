@@ -30,7 +30,7 @@ export const package_json = {
 		'@changesets/changelog-git': '^0.2.0',
 		'@ryanatkn/eslint-config': '^0.1.3',
 		'@ryanatkn/fuz': '^0.105.1',
-		'@ryanatkn/gro': '^0.125.0',
+		'@ryanatkn/gro': '^0.125.1',
 		'@ryanatkn/moss': '^0.6.0',
 		'@sveltejs/adapter-static': '^3.0.2',
 		'@sveltejs/kit': '^2.5.17',
