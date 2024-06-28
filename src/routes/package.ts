@@ -186,7 +186,7 @@ export const src_json = {
 			declarations: [
 				{name: 'Uuid', kind: 'type'},
 				{name: 'is_uuid', kind: 'function'},
-				{name: 'uuid_matcher', kind: 'variable'},
+				{name: 'UUID_MATCHER', kind: 'variable'},
 				{name: 'Client_Id_Creator', kind: 'type'},
 				{name: 'create_client_id_creator', kind: 'function'},
 			],
