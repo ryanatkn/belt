@@ -258,7 +258,7 @@
           "kind": "function"
         },
         {
-          "name": "uuid_matcher",
+          "name": "UUID_MATCHER",
           "kind": "variable"
         },
         {
