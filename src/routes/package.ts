@@ -25,8 +25,6 @@ export const package_json = {
 		deploy: 'gro deploy',
 	},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
-	sideEffects: ['**/*.css'],
-	files: ['dist'],
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
 		'@ryanatkn/eslint-config': '^0.1.3',
@@ -59,6 +57,8 @@ export const package_json = {
 		bracketSpacing: false,
 		overrides: [{files: 'package.json', options: {useTabs: false}}],
 	},
+	sideEffects: ['**/*.css'],
+	files: ['dist'],
 	exports: {
 		'./package.json': './package.json',
 		'./array.js': {types: './dist/array.d.ts', default: './dist/array.js'},

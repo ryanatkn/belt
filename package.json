@@ -34,12 +34,6 @@
     "utilities",
     "web"
   ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "files": [
-    "dist"
-  ],
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.0",
     "@ryanatkn/eslint-config": "^0.1.3",
@@ -87,6 +81,12 @@
       }
     ]
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./package.json": "./package.json",
     "./array.js": {
