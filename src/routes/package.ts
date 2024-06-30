@@ -25,6 +25,7 @@ export const package_json = {
 		deploy: 'gro deploy',
 	},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
+	sideEffects: ['**/*.css'],
 	files: ['dist'],
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',

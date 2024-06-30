@@ -34,6 +34,9 @@
     "utilities",
     "web"
   ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
