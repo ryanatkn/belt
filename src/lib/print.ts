@@ -1,5 +1,4 @@
 import {gray, white, green, yellow, blue, cyan, magenta} from '$lib/styletext.js';
-import {round} from '$lib/maths.js';
 import type {Timings} from '$lib/timings.js';
 import type {Logger} from '$lib/log.js';
 import {identity} from '$lib/function.js';
@@ -42,7 +41,7 @@ export const print_ms = (
 	separator?: string,
 ): string => {
 	const decimal_count = decimals ?? (ms >= 10 ? 0 : ms < 0.1 ? 2 : 1);
-	const rounded = round(ms, decimal_count).toFixed(decimal_count);
+	const rounded = ms.toFixed(decimal_count);
 	return c.white(print_number_with_separators(rounded, separator)) + c.gray('ms');
 };
 
