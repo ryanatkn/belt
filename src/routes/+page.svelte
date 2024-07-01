@@ -13,7 +13,7 @@
 <main class="box mb_xl5">
 	<section>
 		<h1 class="mt_xl5 text_align_center">belt</h1>
-		<Package_Summary {pkg} pixelated_logo>
+		<Package_Summary {pkg}>
 			{#snippet repo_name()}{/snippet}
 		</Package_Summary>
 	</section>
