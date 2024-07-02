@@ -86,8 +86,12 @@ export const print_error = (err: Error, c = colors): string =>
 			`Unknown error: ${err as any}`,
 	);
 
-export const print_timing = (key: string | number, timing: number, c = colors): string =>
-	`${print_ms(timing, undefined, c)} ${c.gray('←')} ${c.gray(key + '')}`;
+export const print_timing = (
+	key: string | number,
+	timing: number | undefined,
+	c = colors,
+): string =>
+	`${timing === undefined ? '...' : print_ms(timing, undefined, c)} ${c.gray('←')} ${c.gray(key + '')}`;
 
 export const print_timings = (timings: Timings, log: Logger, c = colors): void => {
 	for (const [key, timing] of timings.entries()) {

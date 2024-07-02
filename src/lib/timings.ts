@@ -20,7 +20,7 @@ export const create_stopwatch = (decimals = 2): Stopwatch => {
 export type Timings_Key = string | number;
 
 export class Timings {
-	private readonly timings = new Map<Timings_Key, number>();
+	private readonly timings = new Map<Timings_Key, number | undefined>();
 	private readonly stopwatches = new Map<Timings_Key, Stopwatch>();
 
 	constructor(public readonly decimals?: number) {}
@@ -28,7 +28,7 @@ export class Timings {
 	start(key: Timings_Key, decimals = this.decimals): () => number {
 		const final_key = this.next_key(key);
 		this.stopwatches.set(final_key, create_stopwatch(decimals));
-		this.timings.set(final_key, undefined!); // initializing to preserve order
+		this.timings.set(final_key, undefined); // initializing to preserve order
 		return () => this.stop(final_key);
 	}
 
@@ -56,7 +56,7 @@ export class Timings {
 		return timing;
 	}
 
-	entries(): IterableIterator<[Timings_Key, number]> {
+	entries(): IterableIterator<[Timings_Key, number | undefined]> {
 		return this.timings.entries();
 	}
 
@@ -66,7 +66,10 @@ export class Timings {
 	 */
 	merge(timings: Timings): void {
 		for (const [key, timing] of timings.entries()) {
-			this.timings.set(key, (this.timings.get(key) || 0) + timing);
+			this.timings.set(
+				key,
+				timing === undefined ? undefined : (this.timings.get(key) || 0) + timing,
+			);
 		}
 	}
 
