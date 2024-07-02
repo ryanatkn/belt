@@ -12,9 +12,8 @@
 
 <main class="box mb_xl5">
 	<section>
-		<h1 class="mt_xl5 text_align_center">belt</h1>
 		<Package_Summary {pkg}>
-			{#snippet repo_name()}{/snippet}
+			{#snippet repo_name()}<h1 class="mt_xl mb_xl">belt</h1>{/snippet}
 		</Package_Summary>
 	</section>
 	<section class="box">
@@ -24,6 +23,3 @@
 		<Library_Footer {pkg} />
 	</section>
 </main>
-
-<style>
-</style>
