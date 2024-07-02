@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.1
+
+### Patch Changes
+
+- fix timings type to correctly include `undefined` for unfinished ones ([603bfe4](https://github.com/ryanatkn/belt/commit/603bfe4))
+
 ## 0.24.0
 
 ### Minor Changes
