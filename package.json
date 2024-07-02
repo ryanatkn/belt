@@ -3,6 +3,8 @@
   "version": "0.23.0",
   "description": "utility belt for JS",
   "glyph": "🦕",
+  "logo": "logo.svg",
+  "logo_alt": "a friendly pixelated spider facing you",
   "public": true,
   "license": "MIT",
   "homepage": "https://belt.ryanatkn.com/",
@@ -17,16 +19,16 @@
   },
   "bugs": "https://github.com/ryanatkn/belt/issues",
   "funding": "https://www.ryanatkn.com/funding",
-  "type": "module",
-  "engines": {
-    "node": ">=20.12"
-  },
   "scripts": {
     "start": "gro dev",
     "dev": "gro dev",
     "build": "gro build",
     "test": "gro test",
     "deploy": "gro deploy"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.12"
   },
   "keywords": [
     "js",
@@ -37,8 +39,8 @@
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.0",
     "@ryanatkn/eslint-config": "^0.1.3",
-    "@ryanatkn/fuz": "^0.105.2",
-    "@ryanatkn/gro": "^0.126.0",
+    "@ryanatkn/fuz": "^0.106.1",
+    "@ryanatkn/gro": "^0.127.1",
     "@ryanatkn/moss": "^0.6.2",
     "@sveltejs/adapter-static": "^3.0.2",
     "@sveltejs/kit": "^2.5.17",

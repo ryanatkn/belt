@@ -4,7 +4,6 @@
 	import '$routes/style.css';
 
 	import Themed from '@ryanatkn/fuz/Themed.svelte';
-	import {base} from '$app/paths';
 	import type {Snippet} from 'svelte';
 
 	interface Props {
@@ -16,7 +15,6 @@
 
 <svelte:head>
 	<title>@ryanatkn/belt</title>
-	<link rel="icon" href="{base}/favicon.png" />
 </svelte:head>
 
 <Themed>
