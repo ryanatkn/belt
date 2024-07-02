@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.24.0
+
+### Minor Changes
+
+- rename `UUID_MATCHER` from `uuid_matcher` for consistency ([f974a64](https://github.com/ryanatkn/belt/commit/f974a64))
+
+### Patch Changes
+
+- add `sideEffects` to `package.json` ([8f8c5bd](https://github.com/ryanatkn/belt/commit/8f8c5bd))
+
 ## 0.23.0
 
 ### Minor Changes
