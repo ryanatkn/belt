@@ -74,7 +74,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	let key;
 	if (cache) {
 		key = to_fetch_value_cache_key(url_str, params, method);
-		cached = cache?.get(key);
+		cached = cache.get(key);
 		if (return_early_from_cache && cached) {
 			log?.info('[fetch_value] cached locally and returning early', url_str);
 			log?.debug('[fetch_value] cached value', cached);
