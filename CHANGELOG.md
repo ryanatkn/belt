@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.2
+
+### Patch Changes
+
+- add `embed_json` helper for embedding parsed json strings in js ([f5c02c0](https://github.com/ryanatkn/belt/commit/f5c02c0))
+
 ## 0.24.1
 
 ### Patch Changes

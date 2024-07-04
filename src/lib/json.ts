@@ -35,3 +35,10 @@ export const canonicalize = <T extends Json>(value: T): T => {
 			.map(([k, v]) => [k, canonicalize(v)]),
 	) as any;
 };
+
+/**
+ * Embeds `data` as a JSON string, escaping single quotes.
+ * Useful for optimizing JSON in JS because it parses faster.
+ */
+export const embed_json = <T>(data: T, stringify: (data: T) => string = JSON.stringify): string =>
+	`JSON.parse('${stringify(data).replaceAll("'", "\\'")}')`;

@@ -1,10 +1,10 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {to_json_type} from '$lib/json.js';
+import {to_json_type, embed_json} from '$lib/json.js';
 import {noop} from '$lib/function.js';
 
-test('basic behavior', () => {
+test('to_json_type', () => {
 	assert.is(to_json_type(''), 'string');
 	assert.is(to_json_type('1'), 'string');
 	assert.is(to_json_type(1), 'number');
@@ -18,6 +18,12 @@ test('basic behavior', () => {
 	assert.is(to_json_type(noop as any), undefined);
 	assert.is(to_json_type(BigInt(9000) as any), undefined);
 	assert.is(to_json_type(Symbol() as any), undefined);
+});
+
+test('embed_json', () => {
+	assert.is(embed_json('hello"world'), `JSON.parse('"hello\\"world"')`);
+	assert.is(embed_json("hello'world"), `JSON.parse('"hello\\'world"')`);
+	assert.is(embed_json("'hello'w''or'''ld'"), `JSON.parse('"\\'hello\\'w\\'\\'or\\'\\'\\'ld\\'"')`);
 });
 
 test.run();
