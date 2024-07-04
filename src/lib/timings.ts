@@ -1,8 +1,6 @@
 import {round} from '$lib/maths.js';
 
-export interface Stopwatch {
-	(reset?: boolean): number;
-}
+export type Stopwatch = (reset?: boolean) => number;
 
 /**
  * Tracks elapsed time in milliseconds.
@@ -20,8 +18,8 @@ export const create_stopwatch = (decimals = 2): Stopwatch => {
 export type Timings_Key = string | number;
 
 export class Timings {
-	private readonly timings = new Map<Timings_Key, number | undefined>();
-	private readonly stopwatches = new Map<Timings_Key, Stopwatch>();
+	private readonly timings: Map<Timings_Key, number | undefined> = new Map();
+	private readonly stopwatches: Map<Timings_Key, Stopwatch> = new Map();
 
 	constructor(public readonly decimals?: number) {}
 

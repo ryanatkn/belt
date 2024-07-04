@@ -61,7 +61,7 @@ export const is_iframed = (): boolean => {
 	if (typeof window === 'undefined') return false;
 	try {
 		return window.self !== window.top; // some browsers may throw here due to the same origin policy
-	} catch (err) {
+	} catch (_err) {
 		return false;
 	}
 };
