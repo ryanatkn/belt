@@ -207,6 +207,7 @@ export const src_json = {
 				{name: 'Json_Type', kind: 'type'},
 				{name: 'to_json_type', kind: 'function'},
 				{name: 'canonicalize', kind: 'function'},
+				{name: 'embed_json', kind: 'function'},
 			],
 		},
 		'./log.js': {
