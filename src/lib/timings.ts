@@ -66,7 +66,7 @@ export class Timings {
 		for (const [key, timing] of timings.entries()) {
 			this.timings.set(
 				key,
-				timing === undefined ? undefined : (this.timings.get(key) || 0) + timing,
+				timing === undefined ? undefined : (this.timings.get(key) ?? 0) + timing,
 			);
 		}
 	}
