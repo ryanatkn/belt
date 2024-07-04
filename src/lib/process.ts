@@ -72,7 +72,7 @@ export const spawn_process = (
 	options?: SpawnOptions,
 ): Spawned_Process => {
 	let resolve: (v: Spawn_Result) => void;
-	const closed = new Promise<Spawn_Result>((r) => (resolve = r));
+	const closed: Promise<Spawn_Result> = new Promise((r) => (resolve = r));
 	const child = spawn_child_process(command, args, {stdio: 'inherit', ...options});
 	const unregister = register_global_spawn(child);
 	child.once('close', (code, signal) => {
@@ -114,7 +114,7 @@ export const register_global_spawn = (child: ChildProcess): (() => void) => {
  */
 export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 	let resolve: (v: Spawn_Result) => void;
-	const closed = new Promise<Spawn_Result>((r) => (resolve = r));
+	const closed: Promise<Spawn_Result> = new Promise((r) => (resolve = r));
 	log.debug('despawning', print_child_process(child));
 	child.once('close', (code, signal) => {
 		resolve(code ? {ok: false, child, code, signal} : {ok: true, child, code, signal});
@@ -138,15 +138,13 @@ const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Pro
 const handle_unhandled_rejection =
 	(to_error_label?: To_Error_Label) =>
 	(err: any): Promise<void> => {
-		const label = to_error_label?.(err) || 'unhandledRejection';
+		const label = to_error_label?.(err) ?? 'unhandledRejection';
 		return err instanceof Error
 			? handle_fatal_error(err, label)
 			: handle_fatal_error(new Error(err), label);
 	};
 
-interface To_Error_Label {
-	(err: any): string | null;
-}
+type To_Error_Label = (err: any) => string | null;
 
 export const print_spawn_result = (result: Spawn_Result): string => {
 	if (result.ok) return 'ok';

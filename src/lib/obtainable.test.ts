@@ -4,7 +4,7 @@ import * as assert from 'uvu/assert';
 import {create_obtainable} from '$lib/obtainable.js';
 import {noop} from '$lib/function.js';
 
-test('unobtain out of order', async () => {
+test('unobtain out of order', () => {
 	let thing: symbol | undefined;
 	let unobtained = false;
 	const obtain_thing = create_obtainable(
