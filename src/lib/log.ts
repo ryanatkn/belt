@@ -13,7 +13,7 @@ const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
 	debug: 4,
 };
 
-export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4;
+export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4; // eslint-disable-line @typescript-eslint/no-unnecessary-condition
 
 const should_log = (max: Log_Level, level: Log_Level): boolean =>
 	to_log_level_value(max) >= to_log_level_value(level);
@@ -38,8 +38,9 @@ export const configure_log_level = (
 };
 
 const DEFAULT_LOG_LEVEL: Log_Level =
-	(typeof process !== 'undefined' && (process.env?.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ||
-	'info';
+	(typeof process === 'undefined'
+		? null
+		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? 'info';
 
 /*
 

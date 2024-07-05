@@ -40,7 +40,7 @@ export class Result_Error extends Error {
 		public readonly result: {ok: false; message?: string},
 		message?: string,
 	) {
-		super(message || result.message || Result_Error.DEFAULT_MESSAGE);
+		super(message ?? result.message ?? Result_Error.DEFAULT_MESSAGE);
 	}
 }
 

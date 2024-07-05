@@ -3,9 +3,7 @@ import type {Timings} from '$lib/timings.js';
 import type {Logger} from '$lib/log.js';
 import {identity} from '$lib/function.js';
 
-export interface Colorize {
-	(value: string): string;
-}
+export type Colorize = (value: string) => string;
 
 export interface Colors {
 	gray: Colorize;
@@ -82,8 +80,7 @@ export const print_value = (value: unknown, c = colors): string => {
 // don't assume the arg is an `Error` and try to return something useful.
 export const print_error = (err: Error, c = colors): string =>
 	c.yellow(
-		(err && (err.stack || (err.message && `Error: ${err.message}`))) ||
-			`Unknown error: ${err as any}`,
+		err.stack ?? ((err.message && `Error: ${err.message}`) || `Unknown error: ${err as any}`),
 	);
 
 export const print_timing = (

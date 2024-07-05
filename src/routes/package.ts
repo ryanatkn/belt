@@ -31,7 +31,7 @@ export const package_json = {
 	keywords: ['js', 'typescript', 'utilities', 'web'],
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
-		'@ryanatkn/eslint-config': '^0.1.3',
+		'@ryanatkn/eslint-config': '^0.2.0',
 		'@ryanatkn/fuz': '^0.107.1',
 		'@ryanatkn/gro': '^0.129.0',
 		'@ryanatkn/moss': '^0.6.3',
@@ -40,9 +40,7 @@ export const package_json = {
 		'@sveltejs/package': '^2.3.2',
 		'@sveltejs/vite-plugin-svelte': '^3.1.1',
 		'@types/node': '^20.14.8',
-		'@typescript-eslint/eslint-plugin': '^7.13.1',
-		'@typescript-eslint/parser': '^7.13.1',
-		eslint: '^8.57.0',
+		eslint: '^9.6.0',
 		'eslint-plugin-svelte': '^2.41.0',
 		prettier: '^3.3.2',
 		'prettier-plugin-svelte': '^3.2.5',
@@ -50,9 +48,9 @@ export const package_json = {
 		'svelte-check': '^3.8.2',
 		tslib: '^2.6.3',
 		typescript: '^5.5.2',
+		'typescript-eslint': '^8.0.0-alpha.39',
 		uvu: '^0.5.6',
 	},
-	eslintConfig: {root: true, extends: '@ryanatkn', rules: {'no-console': 1}},
 	prettier: {
 		plugins: ['prettier-plugin-svelte'],
 		useTabs: true,
@@ -148,6 +146,7 @@ export const src_json = {
 			path: 'counter.ts',
 			declarations: [
 				{name: 'Counter', kind: 'type'},
+				{name: 'Create_Counter', kind: 'type'},
 				{name: 'create_counter', kind: 'function'},
 			],
 		},

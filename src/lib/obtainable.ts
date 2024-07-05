@@ -28,7 +28,7 @@ export const create_obtainable = <T>(
 	teardown_obtainable_value?: (obtainable: T) => unknown,
 ): (() => [T, Unobtain]) => {
 	let obtainable: T | undefined;
-	const refs = new Set<symbol>();
+	const refs: Set<symbol> = new Set();
 	const unobtain = (ref: symbol): void => {
 		if (!refs.has(ref)) return; // makes unobtaining idempotent per obtainer
 		refs.delete(ref);

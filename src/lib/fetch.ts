@@ -83,7 +83,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	}
 
 	const body =
-		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params || {}));
+		request?.body ?? (method === 'GET' || method === 'HEAD' ? null : JSON.stringify(params ?? {}));
 
 	const headers = new Headers(request?.headers);
 	if (!headers.has('accept')) {

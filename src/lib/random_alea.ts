@@ -78,9 +78,7 @@ export const create_random_alea = (...args: unknown[]): Alea => {
 	return random;
 };
 
-interface Mash {
-	(data: any): number;
-}
+type Mash = (data: any) => number;
 
 /**
  * @source http://baagoe.com/en/RandomMusings/javascript/
