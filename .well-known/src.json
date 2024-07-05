@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.24.1",
+  "version": "0.24.2",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -138,6 +138,10 @@
       "declarations": [
         {
           "name": "Counter",
+          "kind": "type"
+        },
+        {
+          "name": "Create_Counter",
           "kind": "type"
         },
         {
@@ -297,6 +301,10 @@
         },
         {
           "name": "canonicalize",
+          "kind": "function"
+        },
+        {
+          "name": "embed_json",
           "kind": "function"
         }
       ]
