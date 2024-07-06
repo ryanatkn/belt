@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.3
+
+### Patch Changes
+
+- enable tsconfig `declaration` and `declarationMap` ([cbe3e31](https://github.com/ryanatkn/belt/commit/cbe3e31))
+
 ## 0.24.2
 
 ### Patch Changes
