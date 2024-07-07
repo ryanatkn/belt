@@ -1,5 +1,12 @@
 # @ryanatkn/belt
 
+## 0.24.4
+
+### Patch Changes
+
+- publish src files ([9af61b0](https://github.com/ryanatkn/belt/commit/9af61b0))
+- add tsconfig `sourceRoot` ([459eb8a](https://github.com/ryanatkn/belt/commit/459eb8a))
+
 ## 0.24.3
 
 ### Patch Changes
