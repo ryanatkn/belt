@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.5
+
+### Patch Changes
+
+- improve hsl parsing to allow hsl prefix ([#33](https://github.com/ryanatkn/belt/pull/33))
+
 ## 0.24.4
 
 ### Patch Changes
