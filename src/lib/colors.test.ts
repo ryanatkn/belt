@@ -43,7 +43,7 @@ test('parse_hsl_string', () => {
 	assert.equal(parse_hsl_string('210, 55%, 62%'), parsed); // older form with commas
 	assert.equal(parse_hsl_string('210,55%,62%'), parsed); // older form with commas
 	assert.equal(parse_hsl_string('210 55% 62%'), parsed);
-	assert.equal(parse_hsl_string('210    55%  62%'), parsed);
+	assert.equal(parse_hsl_string('   210    55%  62%'), parsed);
 	assert.equal(parse_hsl_string('210 55% 62% / 0.5'), parsed);
 });
 
