@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.8
+
+### Patch Changes
+
+- change `embed_json` to support multiline strings ([d173206](https://github.com/ryanatkn/belt/commit/d173206))
+
 ## 0.24.7
 
 ### Patch Changes
