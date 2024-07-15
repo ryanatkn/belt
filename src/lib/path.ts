@@ -55,7 +55,6 @@ export type Path_Piece =
 			path: string;
 	  };
 
-// TODO BLOCK remove uppercase versions
 export const slugify = (str: string): string => {
 	let s = str.toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
@@ -77,8 +76,6 @@ export const slugify2 = (str: string): string => {
 		.replace(/\s+/gu, '-') // collapse whitespace and replace by -
 		.replace(/-+/gu, '-'); // collapse dashes
 };
-
-// TODO BLOCK try without u
 
 // @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
 const special_char_from = 'áäâàãåÆþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž';
