@@ -18,7 +18,22 @@ test('parse_path_segments', () => {
 });
 
 test('parse_path_pieces', () => {
-	assert.equal(parse_path_pieces('/foo/bar/baz/'), []);
+	assert.equal(parse_path_pieces('/foo/bar/baz/'), [
+		{type: 'separator', path: '/'},
+		{type: 'piece', name: 'foo', path: '/foo'},
+		{type: 'separator', path: '/foo'},
+		{type: 'piece', name: 'bar', path: '/foo/bar'},
+		{type: 'separator', path: '/foo/bar'},
+		{type: 'piece', name: 'baz', path: '/foo/bar/baz'},
+	]);
+	assert.equal(parse_path_pieces('./foo'), [
+		{type: 'separator', path: '/'},
+		{type: 'piece', name: 'foo', path: '/foo'},
+	]);
+	assert.equal(parse_path_pieces('foo'), [
+		{type: 'separator', path: '/'},
+		{type: 'piece', name: 'foo', path: '/foo'},
+	]);
 });
 
 test('slugify', () => {
@@ -26,6 +41,8 @@ test('slugify', () => {
 	assert.is(slugify('A B'), 'a-b');
 	assert.is(slugify('a, b!'), 'a-b');
 	assert.is(slugify("a's b"), 'as-b');
+	assert.is(slugify('a--b'), 'a-b');
+	assert.is(slugify('-a-----b-'), 'a-b');
 	assert.is(slugify('a_b'), 'a_b');
 	assert.is(slugify('a_ b'), 'a_-b');
 	assert.is(slugify('a _ b'), 'a-_-b');

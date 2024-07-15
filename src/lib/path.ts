@@ -61,8 +61,8 @@ export const slugify = (str: string): string => {
 		s = mapper(s);
 	}
 	return s
-		.replace(/[^\s\w]/g, '')
-		.split(/\s+/g) // collapse whitespace
+		.replace(/[^\s\w-]/g, '')
+		.split(/[\s-]+/g) // collapse whitespace
 		.filter(Boolean)
 		.join('-'); // remove all `''`
 };
