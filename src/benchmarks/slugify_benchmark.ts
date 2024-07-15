@@ -10,8 +10,6 @@ This implementation from Stackoverflow is slower than Belt's.
 It also doesn't quite pass our tests because of leading/trailing `-` and underscore handling,
 and conforming would only make it slower.
 
-@see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
-
 ┌─────────┬───────────────────┬───────────┬────────────────────┬──────────┬─────────┐
 │ (index) │ Task Name         │ ops/sec   │ Average Time (ns)  │ Margin   │ Samples │
 ├─────────┼───────────────────┼───────────┼────────────────────┼──────────┼─────────┤
@@ -20,6 +18,9 @@ and conforming would only make it slower.
 └─────────┴───────────────────┴───────────┴────────────────────┴──────────┴─────────┘
 
 */
+/**
+ * @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+ */
 const slugify_slower = (str: string): string => {
 	let s = str.toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
