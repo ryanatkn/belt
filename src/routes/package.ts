@@ -46,6 +46,7 @@ export const package_json = {
 		'prettier-plugin-svelte': '^3.2.5',
 		svelte: '^5.0.0-next.184',
 		'svelte-check': '^3.8.4',
+		tinybench: '^2.8.0',
 		tslib: '^2.6.3',
 		typescript: '^5.5.3',
 		'typescript-eslint': '^8.0.0-alpha.44',
@@ -284,6 +285,7 @@ export const src_json = {
 				{name: 'parse_path_pieces', kind: 'function'},
 				{name: 'Path_Piece', kind: 'type'},
 				{name: 'slugify', kind: 'function'},
+				{name: 'slugify2', kind: 'function'},
 			],
 		},
 		'./print.js': {
