@@ -16,8 +16,6 @@ export const parse_path_parts = (path: string): string[] => {
 /**
  * Gets the individual parts of a path, ignoring dots and separators.
  * @example parse_path_segments('/foo/bar/baz.ts') => ['foo', 'bar', 'baz.ts']
- * @param path
- * @returns
  */
 export const parse_path_segments = (path: string): string[] =>
 	path.split('/').filter((s) => s && s !== '.' && s !== '..');
@@ -54,3 +52,38 @@ export type Path_Piece =
 			type: 'separator';
 			path: string;
 	  };
+
+// TODO improve how? both efficiency and features
+export const slugify = (str: string): string => {
+	let s = str;
+	for (const mapper of get_special_char_mappers()) {
+		s = mapper(s);
+	}
+	const parts = s
+		.toLowerCase()
+		.split(/\s+/gu) // collapse whitespace
+		.map((s) => s.replace(/\W/gu, '')) // remove all non-word characters
+		.filter(Boolean); // remove all `''`
+	return parts.join('-');
+};
+
+// @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+const special_char_from =
+	'ÁÄÂÀÃÅÆÞßČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿž';
+const special_char_to =
+	'AAAAAAABBCCCDDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaabcccddeeeeeeeegiiiiinnooooooorrsstuuuuuyyz';
+let special_char_mappers: Array<(s: string) => string> | undefined;
+/**
+ * Lazily constructs `special_char_mappers` which
+ * converts special characters to their ASCII equivalents.
+ */
+const get_special_char_mappers = (): Array<(s: string) => string> => {
+	if (special_char_mappers) return special_char_mappers;
+	special_char_mappers = [];
+	for (let i = 0, j = special_char_from.length; i < j; i++) {
+		special_char_mappers.push((s) =>
+			s.replace(new RegExp(special_char_from.charAt(i), 'gu'), special_char_to.charAt(i)),
+		);
+	}
+	return special_char_mappers;
+};
