@@ -41,4 +41,4 @@ export const canonicalize = <T extends Json>(value: T): T => {
  * Useful for optimizing JSON in JS because it parses faster.
  */
 export const embed_json = <T>(data: T, stringify: (data: T) => string = JSON.stringify): string =>
-	`JSON.parse('${stringify(data).replaceAll("'", "\\'")}')`;
+	`JSON.parse('${stringify(data).replaceAll("'", "\\'").replaceAll('\\n', '\\\n')}')`;

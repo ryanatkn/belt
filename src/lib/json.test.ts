@@ -24,6 +24,12 @@ test('embed_json', () => {
 	assert.is(embed_json('hello"world'), `JSON.parse('"hello\\"world"')`);
 	assert.is(embed_json("hello'world"), `JSON.parse('"hello\\'world"')`);
 	assert.is(embed_json("'hello'w''or'''ld'"), `JSON.parse('"\\'hello\\'w\\'\\'or\\'\\'\\'ld\\'"')`);
+	assert.is(
+		embed_json(`hello
+world
+	newline`),
+		`JSON.parse('"hello\\\nworld\\\n\\tnewline"')`,
+	);
 });
 
 test.run();
