@@ -56,18 +56,18 @@ export type Path_Piece =
 	  };
 
 // TODO BLOCK remove uppercase versions
-export const slugify2 = (str: string): string => {
+export const slugify = (str: string): string => {
 	let s = str.toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
 		s = mapper(s);
 	}
-	const parts = s
+	return s
 		.split(/\s+/gu) // collapse whitespace
 		.map((s) => s.replace(/\W/gu, '')) // remove all non-word characters
-		.filter(Boolean); // remove all `''`
-	return parts.join('-');
+		.filter(Boolean)
+		.join('-'); // remove all `''`
 };
-export const slugify = (str: string): string => {
+export const slugify2 = (str: string): string => {
 	let s = str.trim().toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
 		s = mapper(s);
@@ -81,8 +81,8 @@ export const slugify = (str: string): string => {
 // TODO BLOCK try without u
 
 // @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
-const special_char_from = 'áäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿž';
-const special_char_to = 'aaaaaabcccddeeeeeeeegiiiiinnooooooorrsstuuuuuyyz';
+const special_char_from = 'áäâàãåÆþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž';
+const special_char_to = 'aaaaaaabcccddeeeeeeeegiiiiinnooooooorrssstuuuuuyyz';
 let special_char_mappers: Array<(s: string) => string> | undefined;
 /**
  * Lazily constructs `special_char_mappers` which
