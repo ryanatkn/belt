@@ -53,25 +53,31 @@ export type Path_Piece =
 			path: string;
 	  };
 
-// TODO improve how? both efficiency and features
-export const slugify = (str: string): string => {
-	let s = str;
-	for (const mapper of get_special_char_mappers()) {
-		s = mapper(s);
+/**
+ * Converts a string into a URL-compatible slug.
+ * @param str
+ * @param map_special_characters - If `true`, characters like `ñ` are converted
+ * to their ASCII equivalents. Runs around 5x faster when disabled.
+ */
+export const slugify = (str: string, map_special_characters = true): string => {
+	let s = str.toLowerCase();
+	if (map_special_characters) {
+		for (const mapper of get_special_char_mappers()) {
+			s = mapper(s);
+		}
 	}
-	const parts = s
-		.toLowerCase()
-		.split(/\s+/gu) // collapse whitespace
-		.map((s) => s.replace(/\W/gu, '')) // remove all non-word characters
-		.filter(Boolean); // remove all `''`
-	return parts.join('-');
+	return s
+		.replace(/[^\s\w-]/g, '')
+		.split(/[\s-]+/g) // collapse whitespace
+		.filter(Boolean)
+		.join('-'); // remove all `''`
 };
 
-// @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
-const special_char_from =
-	'ÁÄÂÀÃÅÆÞßČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿž';
-const special_char_to =
-	'AAAAAAABBCCCDDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaabcccddeeeeeeeegiiiiinnooooooorrsstuuuuuyyz';
+/**
+ * @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+ */
+const special_char_from = 'áäâàãåÆþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž';
+const special_char_to = 'aaaaaaabcccddeeeeeeeegiiiiinnooooooorrssstuuuuuyyz';
 let special_char_mappers: Array<(s: string) => string> | undefined;
 /**
  * Lazily constructs `special_char_mappers` which
@@ -82,7 +88,7 @@ const get_special_char_mappers = (): Array<(s: string) => string> => {
 	special_char_mappers = [];
 	for (let i = 0, j = special_char_from.length; i < j; i++) {
 		special_char_mappers.push((s) =>
-			s.replace(new RegExp(special_char_from.charAt(i), 'gu'), special_char_to.charAt(i)),
+			s.replaceAll(special_char_from.charAt(i), special_char_to.charAt(i)),
 		);
 	}
 	return special_char_mappers;
