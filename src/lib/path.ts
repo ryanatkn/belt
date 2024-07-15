@@ -55,26 +55,25 @@ export type Path_Piece =
 			path: string;
 	  };
 
-// TODO improve how? both efficiency and features
-export const slugify = (str: string): string => {
-	let s = str;
+// TODO BLOCK remove uppercase versions
+export const slugify2 = (str: string): string => {
+	let s = str.toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
 		s = mapper(s);
 	}
 	const parts = s
-		.toLowerCase()
 		.split(/\s+/gu) // collapse whitespace
 		.map((s) => s.replace(/\W/gu, '')) // remove all non-word characters
 		.filter(Boolean); // remove all `''`
 	return parts.join('-');
 };
-export const slugify2 = (str: string): string => {
-	let s = str;
+export const slugify = (str: string): string => {
+	let s = str.trim().toLowerCase();
 	for (const mapper of get_special_char_mappers()) {
 		s = mapper(s);
 	}
-	return str
-		.replace(/[^a-z0-9 -]/gu, '') // remove invalid chars
+	return s
+		.replace(/[^a-z0-9 _-]/gu, '') // remove invalid chars
 		.replace(/\s+/gu, '-') // collapse whitespace and replace by -
 		.replace(/-+/gu, '-'); // collapse dashes
 };
@@ -82,10 +81,8 @@ export const slugify2 = (str: string): string => {
 // TODO BLOCK try without u
 
 // @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
-const special_char_from =
-	'ÁÄÂÀÃÅÆÞßČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿž';
-const special_char_to =
-	'AAAAAAABBCCCDDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaabcccddeeeeeeeegiiiiinnooooooorrsstuuuuuyyz';
+const special_char_from = 'áäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿž';
+const special_char_to = 'aaaaaabcccddeeeeeeeegiiiiinnooooooorrsstuuuuuyyz';
 let special_char_mappers: Array<(s: string) => string> | undefined;
 /**
  * Lazily constructs `special_char_mappers` which

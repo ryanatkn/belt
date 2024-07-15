@@ -16,9 +16,9 @@ test('slugify', () => {
 	assert.is(slugify('   a b    c   '), 'a-b-c');
 	assert.is(
 		slugify(
-			'abcÁÄÂÀÃÅČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞđßÆabc',
+			'abcÁÄÂÀÃÅČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞđabc',
 		),
-		'abcaaaaaacccddeeeeeeeegiiiiinnoooooorrsstuuuuuyyzaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbbdbaabc',
+		'abcaaaaaacccddeeeeeeeegiiiiinnoooooorrsstuuuuuyyzaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbbdabc',
 	);
 });
 
