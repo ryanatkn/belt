@@ -286,7 +286,6 @@ export const src_json = {
 				{name: 'parse_path_pieces', kind: 'function'},
 				{name: 'Path_Piece', kind: 'type'},
 				{name: 'slugify', kind: 'function'},
-				{name: 'slugify2', kind: 'function'},
 			],
 		},
 		'./print.js': {
