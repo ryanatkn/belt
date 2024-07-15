@@ -1,3 +1,5 @@
+// TODO BLOCK test these
+
 /**
  * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
  */
@@ -66,6 +68,18 @@ export const slugify = (str: string): string => {
 		.filter(Boolean); // remove all `''`
 	return parts.join('-');
 };
+export const slugify2 = (str: string): string => {
+	let s = str;
+	for (const mapper of get_special_char_mappers()) {
+		s = mapper(s);
+	}
+	return str
+		.replace(/[^a-z0-9 -]/gu, '') // remove invalid chars
+		.replace(/\s+/gu, '-') // collapse whitespace and replace by -
+		.replace(/-+/gu, '-'); // collapse dashes
+};
+
+// TODO BLOCK try without u
 
 // @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
 const special_char_from =
