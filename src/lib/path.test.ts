@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {parse_path_parts, parse_path_segments, slugify} from '$lib/path.js';
+import {parse_path_parts, parse_path_pieces, parse_path_segments, slugify} from '$lib/path.js';
 
 test('parse_path_parts', () => {
 	assert.equal(parse_path_parts('/foo/bar/baz/'), ['/foo', '/foo/bar', '/foo/bar/baz']);
@@ -17,11 +17,9 @@ test('parse_path_segments', () => {
 	assert.equal(parse_path_segments('foo/bar/baz/'), ['foo', 'bar', 'baz']);
 });
 
-// /**
-//  * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
-//  * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
-//  */
-// export const parse_path_pieces = (raw_path: string): Path_Piece[] => {
+test('parse_path_pieces', () => {
+	assert.equal(parse_path_pieces('/foo/bar/baz/'), []);
+});
 
 test('slugify', () => {
 	assert.is(slugify('AB'), 'ab');
