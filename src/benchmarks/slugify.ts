@@ -23,7 +23,5 @@ await bench.run();
 
 console.table(bench.table());
 
-console.table(bench.table((task) => ({'Task name': task.name})));
-
 console.log(`results1.length`, results1.length);
 console.log(`results2.length`, results2.length);
