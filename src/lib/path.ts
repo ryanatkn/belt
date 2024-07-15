@@ -61,24 +61,15 @@ export const slugify = (str: string): string => {
 		s = mapper(s);
 	}
 	return s
-		.split(/\s+/g) // collapse whitespace
-		.map((s) => s.replace(/\W/g, '')) // remove all non-word characters
-		.filter(Boolean)
-		.join('-'); // remove all `''`
-};
-export const slugify2 = (str: string): string => {
-	let s = str.toLowerCase();
-	for (const mapper of get_special_char_mappers()) {
-		s = mapper(s);
-	}
-	return s
 		.replace(/[^\s\w]/g, '')
 		.split(/\s+/g) // collapse whitespace
 		.filter(Boolean)
 		.join('-'); // remove all `''`
 };
 
-// @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+/**
+ * @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+ */
 const special_char_from = 'áäâàãåÆþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž';
 const special_char_to = 'aaaaaaabcccddeeeeeeeegiiiiinnooooooorrssstuuuuuyyz';
 let special_char_mappers: Array<(s: string) => string> | undefined;

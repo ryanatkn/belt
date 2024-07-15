@@ -1,8 +1,46 @@
 import {Bench} from 'tinybench';
 
-import {slugify, slugify2} from '$lib/path.js';
+import {slugify} from '$lib/path.js';
 
-const bench = new Bench({time: 3000});
+/*
+
+This implementation from Stackoverflow is slower than Belt's.
+
+@see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
+
+┌─────────┬───────────────────┬───────────┬────────────────────┬──────────┬─────────┐
+│ (index) │ Task Name         │ ops/sec   │ Average Time (ns)  │ Margin   │ Samples │
+├─────────┼───────────────────┼───────────┼────────────────────┼──────────┼─────────┤
+│ 0       │ 'slugify current' │ '312,547' │ 3199.514706889348  │ '±0.39%' │ 3125474 │
+│ 1       │ 'slugify slower'  │ '265,941' │ 3760.2206429301086 │ '±1.03%' │ 2659419 │
+└─────────┴───────────────────┴───────────┴────────────────────┴──────────┴─────────┘
+
+*/
+const slugify_slower = (str: string): string => {
+	let s = str.toLowerCase();
+	for (const mapper of get_special_char_mappers()) {
+		s = mapper(s);
+	}
+	return s
+		.replace(/[^a-z0-9 -_]/g, '')
+		.replace(/\s+/g, '-')
+		.replace(/-+/g, '-');
+};
+const special_char_from = 'áäâàãåÆþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž';
+const special_char_to = 'aaaaaaabcccddeeeeeeeegiiiiinnooooooorrssstuuuuuyyz';
+let special_char_mappers: Array<(s: string) => string> | undefined;
+const get_special_char_mappers = (): Array<(s: string) => string> => {
+	if (special_char_mappers) return special_char_mappers;
+	special_char_mappers = [];
+	for (let i = 0, j = special_char_from.length; i < j; i++) {
+		special_char_mappers.push((s) =>
+			s.replaceAll(special_char_from.charAt(i), special_char_to.charAt(i)),
+		);
+	}
+	return special_char_mappers;
+};
+
+const bench = new Bench({time: 10000});
 
 const title = 'this Is a Test of Things to Do';
 
@@ -13,8 +51,8 @@ bench
 	.add('slugify current', () => {
 		results1.push(slugify(title));
 	})
-	.add('slugify new', () => {
-		results2.push(slugify2(title));
+	.add('slugify slower', () => {
+		results2.push(slugify_slower(title));
 	})
 	.todo('unimplemented bench');
 
