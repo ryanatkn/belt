@@ -26,7 +26,8 @@
     "check": "gro check",
     "test": "gro test",
     "preview": "vite preview",
-    "deploy": "gro deploy"
+    "deploy": "gro deploy",
+    "benchmark": "gro run src/benchmarks/slugify.ts"
   },
   "type": "module",
   "engines": {
