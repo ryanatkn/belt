@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.6
+
+### Patch Changes
+
+- add `slugify` to `paths.ts` ([c77cbe2](https://github.com/ryanatkn/belt/commit/c77cbe2))
+
 ## 0.24.5
 
 ### Patch Changes
