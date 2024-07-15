@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.9
+
+### Patch Changes
+
+- fix `embed_json` for multiline strings ([dac5852](https://github.com/ryanatkn/belt/commit/dac5852))
+
 ## 0.24.8
 
 ### Patch Changes
