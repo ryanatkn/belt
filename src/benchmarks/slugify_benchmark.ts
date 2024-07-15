@@ -44,7 +44,7 @@ const get_special_char_mappers = (): Array<(s: string) => string> => {
 	return special_char_mappers;
 };
 
-const bench = new Bench({time: 10000});
+const bench = new Bench({time: 5000});
 
 const title = 'this Is a Test of Things to Do';
 
