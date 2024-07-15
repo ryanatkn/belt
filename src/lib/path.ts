@@ -61,8 +61,8 @@ export const slugify = (str: string): string => {
 		s = mapper(s);
 	}
 	return s
-		.split(/\s+/gu) // collapse whitespace
-		.map((s) => s.replace(/\W/gu, '')) // remove all non-word characters
+		.split(/\s+/g) // collapse whitespace
+		.map((s) => s.replace(/\W/g, '')) // remove all non-word characters
 		.filter(Boolean)
 		.join('-'); // remove all `''`
 };
@@ -72,9 +72,9 @@ export const slugify2 = (str: string): string => {
 		s = mapper(s);
 	}
 	return s
-		.replace(/[^a-z0-9 _-]/gu, '') // remove invalid chars
-		.replace(/\s+/gu, '-') // collapse whitespace and replace by -
-		.replace(/-+/gu, '-'); // collapse dashes
+		.replace(/[^a-z0-9 _-]/g, '') // remove invalid chars
+		.replace(/\s+/g, '-') // collapse whitespace and replace by -
+		.replace(/-+/g, '-'); // collapse dashes
 };
 
 // @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
