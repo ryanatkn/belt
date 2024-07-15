@@ -1,5 +1,3 @@
-// TODO BLOCK test these
-
 /**
  * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
  */

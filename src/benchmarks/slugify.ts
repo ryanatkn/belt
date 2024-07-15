@@ -2,9 +2,13 @@ import {Bench} from 'tinybench';
 
 import {slugify} from '$lib/path.js';
 
+/* eslint-disable no-console */
+
 /*
 
 This implementation from Stackoverflow is slower than Belt's.
+It also doesn't quite pass our tests because of leading/trailing `-` and underscore handling,
+and conforming would only make it slower.
 
 @see https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery/5782563#5782563
 
@@ -22,7 +26,7 @@ const slugify_slower = (str: string): string => {
 		s = mapper(s);
 	}
 	return s
-		.replace(/[^a-z0-9 -_]/g, '')
+		.replace(/[^a-z0-9 -]/g, '')
 		.replace(/\s+/g, '-')
 		.replace(/-+/g, '-');
 };
