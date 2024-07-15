@@ -25,7 +25,7 @@ export const package_json = {
 		test: 'gro test',
 		preview: 'vite preview',
 		deploy: 'gro deploy',
-		benchmark: 'gro run src/benchmarks/slugify.ts',
+		benchmark: 'gro run src/benchmarks/slugify_benchmark.ts',
 	},
 	type: 'module',
 	engines: {node: '>=20.12'},
