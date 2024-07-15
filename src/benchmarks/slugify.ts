@@ -2,7 +2,7 @@ import {Bench} from 'tinybench';
 
 import {slugify, slugify2} from '$lib/path.js';
 
-const bench = new Bench({time: 2000});
+const bench = new Bench({time: 3000});
 
 const title = 'this Is a Test of Things to Do';
 
