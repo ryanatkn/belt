@@ -1,5 +1,14 @@
 # @ryanatkn/belt
 
+## 0.24.7
+
+### Patch Changes
+
+- improve `slugify` ([#34](https://github.com/ryanatkn/belt/pull/34))
+
+  - add the arg `map_special_characters` to optionally disable the expensive special character mappings
+  - improve performance with benchmarks
+
 ## 0.24.6
 
 ### Patch Changes
