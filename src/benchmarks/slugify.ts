@@ -55,6 +55,9 @@ bench
 	.add('slugify current', () => {
 		results1.push(slugify(title));
 	})
+	.add('slugify current without special characters', () => {
+		results2.push(slugify(title, false));
+	})
 	.add('slugify slower', () => {
 		results2.push(slugify_slower(title));
 	})

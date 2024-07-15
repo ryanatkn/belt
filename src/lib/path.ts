@@ -53,10 +53,18 @@ export type Path_Piece =
 			path: string;
 	  };
 
-export const slugify = (str: string): string => {
+/**
+ * Converts a string into a URL-compatible slug.
+ * @param str
+ * @param map_special_characters - If `true`, characters like `ñ` are converted
+ * to their ASCII equivalents. Runs around 5x faster when disabled.
+ */
+export const slugify = (str: string, map_special_characters = true): string => {
 	let s = str.toLowerCase();
-	for (const mapper of get_special_char_mappers()) {
-		s = mapper(s);
+	if (map_special_characters) {
+		for (const mapper of get_special_char_mappers()) {
+			s = mapper(s);
+		}
 	}
 	return s
 		.replace(/[^\s\w-]/g, '')
