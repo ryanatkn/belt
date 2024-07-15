@@ -90,7 +90,7 @@ const get_special_char_mappers = (): Array<(s: string) => string> => {
 	special_char_mappers = [];
 	for (let i = 0, j = special_char_from.length; i < j; i++) {
 		special_char_mappers.push((s) =>
-			s.replace(new RegExp(special_char_from.charAt(i), 'gu'), special_char_to.charAt(i)),
+			s.replace(new RegExp(special_char_from.charAt(i), 'g'), special_char_to.charAt(i)),
 		);
 	}
 	return special_char_mappers;
