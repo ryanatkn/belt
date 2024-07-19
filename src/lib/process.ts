@@ -123,6 +123,9 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 	return closed;
 };
 
+export const despawn_all = (): Promise<Spawn_Result[]> =>
+	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
+
 export const attach_process_error_handlers = (to_error_label?: To_Error_Label): void => {
 	process
 		.on('uncaughtException', handle_fatal_error)
@@ -131,8 +134,7 @@ export const attach_process_error_handlers = (to_error_label?: To_Error_Label): 
 
 const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
 	new System_Logger(print_log_label(label, red)).error(print_error(err));
-	await Promise.all(Array.from(global_spawn, (child) => despawn(child)));
-	process.exit(1);
+	await despawn_all();
 };
 
 const handle_unhandled_rejection =
