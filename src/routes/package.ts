@@ -33,8 +33,8 @@ export const package_json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
 		'@ryanatkn/eslint-config': '^0.4.2',
-		'@ryanatkn/fuz': '^0.110.4',
-		'@ryanatkn/gro': '^0.130.1',
+		'@ryanatkn/fuz': '^0.115.1',
+		'@ryanatkn/gro': '^0.133.1',
 		'@ryanatkn/moss': '^0.8.0',
 		'@sveltejs/adapter-static': '^3.0.2',
 		'@sveltejs/kit': '^2.5.18',
@@ -322,6 +322,7 @@ export const src_json = {
 				{name: 'global_spawn', kind: 'variable'},
 				{name: 'register_global_spawn', kind: 'function'},
 				{name: 'despawn', kind: 'function'},
+				{name: 'despawn_all', kind: 'function'},
 				{name: 'attach_process_error_handlers', kind: 'function'},
 				{name: 'print_spawn_result', kind: 'function'},
 				{name: 'Restartable_Process', kind: 'type'},
