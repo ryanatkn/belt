@@ -126,12 +126,24 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 export const despawn_all = (): Promise<Spawn_Result[]> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
 
+/**
+ * Attaches the `'uncoughtException'` event to despawn all processes,
+ * and enables custom error logging with `to_error_label`.
+ * @param to_error_label - Customize the error label or return `null` to silence the error logging.
+ * @param map_error_text - Customize the error text. Defaults to `print_error(err)`.
+ */
 export const attach_process_error_handlers = (
 	to_error_label?: (err: Error, origin: NodeJS.UncaughtExceptionOrigin) => string | null,
+	map_error_text?: (err: Error) => string,
 ): void => {
 	process.on('uncaughtException', async (err, origin): Promise<void> => {
-		const label = to_error_label?.(err, origin) ?? origin;
-		new System_Logger(print_log_label(label, red)).error(print_error(err));
+		const label = to_error_label ? to_error_label(err, origin) : origin;
+		if (label) {
+			const error_text = map_error_text ? map_error_text(err) : print_error(err);
+			if (error_text) {
+				new System_Logger(print_log_label(label, red)).error(error_text);
+			}
+		}
 		await despawn_all();
 	});
 };
