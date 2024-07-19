@@ -322,6 +322,7 @@ export const src_json = {
 				{name: 'global_spawn', kind: 'variable'},
 				{name: 'register_global_spawn', kind: 'function'},
 				{name: 'despawn', kind: 'function'},
+				{name: 'despawn_all', kind: 'function'},
 				{name: 'attach_process_error_handlers', kind: 'function'},
 				{name: 'print_spawn_result', kind: 'function'},
 				{name: 'Restartable_Process', kind: 'type'},
