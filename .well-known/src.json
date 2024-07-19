@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.24.9",
+  "version": "0.24.10",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -637,6 +637,10 @@
         },
         {
           "name": "despawn",
+          "kind": "function"
+        },
+        {
+          "name": "despawn_all",
           "kind": "function"
         },
         {
