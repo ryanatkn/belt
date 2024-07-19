@@ -1,5 +1,12 @@
 # @ryanatkn/belt
 
+## 0.24.10
+
+### Patch Changes
+
+- add `despawn_all` to `process.ts` ([#35](https://github.com/ryanatkn/belt/pull/35))
+- fix `attach_process_error_handlers` API to only handle exceptions ([#35](https://github.com/ryanatkn/belt/pull/35))
+
 ## 0.24.9
 
 ### Patch Changes
