@@ -126,27 +126,15 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 export const despawn_all = (): Promise<Spawn_Result[]> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
 
-export const attach_process_error_handlers = (to_error_label?: To_Error_Label): void => {
-	process
-		.on('uncaughtException', handle_fatal_error)
-		.on('unhandledRejection', handle_unhandled_rejection(to_error_label));
+export const attach_process_error_handlers = (
+	to_error_label?: (err: Error, origin: NodeJS.UncaughtExceptionOrigin) => string | null,
+): void => {
+	process.on('uncaughtException', async (err, origin): Promise<void> => {
+		const label = to_error_label?.(err, origin) ?? origin;
+		new System_Logger(print_log_label(label, red)).error(print_error(err));
+		await despawn_all();
+	});
 };
-
-const handle_fatal_error = async (err: Error, label = 'handle_fatal_error'): Promise<void> => {
-	new System_Logger(print_log_label(label, red)).error(print_error(err));
-	await despawn_all();
-};
-
-const handle_unhandled_rejection =
-	(to_error_label?: To_Error_Label) =>
-	(err: any): Promise<void> => {
-		const label = to_error_label?.(err) ?? 'unhandledRejection';
-		return err instanceof Error
-			? handle_fatal_error(err, label)
-			: handle_fatal_error(new Error(err), label);
-	};
-
-type To_Error_Label = (err: any) => string | null;
 
 export const print_spawn_result = (result: Spawn_Result): string => {
 	if (result.ok) return 'ok';
