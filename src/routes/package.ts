@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.24.10',
+	version: '0.24.11',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -98,7 +98,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.24.10',
+	version: '0.24.11',
 	modules: {
 		'./package.json': {path: 'package.json', declarations: []},
 		'./array.js': {

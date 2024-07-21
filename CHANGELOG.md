@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.11
+
+### Patch Changes
+
+- fix: exit on uncaught exceptions by default ([8e2e91a](https://github.com/ryanatkn/belt/commit/8e2e91a))
+
 ## 0.24.10
 
 ### Patch Changes
