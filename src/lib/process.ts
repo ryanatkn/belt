@@ -134,17 +134,20 @@ export const despawn_all = (): Promise<Spawn_Result[]> =>
  */
 export const attach_process_error_handlers = (
 	to_error_label?: (err: Error, origin: NodeJS.UncaughtExceptionOrigin) => string | null,
-	map_error_text?: (err: Error) => string | null,
+	map_error_text?: (err: Error, origin: NodeJS.UncaughtExceptionOrigin) => string | null,
+	handle_error: (err: Error, origin: NodeJS.UncaughtExceptionOrigin) => void = () =>
+		process.exit(1),
 ): void => {
 	process.on('uncaughtException', async (err, origin): Promise<void> => {
 		const label = to_error_label?.(err, origin) ?? origin;
 		if (label) {
-			const error_text = map_error_text?.(err) ?? print_error(err);
+			const error_text = map_error_text?.(err, origin) ?? print_error(err);
 			if (error_text) {
 				new System_Logger(print_log_label(label, red)).error(error_text);
 			}
 		}
 		await despawn_all();
+		handle_error(err, origin);
 	});
 };
 
