@@ -194,6 +194,10 @@
       "types": "./dist/timings.d.ts",
       "default": "./dist/timings.js"
     },
+    "./traverse.js": {
+      "types": "./dist/traverse.d.ts",
+      "default": "./dist/traverse.js"
+    },
     "./types.js": {
       "types": "./dist/types.d.ts",
       "default": "./dist/types.js"

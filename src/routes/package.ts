@@ -91,6 +91,7 @@ export const package_json = {
 		'./string.js': {types: './dist/string.d.ts', default: './dist/string.js'},
 		'./styletext.js': {types: './dist/styletext.d.ts', default: './dist/styletext.js'},
 		'./timings.js': {types: './dist/timings.d.ts', default: './dist/timings.js'},
+		'./traverse.js': {types: './dist/traverse.d.ts', default: './dist/traverse.js'},
 		'./types.js': {types: './dist/types.d.ts', default: './dist/types.js'},
 		'./url.js': {types: './dist/url.d.ts', default: './dist/url.js'},
 	},
@@ -268,7 +269,6 @@ export const src_json = {
 				{name: 'omit_undefined', kind: 'function'},
 				{name: 'reorder', kind: 'function'},
 				{name: 'EMPTY_OBJECT', kind: 'variable'},
-				{name: 'traverse', kind: 'function'},
 			],
 		},
 		'./obtainable.js': {
@@ -412,6 +412,7 @@ export const src_json = {
 				{name: 'Timings', kind: 'class'},
 			],
 		},
+		'./traverse.js': {path: 'traverse.ts', declarations: [{name: 'traverse', kind: 'function'}]},
 		'./types.js': {
 			path: 'types.ts',
 			declarations: [
