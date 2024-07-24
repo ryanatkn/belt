@@ -77,18 +77,3 @@ export const reorder = <T extends Record<K, any>, K extends string | number>(
 };
 
 export const EMPTY_OBJECT: Record<string | number | symbol, undefined> & object = Object.freeze({});
-
-/**
- * Performs a depth-first traversal of an object's enumerable properties,
- * calling `cb` for every key and value with the current `obj` context.
- * @param obj - any object with enumerable properties
- * @param cb - receives the key, value, and `obj` for every enumerable property on `obj` and its descendents
- */
-export const traverse = (obj: any, cb: (key: string, value: any, obj: any) => void): void => {
-	if (!obj || typeof obj !== 'object') return;
-	for (const k in obj) {
-		const v = obj[k];
-		cb(k, v, obj);
-		traverse(v, cb);
-	}
-};
