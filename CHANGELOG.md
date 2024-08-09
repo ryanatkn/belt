@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.24.12
+
+### Patch Changes
+
+- add `unreachable` error helper ([b794c07](https://github.com/ryanatkn/belt/commit/b794c07))
+
 ## 0.24.11
 
 ### Patch Changes
