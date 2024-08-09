@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.24.11",
+  "version": "0.24.12",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -181,6 +181,10 @@
         {
           "name": "Unreachable_Error",
           "kind": "class"
+        },
+        {
+          "name": "unreachable",
+          "kind": "function"
         }
       ]
     },
