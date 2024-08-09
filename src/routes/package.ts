@@ -162,7 +162,13 @@ export const src_json = {
 				{name: 'is_iframed', kind: 'function'},
 			],
 		},
-		'./error.js': {path: 'error.ts', declarations: [{name: 'Unreachable_Error', kind: 'class'}]},
+		'./error.js': {
+			path: 'error.ts',
+			declarations: [
+				{name: 'Unreachable_Error', kind: 'class'},
+				{name: 'unreachable', kind: 'function'},
+			],
+		},
 		'./fetch.js': {
 			path: 'fetch.ts',
 			declarations: [
