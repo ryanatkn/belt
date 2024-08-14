@@ -32,7 +32,7 @@ export const package_json = {
 	keywords: ['js', 'typescript', 'utilities', 'web'],
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
-		'@ryanatkn/eslint-config': '^0.5.0',
+		'@ryanatkn/eslint-config': '^0.5.1',
 		'@ryanatkn/fuz': '^0.120.2',
 		'@ryanatkn/gro': '^0.133.6',
 		'@ryanatkn/moss': '^0.13.3',
