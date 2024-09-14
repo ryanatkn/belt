@@ -2,4 +2,4 @@
 '@ryanatkn/belt': minor
 ---
 
-remove `$lib/log.ts` and `$lib/styletext.ts`
+remove `$lib/styletext.ts`
