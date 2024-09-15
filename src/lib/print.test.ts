@@ -3,9 +3,8 @@ import * as assert from 'uvu/assert';
 
 import {print_ms, disable_colors, enable_colors} from '$lib/print.js';
 
-disable_colors();
-
 test('print_ms', () => {
+	disable_colors();
 	assert.is(print_ms(1), '1.0ms');
 	assert.is(print_ms(1.1), '1.1ms');
 	assert.is(print_ms(1.11), '1.1ms');
@@ -28,12 +27,7 @@ test('print_ms', () => {
 	assert.is(print_ms(7000000), '7_000_000ms');
 	assert.is(print_ms(7000000.1), '7_000_000ms');
 	assert.is(print_ms(7000000.9), '7_000_001ms');
-});
-
-enable_colors();
-
-test('print_ms', () => {
-	assert.is(print_ms(1), '1.0ms');
+	enable_colors();
 });
 
 test.run();
