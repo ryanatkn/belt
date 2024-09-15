@@ -186,10 +186,6 @@
       "types": "./dist/string.d.ts",
       "default": "./dist/string.js"
     },
-    "./styletext.js": {
-      "types": "./dist/styletext.d.ts",
-      "default": "./dist/styletext.js"
-    },
     "./timings.js": {
       "types": "./dist/timings.d.ts",
       "default": "./dist/timings.js"
