@@ -1,5 +1,6 @@
+import {styleText as s} from 'node:util';
+
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-import {red, yellow, gray, black, magenta, bg_yellow, bg_red} from '$lib/styletext.js';
 
 // TODO could use some refactoring
 
@@ -202,19 +203,23 @@ export class Logger extends Base_Logger {
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
 	static error: Log_Level_Defaults = {
-		prefixes: [red('➤'), black(bg_red(' 🞩 error 🞩 ')), red('\n➤')],
-		suffixes: ['\n ', black(bg_red(' 🞩🞩 '))],
+		prefixes: [s('red', '➤'), s(['black', 'bgRed'], ' 🞩 error 🞩 '), s('red', '\n➤')],
+		suffixes: ['\n ', s(['black', 'bgRed'], ' 🞩🞩 ')],
 	};
 	static warn: Log_Level_Defaults = {
-		prefixes: [yellow('➤'), black(bg_yellow(' ⚑ warning ⚑ ')), '\n' + yellow('➤')],
-		suffixes: ['\n ', black(bg_yellow(' ⚑ '))],
+		prefixes: [
+			s('yellow', '➤'),
+			s(['black', 'bgYellow'], ' ⚑ warning ⚑ '),
+			'\n' + s('yellow', '➤'),
+		],
+		suffixes: ['\n ', s(['black', 'bgYellow'], ' ⚑ ')],
 	};
 	static info: Log_Level_Defaults = {
-		prefixes: [gray('➤')],
+		prefixes: [s('gray', '➤')],
 		suffixes: [],
 	};
 	static debug: Log_Level_Defaults = {
-		prefixes: [gray('—')],
+		prefixes: [s('gray', '—')],
 		suffixes: [],
 	};
 }
@@ -252,5 +257,5 @@ export class System_Logger extends Base_Logger {
 	static debug = Logger.debug;
 }
 
-export const print_log_label = (label: string, color = magenta): string =>
-	`${gray('[')}${color(label)}${gray(']')}`;
+export const print_log_label = (label: string, color = s.bind(null, 'magenta')): string =>
+	`${s('gray', '[')}${color(label)}${s('gray', ']')}`;
