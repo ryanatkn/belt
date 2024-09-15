@@ -71,3 +71,6 @@ export const print_timings = (timings: Timings, log: Logger): void => {
 		log.debug(print_timing(key, timing));
 	}
 };
+
+export const print_log_label = (label: string, color = st.bind(null, 'magenta')): string =>
+	`${st('gray', '[')}${color(label)}${st('gray', ']')}`;

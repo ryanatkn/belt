@@ -256,6 +256,3 @@ export class System_Logger extends Base_Logger {
 	static info = Logger.info;
 	static debug = Logger.debug;
 }
-
-export const print_log_label = (label: string, color = st.bind(null, 'magenta')): string =>
-	`${st('gray', '[')}${color(label)}${st('gray', ']')}`;

@@ -5,8 +5,8 @@ import {
 } from 'node:child_process';
 import {styleText as st} from 'node:util';
 
-import {print_log_label, System_Logger} from '$lib/log.js';
-import {print_error, print_key_value} from '$lib/print.js';
+import {System_Logger} from '$lib/log.js';
+import {print_error, print_key_value, print_log_label} from '$lib/print.js';
 import type {Result} from '$lib/result.js';
 
 const log = new System_Logger(print_log_label('process'));
