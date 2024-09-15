@@ -1,4 +1,4 @@
-import {styleText as st} from 'node:util';
+import {styleText as st} from 'node:util'; // TODO BLOCK make this an option on the logger (maybe similar pattern to `level`, with a configure helper)
 
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
 
