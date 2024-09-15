@@ -28,7 +28,7 @@ export const package_json = {
 		benchmark: 'gro run src/benchmarks/slugify_benchmark.ts',
 	},
 	type: 'module',
-	engines: {node: '>=20.12'},
+	engines: {node: '>=20.17'},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',

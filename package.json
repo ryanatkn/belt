@@ -31,7 +31,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=20.12"
+    "node": ">=20.17"
   },
   "keywords": [
     "js",
