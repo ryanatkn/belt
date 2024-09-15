@@ -100,6 +100,10 @@ export type Logger_Prefixes_And_Suffixes_Getter = (st: typeof styleText) => unkn
 
 const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
+/**
+ * The base class of `Logger` that's available to be extended by users.
+ * See `System_Logger` for an example of extending `Logger` with minimal boilerplate.
+ */
 export class Base_Logger {
 	prefixes: Logger_Prefixes_And_Suffixes_Getter;
 	suffixes: Logger_Prefixes_And_Suffixes_Getter;
@@ -185,6 +189,9 @@ export class Base_Logger {
 	}
 }
 
+/**
+ * The default implementation of `Base_Logger`.
+ */
 export class Logger extends Base_Logger {
 	constructor(prefixes?: any, suffixes?: any, state: Logger_State = Logger) {
 		super(prefixes, suffixes, state);
