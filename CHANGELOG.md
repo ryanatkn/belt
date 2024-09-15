@@ -1,5 +1,13 @@
 # @ryanatkn/belt
 
+## 0.25.0
+
+### Minor Changes
+
+- rework the `Logger` API ([#36](https://github.com/ryanatkn/belt/pull/36))
+- remove `$lib/styletext.ts` ([#36](https://github.com/ryanatkn/belt/pull/36))
+- move `print_log_label` to `$lib/print.ts` from `$lib/log.ts` ([#36](https://github.com/ryanatkn/belt/pull/36))
+
 ## 0.24.12
 
 ### Patch Changes
