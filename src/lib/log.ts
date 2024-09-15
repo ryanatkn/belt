@@ -1,9 +1,6 @@
 import type {styleText} from 'node:util';
 
-import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-
-// TODO BLOCK use console.warn/error/info/debug, currently uses `console.log` for everything
-// TODO support cases like production output to a file
+import {EMPTY_ARRAY} from '$lib/array.js';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
@@ -72,8 +69,6 @@ export type Log = (...args: any[]) => void;
  * where its static properties are the `Logger_State` values.
  * Though the code is more verbose and slower as a result,
  * the tradeoffs make sense for logging in development.
- * The API is unfinished for production loggers
- * but it should be possible to monkey-patch it for the desired beaviors.
  *
  * Properties like the static `Logger.level` can be mutated
  * to affect all loggers that get instantiated with the default state,
@@ -84,116 +79,103 @@ export type Log = (...args: any[]) => void;
  * demonstrate extending `Logger` to partition logging concerns.
  * User code is given a lot of control and flexibility.
  */
-export interface Logger_State extends Log_Level_Defaults {
+export interface Logger_State {
 	level: Log_Level;
-	log: Log;
-	error: Log_Level_Defaults;
-	warn: Log_Level_Defaults;
-	info: Log_Level_Defaults;
-	debug: Log_Level_Defaults;
+	st: typeof styleText;
+	console: typeof console;
+	prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	suffixes: Logger_Prefixes_And_Suffixes_Getter;
+	error_prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	error_suffixes: Logger_Prefixes_And_Suffixes_Getter;
+	warn_prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	warn_suffixes: Logger_Prefixes_And_Suffixes_Getter;
+	info_prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	info_suffixes: Logger_Prefixes_And_Suffixes_Getter;
+	debug_prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	debug_suffixes: Logger_Prefixes_And_Suffixes_Getter;
 }
 
-interface Log_Level_Defaults {
-	prefixes: unknown[];
-	suffixes: unknown[];
-}
+export type Logger_Prefixes_And_Suffixes_Getter = (st: typeof styleText) => unknown[];
+
+const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
 export class Base_Logger {
-	prefixes: readonly unknown[];
-	suffixes: readonly unknown[];
+	prefixes: Logger_Prefixes_And_Suffixes_Getter;
+	suffixes: Logger_Prefixes_And_Suffixes_Getter;
 	state: Logger_State; // can be the implementing class constructor
 
-	constructor(prefixes: unknown, suffixes: unknown, state: Logger_State) {
-		this.prefixes = to_array(prefixes);
-		this.suffixes = to_array(suffixes);
+	constructor(prefixes: any, suffixes: any, state: Logger_State) {
+		this.prefixes =
+			prefixes == null ? EMPTY_GETTER : typeof prefixes === 'function' ? prefixes : () => prefixes;
+		this.suffixes =
+			suffixes == null ? EMPTY_GETTER : typeof suffixes === 'function' ? suffixes : () => suffixes;
 		this.state = state;
 	}
 
 	error(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'error')) return;
-		this.state.log(
-			...resolve_values(
-				this.state.prefixes,
-				this.state.error.prefixes,
-				this.prefixes,
+		this.state.console.error(
+			...this.#resolve_values(this.state.prefixes, this.state.error_prefixes, this.prefixes).concat(
 				args,
-				this.suffixes,
-				this.state.error.suffixes,
-				this.state.suffixes,
+				this.#resolve_values(this.suffixes, this.state.error_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
 	warn(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'warn')) return;
-		this.state.log(
-			...resolve_values(
-				this.state.prefixes,
-				this.state.warn.prefixes,
-				this.prefixes,
+		this.state.console.warn(
+			...this.#resolve_values(this.state.prefixes, this.state.warn_prefixes, this.prefixes).concat(
 				args,
-				this.suffixes,
-				this.state.warn.suffixes,
-				this.state.suffixes,
+				this.#resolve_values(this.suffixes, this.state.warn_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
 	info(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'info')) return;
-		this.state.log(
-			...resolve_values(
-				this.state.prefixes,
-				this.state.info.prefixes,
-				this.prefixes,
+		this.state.console.log(
+			...this.#resolve_values(this.state.prefixes, this.state.info_prefixes, this.prefixes).concat(
 				args,
-				this.suffixes,
-				this.state.info.suffixes,
-				this.state.suffixes,
+				this.#resolve_values(this.suffixes, this.state.info_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
 	debug(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'debug')) return;
-		this.state.log(
-			...resolve_values(
-				this.state.prefixes,
-				this.state.debug.prefixes,
-				this.prefixes,
+		this.state.console.log(
+			...this.#resolve_values(this.state.prefixes, this.state.debug_prefixes, this.prefixes).concat(
 				args,
-				this.suffixes,
-				this.state.debug.suffixes,
-				this.state.suffixes,
+				this.#resolve_values(this.suffixes, this.state.debug_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
+	// TODO maybe rename to `log` to match the console method?
 	plain(...args: unknown[]): void {
-		this.state.log(...resolve_values(args));
+		this.state.console.log(...args);
 	}
 
 	newline(count = 1): void {
-		this.state.log('\n'.repeat(count));
+		this.state.console.log('\n'.repeat(count));
+	}
+
+	#resolve_values(...getters: Logger_Prefixes_And_Suffixes_Getter[]): unknown[] {
+		let resolved: unknown[] | undefined;
+		const {st} = this.state;
+		for (const getter of getters) {
+			const values = getter(st);
+			for (const value of values) {
+				(resolved ??= []).push(value);
+			}
+		}
+		return resolved ?? EMPTY_ARRAY;
 	}
 }
 
-const resolve_values = (...arrays: any[]): any[] => {
-	const resolved: any[] = [];
-	for (const array of arrays) {
-		for (const value of array) {
-			resolved.push(typeof value === 'function' ? value() : value);
-		}
-	}
-	return resolved;
-};
-
 export class Logger extends Base_Logger {
-	constructor(
-		prefixes: unknown = EMPTY_ARRAY,
-		suffixes: unknown = EMPTY_ARRAY,
-		state: Logger_State = Logger,
-	) {
+	constructor(prefixes?: any, suffixes?: any, state: Logger_State = Logger) {
 		super(prefixes, suffixes, state);
 	}
 
@@ -202,29 +184,31 @@ export class Logger extends Base_Logger {
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
 	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
-	static log: Log = console.log.bind(console); // eslint-disable-line no-console
-	static prefixes: unknown[] = [];
-	static suffixes: unknown[] = [];
-	static error: Log_Level_Defaults = {
-		prefixes: [st('red', '➤'), st(['black', 'bgRed'], ' 🞩 error 🞩 '), st('red', '\n➤')],
-		suffixes: ['\n ', st(['black', 'bgRed'], ' 🞩🞩 ')],
-	};
-	static warn: Log_Level_Defaults = {
-		prefixes: [
-			st('yellow', '➤'),
-			st(['black', 'bgYellow'], ' ⚑ warning ⚑ '),
-			'\n' + st('yellow', '➤'),
-		],
-		suffixes: ['\n ', st(['black', 'bgYellow'], ' ⚑ ')],
-	};
-	static info: Log_Level_Defaults = {
-		prefixes: [st('gray', '➤')],
-		suffixes: [],
-	};
-	static debug: Log_Level_Defaults = {
-		prefixes: [st('gray', '—')],
-		suffixes: [],
-	};
+	static console: typeof console = console;
+	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		st('red', '➤'),
+		st(['black', 'bgRed'], ' 🞩 error 🞩 '),
+		st('red', '\n➤'),
+	];
+	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		'\n ',
+		st(['black', 'bgRed'], ' 🞩🞩 '),
+	];
+	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		st('yellow', '➤'),
+		st(['black', 'bgYellow'], ' ⚑ warning ⚑ '),
+		'\n' + st('yellow', '➤'),
+	];
+	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		'\n ',
+		st(['black', 'bgYellow'], ' ⚑ '),
+	];
+	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '➤')];
+	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '—')];
+	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 }
 
 /**
@@ -236,11 +220,7 @@ export class Logger extends Base_Logger {
  * and users can always extend `Logger` with their own custom versions.
  */
 export class System_Logger extends Base_Logger {
-	constructor(
-		prefixes: unknown = EMPTY_ARRAY,
-		suffixes: unknown = EMPTY_ARRAY,
-		state: Logger_State = System_Logger,
-	) {
+	constructor(prefixes?: any, suffixes?: any, state: Logger_State = System_Logger) {
 		super(prefixes, suffixes, state);
 	}
 
@@ -249,12 +229,16 @@ export class System_Logger extends Base_Logger {
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = Logger.level; // to set alongside the `Logger` value, see `configure_log_level`
 	static st: typeof styleText = Logger.st; // to set alongside the `Logger` value, see `configure_log_colors`
-	static log: Log = Logger.log;
+	static console: typeof console = console;
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;
 	static suffixes = Logger.suffixes;
-	static error = Logger.error;
-	static warn = Logger.warn;
-	static info = Logger.info;
-	static debug = Logger.debug;
+	static error_prefixes = Logger.error_prefixes;
+	static error_suffixes = Logger.error_suffixes;
+	static warn_prefixes = Logger.warn_prefixes;
+	static warn_suffixes = Logger.warn_suffixes;
+	static info_prefixes = Logger.info_prefixes;
+	static info_suffixes = Logger.info_suffixes;
+	static debug_prefixes = Logger.debug_prefixes;
+	static debug_suffixes = Logger.debug_suffixes;
 }

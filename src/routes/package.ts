@@ -225,6 +225,7 @@ export const src_json = {
 				{name: 'configure_log_colors', kind: 'function'},
 				{name: 'Log', kind: 'type'},
 				{name: 'Logger_State', kind: 'type'},
+				{name: 'Logger_Prefixes_And_Suffixes_Getter', kind: 'type'},
 				{name: 'Base_Logger', kind: 'class'},
 				{name: 'Logger', kind: 'class'},
 				{name: 'System_Logger', kind: 'class'},
