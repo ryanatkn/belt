@@ -1,6 +1,6 @@
 import type {styleText} from 'node:util';
 
-import {EMPTY_ARRAY} from '$lib/array.js';
+import {EMPTY_ARRAY, to_array} from '$lib/array.js';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
@@ -82,7 +82,7 @@ export type Log = (...args: any[]) => void;
 export interface Logger_State {
 	level: Log_Level;
 	st: typeof styleText;
-	console: typeof console;
+	console: Pick<typeof console, 'error' | 'warn' | 'log'>;
 	prefixes: Logger_Prefixes_And_Suffixes_Getter;
 	suffixes: Logger_Prefixes_And_Suffixes_Getter;
 	error_prefixes: Logger_Prefixes_And_Suffixes_Getter;
@@ -105,10 +105,20 @@ export class Base_Logger {
 	state: Logger_State; // can be the implementing class constructor
 
 	constructor(prefixes: any, suffixes: any, state: Logger_State) {
+		const prefixes_array = to_array(prefixes);
+		const suffixes_array = to_array(suffixes);
 		this.prefixes =
-			prefixes == null ? EMPTY_GETTER : typeof prefixes === 'function' ? prefixes : () => prefixes;
+			prefixes == null
+				? EMPTY_GETTER
+				: typeof prefixes === 'function'
+					? prefixes
+					: () => prefixes_array;
 		this.suffixes =
-			suffixes == null ? EMPTY_GETTER : typeof suffixes === 'function' ? suffixes : () => suffixes;
+			suffixes == null
+				? EMPTY_GETTER
+				: typeof suffixes === 'function'
+					? suffixes
+					: () => suffixes_array;
 		this.state = state;
 	}
 
@@ -184,7 +194,7 @@ export class Logger extends Base_Logger {
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
 	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
-	static console: typeof console = console;
+	static console: Logger_State['console'] = console;
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
@@ -229,7 +239,7 @@ export class System_Logger extends Base_Logger {
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = Logger.level; // to set alongside the `Logger` value, see `configure_log_level`
 	static st: typeof styleText = Logger.st; // to set alongside the `Logger` value, see `configure_log_colors`
-	static console: typeof console = console;
+	static console: Logger_State['console'] = console;
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;
 	static suffixes = Logger.suffixes;
