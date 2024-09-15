@@ -227,7 +227,6 @@ export const src_json = {
 				{name: 'Base_Logger', kind: 'class'},
 				{name: 'Logger', kind: 'class'},
 				{name: 'System_Logger', kind: 'class'},
-				{name: 'print_log_label', kind: 'function'},
 			],
 		},
 		'./map.js': {
@@ -308,6 +307,7 @@ export const src_json = {
 				{name: 'print_error', kind: 'function'},
 				{name: 'print_timing', kind: 'function'},
 				{name: 'print_timings', kind: 'function'},
+				{name: 'print_log_label', kind: 'function'},
 			],
 		},
 		'./process.js': {
