@@ -31,7 +31,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=20.12"
+    "node": ">=20.17"
   },
   "keywords": [
     "js",
@@ -185,10 +185,6 @@
     "./string.js": {
       "types": "./dist/string.d.ts",
       "default": "./dist/string.js"
-    },
-    "./styletext.js": {
-      "types": "./dist/styletext.d.ts",
-      "default": "./dist/styletext.js"
     },
     "./timings.js": {
       "types": "./dist/timings.d.ts",

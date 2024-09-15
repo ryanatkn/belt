@@ -3,10 +3,10 @@ import {
 	type SpawnOptions,
 	type ChildProcess,
 } from 'node:child_process';
+import {styleText as st} from 'node:util';
 
-import {gray, green, red} from '$lib/styletext.js';
-import {print_log_label, System_Logger} from '$lib/log.js';
-import {print_error, print_key_value} from '$lib/print.js';
+import {System_Logger} from '$lib/log.js';
+import {print_error, print_key_value, print_log_label} from '$lib/print.js';
 import type {Result} from '$lib/result.js';
 
 const log = new System_Logger(print_log_label('process'));
@@ -83,7 +83,7 @@ export const spawn_process = (
 };
 
 export const print_child_process = (child: ChildProcess): string =>
-	`${gray('pid(')}${child.pid}${gray(')')} ← ${green(child.spawnargs.join(' '))}`;
+	`${st('gray', 'pid(')}${child.pid}${st('gray', ')')} ← ${st('green', child.spawnargs.join(' '))}`;
 
 /**
  * We register spawned processes gloabally so we can gracefully exit child processes.
@@ -98,12 +98,12 @@ export const global_spawn: Set<ChildProcess> = new Set();
  */
 export const register_global_spawn = (child: ChildProcess): (() => void) => {
 	if (global_spawn.has(child)) {
-		log.error(red('already registered global spawn:'), print_child_process(child));
+		log.error(st('red', 'already registered global spawn:'), print_child_process(child));
 	}
 	global_spawn.add(child);
 	return () => {
 		if (!global_spawn.has(child)) {
-			log.error(red('spawn not registered:'), print_child_process(child));
+			log.error(st('red', 'spawn not registered:'), print_child_process(child));
 		}
 		global_spawn.delete(child);
 	};
@@ -143,7 +143,7 @@ export const attach_process_error_handlers = (
 		if (label) {
 			const error_text = map_error_text?.(err, origin) ?? print_error(err);
 			if (error_text) {
-				new System_Logger(print_log_label(label, red)).error(error_text);
+				new System_Logger(print_log_label(label, st.bind(null, 'red'))).error(error_text);
 			}
 		}
 		await despawn_all();
