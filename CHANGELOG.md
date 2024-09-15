@@ -7,6 +7,7 @@
 - rework the `Logger` API ([#36](https://github.com/ryanatkn/belt/pull/36))
 - remove `$lib/styletext.ts` ([#36](https://github.com/ryanatkn/belt/pull/36))
 - move `print_log_label` to `$lib/print.ts` from `$lib/log.ts` ([#36](https://github.com/ryanatkn/belt/pull/36))
+- bump required node version to `20.17` ([#36](https://github.com/ryanatkn/belt/pull/36))
 
 ## 0.24.12
 
