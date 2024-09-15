@@ -222,6 +222,7 @@ export const src_json = {
 				{name: 'Log_Level', kind: 'type'},
 				{name: 'to_log_level_value', kind: 'function'},
 				{name: 'configure_log_level', kind: 'function'},
+				{name: 'configure_log_colors', kind: 'function'},
 				{name: 'Log', kind: 'type'},
 				{name: 'Logger_State', kind: 'type'},
 				{name: 'Base_Logger', kind: 'class'},
