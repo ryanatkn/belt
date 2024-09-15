@@ -1,8 +1,9 @@
-import {styleText as st} from 'node:util'; // TODO BLOCK make this an option on the logger (maybe similar pattern to `level`, with a configure helper)
+import type {styleText} from 'node:util';
 
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
 
-// TODO could use some refactoring
+// TODO BLOCK use console.warn/error/info/debug, currently uses `console.log` for everything
+// TODO support cases like production output to a file
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
@@ -43,45 +44,46 @@ const DEFAULT_LOG_LEVEL: Log_Level =
 		? null
 		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? 'info';
 
-/*
-
-`Logger` uses a special pattern
-to achieve a good mix of convenience and flexibility
-both for Felt and user code.
-It uses late binding to allow runtime mutations
-and it accepts a `Logger_State` argument for custom behavior.
-Though the code is more verbose and slower as a result,
-the tradeoffs make sense for logging in development.
-TODO use a different logger in production
-
-The default `Logger_State` is the `Logger` class itself.
-This pattern allows us to have globally mutable logger state
-without locking the code into the singleton pattern.
-Properties like the static `Logger.level` can be mutated
-to affect all loggers that get instantiated with the default state,
-but loggers can also be instantiated with other state
-that isn't affected by these globally mutable values.
-
-Custom loggers like `System_Logger` (see below)
-demonstrate extending `Logger` to partition logging concerns.
-User code is given a lot of control and flexibility.
-
-This design opens the potential for hard-to-track bugs -
-globally mutable properties bad!! -
-but it also provides flexibility that feels appropriate for logging.
-This probably isn't a good pattern to use in, for example,
-the data management layer.
-
-Logging in and around tests is a motivating use case for this design.
-See the usage of `TestLogger` in the test framework code for more.
-Scratch that: that code is gone now after we replaced Felt's `oki` with `uvu`.
-How should we integrate the test logger with `uvu`? 
-TODO !
-
-*/
+/**
+ * Sets the colors helper for both the main and system loggers.
+ * By default logging uses no colors.
+ * @param st A `node:util` `styleText`-compatible function.
+ * @param configure_main_logger Set the `Logger` log level? Defaults to true.
+ * @param configure_system_logger Set the `System_Logger` log level? Defaults to true.
+ */
+export const configure_log_colors = (
+	st: typeof styleText,
+	configure_main_logger = true,
+	configure_system_logger = true,
+): void => {
+	if (configure_main_logger) {
+		Logger.st = st;
+	}
+	if (configure_system_logger) {
+		System_Logger.st = st;
+	}
+};
 
 export type Log = (...args: any[]) => void;
 
+/**
+ * The `Logger` accepts a `Logger_State` argument for custom behavior,
+ * which by default is the `Logger` class itself,
+ * where its static properties are the `Logger_State` values.
+ * Though the code is more verbose and slower as a result,
+ * the tradeoffs make sense for logging in development.
+ * The API is unfinished for production loggers
+ * but it should be possible to monkey-patch it for the desired beaviors.
+ *
+ * Properties like the static `Logger.level` can be mutated
+ * to affect all loggers that get instantiated with the default state,
+ * but loggers can also be instantiated with other state
+ * that isn't affected by these globally mutable values.
+ *
+ * Custom loggers like `System_Logger` (see below)
+ * demonstrate extending `Logger` to partition logging concerns.
+ * User code is given a lot of control and flexibility.
+ */
 export interface Logger_State extends Log_Level_Defaults {
 	level: Log_Level;
 	log: Log;
@@ -199,6 +201,7 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
+	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
 	static log: Log = console.log.bind(console); // eslint-disable-line no-console
 	static prefixes: unknown[] = [];
 	static suffixes: unknown[] = [];
@@ -224,16 +227,14 @@ export class Logger extends Base_Logger {
 	};
 }
 
-/*
-
-The `System_Logger` is distinct from the `Logger`
-to cleanly separate Felt's logging from user logging, decoupling their log levels.
-Felt internally uses `System_Logger`, not `Logger` directly.
-This allows user code to simply import and use `Logger`.
-`System_Logger` is still made available to user code,
-and users can always extend `Logger` with their own custom versions.
-
-*/
+/**
+ * The `System_Logger` is distinct from the `Logger`
+ * to cleanly separate Felt's logging from user logging, decoupling their log levels.
+ * Felt internally uses `System_Logger`, not `Logger` directly.
+ * This allows user code to simply import and use `Logger`.
+ * `System_Logger` is still made available to user code,
+ * and users can always extend `Logger` with their own custom versions.
+ */
 export class System_Logger extends Base_Logger {
 	constructor(
 		prefixes: unknown = EMPTY_ARRAY,
@@ -246,8 +247,9 @@ export class System_Logger extends Base_Logger {
 	// These properties can be mutated at runtime
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
-	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `Logger` value, see `configure_log_level`
-	static log: Log = console.log.bind(console); // eslint-disable-line no-console
+	static level: Log_Level = Logger.level; // to set alongside the `Logger` value, see `configure_log_level`
+	static st: typeof styleText = Logger.st; // to set alongside the `Logger` value, see `configure_log_colors`
+	static log: Log = Logger.log;
 	// These can be reassigned to avoid sharing with the `Logger` instance.
 	static prefixes = Logger.prefixes;
 	static suffixes = Logger.suffixes;
