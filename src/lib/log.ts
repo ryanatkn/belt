@@ -36,6 +36,7 @@ export const configure_log_level = (
 	}
 };
 
+// TODO use `import.meta.env` if available? SvelteKit imports?
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
 		? null
