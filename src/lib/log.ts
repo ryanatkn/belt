@@ -20,8 +20,8 @@ const should_log = (max: Log_Level, level: Log_Level): boolean =>
 /**
  * Sets the log level for both the main and system loggers.
  * @param level The desired log level.
- * @param configure_main_logger Set the `Logger` log level? Defaults to true.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to true.
+ * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
+ * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
  */
 export const configure_log_level = (
 	level: Log_Level,
@@ -45,8 +45,8 @@ const DEFAULT_LOG_LEVEL: Log_Level =
  * Sets the colors helper for both the main and system loggers.
  * By default logging uses no colors.
  * @param st A `node:util` `styleText`-compatible function.
- * @param configure_main_logger Set the `Logger` log level? Defaults to true.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to true.
+ * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
+ * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
  */
 export const configure_log_colors = (
 	st: typeof styleText,
