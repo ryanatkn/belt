@@ -7,6 +7,7 @@ import {noop} from '$lib/function.js';
 test('unobtain out of order', () => {
 	let thing: symbol | undefined;
 	let unobtained = false;
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	const obtain_thing = create_obtainable(
 		() => {
 			assert.is(thing, undefined);
@@ -56,6 +57,7 @@ test('unobtain out of order', () => {
 });
 
 test('cannot obtain undefined', () => {
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	const obtain_thing = create_obtainable(() => undefined, noop);
 	assert.throws(() => obtain_thing());
 });

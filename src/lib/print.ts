@@ -16,7 +16,7 @@ export const disable_colors = (): void => {
 export const print_key_value = (key: string, val: string | number): string =>
 	st('gray', `${key}(`) + val + st('gray', ')');
 
-export const print_ms = (ms: number, decimals?: number | undefined, separator?: string): string => {
+export const print_ms = (ms: number, decimals?: number, separator?: string): string => {
 	const decimal_count = decimals ?? (ms >= 10 ? 0 : ms < 0.1 ? 2 : 1);
 	const rounded = ms.toFixed(decimal_count);
 	return st('white', print_number_with_separators(rounded, separator)) + st('gray', 'ms');
