@@ -93,7 +93,7 @@ test('calls functions in sequence', async () => {
 	assert.equal(results, ['a_run', 'a_done', 'b_run', 'b_done']);
 });
 
-test('throttles calls to a function with leading=false', async () => {
+test("throttles calls to a function with when='trailing'", async () => {
 	const results: string[] = [];
 	const fn = throttle(
 		async (name: string) => {
@@ -101,7 +101,7 @@ test('throttles calls to a function with leading=false', async () => {
 			await wait();
 			results.push(name + '_done');
 		},
-		{leading: false},
+		{when: 'trailing'},
 	);
 
 	const promise_a = fn('a'); // discarded
@@ -152,7 +152,7 @@ test('throttles calls to a function with leading=false', async () => {
 	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done', 'g_run', 'g_done']);
 });
 
-test('throttles calls to a function with trailing=false', async () => {
+test("throttles calls to a function with when='leading'", async () => {
 	const results: string[] = [];
 	const fn = throttle(
 		async (name: string) => {
@@ -160,7 +160,7 @@ test('throttles calls to a function with trailing=false', async () => {
 			await wait();
 			results.push(name + '_done');
 		},
-		{trailing: false},
+		{when: 'leading'},
 	);
 
 	const promise_a = fn('a'); // called immediately

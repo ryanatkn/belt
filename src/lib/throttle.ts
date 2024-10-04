@@ -5,8 +5,10 @@ export interface Throttle_Options {
 	 * Delay this many milliseconds between the pending call finishing and the next starting.
 	 */
 	delay?: number;
-	leading?: boolean;
-	trailing?: boolean;
+	/**
+	 * When to call the throttled function. Defaults to `both`.
+	 */
+	when?: 'both' | 'leading' | 'trailing';
 }
 
 /**
@@ -29,12 +31,7 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	options?: Throttle_Options,
 ): T => {
 	const delay = options?.delay ?? 0;
-	const leading = options?.leading ?? true; // TODO BLOCK maybe change API to `when: 'leading' | 'trailing' | 'both'`, defaulting to `'both'`?
-	const trailing = options?.trailing ?? true;
-
-	if (!leading && !trailing) {
-		throw Error('invalid options to thottle - cannot set both leading and trailing to false');
-	}
+	const when = options?.when ?? 'both';
 
 	let pending_promise: Promise<void> | null = null;
 	let next_args: any[] | null = null;
@@ -69,8 +66,8 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	};
 
 	return ((...args) => {
-		if (pending_promise || !leading) {
-			return trailing ? defer(args) : pending_promise; // discarded when pending and not trailing (!leading && !trailing is disallowed)
+		if (pending_promise || when === 'trailing') {
+			return when === 'leading' ? pending_promise : defer(args); // discarded when pending and not trailing
 		} else {
 			return call(args);
 		}
