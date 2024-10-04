@@ -63,7 +63,7 @@ test('calls functions in sequence', async () => {
 	assert.equal(results, ['a_run', 'a_done', 'b_run', 'b_done']);
 });
 
-test('throttles calls to a function with leading = false', async () => {
+test('throttles calls to a function with leading=false', async () => {
 	const results: string[] = [];
 	const fn = throttle(
 		async (name: string) => {
