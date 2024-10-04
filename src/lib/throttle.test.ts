@@ -36,36 +36,6 @@ test('throttles calls to a function', async () => {
 	assert.equal(results, ['a_run', 'a_done', 'd_run', 'd_done']);
 });
 
-// test('throttles calls to a non-async function', async () => {
-// 	const results: string[] = [];
-// 	const fn = throttle((name: string) => {
-// 		results.push(name + '_ran');
-// 	});
-
-// 	const promise_a = fn('a'); // called immediately
-// 	const promise_b = fn('b'); // discarded
-// 	const promise_c = fn('c'); // discarded
-// 	const promise_d = fn('d'); // called at trailing edge
-
-// 	assert.ok(promise_a !== promise_b);
-// 	assert.is(promise_b, promise_c);
-// 	assert.is(promise_b, promise_d);
-
-// 	assert.equal(results, ['a_ran']); // called immediately
-
-// 	await promise_a;
-
-// 	assert.equal(results, ['a_ran']);
-
-// 	await wait();
-
-// 	assert.equal(results, ['a_ran', 'd_ran']);
-
-// 	await promise_b;
-
-// 	assert.equal(results, ['a_ran', 'd_ran']);
-// });
-
 test('calls functions in sequence', async () => {
 	const results: string[] = [];
 	const fn = throttle(async (name: string) => {
