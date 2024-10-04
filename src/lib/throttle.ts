@@ -1,3 +1,9 @@
+export interface Throttle_Options {
+	delay?: number;
+	leading?: boolean;
+	trailing?: boolean;
+}
+
 /**
  * Throttles calls to a callback that returns a void promise.
  * Immediately invokes the callback on the first call unless `leading=false`.
@@ -17,8 +23,7 @@
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	cb: T,
-	delay = 0,
-	leading = true, // TODO add a trailing option
+	{delay = 0, leading = true, trailing = true}: Throttle_Options,
 ): T => {
 	let pending_promise: Promise<void> | null = null;
 	let next_args: any[] | null = null;
@@ -36,6 +41,7 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 		return next_promise;
 	};
 
+	// TODO BLOCK test to ensure it calls a single time for a single call (not trailing unless called twice)
 	const flush = async (): Promise<void> => {
 		if (!next_promise_resolve) return;
 		const result = await call(next_args!);
