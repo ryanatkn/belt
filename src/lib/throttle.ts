@@ -2,7 +2,7 @@ import {create_deferred, type Deferred} from './async.js';
 
 export interface Throttle_Options {
 	/**
-	 * Delay this many milliseconds between the pending call finishing and the next starting.
+	 * Enforced milliseconds between calls. For `when='trailing'` this is the debounce delay.
 	 */
 	delay?: number;
 	/**
@@ -26,7 +26,7 @@ export interface Throttle_Options {
  * @returns same as `cb`
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
-	// TODO BLOCK `Promise<void> | void`, and geneeric return type?
+	// TODO BLOCK `Promise<void> | void`, and generic return type?
 	cb: T,
 	options?: Throttle_Options,
 ): T => {
