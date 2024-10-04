@@ -12,15 +12,16 @@ test('throttles calls to a function', async () => {
 		results.push(name + '_done');
 	});
 
-	const promise_a = fn('a');
+	const promise_a = fn('a'); // called immediately
 	const promise_b = fn('b'); // discarded
 	const promise_c = fn('c'); // discarded
-	const promise_d = fn('d');
+	const promise_d = fn('d'); // called at trailing edge
 
 	assert.ok(promise_a !== promise_b);
 	assert.is(promise_b, promise_c);
 	assert.is(promise_b, promise_d);
-	assert.equal(results, ['a_run']);
+
+	assert.equal(results, ['a_run']); // called immediately
 
 	await promise_a;
 
@@ -43,15 +44,17 @@ test('calls functions in sequence', async () => {
 		results.push(name + '_done');
 	});
 
-	const promise_a = fn('a');
+	const promise_a = fn('a'); // called immediately
 
-	assert.equal(results, ['a_run']);
+	assert.equal(results, ['a_run']); // called immediately
 
 	await promise_a;
 
 	assert.equal(results, ['a_run', 'a_done']);
 
-	const promise_b = fn('b');
+	const promise_b = fn('b'); // called immediately
+
+	assert.equal(results, ['a_run', 'a_done', 'b_run']); // called immediately
 
 	assert.ok(promise_a !== promise_b);
 
@@ -74,22 +77,22 @@ test('throttles calls to a function with leading = false', async () => {
 	const promise_a = fn('a'); // discarded
 	const promise_b = fn('b'); // discarded
 	const promise_c = fn('c'); // discarded
-	const promise_d = fn('d');
+	const promise_d = fn('d'); // called at trailing edge
 
 	assert.is(promise_a, promise_b);
 	assert.is(promise_a, promise_c);
 	assert.is(promise_a, promise_d);
-	assert.equal(results, []); // No immediate execution
+	assert.equal(results, []); // no immediate call
 
 	await wait();
 
 	assert.equal(results, ['d_run']);
 
-	await promise_a; // All promises resolve to the same result
+	await promise_a;
 
 	assert.equal(results, ['d_run', 'd_done']);
 
-	const promise_e = fn('e');
+	const promise_e = fn('e'); // called at trailing edge
 	assert.ok(promise_a !== promise_e);
 	assert.equal(results, ['d_run', 'd_done']);
 
@@ -102,7 +105,7 @@ test('throttles calls to a function with leading = false', async () => {
 	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done']);
 
 	const promise_f = fn('f'); // discarded
-	const promise_g = fn('g');
+	const promise_g = fn('g'); // called at trailing edge
 	assert.ok(promise_e !== promise_f);
 	assert.ok(promise_f === promise_g);
 	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done']);
