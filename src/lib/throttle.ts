@@ -24,12 +24,17 @@ export interface Throttle_Options {
  * @returns same as `cb`
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
+	// TODO BLOCK `Promise<void> | void`, and geneeric return type?
 	cb: T,
 	options?: Throttle_Options,
 ): T => {
 	const delay = options?.delay ?? 0;
-	const leading = options?.leading ?? true;
+	const leading = options?.leading ?? true; // TODO BLOCK maybe change API to `when: 'leading' | 'trailing' | 'both'`, defaulting to `'both'`?
 	const trailing = options?.trailing ?? true;
+
+	if (!leading && !trailing) {
+		throw Error('invalid options to thottle - cannot set both leading and trailing to false');
+	}
 
 	let pending_promise: Promise<void> | null = null;
 	let next_args: any[] | null = null;
@@ -50,13 +55,13 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 		if (!next_deferred) return;
 		const result = await call(next_args!);
 		next_args = null;
-		const resolve = next_deferred.resolve;
+		const {resolve} = next_deferred;
 		next_deferred = null;
 		resolve(result); // resolve last to prevent synchronous call issues
 	};
 
 	const call = (args: any[]): Promise<any> => {
-		pending_promise = cb(...args); // TODO accept non-promise-returning functions?
+		pending_promise = cb(...args); // TODO BLOCK for void return value, ` || wait(delay)`, but returning this promise breaks the type of the throttled function
 		void pending_promise.finally(() => {
 			pending_promise = null;
 		});
@@ -65,7 +70,7 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 
 	return ((...args) => {
 		if (pending_promise || !leading) {
-			return defer(args);
+			return trailing ? defer(args) : pending_promise; // discarded when pending and not trailing (!leading && !trailing is disallowed)
 		} else {
 			return call(args);
 		}
