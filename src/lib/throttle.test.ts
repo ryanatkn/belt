@@ -10,7 +10,7 @@ test('throttles calls to a function', async () => {
 		results.push(name + '_run');
 		await wait();
 		results.push(name + '_done');
-	}, 0);
+	});
 
 	const promise_a = fn('a');
 	const promise_b = fn('b'); // discarded
@@ -41,7 +41,7 @@ test('calls functions in sequence', async () => {
 		results.push(name + '_run');
 		await wait();
 		results.push(name + '_done');
-	}, 0);
+	});
 
 	const promise_a = fn('a');
 
@@ -68,8 +68,7 @@ test('throttles calls to a function with leading = false', async () => {
 			await wait();
 			results.push(name + '_done');
 		},
-		0,
-		false,
+		{leading: false},
 	);
 
 	const promise_a = fn('a'); // discarded

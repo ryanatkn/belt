@@ -1,4 +1,9 @@
+import {create_deferred, type Deferred} from './async.js';
+
 export interface Throttle_Options {
+	/**
+	 * Delay this many milliseconds between the pending call finishing and the next starting.
+	 */
 	delay?: number;
 	leading?: boolean;
 	trailing?: boolean;
@@ -13,42 +18,40 @@ export interface Throttle_Options {
  * In other words, all calls and their args are discarded
  * during the pending window except for the most recent.
  * Unlike debouncing, this calls the throttled callback
- * both on the leading and trailing edges of the delay window,
- * and this can be customized by setting `leading` to `false`.
+ * both on the leading and trailing edges of the delay window by default,
+ * and this can be customized by setting `leading` or `trailing.
  * It also differs from a queue where every call to the throttled callback eventually runs.
- * @param cb - any function that returns a void promise
- * @param delay - delay this many milliseconds between the pending call finishing and the next starting
- * @param leading - if `true`, the default, the callback is called immediately
  * @returns same as `cb`
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	cb: T,
-	{delay = 0, leading = true, trailing = true}: Throttle_Options,
+	options?: Throttle_Options,
 ): T => {
+	const delay = options?.delay ?? 0;
+	const leading = options?.leading ?? true;
+	const trailing = options?.trailing ?? true;
+
 	let pending_promise: Promise<void> | null = null;
 	let next_args: any[] | null = null;
-	let next_promise: Promise<void> | null = null;
-	let next_promise_resolve: ((value: any) => void) | null = null;
+	let next_deferred: Deferred<void> | null = null;
 
 	const defer = (args: any[]): Promise<void> => {
 		next_args = args;
-		if (!next_promise) {
-			next_promise = new Promise((resolve) => {
-				next_promise_resolve = resolve; // TODO `create_deferred`
-			});
+		if (!next_deferred) {
+			next_deferred = create_deferred<void>();
 			setTimeout(flush, delay);
 		}
-		return next_promise;
+		// TODO BLOCK does it make sense to have `void` be generic?
+		return next_deferred.promise;
 	};
 
 	// TODO BLOCK test to ensure it calls a single time for a single call (not trailing unless called twice)
 	const flush = async (): Promise<void> => {
-		if (!next_promise_resolve) return;
+		if (!next_deferred) return;
 		const result = await call(next_args!);
 		next_args = null;
-		next_promise = null;
-		const resolve = next_promise_resolve;
-		next_promise_resolve = null;
+		const resolve = next_deferred.resolve;
+		next_deferred = null;
 		resolve(result); // resolve last to prevent synchronous call issues
 	};
 
