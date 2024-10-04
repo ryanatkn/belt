@@ -26,7 +26,6 @@ export interface Throttle_Options {
  * @returns same as `cb`
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
-	// TODO BLOCK `Promise<void> | void`, and generic return type?
 	cb: T,
 	options?: Throttle_Options,
 ): T => {
@@ -43,11 +42,9 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 			next_deferred = create_deferred<void>();
 			setTimeout(flush, delay);
 		}
-		// TODO BLOCK does it make sense to have `void` be generic?
 		return next_deferred.promise;
 	};
 
-	// TODO BLOCK test to ensure it calls a single time for a single call (not trailing unless called twice)
 	const flush = async (): Promise<void> => {
 		if (!next_deferred) return;
 		const result = await call(next_args!);
@@ -58,7 +55,7 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	};
 
 	const call = (args: any[]): Promise<any> => {
-		pending_promise = cb(...args); // TODO BLOCK for void return value, ` || wait(delay)`, but returning this promise breaks the type of the throttled function
+		pending_promise = cb(...args);
 		void pending_promise.finally(() => {
 			pending_promise = null;
 		});
