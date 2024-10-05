@@ -2,8 +2,15 @@ import {is_plain_object} from '$lib/object.js';
 
 export type Json = string | number | boolean | null | {[prop: string]: Json} | Json[];
 
+/**
+ * Like `typeof json`, but includes arrays. Excludes `'undefined'` because it's not valid JSON.
+ */
 export type Json_Type = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
+/**
+ * Converts `value` to a `Json_Type`, which is like `typeof json`
+ * but includes `'arrays'` and omits `'undefined'`.
+ */
 export const to_json_type = (value: Json): Json_Type | undefined => {
 	const type = typeof value;
 	switch (type) {

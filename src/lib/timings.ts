@@ -17,6 +17,10 @@ export const create_stopwatch = (decimals = 2): Stopwatch => {
 
 export type Timings_Key = string | number;
 
+/**
+ * Tracks and manages multiple timing operations.
+ * Allows starting, stopping, and retrieving timings with optional precision.
+ */
 export class Timings {
 	private readonly timings: Map<Timings_Key, number | undefined> = new Map();
 	private readonly stopwatches: Map<Timings_Key, Stopwatch> = new Map();

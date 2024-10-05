@@ -1,5 +1,8 @@
 import {count_iterator} from '$lib/iterator.js';
 
+/**
+ * Truncates a string to a maximum length, adding a suffix if needed that defaults to `...`.
+ */
 export const truncate = (str: string, maxLength: number, suffix = '...'): string => {
 	if (maxLength < suffix.length) return '';
 	if (str.length > maxLength) {
@@ -44,11 +47,17 @@ export const strip_before = (source: string, stripped: string): string => {
 	return source.substring(idx + stripped.length);
 };
 
+/**
+ * Adds the substring `ensured` to the start of the `source` string if it's not already present.
+ */
 export const ensure_start = (source: string, ensured: string): string => {
 	if (source.startsWith(ensured)) return source;
 	return ensured + source;
 };
 
+/**
+ * Adds the substring `ensured` to the end of the `source` string if it's not already present.
+ */
 export const ensure_end = (source: string, ensured: string): string => {
 	if (source.endsWith(ensured)) return source;
 	return source + ensured;
@@ -56,7 +65,6 @@ export const ensure_end = (source: string, ensured: string): string => {
 
 /**
  * Removes leading and trailing spaces from each line of a string.
- * @param str
  */
 export const deindent = (str: string): string =>
 	str
@@ -65,6 +73,9 @@ export const deindent = (str: string): string =>
 		.map((s) => s.trim())
 		.join('\n');
 
+/**
+ * Returns a plural suffix based on a count.
+ */
 export const plural = (count: number | undefined | null, suffix = 's'): string =>
 	count === 1 ? '' : suffix;
 

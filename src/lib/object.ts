@@ -24,6 +24,9 @@ export const map_record = <T, K extends string | number, U>(
 	return result;
 };
 
+/**
+ * Creates a new object without the specified `keys`.
+ */
 export const omit = <T extends Record<K, any>, K extends keyof T>(
 	obj: T,
 	keys: K[],
@@ -37,6 +40,9 @@ export const omit = <T extends Record<K, any>, K extends keyof T>(
 	return result;
 };
 
+/**
+ * Creates a new object with properties that pass the `should_pick` predicate.
+ */
 export const pick_by = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
 	should_pick: (value: any, key: K) => boolean,
@@ -76,6 +82,9 @@ export const reorder = <T extends Record<K, any>, K extends string | number>(
 	return result;
 };
 
+/**
+ * Frozen empty object with no properties, good for options default values.
+ */
 export const EMPTY_OBJECT: Record<string | number | symbol, undefined> & object = Object.freeze({});
 
 /**

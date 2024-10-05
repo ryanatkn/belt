@@ -1,3 +1,7 @@
+/**
+ * Error for asserting unreachable code paths in TypeScript.
+ * Useful for exhaustive matching.
+ */
 export class Unreachable_Error extends Error {
 	constructor(value: never, message = `Unreachable case: ${value}`) {
 		super(message);

@@ -123,6 +123,9 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 	return closed;
 };
 
+/**
+ * Kills all globally registered child processes.
+ */
 export const despawn_all = (): Promise<Spawn_Result[]> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
 
@@ -151,6 +154,9 @@ export const attach_process_error_handlers = (
 	});
 };
 
+/**
+ * Formats a `Spawn_Result` for printing.
+ */
 export const print_spawn_result = (result: Spawn_Result): string => {
 	if (result.ok) return 'ok';
 	let text = result.code === null ? '' : print_key_value('code', result.code);

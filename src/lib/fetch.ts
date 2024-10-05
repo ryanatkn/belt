@@ -220,8 +220,14 @@ export const to_fetch_value_cache_key = (
 	return key;
 };
 
+/**
+ * Converts `Fetch_Value_Cache` to a JSON string.
+ */
 export const serialize_cache = (cache: Fetch_Value_Cache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
+/**
+ * Converts a serialized cache string to a `Fetch_Value_Cache`.
+ */
 export const deserialize_cache = (serialized: string): Fetch_Value_Cache =>
 	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));

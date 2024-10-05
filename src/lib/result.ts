@@ -7,7 +7,14 @@ export type Result<T_Value = object, T_Error = object> =
 	| ({ok: true} & T_Value)
 	| ({ok: false} & T_Error);
 
+/**
+ * Frozen object representing a successful result.
+ */
 export const OK = Object.freeze({ok: true} as const);
+
+/**
+ * Frozen object representing a failed result.
+ */
 export const NOT_OK = Object.freeze({ok: false} as const);
 
 /**

@@ -1,4 +1,5 @@
 import {create_deferred, type Deferred} from '$lib/async.js';
+import {EMPTY_OBJECT} from '$lib/object.js';
 
 export interface Throttle_Options {
 	/**
@@ -27,11 +28,8 @@ export interface Throttle_Options {
  */
 export const throttle = <T extends (...args: any[]) => Promise<void>>(
 	cb: T,
-	options?: Throttle_Options,
+	{delay = 0, when = 'both'}: Throttle_Options = EMPTY_OBJECT,
 ): T => {
-	const delay = options?.delay ?? 0;
-	const when = options?.when ?? 'both';
-
 	let pending_promise: Promise<void> | null = null;
 	let next_args: any[] | null = null;
 	let next_deferred: Deferred<void> | null = null;

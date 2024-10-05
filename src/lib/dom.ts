@@ -1,3 +1,7 @@
+/**
+ * Checks if the given element is editable.
+ * Returns `true` for text-based input types, textareas, and contenteditable elements.
+ */
 export const is_editable = (el: any): boolean => {
 	if (!el) return false;
 	const {tagName} = el;
@@ -18,6 +22,9 @@ export const is_editable = (el: any): boolean => {
 	);
 };
 
+/**
+ * Returns `true` if the element is within a `contenteditable` ancestor.
+ */
 export const inside_editable = (el: HTMLElement | SVGElement): boolean => {
 	const found = el.closest('[contenteditable]');
 	return found !== null && found.getAttribute('contenteditable') !== 'false';
@@ -47,6 +54,10 @@ export const swallow = <
 };
 
 // TODO improve these types, the motivation was the strictness of Svelte DOM types
+/**
+ * Handles the value of an event's target and invokes a callback.
+ * Defaults to swallowing the event to prevent default actions and propagation.
+ */
 export const handle_target_value =
 	(cb: (value: any, event: any) => void, swallow_event = true) =>
 	(e: any): void => {

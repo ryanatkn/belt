@@ -5,23 +5,38 @@ import type {Logger} from '$lib/log.js';
 
 let st: typeof styleText = styleText;
 
+/**
+ * Enables colorized output for printing functions globally.
+ */
 export const enable_colors = (): void => {
 	st = styleText;
 };
 
+/**
+ * Disables colorized output for printing functions globally.
+ */
 export const disable_colors = (): void => {
 	st = (_, v) => v;
 };
 
-export const print_key_value = (key: string, val: string | number): string =>
-	st('gray', `${key}(`) + val + st('gray', ')');
+/**
+ * Formats a key-value pair for printing.
+ */
+export const print_key_value = (key: string, value: string | number): string =>
+	st('gray', `${key}(`) + value + st('gray', ')');
 
+/**
+ * Formats a `number` of milliseconds for printing.
+ */
 export const print_ms = (ms: number, decimals?: number, separator?: string): string => {
 	const decimal_count = decimals ?? (ms >= 10 ? 0 : ms < 0.1 ? 2 : 1);
 	const rounded = ms.toFixed(decimal_count);
 	return st('white', print_number_with_separators(rounded, separator)) + st('gray', 'ms');
 };
 
+/**
+ * Formats a `number` with separators for improved readability.
+ */
 export const print_number_with_separators = (v: string, separator = '_'): string => {
 	if (!separator) return v;
 	const decimal_index = v.indexOf('.');
@@ -36,10 +51,24 @@ export const print_number_with_separators = (v: string, separator = '_'): string
 	return s;
 };
 
-export const print_string = (v: string): string => st('green', `'${v}'`);
-export const print_number = (v: number): string => st('cyan', v + '');
-export const print_boolean = (v: boolean): string => st('yellow', v + '');
+/**
+ * Formats a `string` for printing.
+ */
+export const print_string = (value: string): string => st('green', `'${value}'`);
 
+/**
+ * Formats a `number` for printing.
+ */
+export const print_number = (value: number): string => st('cyan', value + '');
+
+/**
+ * Formats a `boolean` for printing.
+ */
+export const print_boolean = (value: boolean): string => st('yellow', value + '');
+
+/**
+ * Formats any value for printing.
+ */
 export const print_value = (value: unknown): string => {
 	switch (typeof value) {
 		case 'string':
@@ -55,22 +84,34 @@ export const print_value = (value: unknown): string => {
 	}
 };
 
-// Because throwing errors and rejecting promises isn't typesafe,
-// don't assume the arg is an `Error` and try to return something useful.
+/**
+ * Formats an error for printing.
+ * Because throwing errors and rejecting promises isn't typesafe,
+ * don't assume the arg is an `Error` and try to return something useful.
+ */
 export const print_error = (err: Error): string =>
 	st(
 		'yellow',
 		err.stack ?? ((err.message && `Error: ${err.message}`) || `Unknown error: ${err as any}`),
 	);
 
+/**
+ * Formats a timing entry with `key` for printing.
+ */
 export const print_timing = (key: string | number, timing: number | undefined): string =>
 	`${timing === undefined ? '...' : print_ms(timing, undefined)} ${st('gray', '←')} ${st('gray', key + '')}`;
 
+/**
+ * Prints all timings in a `Timings` object.
+ */
 export const print_timings = (timings: Timings, log: Logger): void => {
 	for (const [key, timing] of timings.entries()) {
 		log.debug(print_timing(key, timing));
 	}
 };
 
+/**
+ * Formats a log label `string` for printing.
+ */
 export const print_log_label = (label: string, color = st.bind(null, 'magenta')): string =>
 	`${st('gray', '[')}${color(label)}${st('gray', ']')}`;

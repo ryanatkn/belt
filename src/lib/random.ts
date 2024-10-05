@@ -1,5 +1,8 @@
 import type {Array_Element} from '$lib/types.js';
 
+/**
+ * Generates a random `number` between `min` and `max`.
+ */
 export const random_float = (min: number, max: number, random = Math.random): number =>
 	random() * (max - min) + min;
 
@@ -11,8 +14,14 @@ export const random_float = (min: number, max: number, random = Math.random): nu
 export const random_int = (min: number, max: number, random = Math.random): number =>
 	Math.floor(random() * (max - min + 1)) + min;
 
+/**
+ * Generates a random `boolean`.
+ */
 export const random_boolean = (random = Math.random): boolean => random() > 0.5;
 
+/**
+ * Selects a random item from an array.
+ */
 export const random_item = <T extends readonly any[]>(
 	arr: T,
 	random = Math.random,

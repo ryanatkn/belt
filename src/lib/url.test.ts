@@ -10,7 +10,7 @@ test('format_url', () => {
 	assert.is(format_url('https://fuz.dev/'), 'fuz.dev');
 	assert.is(format_url('https://fuz.dev'), 'fuz.dev');
 	assert.is(format_url('fuz.dev'), 'fuz.dev');
-	assert.is(format_url('http://fuz.dev'), 'http://fuz.dev');
+	assert.is(format_url('http://fuz.dev'), 'http://fuz.dev'); // user-facing, so alert to the lack of security
 	assert.is(format_url('/'), '');
 });
 

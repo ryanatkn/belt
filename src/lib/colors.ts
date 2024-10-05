@@ -16,8 +16,14 @@ export type Red = Flavored<number, 'Red'>; // [0, 255]
 export type Green = Flavored<number, 'Green'>; // [0, 255]
 export type Blue = Flavored<number, 'Blue'>; // [0, 255]
 
+/**
+ * Converts an RGB color to a hex color.
+ */
 export const rgb_to_hex = (r: number, g: number, b: number): number => (r << 16) + (g << 8) + b;
 
+/**
+ * Converts a hex color to an RGB color.
+ */
 export const hex_to_rgb = (hex: number): Rgb => [(hex >> 16) & 255, (hex >> 8) & 255, hex & 255];
 
 export const hex_string_to_rgb = (hex: string): Rgb => {
