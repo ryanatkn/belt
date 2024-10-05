@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.25.2
+
+### Patch Changes
+
+- add optional peer dep `@types/node` to fix disabled TS `skipLibCheck` ([578f632](https://github.com/ryanatkn/belt/commit/578f632))
+
 ## 0.25.1
 
 ### Patch Changes
