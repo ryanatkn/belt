@@ -30,6 +30,8 @@ export const package_json = {
 	type: 'module',
 	engines: {node: '>=20.17'},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
+	peerDependencies: {'@types/node': '^22.7.4'},
+	peerDependenciesMeta: {'@types/node': {optional: true}},
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.0',
 		'@ryanatkn/eslint-config': '^0.5.5',
