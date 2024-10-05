@@ -2,7 +2,7 @@ import {wait} from '@ryanatkn/belt/async.js';
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {throttle} from '$lib/throttle.js';
+import {throttle} from './throttle.js';
 
 test('throttles calls to a function', async () => {
 	const results: string[] = [];
