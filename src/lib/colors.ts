@@ -1,5 +1,4 @@
-import type {Flavored} from '@ryanatkn/belt/types.js';
-
+import type {Flavored} from '$lib/types.js';
 import {round} from '$lib/maths.js';
 
 // TODO for high-performance usecases, we may want to add variants for any that return a new array to reuse a single array
