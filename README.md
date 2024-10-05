@@ -25,9 +25,10 @@ import {type Result, unwrap} from '@ryanatkn/belt/result.js';
 import {random_int} from '@ryanatkn/belt/random.js';
 ```
 
-see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com),
-[src/lib/index.ts](src/lib/index.ts),
-and [src/lib/exports.ts](src/lib/exports.ts)
+docs are a work in progress -
+see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com) and
+[/src/routes/package.ts](https://github.com/ryanatkn/belt/blob/main/src/routes/package.ts),
+I recommend reading the source code for now or asking an AI
 
 ## build
 
