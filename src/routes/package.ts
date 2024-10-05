@@ -89,6 +89,7 @@ export const package_json = {
 		'./regexp.js': {types: './dist/regexp.d.ts', default: './dist/regexp.js'},
 		'./result.js': {types: './dist/result.d.ts', default: './dist/result.js'},
 		'./string.js': {types: './dist/string.d.ts', default: './dist/string.js'},
+		'./throttle.js': {types: './dist/throttle.d.ts', default: './dist/throttle.js'},
 		'./timings.js': {types: './dist/timings.d.ts', default: './dist/timings.js'},
 		'./types.js': {types: './dist/types.d.ts', default: './dist/types.js'},
 		'./url.js': {types: './dist/url.d.ts', default: './dist/url.js'},
@@ -115,6 +116,8 @@ export const src_json = {
 				{name: 'Async_Status', kind: 'type'},
 				{name: 'wait', kind: 'function'},
 				{name: 'is_promise', kind: 'function'},
+				{name: 'Deferred', kind: 'type'},
+				{name: 'create_deferred', kind: 'function'},
 			],
 		},
 		'./colors.js': {
@@ -376,6 +379,13 @@ export const src_json = {
 				{name: 'deindent', kind: 'function'},
 				{name: 'plural', kind: 'function'},
 				{name: 'count_graphemes', kind: 'function'},
+			],
+		},
+		'./throttle.js': {
+			path: 'throttle.ts',
+			declarations: [
+				{name: 'Throttle_Options', kind: 'type'},
+				{name: 'throttle', kind: 'function'},
 			],
 		},
 		'./timings.js': {

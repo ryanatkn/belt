@@ -1,4 +1,4 @@
-import {create_deferred, type Deferred} from './async.js';
+import {create_deferred, type Deferred} from '$lib/async.js';
 
 export interface Throttle_Options {
 	/**
