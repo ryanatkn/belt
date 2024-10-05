@@ -1,5 +1,12 @@
 # @ryanatkn/belt
 
+## 0.25.1
+
+### Patch Changes
+
+- add logo ([#37](https://github.com/ryanatkn/belt/pull/37))
+- add `throttle` ([#38](https://github.com/ryanatkn/belt/pull/38))
+
 ## 0.25.0
 
 ### Minor Changes
