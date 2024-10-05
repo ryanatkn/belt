@@ -10,6 +10,7 @@ export const package_json = {
 	glyph: '🦕',
 	logo: 'logo.svg',
 	logo_alt: 'a green sauropod wearing a brown utility belt',
+	motto: 'ancient not extinct',
 	public: true,
 	license: 'MIT',
 	homepage: 'https://belt.ryanatkn.com/',
