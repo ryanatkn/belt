@@ -1,5 +1,7 @@
 # @ryanatkn/belt
 
+[<img src="static/logo.svg" alt="a pixelated green oak acorn with a glint of sun" align="right" width="192" height="192">](https://gro.ryanatkn.com/)
+
 > utility belt for JS 🦕
 > [belt.ryanatkn.com](https://belt.ryanatkn.com)
 
