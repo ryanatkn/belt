@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -40,6 +40,14 @@
         },
         {
           "name": "is_promise",
+          "kind": "function"
+        },
+        {
+          "name": "Deferred",
+          "kind": "type"
+        },
+        {
+          "name": "create_deferred",
           "kind": "function"
         }
       ]
@@ -782,6 +790,19 @@
         },
         {
           "name": "count_graphemes",
+          "kind": "function"
+        }
+      ]
+    },
+    "./throttle.js": {
+      "path": "throttle.ts",
+      "declarations": [
+        {
+          "name": "Throttle_Options",
+          "kind": "type"
+        },
+        {
+          "name": "throttle",
           "kind": "function"
         }
       ]
