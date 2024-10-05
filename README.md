@@ -59,6 +59,12 @@ npm run deploy
 gro deploy
 ```
 
+## credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
+
+My sister Lisa helped me evolve the logo concept -
+[instagram.com/lisaeatkinson](https://www.instagram.com/lisaeatkinson/) -
+she's a designer and currently looking for work
+
 ## license [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
 
 [MIT](LICENSE)
