@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.25.3
+
+### Patch Changes
+
+- add more docs ([ddcda63](https://github.com/ryanatkn/belt/commit/ddcda63))
+
 ## 0.25.2
 
 ### Patch Changes
