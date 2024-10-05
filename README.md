@@ -3,6 +3,7 @@
 [<img src="static/logo.svg" alt="a green sauropod wearing a brown utility belt" align="right" width="256" height="256">](https://belt.ryanatkn.com/)
 
 > utility belt for JS 🦕 ancient not extinct
+
 > [belt.ryanatkn.com](https://belt.ryanatkn.com)
 
 design:
