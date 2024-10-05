@@ -18,12 +18,12 @@
 		</header>
 		<Breadcrumb>{package_json.glyph}</Breadcrumb>
 	</section>
-	<Community_Links_Panel />
 	<section class="box w_100 mb_lg">
 		<div class="panel p_md width_md">
 			<Package_Detail {pkg} />
 		</div>
 	</section>
+	<Community_Links_Panel />
 	<section class="box">
 		<Library_Footer {pkg} />
 	</section>
