@@ -9,7 +9,7 @@ export const package_json = {
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
-	logo_alt: 'a friendly pixelated spider facing you',
+	logo_alt: 'a green sauropod wearing a brown belt',
 	public: true,
 	license: 'MIT',
 	homepage: 'https://belt.ryanatkn.com/',
