@@ -4,7 +4,7 @@
 
 > utility belt for JS 🦕 ancient not extinct
 
-> [belt.ryanatkn.com](https://belt.ryanatkn.com)
+**[belt.ryanatkn.com](https://belt.ryanatkn.com)**
 
 design:
 
