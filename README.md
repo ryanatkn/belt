@@ -2,7 +2,7 @@
 
 [<img src="static/logo.svg" alt="a green sauropod wearing a brown utility belt" align="right" width="256" height="256">](https://belt.ryanatkn.com/)
 
-> utility belt for JS 🦕
+> utility belt for JS 🦕 ancient not extinct
 > [belt.ryanatkn.com](https://belt.ryanatkn.com)
 
 design:
@@ -14,8 +14,6 @@ design:
   see <a href="https://github.com/fuz-dev/fuz">@ryanatkn/fuz</a>
 - complements the modern web platform, drops legacy quickly
 - kinda minimal in many ways but also not, treeshakes well
-
-> ancient not extinct
 
 ## usage
 
