@@ -61,7 +61,7 @@ gro deploy
 
 ## credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
 
-My sister Lisa helped me evolve the logo concept -
+My sister Lisa helped me with the logo -
 [instagram.com/lisaeatkinson](https://www.instagram.com/lisaeatkinson/) -
 she's a designer and currently looking for work
 
