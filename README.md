@@ -15,6 +15,8 @@ design:
 - complements the modern web platform, drops legacy quickly
 - kinda minimal in many ways but also not, treeshakes well
 
+> ancient not extinct
+
 ## usage
 
 > [`npm i -D @ryanatkn/belt`](https://www.npmjs.com/package/@ryanatkn/belt)
