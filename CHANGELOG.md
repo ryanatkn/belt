@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.26.0
+
+### Minor Changes
+
+- remove `obtainable` ([#39](https://github.com/ryanatkn/belt/pull/39))
+
 ## 0.25.3
 
 ### Patch Changes
