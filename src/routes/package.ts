@@ -53,7 +53,7 @@ export const package_json = {
 		tinybench: '^3.0.3',
 		tslib: '^2.8.0',
 		typescript: '^5.6.3',
-		'typescript-eslint': '^8.12.2',
+		'typescript-eslint': '^8.12.1',
 		uvu: '^0.5.6',
 	},
 	prettier: {
