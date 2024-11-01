@@ -1,6 +1,12 @@
 import {is_plain_object} from '$lib/object.js';
 
-export type Json = string | number | boolean | null | {[prop: string]: Json} | Json[];
+export type Json = Json_Primitive | Json_Object | Json_Array;
+
+export type Json_Primitive = string | number | boolean | null;
+
+export interface Json_Object extends Record<string, Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
+
+export interface Json_Array extends Array<Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
 
 /**
  * Like `typeof json`, but includes arrays. Excludes `'undefined'` because it's not valid JSON.

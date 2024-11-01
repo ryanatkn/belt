@@ -215,6 +215,9 @@ export const src_json = {
 			path: 'json.ts',
 			declarations: [
 				{name: 'Json', kind: 'type'},
+				{name: 'Json_Primitive', kind: 'type'},
+				{name: 'Json_Object', kind: 'type'},
+				{name: 'Json_Array', kind: 'type'},
 				{name: 'Json_Type', kind: 'type'},
 				{name: 'to_json_type', kind: 'function'},
 				{name: 'canonicalize', kind: 'function'},
