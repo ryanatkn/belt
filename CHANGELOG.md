@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.26.1
+
+### Patch Changes
+
+- improve `Json` types, adding `Json_Primitive`, `Json_Object`, and `Json_Array` ([9db9a1d](https://github.com/ryanatkn/belt/commit/9db9a1d))
+
 ## 0.26.0
 
 ### Minor Changes
