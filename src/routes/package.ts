@@ -298,6 +298,7 @@ export const src_json = {
 		'./print.js': {
 			path: 'print.ts',
 			declarations: [
+				{name: 'st', kind: 'function'},
 				{name: 'enable_colors', kind: 'function'},
 				{name: 'disable_colors', kind: 'function'},
 				{name: 'print_key_value', kind: 'function'},

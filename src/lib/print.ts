@@ -3,7 +3,7 @@ import {styleText} from 'node:util';
 import type {Timings} from '$lib/timings.js';
 import type {Logger} from '$lib/log.js';
 
-let st: typeof styleText = styleText;
+export let st: typeof styleText = styleText;
 
 /**
  * Enables colorized output for printing functions globally.
