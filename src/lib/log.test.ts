@@ -3,6 +3,8 @@ import * as assert from 'uvu/assert';
 
 import {Logger, type Logger_State} from '$lib/log.js';
 
+const log = new Logger();
+
 interface Test_Logger_Context {
 	logged_args: any;
 	logger_state: Logger_State;
@@ -10,6 +12,7 @@ interface Test_Logger_Context {
 const create_test_logger_context = (): Test_Logger_Context => {
 	const collect_args = (...log_args: any[]) => {
 		ctx.logged_args = log_args;
+		log.debug(`log_args`, log_args);
 	};
 	const ctx: Test_Logger_Context = {
 		logged_args: undefined, // stores the result of the latest log call
