@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.3
+
+### Patch Changes
+
+- tweak logging outputs ([d292845](https://github.com/ryanatkn/belt/commit/d292845))
+
 ## 0.27.2
 
 ### Patch Changes
