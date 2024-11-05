@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.5
+
+### Patch Changes
+
+- export `st` from `print.ts` ([95fe446](https://github.com/ryanatkn/belt/commit/95fe446))
+
 ## 0.27.4
 
 ### Patch Changes
