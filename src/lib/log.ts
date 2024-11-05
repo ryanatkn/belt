@@ -1,4 +1,5 @@
 import type {styleText} from 'node:util';
+import {DEV} from 'esm-env';
 
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
 
@@ -36,11 +37,10 @@ export const configure_log_level = (
 	}
 };
 
-// TODO use `import.meta.env` if available? SvelteKit imports?
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
 		? null
-		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? 'info';
+		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? (DEV ? 'debug' : 'off'); // TODO how to opt into `'debug'` and default to `'info'`?
 
 /**
  * Sets the colors helper for both the main and system loggers.
