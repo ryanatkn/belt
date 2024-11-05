@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.0
+
+### Minor Changes
+
+- add `esm-env` optional dep and default logger to debug ([9c8d8af](https://github.com/ryanatkn/belt/commit/9c8d8af))
+
 ## 0.26.1
 
 ### Patch Changes
