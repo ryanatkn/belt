@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.1
+
+### Patch Changes
+
+- improve log symbols and consistency ([28371a1](https://github.com/ryanatkn/belt/commit/28371a1))
+
 ## 0.27.0
 
 ### Minor Changes
