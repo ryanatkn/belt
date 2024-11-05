@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.2
+
+### Patch Changes
+
+- change the debug char ([6876ebc](https://github.com/ryanatkn/belt/commit/6876ebc))
+
 ## 0.27.1
 
 ### Patch Changes
