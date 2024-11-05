@@ -201,7 +201,7 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
-	static char_debug = '┇';
+	static char_debug = '┆'; // '┇';
 	static char_info = '➤';
 	static char_warn = '⚑';
 	static char_error = '🞩';
@@ -210,22 +210,16 @@ export class Logger extends Base_Logger {
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('red', Logger.char_error),
-		st(['black', 'bgRed'], ` ${Logger.char_error} error ${Logger.char_error} `),
-		st('red', `\n${Logger.char_error}`),
+		st('red', `${Logger.char_error.repeat(3)}error`),
 	];
 	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		'\n ',
-		st(['black', 'bgRed'], Logger.char_error),
+		st('red', `\n${Logger.char_error.repeat(3)}`),
 	];
 	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('yellow', Logger.char_warn),
-		st(['black', 'bgYellow'], ` ${Logger.char_warn} warning ${Logger.char_warn} `),
-		'\n' + st('yellow', Logger.char_warn),
+		st('red', `${Logger.char_warn.repeat(3)}warn`),
 	];
 	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		'\n ',
-		st(['black', 'bgYellow'], ` ${Logger.char_warn} `),
+		st('red', `\n${Logger.char_warn.repeat(3)}`),
 	];
 	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
 		st('gray', Logger.char_info),
