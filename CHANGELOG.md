@@ -1,5 +1,12 @@
 # @ryanatkn/belt
 
+## 0.27.4
+
+### Patch Changes
+
+- tweak logging outputs again ([2cc4100](https://github.com/ryanatkn/belt/commit/2cc4100))
+- tweak logging outputs once more ([2e2fb84](https://github.com/ryanatkn/belt/commit/2e2fb84))
+
 ## 0.27.3
 
 ### Patch Changes
