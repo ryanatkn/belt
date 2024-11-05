@@ -5,13 +5,13 @@ import {EMPTY_ARRAY, to_array} from '$lib/array.js';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
-const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
+const LOG_LEVEL_VALUES = {
 	off: 0,
 	error: 1,
 	warn: 2,
 	info: 3,
 	debug: 4,
-};
+} as const satisfies Record<Log_Level, number>;
 
 export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4; // eslint-disable-line @typescript-eslint/no-unnecessary-condition
 
@@ -201,31 +201,39 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
+	static char_debug = '░';
+	static char_info = '➤';
+	static char_warn = '⚑';
+	static char_error = '🞩';
 	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
 	static console: Logger_State['console'] = console;
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('red', '➤'),
-		st(['black', 'bgRed'], ' 🞩 error 🞩 '),
-		st('red', '\n➤'),
+		st('red', Logger.char_error),
+		st(['black', 'bgRed'], ` ${Logger.char_error} error ${Logger.char_error} `),
+		st('red', `\n${Logger.char_error}`),
 	];
 	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
 		'\n ',
-		st(['black', 'bgRed'], ' 🞩🞩 '),
+		st(['black', 'bgRed'], Logger.char_error),
 	];
 	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('yellow', '➤'),
-		st(['black', 'bgYellow'], ' ⚑ warning ⚑ '),
-		'\n' + st('yellow', '➤'),
+		st('yellow', Logger.char_warn),
+		st(['black', 'bgYellow'], ` ${Logger.char_warn} warning ${Logger.char_warn} `),
+		'\n' + st('yellow', Logger.char_warn),
 	];
 	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
 		'\n ',
-		st(['black', 'bgYellow'], ' ⚑ '),
+		st(['black', 'bgYellow'], ` ${Logger.char_warn} `),
 	];
-	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '➤')];
+	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		st('gray', Logger.char_info),
+	];
 	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '—')];
+	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
+		st('gray', Logger.char_debug),
+	];
 	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 }
 
