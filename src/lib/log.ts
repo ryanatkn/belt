@@ -96,7 +96,10 @@ export interface Logger_State {
 	debug_suffixes: Logger_Prefixes_And_Suffixes_Getter;
 }
 
-export type Logger_Prefixes_And_Suffixes_Getter = (st: typeof styleText) => unknown[];
+export type Logger_Prefixes_And_Suffixes_Getter = (
+	st: typeof styleText,
+	args: unknown[],
+) => unknown[];
 
 const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
@@ -130,9 +133,14 @@ export class Base_Logger {
 	error(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'error')) return;
 		this.state.console.error(
-			...this.#resolve_values(this.state.prefixes, this.state.error_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.error_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.error_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.error_suffixes, this.state.suffixes),
 			),
 		);
 	}
@@ -140,9 +148,14 @@ export class Base_Logger {
 	warn(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'warn')) return;
 		this.state.console.warn(
-			...this.#resolve_values(this.state.prefixes, this.state.warn_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.warn_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.warn_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.warn_suffixes, this.state.suffixes),
 			),
 		);
 	}
@@ -150,9 +163,14 @@ export class Base_Logger {
 	info(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'info')) return;
 		this.state.console.log(
-			...this.#resolve_values(this.state.prefixes, this.state.info_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.info_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.info_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.info_suffixes, this.state.suffixes),
 			),
 		);
 	}
@@ -160,9 +178,14 @@ export class Base_Logger {
 	debug(...args: unknown[]): void {
 		if (!should_log(this.state.level, 'debug')) return;
 		this.state.console.log(
-			...this.#resolve_values(this.state.prefixes, this.state.debug_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.debug_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.debug_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.debug_suffixes, this.state.suffixes),
 			),
 		);
 	}
@@ -176,11 +199,11 @@ export class Base_Logger {
 		this.state.console.log('\n'.repeat(count));
 	}
 
-	#resolve_values(...getters: Logger_Prefixes_And_Suffixes_Getter[]): unknown[] {
+	#resolve_values(args: unknown[], ...getters: Logger_Prefixes_And_Suffixes_Getter[]): unknown[] {
 		let resolved: unknown[] | undefined;
 		const {st} = this.state;
 		for (const getter of getters) {
-			const values = getter(st);
+			const values = getter(st, args);
 			for (const value of values) {
 				(resolved ??= []).push(value);
 			}
@@ -210,13 +233,13 @@ export class Logger extends Base_Logger {
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('red', `${Logger.char_error.repeat(3)}error`),
+		st('red', `${Logger.char_error.repeat(3)}error\n`),
 	];
 	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
 		st('red', `\n${Logger.char_error.repeat(3)}`),
 	];
 	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('red', `${Logger.char_warn.repeat(3)}warn`),
+		st('red', `${Logger.char_warn.repeat(3)}warn\n`),
 	];
 	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
 		st('red', `\n${Logger.char_warn.repeat(3)}`),
