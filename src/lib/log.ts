@@ -201,7 +201,7 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
-	static char_debug = '░';
+	static char_debug = '┇';
 	static char_info = '➤';
 	static char_warn = '⚑';
 	static char_error = '🞩';
