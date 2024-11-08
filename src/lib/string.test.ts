@@ -12,6 +12,7 @@ import {
 	ensure_end,
 	deindent,
 	count_graphemes,
+	strip_ansi,
 } from '$lib/string.js';
 
 /* test__truncate */
@@ -366,3 +367,15 @@ test__count_graphemes('counts graphemes of a string, where compound emoji are on
 
 test__count_graphemes.run();
 /* test__count_graphemes */
+
+/* test__strip_ansi */
+const test__strip_ansi = suite('strip_ansi');
+
+test__strip_ansi('counts graphemes of a string, where compound emoji are one grapheme', () => {
+	assert.is(strip_ansi('\x1B[31mred text\x1B[0m'), 'red text');
+	assert.is(strip_ansi(' \x1B[1;33;40m Yellow on black \x1B[0m '), '  Yellow on black  ');
+	assert.is(strip_ansi('/[39msrc[39m/'), '/src/');
+});
+
+test__strip_ansi.run();
+/* test__strip_ansi */
