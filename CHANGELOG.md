@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.27.6
+
+### Patch Changes
+
+- add `strip_ansi` string util ([ffb7587](https://github.com/ryanatkn/belt/commit/ffb7587))
+
 ## 0.27.5
 
 ### Patch Changes
