@@ -1,15 +1,15 @@
-import {styleText} from 'node:util';
+import type {styleText} from 'node:util';
 
 import type {Timings} from '$lib/timings.js';
 import type {Logger} from '$lib/log.js';
 
-export let st: typeof styleText = styleText;
+export let st: typeof styleText = (_, v) => v;
 
 /**
  * Enables colorized output for printing functions globally.
  */
-export const enable_colors = (): void => {
-	st = styleText;
+export const enable_colors = (s: typeof styleText): void => {
+	st = s;
 };
 
 /**
