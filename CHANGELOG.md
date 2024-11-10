@@ -1,5 +1,13 @@
 # @ryanatkn/belt
 
+## 0.28.0
+
+### Minor Changes
+
+- disable colors by default for better runtime compat - ([1972e95](https://github.com/ryanatkn/belt/commit/1972e95))
+  call `set_colors(styleText)` from `print.ts`,
+  in Node `import {styleText} from 'node:util';`
+
 ## 0.27.6
 
 ### Patch Changes
