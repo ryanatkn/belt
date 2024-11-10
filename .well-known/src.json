@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.27.6",
+  "version": "0.28.0",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -550,11 +550,7 @@
           "kind": "function"
         },
         {
-          "name": "enable_colors",
-          "kind": "function"
-        },
-        {
-          "name": "disable_colors",
+          "name": "set_colors",
           "kind": "function"
         },
         {
