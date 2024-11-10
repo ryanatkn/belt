@@ -299,8 +299,7 @@ export const src_json = {
 			path: 'print.ts',
 			declarations: [
 				{name: 'st', kind: 'function'},
-				{name: 'enable_colors', kind: 'function'},
-				{name: 'disable_colors', kind: 'function'},
+				{name: 'set_colors', kind: 'function'},
 				{name: 'print_key_value', kind: 'function'},
 				{name: 'print_ms', kind: 'function'},
 				{name: 'print_number_with_separators', kind: 'function'},

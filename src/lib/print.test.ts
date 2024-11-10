@@ -1,10 +1,20 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {print_ms, disable_colors, enable_colors} from '$lib/print.js';
+import {print_ms, st, set_colors} from '$lib/print.js';
+
+let original_st: typeof st;
+
+test.before(() => {
+	original_st = st;
+	set_colors(null);
+});
+
+test.after(() => {
+	set_colors(original_st);
+});
 
 test('print_ms', () => {
-	disable_colors();
 	assert.is(print_ms(1), '1.0ms');
 	assert.is(print_ms(1.1), '1.1ms');
 	assert.is(print_ms(1.11), '1.1ms');
@@ -27,7 +37,6 @@ test('print_ms', () => {
 	assert.is(print_ms(7000000), '7_000_000ms');
 	assert.is(print_ms(7000000.1), '7_000_000ms');
 	assert.is(print_ms(7000000.9), '7_000_001ms');
-	enable_colors();
 });
 
 test.run();

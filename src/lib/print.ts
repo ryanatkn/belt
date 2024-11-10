@@ -5,18 +5,9 @@ import type {Logger} from '$lib/log.js';
 
 export let st: typeof styleText = (_, v) => v;
 
-/**
- * Enables colorized output for printing functions globally.
- */
-export const enable_colors = (s: typeof styleText): void => {
-	st = s;
-};
-
-/**
- * Disables colorized output for printing functions globally.
- */
-export const disable_colors = (): void => {
-	st = (_, v) => v;
+export const set_colors = (s: typeof styleText | null | undefined): typeof styleText => {
+	st = s ?? ((_, v) => v);
+	return st;
 };
 
 /**
