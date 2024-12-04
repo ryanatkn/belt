@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -167,6 +167,10 @@
         },
         {
           "name": "inside_editable",
+          "kind": "function"
+        },
+        {
+          "name": "is_interactive",
           "kind": "function"
         },
         {
