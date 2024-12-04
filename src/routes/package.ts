@@ -161,6 +161,7 @@ export const src_json = {
 			declarations: [
 				{name: 'is_editable', kind: 'function'},
 				{name: 'inside_editable', kind: 'function'},
+				{name: 'is_interactive', kind: 'function'},
 				{name: 'swallow', kind: 'function'},
 				{name: 'handle_target_value', kind: 'function'},
 				{name: 'is_iframed', kind: 'function'},
