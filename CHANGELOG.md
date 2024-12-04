@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.29.0
+
+### Minor Changes
+
+- change `is_editable` to match all inputs except hidden ones ([4889274](https://github.com/ryanatkn/belt/commit/4889274))
+
+### Patch Changes
+
+- add `is_interactive` ([4889274](https://github.com/ryanatkn/belt/commit/4889274))
+
 ## 0.28.0
 
 ### Minor Changes
