@@ -37,15 +37,19 @@ export interface Alea {
 }
 
 /**
+ * Seeded pseudo-random number generator.
  * DO NOT USE when security matters, use webcrypto APIs instead.
+ *
+ * @see http://baagoe.com/en/RandomMusings/javascript/
+ * @see https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
  */
-export const create_random_alea = (...args: unknown[]): Alea => {
+export const create_random_alea = (...seed: unknown[]): Alea => {
 	let s0 = 0;
 	let s1 = 0;
 	let s2 = 0;
 	let c = 1;
 
-	const seeds = args.length ? args : [Date.now()];
+	const seeds = seed.length ? seed : [Date.now()];
 	let mash: Mash | null = masher();
 	s0 = mash(' ');
 	s1 = mash(' ');
