@@ -33,7 +33,7 @@ export interface Alea {
 	uint32: () => number;
 	fract53: () => number;
 	version: string;
-	seeds: unknown[];
+	seeds: Array<unknown>;
 }
 
 /**
@@ -43,7 +43,7 @@ export interface Alea {
  * @see http://baagoe.com/en/RandomMusings/javascript/
  * @see https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
  */
-export const create_random_alea = (...seed: unknown[]): Alea => {
+export const create_random_alea = (...seed: Array<unknown>): Alea => {
 	let s0 = 0;
 	let s1 = 0;
 	let s2 = 0;

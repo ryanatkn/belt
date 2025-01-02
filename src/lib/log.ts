@@ -63,7 +63,7 @@ export const configure_log_colors = (
 	}
 };
 
-export type Log = (...args: any[]) => void;
+export type Log = (...args: Array<any>) => void;
 
 /**
  * The `Logger` accepts a `Logger_State` argument for custom behavior,
@@ -99,8 +99,8 @@ export interface Logger_State {
 
 export type Logger_Prefixes_And_Suffixes_Getter = (
 	st: typeof styleText,
-	args: unknown[],
-) => unknown[];
+	args: Array<unknown>,
+) => Array<unknown>;
 
 const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
@@ -131,7 +131,7 @@ export class Base_Logger {
 		this.state = state;
 	}
 
-	error(...args: unknown[]): void {
+	error(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'error')) return;
 		this.state.console.error(
 			...this.#resolve_values(
@@ -146,7 +146,7 @@ export class Base_Logger {
 		);
 	}
 
-	warn(...args: unknown[]): void {
+	warn(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'warn')) return;
 		this.state.console.warn(
 			...this.#resolve_values(
@@ -161,7 +161,7 @@ export class Base_Logger {
 		);
 	}
 
-	info(...args: unknown[]): void {
+	info(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'info')) return;
 		this.state.console.log(
 			...this.#resolve_values(
@@ -176,7 +176,7 @@ export class Base_Logger {
 		);
 	}
 
-	debug(...args: unknown[]): void {
+	debug(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'debug')) return;
 		this.state.console.log(
 			...this.#resolve_values(
@@ -192,7 +192,7 @@ export class Base_Logger {
 	}
 
 	// TODO maybe rename to `log` to match the console method?
-	plain(...args: unknown[]): void {
+	plain(...args: Array<unknown>): void {
 		this.state.console.log(...args);
 	}
 
@@ -200,8 +200,11 @@ export class Base_Logger {
 		this.state.console.log('\n'.repeat(count));
 	}
 
-	#resolve_values(args: unknown[], ...getters: Logger_Prefixes_And_Suffixes_Getter[]): unknown[] {
-		let resolved: unknown[] | undefined;
+	#resolve_values(
+		args: Array<unknown>,
+		...getters: Array<Logger_Prefixes_And_Suffixes_Getter>
+	): Array<unknown> {
+		let resolved: Array<unknown> | undefined;
 		const {st} = this.state;
 		for (const getter of getters) {
 			const values = getter(st, args);

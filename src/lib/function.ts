@@ -1,12 +1,12 @@
 /**
  * Does nothing when called.
  */
-export const noop: (...args: any[]) => any = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+export const noop: (...args: Array<any>) => any = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
 /**
  * Async function that returns a resolved promise.
  */
-export const noop_async: (...args: any[]) => Promise<any> = () => resolved;
+export const noop_async: (...args: Array<any>) => Promise<any> = () => resolved;
 
 /**
  * A singleton resolved `Promise`.

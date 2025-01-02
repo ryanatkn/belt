@@ -5,7 +5,7 @@ import {throttle} from '$lib/throttle.js';
 import {wait} from '$lib/async.js';
 
 test('throttles calls to a function', async () => {
-	const results: string[] = [];
+	const results: Array<string> = [];
 	const fn = throttle(async (name: string) => {
 		results.push(name + '_run');
 		await wait();
@@ -37,7 +37,7 @@ test('throttles calls to a function', async () => {
 });
 
 test('calls functions in sequence', async () => {
-	const results: string[] = [];
+	const results: Array<string> = [];
 	const fn = throttle(async (name: string) => {
 		results.push(name + '_run');
 		await wait();
@@ -64,7 +64,7 @@ test('calls functions in sequence', async () => {
 });
 
 test("throttles calls to a function with when='trailing'", async () => {
-	const results: string[] = [];
+	const results: Array<string> = [];
 	const fn = throttle(
 		async (name: string) => {
 			results.push(name + '_run');
@@ -123,7 +123,7 @@ test("throttles calls to a function with when='trailing'", async () => {
 });
 
 test("throttles calls to a function with when='leading'", async () => {
-	const results: string[] = [];
+	const results: Array<string> = [];
 	const fn = throttle(
 		async (name: string) => {
 			results.push(name + '_run');

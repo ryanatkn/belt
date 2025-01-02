@@ -45,7 +45,7 @@ export interface Spawned_Out {
  */
 export const spawn_out = async (
 	command: string,
-	args: readonly string[] = [],
+	args: ReadonlyArray<string> = [],
 	options?: SpawnOptions,
 ): Promise<Spawned_Out> => {
 	const {child, closed} = spawn_process(command, args, {...options, stdio: 'pipe'});
@@ -68,7 +68,7 @@ export const spawn_out = async (
  */
 export const spawn_process = (
 	command: string,
-	args: readonly string[] = [],
+	args: ReadonlyArray<string> = [],
 	options?: SpawnOptions,
 ): Spawned_Process => {
 	let resolve: (v: Spawn_Result) => void;
@@ -126,7 +126,7 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 /**
  * Kills all globally registered child processes.
  */
-export const despawn_all = (): Promise<Spawn_Result[]> =>
+export const despawn_all = (): Promise<Array<Spawn_Result>> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
 
 /**
@@ -176,7 +176,7 @@ export interface Restartable_Process {
  */
 export const spawn_restartable_process = (
 	command: string,
-	args: readonly string[] = [],
+	args: ReadonlyArray<string> = [],
 	options?: SpawnOptions,
 ): Restartable_Process => {
 	let spawned: Spawned_Process | null = null;

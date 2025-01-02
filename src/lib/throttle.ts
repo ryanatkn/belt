@@ -26,15 +26,15 @@ export interface Throttle_Options {
  * It also differs from a queue where every call to the throttled callback eventually runs.
  * @returns same as `cb`
  */
-export const throttle = <T extends (...args: any[]) => Promise<void>>(
+export const throttle = <T extends (...args: Array<any>) => Promise<void>>(
 	cb: T,
 	{delay = 0, when = 'both'}: Throttle_Options = EMPTY_OBJECT,
 ): T => {
 	let pending_promise: Promise<void> | null = null;
-	let next_args: any[] | null = null;
+	let next_args: Array<any> | null = null;
 	let next_deferred: Deferred<void> | null = null;
 
-	const defer = (args: any[]): Promise<void> => {
+	const defer = (args: Array<any>): Promise<void> => {
 		next_args = args;
 		if (!next_deferred) {
 			next_deferred = create_deferred<void>();
@@ -52,7 +52,7 @@ export const throttle = <T extends (...args: any[]) => Promise<void>>(
 		resolve(result); // resolve last to prevent synchronous call issues
 	};
 
-	const call = (args: any[]): Promise<any> => {
+	const call = (args: Array<any>): Promise<any> => {
 		pending_promise = cb(...args);
 		void pending_promise.finally(() => {
 			pending_promise = null;
