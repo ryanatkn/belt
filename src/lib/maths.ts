@@ -10,7 +10,7 @@ export const clamp = (n: number, min: number, max: number): number =>
 export const lerp = (a: number, b: number, amount: number): number => (1 - amount) * a + amount * b;
 
 /**
- * Returns a number clamped between `min` and `max`.
+ * Rounds a number to a specified number of decimal places.
  */
 export const round = (n: number, decimals: number): number => {
 	const mult = 10 ** decimals;
