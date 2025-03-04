@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.29.1
+
+### Patch Changes
+
+- add `Class_Constructor` to `types.ts` ([dc8f0b9](https://github.com/ryanatkn/belt/commit/dc8f0b9))
+
 ## 0.29.0
 
 ### Minor Changes
