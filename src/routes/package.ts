@@ -400,6 +400,7 @@ export const src_json = {
 		'./types.js': {
 			path: 'types.ts',
 			declarations: [
+				{name: 'Class_Constructor', kind: 'type'},
 				{name: 'Omit_Strict', kind: 'type'},
 				{name: 'Pick_Union', kind: 'type'},
 				{name: 'Keyof_Union', kind: 'type'},
