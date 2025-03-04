@@ -8,8 +8,9 @@ TODO probably make this `.d.ts` when we make a proper build process
 
 */
 
-export type Class_Constructor<T_Instance, T_Args extends any[] = any[]> = new (...args: T_Args) => T_Instance;
-
+export type Class_Constructor<T_Instance, T_Args extends any[] = any[]> = new (
+	...args: T_Args
+) => T_Instance;
 
 export type Omit_Strict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
