@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.30.0
+
+### Minor Changes
+
+- rename `Thunk` from `Lazy` and `unthunk` from `lazy` ([5e36e11](https://github.com/ryanatkn/belt/commit/5e36e11))
+
 ## 0.29.1
 
 ### Patch Changes
