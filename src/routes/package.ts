@@ -194,8 +194,8 @@ export const src_json = {
 				{name: 'noop_async', kind: 'function'},
 				{name: 'resolved', kind: 'variable'},
 				{name: 'identity', kind: 'function'},
-				{name: 'Lazy', kind: 'type'},
-				{name: 'lazy', kind: 'function'},
+				{name: 'Thunk', kind: 'type'},
+				{name: 'unthunk', kind: 'function'},
 			],
 		},
 		'./id.js': {
