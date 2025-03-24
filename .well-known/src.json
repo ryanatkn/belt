@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.29.1",
+  "version": "0.30.0",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -257,11 +257,11 @@
           "kind": "function"
         },
         {
-          "name": "Lazy",
+          "name": "Thunk",
           "kind": "type"
         },
         {
-          "name": "lazy",
+          "name": "unthunk",
           "kind": "function"
         }
       ]
