@@ -29,7 +29,7 @@ export const package_json = {
 		benchmark: 'gro run src/benchmarks/slugify_benchmark.ts',
 	},
 	type: 'module',
-	engines: {node: '>=20.17'},
+	engines: {node: '>=22.11'},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
 	peerDependencies: {'@types/node': '^22.7.4', 'esm-env': '^1.1.4'},
 	peerDependenciesMeta: {'@types/node': {optional: true}, 'esm-env': {optional: true}},
