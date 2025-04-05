@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.30.0",
+  "version": "0.30.1",
   "modules": {
     "./package.json": {
       "path": "package.json",
