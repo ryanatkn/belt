@@ -5,7 +5,7 @@ export const EMPTY_ARRAY: Array<any> = Object.freeze([]) as any;
 
 /** Converts `value` to an array if it's not already. */
 export const to_array = <T>(value: T): T extends ReadonlyArray<any> ? T : Array<T> =>
-	Array.isArray(value) ? value : ([value] as any);
+	Array.isArray(value) ? (value as any) : ([value] as any);
 
 /** Removes an element from `array` at `index` in an unordered manner. */
 export const remove_unordered = (array: Array<any>, index: number): void => {
