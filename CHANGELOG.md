@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.30.1
+
+### Patch Changes
+
+- upgrade esm-env@1.2.2 ([#40](https://github.com/ryanatkn/belt/pull/40))
+
 ## 0.30.0
 
 ### Minor Changes
