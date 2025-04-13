@@ -19,18 +19,23 @@ design:
 
 ## usage
 
-> [`npm i -D @ryanatkn/belt`](https://www.npmjs.com/package/@ryanatkn/belt)
+Install from [npm](https://www.npmjs.com/package/@ryanatkn/belt):
+
+```bash
+npm i -D @ryanatkn/belt
+```
+
+Import modules at their full paths:
 
 ```ts
-// import full module paths:
 import {type Result, unwrap} from '@ryanatkn/belt/result.js';
 import {random_int} from '@ryanatkn/belt/random.js';
 ```
 
-docs are a work in progress -
+Docs are a work in progress -
 see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com) and
 [/src/routes/package.ts](https://github.com/ryanatkn/belt/blob/main/src/routes/package.ts),
-I recommend reading the source code for now or asking an AI
+I recommend reading the source code for now when the doc comments and types are insufficient.
 
 ## build
 
