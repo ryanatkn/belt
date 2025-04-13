@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.30.2
+
+### Patch Changes
+
+- improve `unreachable` type to assert `never` ([d6a81c7](https://github.com/ryanatkn/belt/commit/d6a81c7))
+
 ## 0.30.1
 
 ### Patch Changes
