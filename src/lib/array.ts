@@ -1,14 +1,14 @@
 import type {Array_Element} from '$lib/types.js';
 
 // TODO try to cange to readonly again, see if upstream errors are tolerably fixed
-export const EMPTY_ARRAY: any[] = Object.freeze([]) as any;
+export const EMPTY_ARRAY: Array<any> = Object.freeze([]) as any;
 
 /** Converts `value` to an array if it's not already. */
-export const to_array = <T>(value: T): T extends readonly any[] ? T : T[] =>
-	Array.isArray(value) ? value : ([value] as any);
+export const to_array = <T>(value: T): T extends ReadonlyArray<any> ? T : Array<T> =>
+	Array.isArray(value) ? (value as any) : ([value] as any);
 
 /** Removes an element from `array` at `index` in an unordered manner. */
-export const remove_unordered = (array: any[], index: number): void => {
+export const remove_unordered = (array: Array<any>, index: number): void => {
 	array[index] = array[array.length - 1];
 	array.pop();
 };
@@ -17,7 +17,7 @@ export const remove_unordered = (array: any[], index: number): void => {
  * Returns a function that returns the next item in the `array`
  * in a linear sequence, looping back to index 0 when it reaches the end.
  */
-export const to_next = <T extends readonly any[]>(array: T): (() => Array_Element<T>) => {
+export const to_next = <T extends ReadonlyArray<any>>(array: T): (() => Array_Element<T>) => {
 	let i = -1;
 	return () => {
 		i++;

@@ -1,16 +1,18 @@
 import type {styleText} from 'node:util';
+import {DEV} from 'esm-env';
 
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
+import {traverse} from './object.js';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
-const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
+const LOG_LEVEL_VALUES = {
 	off: 0,
 	error: 1,
 	warn: 2,
 	info: 3,
 	debug: 4,
-};
+} as const satisfies Record<Log_Level, number>;
 
 export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4; // eslint-disable-line @typescript-eslint/no-unnecessary-condition
 
@@ -36,11 +38,10 @@ export const configure_log_level = (
 	}
 };
 
-// TODO use `import.meta.env` if available? SvelteKit imports?
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
 		? null
-		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? 'info';
+		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? (DEV ? 'debug' : 'off'); // TODO how to opt into `'debug'` and default to `'info'`?
 
 /**
  * Sets the colors helper for both the main and system loggers.
@@ -62,7 +63,7 @@ export const configure_log_colors = (
 	}
 };
 
-export type Log = (...args: any[]) => void;
+export type Log = (...args: Array<any>) => void;
 
 /**
  * The `Logger` accepts a `Logger_State` argument for custom behavior,
@@ -96,7 +97,10 @@ export interface Logger_State {
 	debug_suffixes: Logger_Prefixes_And_Suffixes_Getter;
 }
 
-export type Logger_Prefixes_And_Suffixes_Getter = (st: typeof styleText) => unknown[];
+export type Logger_Prefixes_And_Suffixes_Getter = (
+	st: typeof styleText,
+	args: Array<unknown>,
+) => Array<unknown>;
 
 const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
@@ -127,48 +131,68 @@ export class Base_Logger {
 		this.state = state;
 	}
 
-	error(...args: unknown[]): void {
+	error(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'error')) return;
 		this.state.console.error(
-			...this.#resolve_values(this.state.prefixes, this.state.error_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.error_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.error_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.error_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
-	warn(...args: unknown[]): void {
+	warn(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'warn')) return;
 		this.state.console.warn(
-			...this.#resolve_values(this.state.prefixes, this.state.warn_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.warn_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.warn_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.warn_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
-	info(...args: unknown[]): void {
+	info(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'info')) return;
 		this.state.console.log(
-			...this.#resolve_values(this.state.prefixes, this.state.info_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.info_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.info_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.info_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
-	debug(...args: unknown[]): void {
+	debug(...args: Array<unknown>): void {
 		if (!should_log(this.state.level, 'debug')) return;
 		this.state.console.log(
-			...this.#resolve_values(this.state.prefixes, this.state.debug_prefixes, this.prefixes).concat(
+			...this.#resolve_values(
 				args,
-				this.#resolve_values(this.suffixes, this.state.debug_suffixes, this.state.suffixes),
+				this.state.prefixes,
+				this.state.debug_prefixes,
+				this.prefixes,
+			).concat(
+				args,
+				this.#resolve_values(args, this.suffixes, this.state.debug_suffixes, this.state.suffixes),
 			),
 		);
 	}
 
 	// TODO maybe rename to `log` to match the console method?
-	plain(...args: unknown[]): void {
+	plain(...args: Array<unknown>): void {
 		this.state.console.log(...args);
 	}
 
@@ -176,11 +200,14 @@ export class Base_Logger {
 		this.state.console.log('\n'.repeat(count));
 	}
 
-	#resolve_values(...getters: Logger_Prefixes_And_Suffixes_Getter[]): unknown[] {
-		let resolved: unknown[] | undefined;
+	#resolve_values(
+		args: Array<unknown>,
+		...getters: Array<Logger_Prefixes_And_Suffixes_Getter>
+	): Array<unknown> {
+		let resolved: Array<unknown> | undefined;
 		const {st} = this.state;
 		for (const getter of getters) {
-			const values = getter(st);
+			const values = getter(st, args);
 			for (const value of values) {
 				(resolved ??= []).push(value);
 			}
@@ -201,33 +228,58 @@ export class Logger extends Base_Logger {
 	// to affect all loggers instantiated with the default `state`.
 	// See the comment on `Logger_State` for more.
 	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
+	static char_debug = '┆'; // '┇';
+	static char_info = '➤';
+	static char_warn = '⚑';
+	static char_error = '🞩';
 	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
 	static console: Logger_State['console'] = console;
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('red', '➤'),
-		st(['black', 'bgRed'], ' 🞩 error 🞩 '),
-		st('red', '\n➤'),
+	// TODO ideally `is_multiline` would be done in `#resolve_values`
+	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
+		st('red', `${Logger.char_error.repeat(3)}error\n`),
 	];
-	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		'\n ',
-		st(['black', 'bgRed'], ' 🞩🞩 '),
+	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
+		st('red', `\n${Logger.char_error.repeat(3)}`),
 	];
-	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		st('yellow', '➤'),
-		st(['black', 'bgYellow'], ' ⚑ warning ⚑ '),
-		'\n' + st('yellow', '➤'),
+	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
+		st('yellow', `${Logger.char_warn.repeat(3)}warn\n`),
 	];
-	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [
-		'\n ',
-		st(['black', 'bgYellow'], ' ⚑ '),
+	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
+		st('yellow', `\n${Logger.char_warn.repeat(3)}`),
 	];
-	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '➤')];
-	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st) => [st('gray', '—')];
-	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
+		st('gray', is_multiline(args) ? `${Logger.char_info.repeat(3)}info\n` : Logger.char_info),
+	];
+	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
+		is_multiline(args) ? st('gray', `\n${Logger.char_info.repeat(3)}`) : '',
+	];
+	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
+		st('gray', is_multiline(args) ? `${Logger.char_debug.repeat(3)}debug\n` : Logger.char_info),
+	];
+	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
+		is_multiline(args) ? st('gray', `\n${Logger.char_debug.repeat(3)}`) : '',
+	];
 }
+
+// TODO improve
+const is_multiline = (data: unknown): boolean => {
+	let multiline = false;
+	traverse(data, (_key, value) => {
+		if (multiline) return;
+		const type = typeof value;
+		if (type === 'string') {
+			const m = value.includes('\n');
+			if (m) multiline = true;
+		} else if (type === 'object' && value !== null) {
+			// TODO hacky and inefficient
+			multiline = true;
+		}
+		return false;
+	});
+	return multiline;
+};
 
 /**
  * The `System_Logger` is distinct from the `Logger`

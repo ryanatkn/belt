@@ -1,7 +1,7 @@
 /**
  * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
  */
-export const parse_path_parts = (path: string): string[] => {
+export const parse_path_parts = (path: string): Array<string> => {
 	const segments = parse_path_segments(path);
 	let current_path = path.startsWith('/') ? '/' : '';
 	return segments.map((segment) => {
@@ -17,15 +17,15 @@ export const parse_path_parts = (path: string): string[] => {
  * Gets the individual parts of a path, ignoring dots and separators.
  * @example parse_path_segments('/foo/bar/baz.ts') => ['foo', 'bar', 'baz.ts']
  */
-export const parse_path_segments = (path: string): string[] =>
+export const parse_path_segments = (path: string): Array<string> =>
 	path.split('/').filter((s) => s && s !== '.' && s !== '..');
 
 /**
  * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
  * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
  */
-export const parse_path_pieces = (raw_path: string): Path_Piece[] => {
-	const pieces: Path_Piece[] = [];
+export const parse_path_pieces = (raw_path: string): Array<Path_Piece> => {
+	const pieces: Array<Path_Piece> = [];
 	const path_segments = parse_path_segments(raw_path);
 	if (path_segments.length) {
 		pieces.push({type: 'separator', path: '/'});

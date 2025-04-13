@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.25.3',
+	version: '0.30.1',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -29,31 +29,31 @@ export const package_json = {
 		benchmark: 'gro run src/benchmarks/slugify_benchmark.ts',
 	},
 	type: 'module',
-	engines: {node: '>=20.17'},
+	engines: {node: '>=22.11'},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
-	peerDependencies: {'@types/node': '^22.7.4'},
-	peerDependenciesMeta: {'@types/node': {optional: true}},
+	peerDependencies: {'@types/node': '^22.7.4', 'esm-env': '^1.2.2'},
+	peerDependenciesMeta: {'@types/node': {optional: true}, 'esm-env': {optional: true}},
 	devDependencies: {
-		'@changesets/changelog-git': '^0.2.0',
-		'@ryanatkn/eslint-config': '^0.5.5',
-		'@ryanatkn/fuz': '^0.129.5',
-		'@ryanatkn/gro': '^0.140.0',
-		'@ryanatkn/moss': '^0.16.1',
-		'@sveltejs/adapter-static': '^3.0.5',
-		'@sveltejs/kit': '^2.7.0',
-		'@sveltejs/package': '^2.3.5',
-		'@sveltejs/vite-plugin-svelte': '^3.1.2',
-		'@types/node': '^22.7.5',
-		eslint: '^9.12.0',
-		'eslint-plugin-svelte': '^2.44.1',
-		prettier: '^3.3.3',
-		'prettier-plugin-svelte': '^3.2.7',
-		svelte: '^5.0.0-next.264',
-		'svelte-check': '^4.0.5',
-		tinybench: '^2.9.0',
-		tslib: '^2.7.0',
-		typescript: '^5.6.3',
-		'typescript-eslint': '^8.8.1',
+		'@changesets/changelog-git': '^0.2.1',
+		'@ryanatkn/eslint-config': '^0.8.0',
+		'@ryanatkn/fuz': '^0.135.0',
+		'@ryanatkn/gro': '^0.149.2',
+		'@ryanatkn/moss': '^0.24.2',
+		'@sveltejs/adapter-static': '^3.0.8',
+		'@sveltejs/kit': '^2.20.4',
+		'@sveltejs/package': '^2.3.10',
+		'@sveltejs/vite-plugin-svelte': '^5.0.3',
+		'@types/node': '^22.14.0',
+		eslint: '^9.24.0',
+		'eslint-plugin-svelte': '^3.5.1',
+		prettier: '^3.5.3',
+		'prettier-plugin-svelte': '^3.3.3',
+		svelte: '^5.25.6',
+		'svelte-check': '^4.1.5',
+		tinybench: '^4.0.1',
+		tslib: '^2.8.1',
+		typescript: '^5.8.3',
+		'typescript-eslint': '^8.29.0',
 		uvu: '^0.5.6',
 	},
 	prettier: {
@@ -83,7 +83,6 @@ export const package_json = {
 		'./map.js': {types: './dist/map.d.ts', default: './dist/map.js'},
 		'./maths.js': {types: './dist/maths.d.ts', default: './dist/maths.js'},
 		'./object.js': {types: './dist/object.d.ts', default: './dist/object.js'},
-		'./obtainable.js': {types: './dist/obtainable.d.ts', default: './dist/obtainable.js'},
 		'./path.js': {types: './dist/path.d.ts', default: './dist/path.js'},
 		'./print.js': {types: './dist/print.d.ts', default: './dist/print.js'},
 		'./process.js': {types: './dist/process.d.ts', default: './dist/process.js'},
@@ -101,7 +100,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.25.3',
+	version: '0.30.1',
 	modules: {
 		'./package.json': {path: 'package.json', declarations: []},
 		'./array.js': {
@@ -162,6 +161,7 @@ export const src_json = {
 			declarations: [
 				{name: 'is_editable', kind: 'function'},
 				{name: 'inside_editable', kind: 'function'},
+				{name: 'is_interactive', kind: 'function'},
 				{name: 'swallow', kind: 'function'},
 				{name: 'handle_target_value', kind: 'function'},
 				{name: 'is_iframed', kind: 'function'},
@@ -194,8 +194,8 @@ export const src_json = {
 				{name: 'noop_async', kind: 'function'},
 				{name: 'resolved', kind: 'variable'},
 				{name: 'identity', kind: 'function'},
-				{name: 'Lazy', kind: 'type'},
-				{name: 'lazy', kind: 'function'},
+				{name: 'Thunk', kind: 'type'},
+				{name: 'unthunk', kind: 'function'},
 			],
 		},
 		'./id.js': {
@@ -216,6 +216,9 @@ export const src_json = {
 			path: 'json.ts',
 			declarations: [
 				{name: 'Json', kind: 'type'},
+				{name: 'Json_Primitive', kind: 'type'},
+				{name: 'Json_Object', kind: 'type'},
+				{name: 'Json_Array', kind: 'type'},
 				{name: 'Json_Type', kind: 'type'},
 				{name: 'to_json_type', kind: 'function'},
 				{name: 'canonicalize', kind: 'function'},
@@ -283,13 +286,6 @@ export const src_json = {
 				{name: 'traverse', kind: 'function'},
 			],
 		},
-		'./obtainable.js': {
-			path: 'obtainable.ts',
-			declarations: [
-				{name: 'Unobtain', kind: 'type'},
-				{name: 'create_obtainable', kind: 'function'},
-			],
-		},
 		'./path.js': {
 			path: 'path.ts',
 			declarations: [
@@ -303,8 +299,8 @@ export const src_json = {
 		'./print.js': {
 			path: 'print.ts',
 			declarations: [
-				{name: 'enable_colors', kind: 'function'},
-				{name: 'disable_colors', kind: 'function'},
+				{name: 'st', kind: 'function'},
+				{name: 'set_colors', kind: 'function'},
 				{name: 'print_key_value', kind: 'function'},
 				{name: 'print_ms', kind: 'function'},
 				{name: 'print_number_with_separators', kind: 'function'},
@@ -382,6 +378,7 @@ export const src_json = {
 				{name: 'deindent', kind: 'function'},
 				{name: 'plural', kind: 'function'},
 				{name: 'count_graphemes', kind: 'function'},
+				{name: 'strip_ansi', kind: 'function'},
 			],
 		},
 		'./throttle.js': {
@@ -403,6 +400,7 @@ export const src_json = {
 		'./types.js': {
 			path: 'types.ts',
 			declarations: [
+				{name: 'Class_Constructor', kind: 'type'},
 				{name: 'Omit_Strict', kind: 'type'},
 				{name: 'Pick_Union', kind: 'type'},
 				{name: 'Keyof_Union', kind: 'type'},

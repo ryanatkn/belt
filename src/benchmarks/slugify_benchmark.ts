@@ -45,7 +45,7 @@ const get_special_char_mappers = (): Array<(s: string) => string> => {
 	return special_char_mappers;
 };
 
-const bench = new Bench({time: 5000});
+const bench = new Bench({time: 5000, warmup: true});
 
 const title = 'this Is a Test of Things to Do';
 
@@ -61,10 +61,9 @@ bench
 	})
 	.add('slugify slower', () => {
 		results2.push(slugify_slower(title));
-	})
-	.todo('unimplemented bench');
+	});
+// .todo('unimplemented bench');
 
-await bench.warmup(); // make results more reliable, ref: https://github.com/tinylibs/tinybench/pull/50
 await bench.run();
 
 console.table(bench.table());

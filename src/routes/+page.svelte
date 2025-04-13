@@ -21,8 +21,8 @@
 	</section>
 	<aside class="width_sm mb_xl5">
 		⚠️ Belt's docs are a work in progress. For now see <a href="{base}/about">the about page</a> and
-		<a href="https://github.com/ryanatkn/belt">source code</a>. It's all TypeScript and most
-		nontrivial stuff has doc comments.
+		<a href="https://github.com/ryanatkn/belt/tree/main/src/lib">source code</a>. It's all
+		TypeScript and most nontrivial stuff has doc comments.
 	</aside>
 	<section class="box">
 		<Card href="{base}/about" icon="">about</Card>

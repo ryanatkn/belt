@@ -22,7 +22,7 @@ export const random_boolean = (random = Math.random): boolean => random() > 0.5;
 /**
  * Selects a random item from an array.
  */
-export const random_item = <T extends readonly any[]>(
+export const random_item = <T extends ReadonlyArray<any>>(
 	arr: T,
 	random = Math.random,
 ): Array_Element<T> => arr[random_int(0, arr.length - 1, random)];
@@ -30,7 +30,7 @@ export const random_item = <T extends readonly any[]>(
 /**
  * Mutates `array` with random ordering.
  */
-export const shuffle: <T extends any[]>(array: T, random?: typeof random_int) => T = (
+export const shuffle: <T extends Array<any>>(array: T, random?: typeof random_int) => T = (
 	array,
 	random = random_int,
 ) => {

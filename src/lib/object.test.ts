@@ -88,7 +88,7 @@ test__reorder.run();
 const test__traverse = suite('traverse');
 
 test__traverse('basic behavior', () => {
-	const results: string[] = [];
+	const results: Array<string> = [];
 	const obj = {a: 1, b: {c: 2, d: ['33', undefined]}, e: null};
 	traverse(obj, (key, value, obj) => results.push(key, value, obj));
 	assert.equal(results, [

@@ -29,7 +29,7 @@ export const map_record = <T, K extends string | number, U>(
  */
 export const omit = <T extends Record<K, any>, K extends keyof T>(
 	obj: T,
-	keys: K[],
+	keys: Array<K>,
 ): Omit_Strict<T, K> => {
 	const result = {} as T;
 	for (const key in obj) {
@@ -72,7 +72,7 @@ export const omit_undefined = <T extends Record<string | number, any>>(obj: T): 
  */
 export const reorder = <T extends Record<K, any>, K extends string | number>(
 	obj: T,
-	keys: K[],
+	keys: Array<K>,
 ): T => {
 	const result = {} as T;
 	for (const k of keys) result[k] = obj[k];

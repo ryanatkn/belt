@@ -5,29 +5,57 @@
 export const is_editable = (el: any): boolean => {
 	if (!el) return false;
 	const {tagName} = el;
-	if (tagName === 'INPUT') {
-		const {type} = el;
-		return (
-			type === 'text' ||
-			type === 'number' ||
-			type === 'password' ||
-			type === 'email' ||
-			type === 'search' ||
-			type === 'url'
-		);
-	}
 	return (
+		(tagName === 'INPUT' && el.type !== 'hidden') ||
 		tagName === 'TEXTAREA' ||
-		(!!el.getAttribute?.('contenteditable') && el.getAttribute('contenteditable') !== 'false')
+		el.contentEditable === 'true' ||
+		el.contentEditable === '' // Some browsers treat empty string as `'true'`
 	);
 };
 
 /**
  * Returns `true` if the element is within a `contenteditable` ancestor.
  */
-export const inside_editable = (el: HTMLElement | SVGElement): boolean => {
+export const inside_editable = (el: Element): boolean => {
 	const found = el.closest('[contenteditable]');
-	return found !== null && found.getAttribute('contenteditable') !== 'false';
+	return found !== null && (found as any).contentEditable !== 'false';
+};
+
+/**
+ * Checks if the element is interactive (clickable, focusable, or otherwise accepts user input).
+ * Returns `true` for buttons, links, form controls,
+ * and elements with interactive attributes and ARIA roles.
+ */
+export const is_interactive = (el: any): boolean => {
+	if (!el) return false;
+
+	const {tagName} = el;
+	if (
+		tagName === 'BUTTON' ||
+		tagName === 'SELECT' ||
+		tagName === 'TEXTAREA' ||
+		tagName === 'A' ||
+		tagName === 'AUDIO' ||
+		tagName === 'VIDEO' ||
+		(tagName === 'INPUT' && el.type !== 'hidden')
+	) {
+		return true;
+	}
+
+	const role = el.getAttribute?.('role');
+	return (
+		(role &&
+			(role === 'button' ||
+				role === 'link' ||
+				role === 'menuitem' ||
+				role === 'option' ||
+				role === 'switch' ||
+				role === 'tab')) ||
+		(el.hasAttribute?.('tabindex') && el.getAttribute('tabindex') !== '-1') ||
+		el.contentEditable === 'true' ||
+		el.contentEditable === '' ||
+		el.getAttribute?.('draggable') === 'true'
+	);
 };
 
 /**

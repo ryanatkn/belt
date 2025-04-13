@@ -84,3 +84,8 @@ export const plural = (count: number | undefined | null, suffix = 's'): string =
  */
 export const count_graphemes = (str: string): number =>
 	count_iterator(new Intl.Segmenter().segment(str));
+
+/**
+ * Strips ANSI escape sequences from a string
+ */
+export const strip_ansi = (str: string): string => str.replaceAll(/\x1B\[[0-9;]*[a-zA-Z]/g, ''); // eslint-disable-line no-control-regex
