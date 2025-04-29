@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
 	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
-	import Library_Footer from '@ryanatkn/fuz/Library_Footer.svelte';
+	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Community_Links_Panel from '@ryanatkn/fuz/Community_Links_Panel.svelte';
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
 
@@ -25,7 +25,7 @@
 	</section>
 	<Community_Links_Panel />
 	<section class="box">
-		<Library_Footer {pkg} />
+		<Docs_Footer {pkg} />
 	</section>
 	<section class="box mb_lg">
 		<Breadcrumb>{package_json.glyph}</Breadcrumb>

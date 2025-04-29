@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
 	import Package_Summary from '@ryanatkn/fuz/Package_Summary.svelte';
-	import Library_Footer from '@ryanatkn/fuz/Library_Footer.svelte';
+	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Card from '@ryanatkn/fuz/Card.svelte';
 	import Svg from '@ryanatkn/fuz/Svg.svelte';
 	import {belt_logo} from '@ryanatkn/fuz/logos.js';
@@ -28,7 +28,7 @@
 		<Card href="{base}/about" icon="">about</Card>
 	</section>
 	<section>
-		<Library_Footer {pkg} />
+		<Docs_Footer {pkg} />
 	</section>
 </main>
 
