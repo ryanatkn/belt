@@ -26,7 +26,7 @@
 
 /* A panel is a box embedded into the page, useful for visually isolating content. */
 .panel {
-	border-radius: var(--radius_xs);
+	border-radius: var(--border_radius_xs);
 	background-color: var(--panel_bg, var(--fg_1));
 }
 
@@ -35,13 +35,21 @@
 	padding-left: var(--space_xs);
 	padding-right: var(--space_xs);
 	background-color: var(--fg_1);
-	border-radius: var(--radius_xs);
+	border-radius: var(--border_radius_xs);
 }
 a.chip {
 	font-weight: 700;
 }
 
-.flex {
+.relative {
+	position: relative;
+}
+/** Same as `display: inline flow-root`. */
+.display_inline_block {
+	display: inline-block;
+}
+/** Same as `display: block flex`. */
+.display_flex {
 	display: flex;
 }
 .flex_1 {
