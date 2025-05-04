@@ -22,10 +22,14 @@ export type Timings_Key = string | number;
  * Allows starting, stopping, and retrieving timings with optional precision.
  */
 export class Timings {
+	readonly decimals: number | undefined;
+
 	private readonly timings: Map<Timings_Key, number | undefined> = new Map();
 	private readonly stopwatches: Map<Timings_Key, Stopwatch> = new Map();
 
-	constructor(public readonly decimals?: number) {}
+	constructor(decimals?: number) {
+		this.decimals = decimals;
+	}
 
 	start(key: Timings_Key, decimals = this.decimals): () => number {
 		const final_key = this.next_key(key);

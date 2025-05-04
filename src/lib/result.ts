@@ -43,11 +43,11 @@ export const unwrap = <T_Value extends {value?: unknown}, T_Error extends {messa
 export class Result_Error extends Error {
 	static DEFAULT_MESSAGE = 'unknown error';
 
-	constructor(
-		public readonly result: {ok: false; message?: string},
-		message?: string,
-	) {
+	readonly result: {ok: false; message?: string};
+
+	constructor(result: {ok: false; message?: string}, message?: string) {
 		super(message ?? result.message ?? Result_Error.DEFAULT_MESSAGE);
+		this.result = result;
 	}
 }
 
