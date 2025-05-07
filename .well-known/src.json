@@ -4,7 +4,12 @@
   "modules": {
     "./package.json": {
       "path": "package.json",
-      "declarations": []
+      "declarations": [
+        {
+          "name": "default",
+          "kind": "json"
+        }
+      ]
     },
     "./array.js": {
       "path": "array.ts",
