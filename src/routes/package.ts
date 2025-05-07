@@ -36,9 +36,9 @@ export const package_json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.8.0',
-		'@ryanatkn/fuz': '^0.141.1',
-		'@ryanatkn/gro': '^0.156.0',
-		'@ryanatkn/moss': '^0.28.0',
+		'@ryanatkn/fuz': '^0.143.0',
+		'@ryanatkn/gro': '^0.158.0',
+		'@ryanatkn/moss': '^0.29.0',
 		'@sveltejs/adapter-static': '^3.0.8',
 		'@sveltejs/kit': '^2.20.8',
 		'@sveltejs/package': '^2.3.11',
@@ -102,7 +102,7 @@ export const src_json = {
 	name: '@ryanatkn/belt',
 	version: '0.30.2',
 	modules: {
-		'./package.json': {path: 'package.json', declarations: []},
+		'./package.json': {path: 'package.json', declarations: [{name: 'default', kind: 'json'}]},
 		'./array.js': {
 			path: 'array.ts',
 			declarations: [
