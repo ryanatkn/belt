@@ -379,6 +379,7 @@ export const src_json = {
 				{name: 'plural', kind: 'function'},
 				{name: 'count_graphemes', kind: 'function'},
 				{name: 'strip_ansi', kind: 'function'},
+				{name: 'stringify', kind: 'function'},
 			],
 		},
 		'./throttle.js': {

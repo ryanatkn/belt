@@ -89,3 +89,11 @@ export const count_graphemes = (str: string): number =>
  * Strips ANSI escape sequences from a string
  */
 export const strip_ansi = (str: string): string => str.replaceAll(/\x1B\[[0-9;]*[a-zA-Z]/g, ''); // eslint-disable-line no-control-regex
+
+/**
+ * Stringifies a value like `JSON.stringify` but with some corner cases handled better.
+ *
+ * @source https://2ality.com/2025/04/stringification-javascript.html
+ */
+export const stringify = (value: unknown): string =>
+	typeof value === 'bigint' ? value + 'n' : (JSON.stringify(value) ?? String(value)); // eslint-disable-line @typescript-eslint/no-unnecessary-condition
