@@ -5,7 +5,7 @@ import type {Src_Json} from '@ryanatkn/gro/src_json.js';
 
 export const package_json = {
 	name: '@ryanatkn/belt',
-	version: '0.30.2',
+	version: '0.31.0',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -36,8 +36,8 @@ export const package_json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.8.0',
-		'@ryanatkn/fuz': '^0.144.3',
-		'@ryanatkn/gro': '^0.159.0',
+		'@ryanatkn/fuz': '^0.144.4',
+		'@ryanatkn/gro': '^0.160.0',
 		'@ryanatkn/moss': '^0.31.0',
 		'@sveltejs/adapter-static': '^3.0.8',
 		'@sveltejs/kit': '^2.22.2',
@@ -100,7 +100,7 @@ export const package_json = {
 
 export const src_json = {
 	name: '@ryanatkn/belt',
-	version: '0.30.2',
+	version: '0.31.0',
 	modules: {
 		'./package.json': {path: 'package.json', declarations: [{name: 'default', kind: 'json'}]},
 		'./array.js': {
