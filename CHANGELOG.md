@@ -1,5 +1,16 @@
 # @ryanatkn/belt
 
+## 0.31.0
+
+### Minor Changes
+
+- bump node@22.15 from 22.11 ([0989b18](https://github.com/ryanatkn/belt/commit/0989b18))
+- chore: bump @types/node@24 ([ccd7d5b](https://github.com/ryanatkn/belt/commit/ccd7d5b))
+
+### Patch Changes
+
+- add `stringify` helper ([588732b](https://github.com/ryanatkn/belt/commit/588732b))
+
 ## 0.30.2
 
 ### Patch Changes
@@ -161,7 +172,6 @@
 ### Patch Changes
 
 - improve `slugify` ([#34](https://github.com/ryanatkn/belt/pull/34))
-
   - add the arg `map_special_characters` to optionally disable the expensive special character mappings
   - improve performance with benchmarks
 
