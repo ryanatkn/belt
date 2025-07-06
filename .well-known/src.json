@@ -803,6 +803,10 @@
         {
           "name": "strip_ansi",
           "kind": "function"
+        },
+        {
+          "name": "stringify",
+          "kind": "function"
         }
       ]
     },
