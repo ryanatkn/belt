@@ -3,8 +3,8 @@
  * Useful for exhaustive matching.
  */
 export class Unreachable_Error extends Error {
-	constructor(value: never, message = `Unreachable case: ${value}`) {
-		super(message);
+	constructor(value: never, message = `Unreachable case: ${value}`, options?: ErrorOptions) {
+		super(message, options);
 	}
 }
 

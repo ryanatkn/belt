@@ -45,8 +45,8 @@ export class Result_Error extends Error {
 
 	readonly result: {ok: false; message?: string};
 
-	constructor(result: {ok: false; message?: string}, message?: string) {
-		super(message ?? result.message ?? Result_Error.DEFAULT_MESSAGE);
+	constructor(result: {ok: false; message?: string}, message?: string, options?: ErrorOptions) {
+		super(message ?? result.message ?? Result_Error.DEFAULT_MESSAGE, options);
 		this.result = result;
 	}
 }
