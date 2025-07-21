@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.31.1
+
+### Patch Changes
+
+- add `options` arg to `Result_Error` and `Unreachable_Error` ctors ([34723fe](https://github.com/ryanatkn/belt/commit/34723fe))
+
 ## 0.31.0
 
 ### Minor Changes
