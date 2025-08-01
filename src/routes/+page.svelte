@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {parse_pkg} from '@ryanatkn/gro/pkg.js';
+	import {parse_pkg} from '@ryanatkn/belt/pkg.js';
 	import Package_Summary from '@ryanatkn/fuz/Package_Summary.svelte';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Card from '@ryanatkn/fuz/Card.svelte';

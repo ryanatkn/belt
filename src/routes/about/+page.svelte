@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
-	import {parse_pkg} from '@ryanatkn/gro/pkg.js';
+	import {parse_pkg} from '@ryanatkn/belt/pkg.js';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Community_Links_Panel from '@ryanatkn/fuz/Community_Links_Panel.svelte';
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';

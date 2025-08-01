@@ -169,9 +169,17 @@
       "types": "./dist/object.d.ts",
       "default": "./dist/object.js"
     },
+    "./package_json.js": {
+      "types": "./dist/package_json.d.ts",
+      "default": "./dist/package_json.js"
+    },
     "./path.js": {
       "types": "./dist/path.d.ts",
       "default": "./dist/path.js"
+    },
+    "./pkg.js": {
+      "types": "./dist/pkg.d.ts",
+      "default": "./dist/pkg.js"
     },
     "./print.js": {
       "types": "./dist/print.d.ts",
@@ -196,6 +204,10 @@
     "./result.js": {
       "types": "./dist/result.d.ts",
       "default": "./dist/result.js"
+    },
+    "./src_json.js": {
+      "types": "./dist/src_json.d.ts",
+      "default": "./dist/src_json.js"
     },
     "./string.js": {
       "types": "./dist/string.d.ts",
