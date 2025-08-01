@@ -101,3 +101,10 @@ export const traverse = (obj: any, cb: (key: string, value: any, obj: any) => vo
 		traverse(v, cb);
 	}
 };
+
+export const transform_empty_object_to_undefined = <T>(obj: T): T | undefined => {
+	if (obj && Object.keys(obj).length === 0) {
+		return;
+	}
+	return obj;
+};
