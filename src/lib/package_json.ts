@@ -1,16 +1,8 @@
 import {z} from 'zod';
 
 import {count_graphemes} from '$lib/string.js';
-import type {Flavored} from '$lib/types.js';
 import {transform_empty_object_to_undefined} from '$lib/object.js';
-
-// TODO @many belongs elsewhere
-export const Url = z.string();
-export type Url = Flavored<z.infer<typeof Url>, 'Url'>;
-
-// TODO @many belongs elsewhere
-export const Email = z.string();
-export type Email = Flavored<z.infer<typeof Email>, 'Email'>;
+import {Url} from '$lib/url.js';
 
 export const Package_Json_Repository = z.union([
 	z.string(),
@@ -26,7 +18,7 @@ export const Package_Json_Author = z.union([
 	z.string(),
 	z.looseObject({
 		name: z.string(),
-		email: Email.optional(),
+		email: z.email().optional(),
 		url: Url.optional(),
 	}),
 ]);
@@ -41,7 +33,7 @@ export const Package_Json_Funding = z.union([
 ]);
 export type Package_Json_Funding = z.infer<typeof Package_Json_Funding>;
 
-// TODO BLOCK remove recursive schema workarounds
+// TODO doesnt look like zod4 can do this still? can't use a getter in the record value type
 // Helper to create a recursive type that represents export conditions and values
 const create_export_value_schema = (): z.ZodType => {
 	return z.lazy(() =>
@@ -61,10 +53,12 @@ const export_value_schema = create_export_value_schema();
 export const Export_Value = export_value_schema;
 export type Export_Value = z.infer<typeof Export_Value>;
 
-// Package exports can be:
-// 1. A string (shorthand for main export)
-// 2. null (to block exports)
-// 3. A record of export conditions/paths
+/**
+ * Package exports can be:
+ * 1. A string (shorthand for main export)
+ * 2. null (to block exports)
+ * 3. A record of export conditions/paths
+ */
 export const Package_Json_Exports = z.union([
 	z.string(),
 	z.null(),
@@ -120,7 +114,7 @@ export const Package_Json = z.looseObject({
 	repository: z.union([z.string(), Url, Package_Json_Repository]).optional(),
 	contributors: z.array(z.union([z.string(), Package_Json_Author])).optional(),
 	bugs: z
-		.union([z.string(), z.looseObject({url: Url.optional(), email: Email.optional()})])
+		.union([z.string(), z.looseObject({url: Url.optional(), email: z.email().optional()})])
 		.optional(),
 	funding: z
 		.union([Url, Package_Json_Funding, z.array(z.union([Url, Package_Json_Funding]))])
