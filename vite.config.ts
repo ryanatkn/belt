@@ -3,7 +3,7 @@ import {sveltekit} from '@sveltejs/kit/vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	// TODO delete if no longer needed to bootstrap the build
+	// TODO delete after bootstrapping the build with updated deps
 	build: {
 		rollupOptions: {
 			external: [
