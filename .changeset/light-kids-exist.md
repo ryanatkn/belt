@@ -1,5 +1,5 @@
 ---
-'@ryanatkn/belt': patch
+'@ryanatkn/belt': minor
 ---
 
 add optional zod peer dep
