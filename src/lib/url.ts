@@ -10,6 +10,5 @@ import type {Flavored} from '$lib/types.js';
 export const format_url = (url: string): string =>
 	strip_end(strip_start(strip_start(url, 'https://'), 'www.'), '/');
 
-// TODO @many belongs elsewhere
-export const Url = z.string();
-export type Url = Flavored<z.infer<typeof Url>, 'Url'>;
+export const Url = z.url();
+export type Url = Flavored<z.infer<typeof Url>, 'Url'>; // TODO brand is too annoying to use, but this doesn't work for schema composition
