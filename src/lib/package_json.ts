@@ -20,7 +20,7 @@ export const transform_empty_object_to_undefined = <T>(val: T): T | undefined =>
 
 export const Package_Json_Repository = z.union([
 	z.string(),
-	z.looseInterface({
+	z.looseObject({
 		type: z.string(),
 		url: Url,
 		directory: z.string().optional(),
@@ -30,7 +30,7 @@ export type Package_Json_Repository = z.infer<typeof Package_Json_Repository>;
 
 export const Package_Json_Author = z.union([
 	z.string(),
-	z.looseInterface({
+	z.looseObject({
 		name: z.string(),
 		email: Email.optional(),
 		url: Url.optional(),
@@ -40,7 +40,7 @@ export type Package_Json_Author = z.infer<typeof Package_Json_Author>;
 
 export const Package_Json_Funding = z.union([
 	z.string(),
-	z.looseInterface({
+	z.looseObject({
 		type: z.string(),
 		url: Url,
 	}),
@@ -81,7 +81,7 @@ export type Package_Json_Exports = z.infer<typeof Package_Json_Exports>;
 /**
  * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json
  */
-export const Package_Json = z.looseInterface({
+export const Package_Json = z.looseObject({
 	// according to the npm docs, `name` and `version` are the only required properties
 	name: z.string(),
 	version: z.string(),
@@ -126,7 +126,7 @@ export const Package_Json = z.looseInterface({
 	repository: z.union([z.string(), Url, Package_Json_Repository]).optional(),
 	contributors: z.array(z.union([z.string(), Package_Json_Author])).optional(),
 	bugs: z
-		.union([z.string(), z.looseInterface({url: Url.optional(), email: Email.optional()})])
+		.union([z.string(), z.looseObject({url: Url.optional(), email: Email.optional()})])
 		.optional(),
 	funding: z
 		.union([Url, Package_Json_Funding, z.array(z.union([Url, Package_Json_Funding]))])
@@ -141,7 +141,7 @@ export const Package_Json = z.looseInterface({
 	dependencies: z.record(z.string(), z.string()).optional(),
 	devDependencies: z.record(z.string(), z.string()).optional(),
 	peerDependencies: z.record(z.string(), z.string()).optional(),
-	peerDependenciesMeta: z.record(z.string(), z.interface({optional: z.boolean()})).optional(),
+	peerDependenciesMeta: z.record(z.string(), z.looseObject({optional: z.boolean()})).optional(),
 	optionalDependencies: z.record(z.string(), z.string()).optional(),
 
 	bin: z.record(z.string(), z.string()).optional(),

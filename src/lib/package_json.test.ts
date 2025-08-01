@@ -1,7 +1,7 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {Package_Json, Package_Json_Exports} from './package_json.js';
+import {Package_Json, Package_Json_Exports} from '$lib/package_json.js';
 
 test('Package_Json.parse', () => {
 	Package_Json.parse({name: 'abc', version: '123'});
