@@ -6,7 +6,12 @@ export default defineConfig({
 	// TODO delete if no longer needed to bootstrap the build
 	build: {
 		rollupOptions: {
-			external: ['@ryanatkn/belt/pkg.js'],
+			external: [
+				'@ryanatkn/belt/pkg.js',
+				'@ryanatkn/belt/url.js',
+				'@ryanatkn/belt/string.js',
+				'@ryanatkn/belt/path.js',
+			],
 		},
 	},
 });

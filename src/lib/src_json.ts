@@ -2,18 +2,29 @@ import {z} from 'zod';
 
 import {transform_empty_object_to_undefined} from '$lib/package_json.js';
 
+export const Src_Module_Declaration_Kind = z.enum([
+	'type',
+	'function',
+	'variable',
+	'class',
+	'component',
+	'json',
+	'css',
+]);
+export type Src_Module_Declaration_Kind = z.infer<typeof Src_Module_Declaration_Kind>;
+
 export const Src_Module_Declaration = z.looseObject({
 	name: z.string(), // the export identifier
 	// TODO these are poorly named, and they're somewhat redundant with `kind`,
 	// they were added to distinguish `VariableDeclaration` functions and non-functions
-	kind: z.enum(['type', 'function', 'variable', 'class']).nullable(),
+	kind: Src_Module_Declaration_Kind.nullable(),
 	// code: z.string(), // TODO experiment with `getType().getText()`, some of them return the same as `name`
 });
 export type Src_Module_Declaration = z.infer<typeof Src_Module_Declaration>;
 
 export const Src_Module = z.looseObject({
 	path: z.string(),
-	declarations: z.array(Src_Module_Declaration),
+	declarations: z.array(Src_Module_Declaration).optional(),
 });
 export type Src_Module = z.infer<typeof Src_Module>;
 
