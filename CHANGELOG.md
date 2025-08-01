@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.32.0
+
+### Minor Changes
+
+- add optional zod peer dep ([#42](https://github.com/ryanatkn/belt/pull/42))
+
+### Patch Changes
+
+- add modules package_json.ts, pkg.ts, and src_json.ts ([#42](https://github.com/ryanatkn/belt/pull/42))
+
 ## 0.31.1
 
 ### Patch Changes
