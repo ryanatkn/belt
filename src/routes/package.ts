@@ -299,8 +299,6 @@ export const src_json = {
 		'./package_json.js': {
 			path: 'package_json.ts',
 			declarations: [
-				{name: 'Url', kind: 'variable'},
-				{name: 'Email', kind: 'variable'},
 				{name: 'Package_Json_Repository', kind: 'variable'},
 				{name: 'Package_Json_Author', kind: 'variable'},
 				{name: 'Package_Json_Funding', kind: 'variable'},
@@ -460,7 +458,13 @@ export const src_json = {
 				{name: 'Brand', kind: 'type'},
 			],
 		},
-		'./url.js': {path: 'url.ts', declarations: [{name: 'format_url', kind: 'function'}]},
+		'./url.js': {
+			path: 'url.ts',
+			declarations: [
+				{name: 'format_url', kind: 'function'},
+				{name: 'Url', kind: 'variable'},
+			],
+		},
 	},
 } satisfies Src_Json;
 
