@@ -293,6 +293,7 @@ export const src_json = {
 				{name: 'reorder', kind: 'function'},
 				{name: 'EMPTY_OBJECT', kind: 'variable'},
 				{name: 'traverse', kind: 'function'},
+				{name: 'transform_empty_object_to_undefined', kind: 'function'},
 			],
 		},
 		'./package_json.js': {
@@ -300,7 +301,6 @@ export const src_json = {
 			declarations: [
 				{name: 'Url', kind: 'variable'},
 				{name: 'Email', kind: 'variable'},
-				{name: 'transform_empty_object_to_undefined', kind: 'function'},
 				{name: 'Package_Json_Repository', kind: 'variable'},
 				{name: 'Package_Json_Author', kind: 'variable'},
 				{name: 'Package_Json_Funding', kind: 'variable'},
