@@ -9,7 +9,8 @@
 design:
 
 - kitchen-sink utilities library - sorry, I wish it weren't so, JS made me do it
-- one optional runtime dependency on `esm-env`, one optional type dependency on `@types/node`
+- two optional runtime dependencies on `zod` and `esm-env`,
+  one optional type dependency on `@types/node`
 - mix of JS module environments - browser-only, Node-only, universal
 - mostly small pure functions
 - all TypeScript, for styles and Svelte and SvelteKit
