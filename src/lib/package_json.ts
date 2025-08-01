@@ -2,6 +2,7 @@ import {z} from 'zod';
 
 import {count_graphemes} from '$lib/string.js';
 import type {Flavored} from '$lib/types.js';
+import {transform_empty_object_to_undefined} from '$lib/object.js';
 
 // TODO @many belongs elsewhere
 export const Url = z.string();
@@ -10,14 +11,6 @@ export type Url = Flavored<z.infer<typeof Url>, 'Url'>;
 // TODO @many belongs elsewhere
 export const Email = z.string();
 export type Email = Flavored<z.infer<typeof Email>, 'Email'>;
-
-// TODO BLOCK object helper
-export const transform_empty_object_to_undefined = <T>(val: T): T | undefined => {
-	if (val && Object.keys(val).length === 0) {
-		return;
-	}
-	return val;
-};
 
 export const Package_Json_Repository = z.union([
 	z.string(),

@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-import {transform_empty_object_to_undefined} from '$lib/package_json.js';
+import {transform_empty_object_to_undefined} from '$lib/object.js';
 
 export const Src_Module_Declaration_Kind = z.enum([
 	'type',
