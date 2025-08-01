@@ -1,5 +1,4 @@
-import {ensure_end, strip_end, strip_start} from '@ryanatkn/belt/string.js';
-
+import {ensure_end, strip_end, strip_start} from '$lib/string.js';
 import type {Package_Json, Url} from '$lib/package_json.js';
 import type {Src_Json} from '$lib/src_json.js';
 

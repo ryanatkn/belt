@@ -1,6 +1,7 @@
 import {z} from 'zod';
-import {count_graphemes} from '@ryanatkn/belt/string.js';
-import type {Flavored} from '@ryanatkn/belt/types.js';
+
+import {count_graphemes} from '$lib/string.js';
+import type {Flavored} from '$lib/types.js';
 
 // TODO @many belongs elsewhere
 export const Url = z.string();

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import {parse_pkg} from '@ryanatkn/belt/pkg.js';
 	import Package_Summary from '@ryanatkn/fuz/Package_Summary.svelte';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Card from '@ryanatkn/fuz/Card.svelte';
@@ -8,6 +7,7 @@
 	import {base} from '$app/paths';
 
 	import {package_json, src_json} from '$routes/package.js';
+	import {parse_pkg} from '$lib/pkg.js';
 
 	const pkg = parse_pkg(package_json, src_json);
 </script>
