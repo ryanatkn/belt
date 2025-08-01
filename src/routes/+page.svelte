@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
+	import {parse_pkg} from '@ryanatkn/gro/pkg.js';
 	import Package_Summary from '@ryanatkn/fuz/Package_Summary.svelte';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Card from '@ryanatkn/fuz/Card.svelte';
@@ -9,7 +9,7 @@
 
 	import {package_json, src_json} from '$routes/package.js';
 
-	const pkg = parse_package_meta(package_json, src_json);
+	const pkg = parse_pkg(package_json, src_json);
 </script>
 
 <main class="box mb_xl5">
