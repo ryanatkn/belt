@@ -61,7 +61,7 @@
     "@ryanatkn/eslint-config": "^0.8.0",
     "@ryanatkn/fuz": "file:../fuz",
     "@ryanatkn/gro": "file:../gro",
-    "@ryanatkn/moss": "^0.31.0",
+    "@ryanatkn/moss": "file:../moss",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.27.0",
     "@sveltejs/package": "^2.4.0",
