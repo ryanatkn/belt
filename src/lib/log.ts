@@ -85,16 +85,16 @@ export interface Logger_State {
 	level: Log_Level;
 	st: typeof styleText;
 	console: Pick<typeof console, 'error' | 'warn' | 'log'>;
-	prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	suffixes: Logger_Prefixes_And_Suffixes_Getter;
-	error_prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	error_suffixes: Logger_Prefixes_And_Suffixes_Getter;
-	warn_prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	warn_suffixes: Logger_Prefixes_And_Suffixes_Getter;
-	info_prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	info_suffixes: Logger_Prefixes_And_Suffixes_Getter;
-	debug_prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	debug_suffixes: Logger_Prefixes_And_Suffixes_Getter;
+	prefixes?: Logger_Prefixes_And_Suffixes_Getter;
+	suffixes?: Logger_Prefixes_And_Suffixes_Getter;
+	error_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
+	error_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
+	warn_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
+	warn_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
+	info_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
+	info_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
+	debug_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
+	debug_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
 }
 
 export type Logger_Prefixes_And_Suffixes_Getter = (
@@ -202,12 +202,12 @@ export class Base_Logger {
 
 	#resolve_values(
 		args: Array<unknown>,
-		...getters: Array<Logger_Prefixes_And_Suffixes_Getter>
+		...getters: Array<Logger_Prefixes_And_Suffixes_Getter | undefined>
 	): Array<unknown> {
 		let resolved: Array<unknown> | undefined;
 		const {st} = this.state;
 		for (const getter of getters) {
-			const values = getter(st, args);
+			const values = getter?.(st, args);
 			if (!values) continue;
 			for (const value of values) {
 				(resolved ??= []).push(value);
