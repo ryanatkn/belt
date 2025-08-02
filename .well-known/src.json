@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.31.1",
+  "version": "0.33.0",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -523,6 +523,39 @@
         {
           "name": "traverse",
           "kind": "function"
+        },
+        {
+          "name": "transform_empty_object_to_undefined",
+          "kind": "function"
+        }
+      ]
+    },
+    "./package_json.js": {
+      "path": "package_json.ts",
+      "declarations": [
+        {
+          "name": "Package_Json_Repository",
+          "kind": "variable"
+        },
+        {
+          "name": "Package_Json_Author",
+          "kind": "variable"
+        },
+        {
+          "name": "Package_Json_Funding",
+          "kind": "variable"
+        },
+        {
+          "name": "Export_Value",
+          "kind": "variable"
+        },
+        {
+          "name": "Package_Json_Exports",
+          "kind": "variable"
+        },
+        {
+          "name": "Package_Json",
+          "kind": "variable"
         }
       ]
     },
@@ -547,6 +580,27 @@
         },
         {
           "name": "slugify",
+          "kind": "function"
+        }
+      ]
+    },
+    "./pkg.js": {
+      "path": "pkg.ts",
+      "declarations": [
+        {
+          "name": "Pkg",
+          "kind": "type"
+        },
+        {
+          "name": "parse_pkg",
+          "kind": "function"
+        },
+        {
+          "name": "parse_repo_name",
+          "kind": "function"
+        },
+        {
+          "name": "parse_org_url",
           "kind": "function"
         }
       ]
@@ -757,6 +811,31 @@
         }
       ]
     },
+    "./src_json.js": {
+      "path": "src_json.ts",
+      "declarations": [
+        {
+          "name": "Src_Module_Declaration_Kind",
+          "kind": "variable"
+        },
+        {
+          "name": "Src_Module_Declaration",
+          "kind": "variable"
+        },
+        {
+          "name": "Src_Module",
+          "kind": "variable"
+        },
+        {
+          "name": "Src_Modules",
+          "kind": "variable"
+        },
+        {
+          "name": "Src_Json",
+          "kind": "variable"
+        }
+      ]
+    },
     "./string.js": {
       "path": "string.ts",
       "declarations": [
@@ -915,6 +994,10 @@
         {
           "name": "format_url",
           "kind": "function"
+        },
+        {
+          "name": "Url",
+          "kind": "variable"
         }
       ]
     }
