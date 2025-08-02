@@ -1,5 +1,16 @@
 # @ryanatkn/belt
 
+## 0.33.0
+
+### Minor Changes
+
+- change default `print_number_with_separators` separator to `,` from `_` ([#43](https://github.com/ryanatkn/belt/pull/43))
+- remove info log labels and loosen log label types ([#43](https://github.com/ryanatkn/belt/pull/43))
+
+### Patch Changes
+
+- handle arrays in `print_value` ([#43](https://github.com/ryanatkn/belt/pull/43))
+
 ## 0.32.0
 
 ### Minor Changes
