@@ -28,7 +28,7 @@ export const print_ms = (ms: number, decimals?: number, separator?: string): str
 /**
  * Formats a `number` with separators for improved readability.
  */
-export const print_number_with_separators = (v: string, separator = '_'): string => {
+export const print_number_with_separators = (v: string, separator = ','): string => {
 	if (!separator) return v;
 	const decimal_index = v.indexOf('.');
 	const start_index = (decimal_index === -1 ? v.length : decimal_index) - 1;
@@ -61,6 +61,9 @@ export const print_boolean = (value: boolean): string => st('yellow', value + ''
  * Formats any value for printing.
  */
 export const print_value = (value: unknown): string => {
+	if (Array.isArray(value)) {
+		return st('blue', '[') + value.map(print_value).join(st('blue', ', ')) + st('blue', ']');
+	}
 	switch (typeof value) {
 		case 'string':
 			return print_string(value);
