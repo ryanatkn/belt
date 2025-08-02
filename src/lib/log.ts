@@ -249,6 +249,7 @@ export class Logger extends Base_Logger {
 	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
 		st('yellow', `\n${Logger.char_warn.repeat(3)}`),
 	];
+	// TODO BLOCK remove ?
 	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
 		st('gray', is_multiline(args) ? `${Logger.char_info.repeat(3)}info\n` : Logger.char_info),
 	];
