@@ -28,7 +28,7 @@ export const print_ms = (ms: number, decimals?: number, separator?: string): str
 /**
  * Formats a `number` with separators for improved readability.
  */
-export const print_number_with_separators = (v: string, separator = '_'): string => {
+export const print_number_with_separators = (v: string, separator = ','): string => {
 	if (!separator) return v;
 	const decimal_index = v.indexOf('.');
 	const start_index = (decimal_index === -1 ? v.length : decimal_index) - 1;
