@@ -61,6 +61,9 @@ export const print_boolean = (value: boolean): string => st('yellow', value + ''
  * Formats any value for printing.
  */
 export const print_value = (value: unknown): string => {
+	if (Array.isArray(value)) {
+		return st('blue', '[') + value.map(print_value).join(st('blue', ', ')) + st('blue', ']');
+	}
 	switch (typeof value) {
 		case 'string':
 			return print_string(value);
