@@ -100,7 +100,7 @@ export interface Logger_State {
 export type Logger_Prefixes_And_Suffixes_Getter = (
 	st: typeof styleText,
 	args: Array<unknown>,
-) => Array<unknown>;
+) => Array<unknown> | null;
 
 const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
 
@@ -208,6 +208,7 @@ export class Base_Logger {
 		const {st} = this.state;
 		for (const getter of getters) {
 			const values = getter(st, args);
+			if (!values) continue;
 			for (const value of values) {
 				(resolved ??= []).push(value);
 			}
@@ -249,13 +250,8 @@ export class Logger extends Base_Logger {
 	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
 		st('yellow', `\n${Logger.char_warn.repeat(3)}`),
 	];
-	// TODO BLOCK remove ?
-	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
-		st('gray', is_multiline(args) ? `${Logger.char_info.repeat(3)}info\n` : Logger.char_info),
-	];
-	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
-		is_multiline(args) ? st('gray', `\n${Logger.char_info.repeat(3)}`) : '',
-	];
+	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
+	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
 	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
 		st('gray', is_multiline(args) ? `${Logger.char_debug.repeat(3)}debug\n` : Logger.char_info),
 	];
