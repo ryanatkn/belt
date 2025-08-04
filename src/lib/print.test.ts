@@ -1,17 +1,17 @@
 import {test} from 'uvu';
 import * as assert from 'uvu/assert';
 
-import {print_ms, st, set_colors} from '$lib/print.js';
+import {print_ms, st, configure_print_colors} from '$lib/print.js';
 
 let original_st: typeof st;
 
 test.before(() => {
 	original_st = st;
-	set_colors(null);
+	configure_print_colors(null);
 });
 
 test.after(() => {
-	set_colors(original_st);
+	configure_print_colors(original_st);
 });
 
 test('print_ms', () => {

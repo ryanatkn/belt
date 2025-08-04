@@ -5,7 +5,9 @@ import type {Logger} from '$lib/log.js';
 
 export let st: typeof styleText = (_, v) => v;
 
-export const set_colors = (s: typeof styleText | null | undefined): typeof styleText => {
+export const configure_print_colors = (
+	s: typeof styleText | null | undefined,
+): typeof styleText => {
 	st = s ?? ((_, v) => v);
 	return st;
 };
