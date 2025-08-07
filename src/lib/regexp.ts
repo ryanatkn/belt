@@ -8,8 +8,9 @@ export const escape_regexp = (str: string): string => str.replace(/[.*+?^${}()|[
  * Reset a RegExp's lastIndex to 0 for global and sticky patterns.
  * Ensures consistent behavior by clearing state that affects subsequent matches.
  */
-export const reset_regexp = (regexp: RegExp): void => {
+export const reset_regexp = <T extends RegExp>(regexp: T): T => {
 	if (regexp.global || regexp.sticky) {
 		regexp.lastIndex = 0;
 	}
+	return regexp;
 };
