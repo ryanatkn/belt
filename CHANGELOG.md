@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.34.1
+
+### Patch Changes
+
+- change `reset_regexp` to return the regexp instead of void ([48f1324](https://github.com/ryanatkn/belt/commit/48f1324))
+
 ## 0.34.0
 
 ### Minor Changes
