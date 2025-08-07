@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "modules": {
     "./package.json": {
       "path": "package.json",
@@ -613,7 +613,7 @@
           "kind": "function"
         },
         {
-          "name": "set_colors",
+          "name": "configure_print_colors",
           "kind": "function"
         },
         {
@@ -778,6 +778,10 @@
       "declarations": [
         {
           "name": "escape_regexp",
+          "kind": "function"
+        },
+        {
+          "name": "reset_regexp",
           "kind": "function"
         }
       ]
