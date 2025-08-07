@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.34.0
+
+### Minor Changes
+
+- rename `configure_print_colors` from `set_colors` ([70503d9](https://github.com/ryanatkn/belt/commit/70503d9))
+
+### Patch Changes
+
+- add `reset_regexp` ([f6514a7](https://github.com/ryanatkn/belt/commit/f6514a7))
+
 ## 0.33.0
 
 ### Minor Changes
