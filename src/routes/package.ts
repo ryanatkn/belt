@@ -383,7 +383,13 @@ export const src_json: Src_Json = {
 				{name: 'shuffle', kind: 'function'},
 			],
 		},
-		'./regexp.js': {path: 'regexp.ts', declarations: [{name: 'escape_regexp', kind: 'function'}]},
+		'./regexp.js': {
+			path: 'regexp.ts',
+			declarations: [
+				{name: 'escape_regexp', kind: 'function'},
+				{name: 'reset_regexp', kind: 'function'},
+			],
+		},
 		'./result.js': {
 			path: 'result.ts',
 			declarations: [
