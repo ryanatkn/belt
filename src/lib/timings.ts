@@ -9,7 +9,7 @@ export const create_stopwatch = (decimals = 2): Stopwatch => {
 	let start = performance.now();
 	return (reset = false) => {
 		const end = performance.now();
-		const elapsed = round(Number(end - start), decimals);
+		const elapsed = round(Number(end - start), decimals); // eslint-disable-line @typescript-eslint/no-unnecessary-type-conversion
 		if (reset) start = end;
 		return elapsed;
 	};
