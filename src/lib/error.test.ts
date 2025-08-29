@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {Unreachable_Error, unreachable} from '$lib/error.js';
 
@@ -7,13 +6,13 @@ const custom_message = 'Custom message';
 
 test('Unreachable_Error is an Error', () => {
 	const error = new Unreachable_Error('test' as never);
-	assert.instance(error, Error);
-	assert.instance(error, Unreachable_Error);
+	assert.instanceOf(error, Error);
+	assert.instanceOf(error, Unreachable_Error as any);
 });
 
 test('Unreachable_Error accepts custom message', () => {
 	const error = new Unreachable_Error('test' as never, custom_message);
-	assert.is(error.message, custom_message);
+	assert.strictEqual(error.message, custom_message);
 });
 
 test('Unreachable_Error requires never type parameter', () => {
@@ -26,7 +25,7 @@ test('unreachable helper throws Unreachable_Error', () => {
 		unreachable('test' as never);
 		assert.unreachable('Should have thrown');
 	} catch (error) {
-		assert.instance(error, Unreachable_Error);
+		assert.instanceOf(error, Unreachable_Error as any);
 	}
 });
 
@@ -35,8 +34,8 @@ test('unreachable helper with custom message', () => {
 		unreachable('test' as never, custom_message);
 		assert.unreachable('Should have thrown');
 	} catch (error) {
-		assert.instance(error, Unreachable_Error);
-		assert.is(error.message, custom_message);
+		assert.instanceOf(error, Unreachable_Error as any);
+		assert.strictEqual(error.message, custom_message);
 	}
 });
 
@@ -46,5 +45,3 @@ test('unreachable helper requires never type parameter', () => {
 		unreachable('test');
 	});
 });
-
-test.run();

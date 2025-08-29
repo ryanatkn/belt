@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {spawn, spawn_out} from '$lib/process.js';
 
@@ -11,8 +10,6 @@ test('spawn', async () => {
 test('spawn_out', async () => {
 	const {result, stdout, stderr} = await spawn_out('echo', ['a', 'b']);
 	assert.ok(result.ok);
-	assert.is(stdout, 'a b\n');
-	assert.is(stderr, null);
+	assert.strictEqual(stdout, 'a b\n');
+	assert.strictEqual(stderr, null);
 });
-
-test.run();

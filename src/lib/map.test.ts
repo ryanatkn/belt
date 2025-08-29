@@ -1,10 +1,9 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {sort_map} from '$lib/map.js';
 
 test('basic behavior', () => {
-	assert.equal(
+	assert.deepEqual(
 		Array.from(
 			sort_map(
 				new Map([
@@ -33,7 +32,7 @@ test('basic behavior', () => {
 });
 
 test('custom comparator', () => {
-	assert.equal(
+	assert.deepEqual(
 		sort_map(
 			new Map([
 				['d', 1],
@@ -51,5 +50,3 @@ test('custom comparator', () => {
 		]),
 	);
 });
-
-test.run();

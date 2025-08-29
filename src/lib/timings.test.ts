@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {create_stopwatch, Timings} from '$lib/timings.js';
 
@@ -14,7 +13,7 @@ test('start and stop multiple overlapping timings', () => {
 	const timing = timings.start('foo');
 	const timing2 = timings.start('foo');
 	timings.start('foo_3');
-	assert.is(Array.from(timings.entries()).length, 3);
+	assert.strictEqual(Array.from(timings.entries()).length, 3);
 	timing();
 	timing();
 	timing2();
@@ -22,7 +21,7 @@ test('start and stop multiple overlapping timings', () => {
 	const elapsed = timings.get('foo');
 	timings.get('bar');
 	assert.ok(elapsed.toString().split('.')[1].length <= 4);
-	assert.equal(
+	assert.deepEqual(
 		Array.from(timings.entries(), (e) => e[0]),
 		['foo', 'foo_2', 'foo_3'],
 	);
@@ -38,8 +37,6 @@ test('merge timings', () => {
 	const bTiming = timingB();
 	assert.ok(bTiming);
 	a.merge(b);
-	assert.is(a.get('test'), aTiming + bTiming);
-	assert.is(b.get('test'), bTiming);
+	assert.strictEqual(a.get('test'), aTiming + bTiming);
+	assert.strictEqual(b.get('test'), bTiming);
 });
-
-test.run();

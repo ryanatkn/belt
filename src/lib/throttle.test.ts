@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {throttle} from '$lib/throttle.js';
 import {wait} from '$lib/async.js';
@@ -18,22 +17,22 @@ test('throttles calls to a function', async () => {
 	const promise_d = fn('d'); // called at trailing edge
 
 	assert.ok(promise_a !== promise_b);
-	assert.is(promise_b, promise_c);
-	assert.is(promise_b, promise_d);
+	assert.strictEqual(promise_b, promise_c);
+	assert.strictEqual(promise_b, promise_d);
 
-	assert.equal(results, ['a_run']); // called immediately
+	assert.deepEqual(results, ['a_run']); // called immediately
 
 	await promise_a;
 
-	assert.equal(results, ['a_run', 'a_done']);
+	assert.deepEqual(results, ['a_run', 'a_done']);
 
 	await wait();
 
-	assert.equal(results, ['a_run', 'a_done', 'd_run']);
+	assert.deepEqual(results, ['a_run', 'a_done', 'd_run']);
 
 	await promise_b;
 
-	assert.equal(results, ['a_run', 'a_done', 'd_run', 'd_done']);
+	assert.deepEqual(results, ['a_run', 'a_done', 'd_run', 'd_done']);
 });
 
 test('calls functions in sequence', async () => {
@@ -46,21 +45,21 @@ test('calls functions in sequence', async () => {
 
 	const promise_a = fn('a'); // called immediately
 
-	assert.equal(results, ['a_run']); // called immediately
+	assert.deepEqual(results, ['a_run']); // called immediately
 
 	await promise_a;
 
-	assert.equal(results, ['a_run', 'a_done']);
+	assert.deepEqual(results, ['a_run', 'a_done']);
 
 	const promise_b = fn('b'); // called immediately
 
-	assert.equal(results, ['a_run', 'a_done', 'b_run']); // called immediately
+	assert.deepEqual(results, ['a_run', 'a_done', 'b_run']); // called immediately
 
 	assert.ok(promise_a !== promise_b);
 
 	await promise_b;
 
-	assert.equal(results, ['a_run', 'a_done', 'b_run', 'b_done']);
+	assert.deepEqual(results, ['a_run', 'a_done', 'b_run', 'b_done']);
 });
 
 test("throttles calls to a function with when='trailing'", async () => {
@@ -79,47 +78,47 @@ test("throttles calls to a function with when='trailing'", async () => {
 	const promise_c = fn('c'); // discarded
 	const promise_d = fn('d'); // called at trailing edge
 
-	assert.is(promise_a, promise_b);
-	assert.is(promise_a, promise_c);
-	assert.is(promise_a, promise_d);
+	assert.strictEqual(promise_a, promise_b);
+	assert.strictEqual(promise_a, promise_c);
+	assert.strictEqual(promise_a, promise_d);
 
-	assert.equal(results, []); // no immediate call
+	assert.deepEqual(results, []); // no immediate call
 
 	await wait();
 
-	assert.equal(results, ['d_run']);
+	assert.deepEqual(results, ['d_run']);
 
 	await promise_a;
 
-	assert.equal(results, ['d_run', 'd_done']);
+	assert.deepEqual(results, ['d_run', 'd_done']);
 
 	const promise_e = fn('e'); // called at trailing edge
 
 	assert.ok(promise_a !== promise_e);
-	assert.equal(results, ['d_run', 'd_done']);
+	assert.deepEqual(results, ['d_run', 'd_done']);
 
 	await wait();
 
-	assert.equal(results, ['d_run', 'd_done', 'e_run']);
+	assert.deepEqual(results, ['d_run', 'd_done', 'e_run']);
 
 	await promise_e;
 
-	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done']);
+	assert.deepEqual(results, ['d_run', 'd_done', 'e_run', 'e_done']);
 
 	const promise_f = fn('f'); // discarded
 	const promise_g = fn('g'); // called at trailing edge
 
 	assert.ok(promise_e !== promise_f);
 	assert.ok(promise_f === promise_g);
-	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done']);
+	assert.deepEqual(results, ['d_run', 'd_done', 'e_run', 'e_done']);
 
 	await wait();
 
-	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done', 'g_run']);
+	assert.deepEqual(results, ['d_run', 'd_done', 'e_run', 'e_done', 'g_run']);
 
 	await promise_g;
 
-	assert.equal(results, ['d_run', 'd_done', 'e_run', 'e_done', 'g_run', 'g_done']);
+	assert.deepEqual(results, ['d_run', 'd_done', 'e_run', 'e_done', 'g_run', 'g_done']);
 });
 
 test("throttles calls to a function with when='leading'", async () => {
@@ -138,25 +137,25 @@ test("throttles calls to a function with when='leading'", async () => {
 	const promise_c = fn('c'); // discarded
 	const promise_d = fn('d'); // discarded
 
-	assert.is(promise_a, promise_b);
-	assert.is(promise_a, promise_c);
-	assert.is(promise_a, promise_d);
+	assert.strictEqual(promise_a, promise_b);
+	assert.strictEqual(promise_a, promise_c);
+	assert.strictEqual(promise_a, promise_d);
 
-	assert.equal(results, ['a_run']); // called immediately
+	assert.deepEqual(results, ['a_run']); // called immediately
 
 	await promise_a;
 
-	assert.equal(results, ['a_run', 'a_done']);
+	assert.deepEqual(results, ['a_run', 'a_done']);
 
 	const promise_e = fn('e'); // called immediately
 
 	assert.ok(promise_a !== promise_e);
 
-	assert.equal(results, ['a_run', 'a_done', 'e_run']); // called immediately
+	assert.deepEqual(results, ['a_run', 'a_done', 'e_run']); // called immediately
 
 	await promise_e;
 
-	assert.equal(results, ['a_run', 'a_done', 'e_run', 'e_done']);
+	assert.deepEqual(results, ['a_run', 'a_done', 'e_run', 'e_done']);
 
 	const promise_f = fn('f'); // called immediately
 	const promise_g = fn('g'); // discarded
@@ -164,11 +163,9 @@ test("throttles calls to a function with when='leading'", async () => {
 	assert.ok(promise_e !== promise_f);
 	assert.ok(promise_f === promise_g);
 
-	assert.equal(results, ['a_run', 'a_done', 'e_run', 'e_done', 'f_run']); // called immediately
+	assert.deepEqual(results, ['a_run', 'a_done', 'e_run', 'e_done', 'f_run']); // called immediately
 
 	await promise_g;
 
-	assert.equal(results, ['a_run', 'a_done', 'e_run', 'e_done', 'f_run', 'f_done']);
+	assert.deepEqual(results, ['a_run', 'a_done', 'e_run', 'e_done', 'f_run', 'f_done']);
 });
-
-test.run();

@@ -30,8 +30,7 @@ THE SOFTWARE.
 
 */
 
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {create_random_alea} from '$lib/random_alea.js';
 
@@ -39,30 +38,28 @@ test('Math.random() replacement', () => {
 	// From http://baagoe.com/en/RandomMusings/javascript/
 	// via https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
 	const random = create_random_alea('my', 3, 'seeds');
-	assert.is(random(), 0.30802189325913787);
-	assert.is(random(), 0.5190450621303171);
-	assert.is(random(), 0.43635262292809784);
+	assert.strictEqual(random(), 0.30802189325913787);
+	assert.strictEqual(random(), 0.5190450621303171);
+	assert.strictEqual(random(), 0.43635262292809784);
 });
 
 test('another seed', () => {
 	const random2 = create_random_alea(1277182878230);
-	assert.is(random2(), 0.6198398587293923);
-	assert.is(random2(), 0.8385338634252548);
-	assert.is(random2(), 0.3644848605617881);
+	assert.strictEqual(random2(), 0.6198398587293923);
+	assert.strictEqual(random2(), 0.8385338634252548);
+	assert.strictEqual(random2(), 0.3644848605617881);
 });
 
 test('seeded random uint32', () => {
 	const random_uint32 = create_random_alea('').uint32;
-	assert.is(random_uint32(), 715789690);
-	assert.is(random_uint32(), 2091287642);
-	assert.is(random_uint32(), 486307);
+	assert.strictEqual(random_uint32(), 715789690);
+	assert.strictEqual(random_uint32(), 2091287642);
+	assert.strictEqual(random_uint32(), 486307);
 });
 
 test('seeded random fract53', () => {
 	const random_fract53 = create_random_alea('').fract53;
-	assert.is(random_fract53(), 0.16665777435687268);
-	assert.is(random_fract53(), 0.00011322738143160205);
-	assert.is(random_fract53(), 0.17695781631176488);
+	assert.strictEqual(random_fract53(), 0.16665777435687268);
+	assert.strictEqual(random_fract53(), 0.00011322738143160205);
+	assert.strictEqual(random_fract53(), 0.17695781631176488);
 });
-
-test.run();
