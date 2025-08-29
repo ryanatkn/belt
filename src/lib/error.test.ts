@@ -22,25 +22,25 @@ test('Unreachable_Error requires never type parameter', () => {
 
 test('unreachable helper throws Unreachable_Error', () => {
 	let caught_error: unknown;
-	
+
 	try {
 		unreachable('test' as never);
 	} catch (error) {
 		caught_error = error;
 	}
-	
+
 	assert.instanceOf(caught_error, Unreachable_Error as any);
 });
 
 test('unreachable helper with custom message', () => {
 	let caught_error: unknown;
-	
+
 	try {
 		unreachable('test' as never, custom_message);
 	} catch (error) {
 		caught_error = error;
 	}
-	
+
 	assert.instanceOf(caught_error, Unreachable_Error as any);
 	assert.strictEqual((caught_error as Error).message, custom_message);
 });
