@@ -1,30 +1,32 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {to_json_type, embed_json} from '$lib/json.js';
 import {noop} from '$lib/function.js';
 
 test('to_json_type', () => {
-	assert.is(to_json_type(''), 'string');
-	assert.is(to_json_type('1'), 'string');
-	assert.is(to_json_type(1), 'number');
-	assert.is(to_json_type(NaN), 'number');
-	assert.is(to_json_type(Infinity), 'number');
-	assert.is(to_json_type(false), 'boolean');
-	assert.is(to_json_type({}), 'object');
-	assert.is(to_json_type(null), 'null');
-	assert.is(to_json_type([]), 'array');
-	assert.is(to_json_type(undefined as any), undefined);
-	assert.is(to_json_type(noop as any), undefined);
-	assert.is(to_json_type(BigInt(9000) as any), undefined);
-	assert.is(to_json_type(Symbol() as any), undefined);
+	assert.strictEqual(to_json_type(''), 'string');
+	assert.strictEqual(to_json_type('1'), 'string');
+	assert.strictEqual(to_json_type(1), 'number');
+	assert.strictEqual(to_json_type(NaN), 'number');
+	assert.strictEqual(to_json_type(Infinity), 'number');
+	assert.strictEqual(to_json_type(false), 'boolean');
+	assert.strictEqual(to_json_type({}), 'object');
+	assert.strictEqual(to_json_type(null), 'null');
+	assert.strictEqual(to_json_type([]), 'array');
+	assert.strictEqual(to_json_type(undefined as any), undefined);
+	assert.strictEqual(to_json_type(noop as any), undefined);
+	assert.strictEqual(to_json_type(BigInt(9000) as any), undefined);
+	assert.strictEqual(to_json_type(Symbol() as any), undefined);
 });
 
 test('embed_json', () => {
-	assert.is(embed_json('hello"world'), `JSON.parse('"hello\\"world"')`);
-	assert.is(embed_json("hello'world"), `JSON.parse('"hello\\'world"')`);
-	assert.is(embed_json("'hello'w''or'''ld'"), `JSON.parse('"\\'hello\\'w\\'\\'or\\'\\'\\'ld\\'"')`);
-	assert.is(
+	assert.strictEqual(embed_json('hello"world'), `JSON.parse('"hello\\"world"')`);
+	assert.strictEqual(embed_json("hello'world"), `JSON.parse('"hello\\'world"')`);
+	assert.strictEqual(
+		embed_json("'hello'w''or'''ld'"),
+		`JSON.parse('"\\'hello\\'w\\'\\'or\\'\\'\\'ld\\'"')`,
+	);
+	assert.strictEqual(
 		embed_json({a: 1, b: 2}, (d) => JSON.stringify(d, null, '\t')),
 		`JSON.parse('{\\
 	"a": 1,\\
@@ -32,5 +34,3 @@ test('embed_json', () => {
 }')`,
 	);
 });
-
-test.run();

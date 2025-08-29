@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {Package_Json, Package_Json_Exports} from '$lib/package_json.js';
 
@@ -24,7 +23,7 @@ test('`Package_Json_Exports` parses simple string exports', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('`Package_Json_Exports` parses null exports', () => {
@@ -34,7 +33,7 @@ test('`Package_Json_Exports` parses null exports', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('`Package_Json_Exports` parses basic conditional exports', () => {
@@ -47,7 +46,7 @@ test('`Package_Json_Exports` parses basic conditional exports', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('`Package_Json_Exports` parses nested conditional exports', () => {
@@ -62,7 +61,7 @@ test('`Package_Json_Exports` parses nested conditional exports', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('`Package_Json_Exports` parses deeply nested conditional exports', () => {
@@ -83,7 +82,7 @@ test('`Package_Json_Exports` parses deeply nested conditional exports', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('`Package_Json_Exports` parses mixed exports types', () => {
@@ -103,7 +102,7 @@ test('`Package_Json_Exports` parses mixed exports types', () => {
 	};
 	const parsed = Package_Json_Exports.safeParse(exports);
 	assert.ok(parsed.success);
-	assert.equal(exports, parsed.data);
+	assert.deepEqual(exports, parsed.data);
 });
 
 test('rejects invalid exports', () => {
@@ -133,5 +132,3 @@ test('rejects invalid exports', () => {
 		assert.ok(!parsed.success);
 	}
 });
-
-test.run();

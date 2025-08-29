@@ -1,5 +1,4 @@
-import {test} from 'uvu';
-import * as assert from 'uvu/assert';
+import {test, assert} from 'vitest';
 
 import {wait} from '$lib/async.js';
 
@@ -8,5 +7,3 @@ test('basic behavior', async () => {
 	await wait(10);
 	assert.ok(true);
 });
-
-test.run();
