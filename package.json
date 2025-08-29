@@ -43,7 +43,7 @@
   "peerDependencies": {
     "@types/node": "^24",
     "esm-env": "^1.2.2",
-    "zod": "^4.1.5"
+    "zod": "^4.0.14"
   },
   "peerDependenciesMeta": {
     "@types/node": {

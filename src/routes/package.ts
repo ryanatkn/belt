@@ -31,7 +31,7 @@ export const package_json: Package_Json = {
 	type: 'module',
 	engines: {node: '>=22.15'},
 	keywords: ['js', 'typescript', 'utilities', 'web'],
-	peerDependencies: {'@types/node': '^24', 'esm-env': '^1.2.2', zod: '^4.0.14'},
+	peerDependencies: {'@types/node': '^24', 'esm-env': '^1.2.2', zod: '^4.1.5'},
 	peerDependenciesMeta: {
 		'@types/node': {optional: true},
 		'esm-env': {optional: true},
