@@ -59,7 +59,7 @@ export const package_json: Package_Json = {
 		tslib: '^2.8.1',
 		typescript: '^5.9.2',
 		'typescript-eslint': '^8.41.0',
-		uvu: '^0.5.6',
+		vitest: '^3.2.4',
 		zod: '^4.1.5',
 	},
 	prettier: {
