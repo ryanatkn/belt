@@ -11,15 +11,15 @@
 	const pkg = parse_pkg(package_json, src_json);
 </script>
 
-<main class="width_md">
+<main class="width_upto_md">
 	<section>
 		<header class="box">
 			<h1 class="mt_xl5">{pkg.repo_name}</h1>
 		</header>
 		<Breadcrumb>{package_json.glyph}</Breadcrumb>
 	</section>
-	<section class="box w_100 mb_lg">
-		<div class="panel p_md width_md">
+	<section class="box width_100 mb_lg">
+		<div class="panel p_md width_upto_md">
 			<Package_Detail {pkg} />
 		</div>
 	</section>

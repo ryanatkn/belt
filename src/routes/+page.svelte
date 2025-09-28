@@ -19,7 +19,7 @@
 			{#snippet logo()}<div class="logo"><Svg data={belt_logo} /></div>{/snippet}
 		</Package_Summary>
 	</section>
-	<aside class="width_sm mb_xl5">
+	<aside class="width_upto_sm mb_xl5">
 		⚠️ Belt's docs are a work in progress. For now see <a href={resolve('/about')}>the about page</a
 		>
 		and
