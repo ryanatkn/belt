@@ -109,7 +109,7 @@ export const git_parse_workspace_status = (stdout: string | null): Git_Workspace
 	// For rename/copy operations, we need to skip the old filename entry
 	// Format: R  new\0old\0 or C  new\0old\0
 	let skipNext = false;
-	const lines: string[] = [];
+	const lines: Array<string> = [];
 
 	for (const entry of entries) {
 		if (skipNext) {
@@ -175,7 +175,7 @@ export const git_workspace_is_fully_staged = (status: Git_Workspace_Status): boo
  */
 export const git_workspace_status_message = (status: Git_Workspace_Status): string => {
 	if (git_workspace_is_clean(status)) return 'workspace is clean';
-	const issues: string[] = [];
+	const issues: Array<string> = [];
 	if (status.unstaged_changes) issues.push('unstaged changes');
 	if (status.staged_changes) issues.push('staged but uncommitted changes');
 	if (status.untracked_files) issues.push('untracked files');
