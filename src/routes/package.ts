@@ -280,10 +280,16 @@ export const src_json: Src_Json = {
 		'./path.js': {
 			path: 'path.ts',
 			declarations: [
+				{name: 'Path_Id', kind: 'type'},
+				{name: 'Path_Info', kind: 'type'},
+				{name: 'Resolved_Path', kind: 'type'},
+				{name: 'Path_Filter', kind: 'type'},
+				{name: 'File_Filter', kind: 'type'},
+				{name: 'to_file_path', kind: 'function'},
 				{name: 'parse_path_parts', kind: 'function'},
 				{name: 'parse_path_segments', kind: 'function'},
-				{name: 'parse_path_pieces', kind: 'function'},
 				{name: 'Path_Piece', kind: 'type'},
+				{name: 'parse_path_pieces', kind: 'function'},
 				{name: 'slugify', kind: 'function'},
 			],
 		},
