@@ -1,3 +1,43 @@
+import {fileURLToPath, type URL} from 'node:url';
+
+import type {Flavored} from '$lib/types.js';
+
+/**
+ * An absolute path on the filesystem. Named "id" to be consistent with Rollup.
+ */
+export type Path_Id = Flavored<string, 'Path_Id'>;
+
+/**
+ * Basic information about a filesystem path.
+ */
+export interface Path_Info {
+	id: Path_Id;
+	is_directory: boolean;
+}
+
+/**
+ * A resolved path with both the original path string and its absolute id.
+ */
+export interface Resolved_Path extends Path_Info {
+	path: string;
+}
+
+/**
+ * A filter function for paths, can distinguish between files and directories.
+ */
+export type Path_Filter = (path: string, is_directory: boolean) => boolean;
+
+/**
+ * A filter function for file paths only.
+ */
+export type File_Filter = (path: string) => boolean;
+
+/**
+ * Converts a URL to a file path string, or returns the string as-is.
+ */
+export const to_file_path = (path_or_url: string | URL): string =>
+	typeof path_or_url === 'string' ? path_or_url : fileURLToPath(path_or_url);
+
 /**
  * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
  */
@@ -21,6 +61,20 @@ export const parse_path_segments = (path: string): Array<string> =>
 	path.split('/').filter((s) => s && s !== '.' && s !== '..');
 
 /**
+ * A piece of a parsed path, either a path segment or separator.
+ */
+export type Path_Piece =
+	| {
+			type: 'piece';
+			path: Path_Id;
+			name: string;
+	  }
+	| {
+			type: 'separator';
+			path: Path_Id;
+	  };
+
+/**
  * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
  * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
  */
@@ -42,20 +96,9 @@ export const parse_path_pieces = (raw_path: string): Array<Path_Piece> => {
 	return pieces;
 };
 
-export type Path_Piece =
-	| {
-			type: 'piece';
-			path: string;
-			name: string;
-	  }
-	| {
-			type: 'separator';
-			path: string;
-	  };
-
 /**
  * Converts a string into a URL-compatible slug.
- * @param str
+ * @param str - The string to convert
  * @param map_special_characters - If `true`, characters like `ñ` are converted
  * to their ASCII equivalents. Runs around 5x faster when disabled.
  */
