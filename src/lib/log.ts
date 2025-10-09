@@ -1,8 +1,8 @@
 import type {styleText} from 'node:util';
 import {DEV} from 'esm-env';
 
-import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-import {traverse} from '$lib/object.js';
+import {EMPTY_ARRAY, to_array} from '$lib/array.ts';
+import {traverse} from '$lib/object.ts';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 

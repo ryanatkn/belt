@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-import {transform_empty_object_to_undefined} from '$lib/object.js';
+import {transform_empty_object_to_undefined} from '$lib/object.ts';
 
 export const Src_Module_Declaration_Kind = z.enum([
 	'type',

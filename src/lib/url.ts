@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
-import {strip_end, strip_start} from '$lib/string.js';
-import type {Flavored} from '$lib/types.js';
+import {strip_end, strip_start} from '$lib/string.ts';
+import type {Flavored} from '$lib/types.ts';
 
 /**
  * Formats a URL by removing 'https://', 'www.', and trailing slashes.

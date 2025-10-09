@@ -1,7 +1,7 @@
 import {test, assert} from 'vitest';
 
-import {throttle} from '$lib/throttle.js';
-import {wait} from '$lib/async.js';
+import {throttle} from '$lib/throttle.ts';
+import {wait} from '$lib/async.ts';
 
 test('throttles calls to a function', async () => {
 	const results: Array<string> = [];

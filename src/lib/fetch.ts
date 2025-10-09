@@ -1,10 +1,10 @@
 import {z} from 'zod';
 
-import type {Flavored} from '$lib/types.js';
-import type {Logger} from '$lib/log.js';
-import {EMPTY_OBJECT} from '$lib/object.js';
-import type {Result} from '$lib/result.js';
-import {canonicalize} from '$lib/json.js';
+import type {Flavored} from '$lib/types.ts';
+import type {Logger} from '$lib/log.ts';
+import {EMPTY_OBJECT} from '$lib/object.ts';
+import type {Result} from '$lib/result.ts';
+import {canonicalize} from '$lib/json.ts';
 
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';

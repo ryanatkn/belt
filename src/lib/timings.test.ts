@@ -1,6 +1,6 @@
 import {test, assert} from 'vitest';
 
-import {create_stopwatch, Timings} from '$lib/timings.js';
+import {create_stopwatch, Timings} from '$lib/timings.ts';
 
 test('stopwatch', () => {
 	const stopwatch = create_stopwatch(4);
