@@ -175,7 +175,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('unstaged changes only ( M)', () => {
-		const status = git_parse_workspace_status(' M src/lib/git.ts');
+		const status = git_parse_workspace_status(' M src/lib/git.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: false,
@@ -184,7 +184,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('staged changes only (M )', () => {
-		const status = git_parse_workspace_status('M  src/lib/path.test.ts');
+		const status = git_parse_workspace_status('M  src/lib/path.test.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -193,7 +193,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('both staged and unstaged (MM)', () => {
-		const status = git_parse_workspace_status('MM src/lib/git.ts');
+		const status = git_parse_workspace_status('MM src/lib/git.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: true,
@@ -202,7 +202,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('untracked files (??)', () => {
-		const status = git_parse_workspace_status('?? foo');
+		const status = git_parse_workspace_status('?? foo\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: false,
@@ -211,7 +211,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('ignored files (!!) are treated as no change', () => {
-		const status = git_parse_workspace_status('!! ignored.tmp');
+		const status = git_parse_workspace_status('!! ignored.tmp\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: false,
@@ -220,9 +220,7 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('multiple files with mixed states', () => {
-		const porcelain = `MM src/lib/git.ts
-M  src/lib/path.test.ts
-?? foo`;
+		const porcelain = 'MM src/lib/git.ts\0M  src/lib/path.test.ts\0?? foo\0';
 		const status = git_parse_workspace_status(porcelain);
 		assert.deepEqual(status, {
 			unstaged_changes: true,
@@ -232,7 +230,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('added file (A )', () => {
-		const status = git_parse_workspace_status('A  new-file.ts');
+		const status = git_parse_workspace_status('A  new-file.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -241,7 +239,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('deleted from index (D )', () => {
-		const status = git_parse_workspace_status('D  removed.ts');
+		const status = git_parse_workspace_status('D  removed.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -250,7 +248,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('deleted in working tree ( D)', () => {
-		const status = git_parse_workspace_status(' D deleted-file.ts');
+		const status = git_parse_workspace_status(' D deleted-file.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: false,
@@ -259,7 +257,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('renamed in index (R )', () => {
-		const status = git_parse_workspace_status('R  old.ts -> new.ts');
+		const status = git_parse_workspace_status('R  new.ts\0old.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -268,7 +266,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('type changed in index (T )', () => {
-		const status = git_parse_workspace_status('T  symlink.txt');
+		const status = git_parse_workspace_status('T  symlink.txt\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -277,7 +275,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('type changed in working tree ( T)', () => {
-		const status = git_parse_workspace_status(' T file.txt');
+		const status = git_parse_workspace_status(' T file.txt\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: false,
@@ -286,7 +284,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('copied in index (C )', () => {
-		const status = git_parse_workspace_status('C  original.ts -> copy.ts');
+		const status = git_parse_workspace_status('C  copy.ts\0original.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
@@ -295,7 +293,7 @@ M  src/lib/path.test.ts
 	});
 
 	test('unmerged (UU)', () => {
-		const status = git_parse_workspace_status('UU conflicted.ts');
+		const status = git_parse_workspace_status('UU conflicted.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: true,
@@ -303,8 +301,90 @@ M  src/lib/path.test.ts
 		});
 	});
 
-	test('handles trailing newlines', () => {
-		const status = git_parse_workspace_status(' M src/lib/git.ts\n');
+	test('unmerged, both deleted (DD)', () => {
+		const status = git_parse_workspace_status('DD deleted-by-both.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('unmerged, added by us (AU)', () => {
+		const status = git_parse_workspace_status('AU added-by-us.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('unmerged, deleted by them (UD)', () => {
+		const status = git_parse_workspace_status('UD deleted-by-them.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('unmerged, added by them (UA)', () => {
+		const status = git_parse_workspace_status('UA added-by-them.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('unmerged, deleted by us (DU)', () => {
+		const status = git_parse_workspace_status('DU deleted-by-us.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('unmerged, both added (AA)', () => {
+		const status = git_parse_workspace_status('AA both-added.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('renamed in index, modified in work tree (RM)', () => {
+		const status = git_parse_workspace_status('RM new.ts\0old.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('added in index, modified in work tree (AM)', () => {
+		const status = git_parse_workspace_status('AM newly-added.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('added in index, deleted in work tree (AD)', () => {
+		const status = git_parse_workspace_status('AD added-then-deleted.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('renamed in work tree ( R)', () => {
+		// Work tree rename (only possible with certain git configurations)
+		const status = git_parse_workspace_status(' R new-work.ts\0old-work.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: false,
@@ -312,11 +392,82 @@ M  src/lib/path.test.ts
 		});
 	});
 
-	test('handles multiple trailing newlines', () => {
-		const status = git_parse_workspace_status(' M src/lib/git.ts\n\n\n');
+	test('copied in work tree ( C)', () => {
+		// Work tree copy (only possible with certain git configurations)
+		const status = git_parse_workspace_status(' C copy-work.ts\0original-work.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: true,
 			staged_changes: false,
+			untracked_files: false,
+		});
+	});
+
+	test('handles trailing NUL correctly', () => {
+		// With -z format, trailing NUL is normal and handled by filter(Boolean)
+		const status = git_parse_workspace_status(' M src/lib/git.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: false,
+			untracked_files: false,
+		});
+	});
+
+	test('handles empty entries from multiple NULs', () => {
+		// Multiple NULs create empty strings that are filtered out
+		const status = git_parse_workspace_status(' M src/lib/git.ts\0\0\0');
+		assert.deepEqual(status, {
+			unstaged_changes: true,
+			staged_changes: false,
+			untracked_files: false,
+		});
+	});
+
+	test('handles files with spaces in name', () => {
+		// With -z format, spaces are preserved literally without quotes
+		const status = git_parse_workspace_status('M  file with spaces.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: false,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('handles files with newlines in name', () => {
+		// With -z format, newlines are preserved literally
+		const status = git_parse_workspace_status('M  file\nwith\nnewlines.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: false,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('handles files with quotes in name', () => {
+		// With -z format, quotes are preserved literally
+		const status = git_parse_workspace_status('M  file"with"quotes.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: false,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('handles very long file paths', () => {
+		const longPath = 'a/'.repeat(100) + 'file.ts';
+		const status = git_parse_workspace_status(`M  ${longPath}\0`);
+		assert.deepEqual(status, {
+			unstaged_changes: false,
+			staged_changes: true,
+			untracked_files: false,
+		});
+	});
+
+	test('handles renamed file with spaces', () => {
+		// Renamed files with spaces: R  "new name"\0"old name"\0
+		const status = git_parse_workspace_status('R  new file name.ts\0old file name.ts\0');
+		assert.deepEqual(status, {
+			unstaged_changes: false,
+			staged_changes: true,
 			untracked_files: false,
 		});
 	});

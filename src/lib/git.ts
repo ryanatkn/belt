@@ -74,22 +74,73 @@ export interface Git_Workspace_Status {
 }
 
 /**
- * Parses the output of `git status --porcelain` (v1 format) into a status object.
+ * Parses the output of `git status --porcelain -z` (v1 format) into a status object.
  * This is a pure function that can be tested independently.
- * @param stdout - The raw output from `git status --porcelain`
+ *
+ * Format: XY path\0 where:
+ * - X = staged status (index)
+ * - Y = unstaged status (work tree)
+ * - path = file path (unescaped with -z)
+ *
+ * Supported status codes:
+ * - M = modified
+ * - A = added
+ * - D = deleted
+ * - R = renamed
+ * - C = copied
+ * - T = type changed (regular file, symbolic link or submodule)
+ * - U = unmerged
+ * - ? = untracked
+ * - ! = ignored
+ *
+ * For renames/copies: XY new\0old\0 (two NUL-separated paths)
+ *
+ * Note: This implementation treats submodules the same as regular files.
+ * Submodule-specific status codes (lowercase m, ?) are interpreted as changes.
+ *
+ * @param stdout - The raw output from `git status --porcelain -z`
  * @returns status object with flags for unstaged changes, staged changes, and untracked files
  */
 export const git_parse_workspace_status = (stdout: string | null): Git_Workspace_Status => {
-	const lines = stdout?.split('\n').filter(Boolean) ?? [];
+	// Split on NUL character (\0) for -z format
+	// Filter out empty strings (last element after final \0)
+	const entries = stdout?.split('\0').filter(Boolean) ?? [];
+
+	// For rename/copy operations, we need to skip the old filename entry
+	// Format: R  new\0old\0 or C  new\0old\0
+	let skipNext = false;
+	const lines: string[] = [];
+
+	for (const entry of entries) {
+		if (skipNext) {
+			skipNext = false;
+			continue;
+		}
+
+		// Check if this is a rename/copy operation in either position
+		// R  = renamed in index, RM = renamed in index + modified in work tree
+		//  R = renamed in work tree (rare but possible with certain configs)
+		if (
+			entry.length >= 3 &&
+			((entry[0] === 'R' || entry[0] === 'C') ||
+			 (entry[1] === 'R' || entry[1] === 'C'))
+		) {
+			skipNext = true;
+		}
+
+		lines.push(entry);
+	}
 
 	return {
 		// Y position (index 1) - any non-space, non-?, non-! means unstaged changes
+		// Minimum length is 3: XY followed by at least one space (e.g., "M  ")
 		unstaged_changes: lines.some(
-			(line) => line.length >= 2 && line[1] !== ' ' && line[1] !== '?' && line[1] !== '!',
+			(line) => line.length >= 3 && line[1] !== ' ' && line[1] !== '?' && line[1] !== '!',
 		),
 		// X position (index 0) - any non-space, non-?, non-! means staged changes
+		// Minimum length is 3: XY followed by at least one space (e.g., "M  ")
 		staged_changes: lines.some(
-			(line) => line.length >= 2 && line[0] !== ' ' && line[0] !== '?' && line[0] !== '!',
+			(line) => line.length >= 3 && line[0] !== ' ' && line[0] !== '?' && line[0] !== '!',
 		),
 		// ?? prefix means untracked files
 		untracked_files: lines.some((line) => line.startsWith('??')),
@@ -97,13 +148,14 @@ export const git_parse_workspace_status = (stdout: string | null): Git_Workspace
 };
 
 /**
- * Checks the git workspace status using a single `git status --porcelain` call.
+ * Checks the git workspace status using a single `git status --porcelain -z` call.
+ * The -z format provides more reliable parsing by using NUL separators and avoiding escaping.
  * @returns status object with flags for unstaged changes, staged changes, and untracked files
  */
 export const git_check_workspace = async (
 	options?: SpawnOptions,
 ): Promise<Git_Workspace_Status> => {
-	const {stdout} = await spawn_out('git', ['status', '--porcelain'], options);
+	const {stdout} = await spawn_out('git', ['status', '--porcelain', '-z'], options);
 	return git_parse_workspace_status(stdout);
 };
 
