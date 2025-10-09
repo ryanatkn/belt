@@ -1,6 +1,19 @@
 import {test, assert} from 'vitest';
 
-import {parse_path_parts, parse_path_pieces, parse_path_segments, slugify} from '$lib/path.js';
+import {
+	parse_path_parts,
+	parse_path_pieces,
+	parse_path_segments,
+	slugify,
+	to_file_path,
+} from '$lib/path.js';
+
+test('to_file_path', () => {
+	assert.strictEqual(to_file_path('/foo/bar/baz.ts'), '/foo/bar/baz.ts');
+	assert.strictEqual(to_file_path('./foo/bar.ts'), './foo/bar.ts');
+	assert.strictEqual(to_file_path('foo.ts'), 'foo.ts');
+	assert.strictEqual(to_file_path(new URL('file:///foo/bar/baz.ts')), '/foo/bar/baz.ts');
+});
 
 test('parse_path_parts', () => {
 	assert.deepEqual(parse_path_parts('/foo/bar/baz/'), ['/foo', '/foo/bar', '/foo/bar/baz']);
