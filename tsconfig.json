@@ -22,7 +22,7 @@
 		"skipLibCheck": true,
 		"allowJs": true,
 		"erasableSyntaxOnly": true,
-		"allowImportingTsExtensions": false,
+		"allowImportingTsExtensions": true,
 		"checkJs": true
 	},
 	"include": [
