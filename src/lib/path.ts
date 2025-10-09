@@ -1,6 +1,6 @@
 import {fileURLToPath, type URL} from 'node:url';
 
-import type {Flavored} from './types.js';
+import type {Flavored} from '$lib/types.js';
 
 /**
  * An absolute path on the filesystem. Named "id" to be consistent with Rollup.

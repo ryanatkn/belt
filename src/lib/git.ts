@@ -2,9 +2,9 @@ import type {SpawnOptions} from 'node:child_process';
 import {z} from 'zod';
 import {existsSync} from 'node:fs';
 
-import {spawn, spawn_out} from './process.js';
-import type {Flavored} from './types.js';
-import {to_file_path} from './path.js';
+import {spawn, spawn_out} from '$lib/process.js';
+import type {Flavored} from '$lib/types.js';
+import {to_file_path} from '$lib/path.js';
 
 export const Git_Origin = z.string();
 export type Git_Origin = Flavored<string, 'Git_Origin'>;
@@ -269,8 +269,6 @@ export const git_current_branch_first_commit_hash = async (
 
 /**
  * Returns the global git config setting for `pull.rebase`.
- * Gro is currently written to expect `true`,
- * but the restriction could be loosened with additional work.
  */
 export const git_check_setting_pull_rebase = async (options?: SpawnOptions): Promise<boolean> => {
 	const value = await spawn_out('git', ['config', '--global', 'pull.rebase'], options);
