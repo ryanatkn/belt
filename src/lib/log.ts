@@ -41,7 +41,8 @@ export const configure_log_level = (
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
 		? null
-		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ?? (DEV ? 'debug' : 'off'); // TODO how to opt into `'debug'` and default to `'info'`?
+		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ??
+	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
 /**
  * Sets the colors helper for both the main and system loggers.
