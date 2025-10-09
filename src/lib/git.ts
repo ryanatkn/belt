@@ -122,8 +122,7 @@ export const git_parse_workspace_status = (stdout: string | null): Git_Workspace
 		//  R = renamed in work tree (rare but possible with certain configs)
 		if (
 			entry.length >= 3 &&
-			((entry[0] === 'R' || entry[0] === 'C') ||
-			 (entry[1] === 'R' || entry[1] === 'C'))
+			(entry[0] === 'R' || entry[0] === 'C' || entry[1] === 'R' || entry[1] === 'C')
 		) {
 			skipNext = true;
 		}
