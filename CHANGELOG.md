@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.35.1
+
+### Patch Changes
+
+- fix path module to not require node ([#47](https://github.com/ryanatkn/belt/pull/47))
+
 ## 0.35.0
 
 ### Minor Changes
