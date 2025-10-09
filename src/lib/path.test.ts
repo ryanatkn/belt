@@ -12,7 +12,9 @@ test('to_file_path', () => {
 	assert.strictEqual(to_file_path('/foo/bar/baz.ts'), '/foo/bar/baz.ts');
 	assert.strictEqual(to_file_path('./foo/bar.ts'), './foo/bar.ts');
 	assert.strictEqual(to_file_path('foo.ts'), 'foo.ts');
+	assert.strictEqual(to_file_path(''), '');
 	assert.strictEqual(to_file_path(new URL('file:///foo/bar/baz.ts')), '/foo/bar/baz.ts');
+	assert.strictEqual(to_file_path(new URL('file:///foo/bar%20baz.ts')), '/foo/bar baz.ts');
 });
 
 test('parse_path_parts', () => {
@@ -20,6 +22,10 @@ test('parse_path_parts', () => {
 	assert.deepEqual(parse_path_parts('./foo/bar/baz.ts'), ['foo', 'foo/bar', 'foo/bar/baz.ts']);
 	assert.deepEqual(parse_path_parts('foo/bar/baz.ts'), ['foo', 'foo/bar', 'foo/bar/baz.ts']);
 	assert.deepEqual(parse_path_parts('foo/bar/baz/'), ['foo', 'foo/bar', 'foo/bar/baz']);
+	assert.deepEqual(parse_path_parts('foo'), ['foo']);
+	assert.deepEqual(parse_path_parts('/foo'), ['/foo']);
+	assert.deepEqual(parse_path_parts('/'), []);
+	assert.deepEqual(parse_path_parts(''), []);
 });
 
 test('parse_path_segments', () => {
@@ -27,6 +33,9 @@ test('parse_path_segments', () => {
 	assert.deepEqual(parse_path_segments('./foo/bar/baz.ts'), ['foo', 'bar', 'baz.ts']);
 	assert.deepEqual(parse_path_segments('foo/bar/baz.ts'), ['foo', 'bar', 'baz.ts']);
 	assert.deepEqual(parse_path_segments('foo/bar/baz/'), ['foo', 'bar', 'baz']);
+	assert.deepEqual(parse_path_segments('../foo/bar'), ['foo', 'bar']);
+	assert.deepEqual(parse_path_segments('/'), []);
+	assert.deepEqual(parse_path_segments(''), []);
 });
 
 test('parse_path_pieces', () => {
@@ -46,6 +55,8 @@ test('parse_path_pieces', () => {
 		{type: 'separator', path: '/'},
 		{type: 'piece', name: 'foo', path: '/foo'},
 	]);
+	assert.deepEqual(parse_path_pieces('/'), []);
+	assert.deepEqual(parse_path_pieces(''), []);
 });
 
 test('slugify', () => {
@@ -59,6 +70,10 @@ test('slugify', () => {
 	assert.strictEqual(slugify('a_ b'), 'a_-b');
 	assert.strictEqual(slugify('a _ b'), 'a-_-b');
 	assert.strictEqual(slugify('   a b    c   '), 'a-b-c');
+	assert.strictEqual(slugify(''), '');
+	assert.strictEqual(slugify('123'), '123');
+	assert.strictEqual(slugify('foo-bar-123'), 'foo-bar-123');
+	assert.strictEqual(slugify('ñoño', false), 'oo');
 	assert.strictEqual(
 		slugify(
 			'ÁÄÂÀÃÅÆÞČÇĆĎĐÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåþčçćďđéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşßťúůüùûýÿž',
