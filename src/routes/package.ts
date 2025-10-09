@@ -54,7 +54,7 @@ export const package_json: Package_Json = {
 		prettier: '^3.6.2',
 		'prettier-plugin-svelte': '^3.4.0',
 		svelte: '^5.39.11',
-		'svelte-check': '^4.3.1',
+		'svelte-check': '^4.3.3',
 		tinybench: '^5.0.1',
 		tslib: '^2.8.1',
 		typescript: '^5.9.2',
