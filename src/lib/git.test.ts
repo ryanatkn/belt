@@ -463,12 +463,28 @@ describe('git_parse_workspace_status', () => {
 	});
 
 	test('handles renamed file with spaces', () => {
-		// Renamed files with spaces: R  "new name"\0"old name"\0
+		// Renamed files with spaces: R  new name\0old name\0
 		const status = git_parse_workspace_status('R  new file name.ts\0old file name.ts\0');
 		assert.deepEqual(status, {
 			unstaged_changes: false,
 			staged_changes: true,
 			untracked_files: false,
+		});
+	});
+
+	test('handles multiple renames and copies in single output', () => {
+		// Multiple rename/copy operations mixed with other changes
+		const porcelain =
+			'R  renamed1.ts\0old1.ts\0' + // Rename in index
+			'C  copied.ts\0original.ts\0' + // Copy in index
+			'M  modified.ts\0' + // Regular modified file
+			'RM renamed2.ts\0old2.ts\0' + // Renamed and modified
+			'?? untracked.ts\0'; // Untracked file
+		const status = git_parse_workspace_status(porcelain);
+		assert.deepEqual(status, {
+			unstaged_changes: true, // From RM
+			staged_changes: true, // From R, C, M, and RM
+			untracked_files: true, // From ??
 		});
 	});
 });
