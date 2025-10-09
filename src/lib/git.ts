@@ -74,13 +74,12 @@ export interface Git_Workspace_Status {
 }
 
 /**
- * Checks the git workspace status using a single `git status --porcelain` call.
+ * Parses the output of `git status --porcelain` (v1 format) into a status object.
+ * This is a pure function that can be tested independently.
+ * @param stdout - The raw output from `git status --porcelain`
  * @returns status object with flags for unstaged changes, staged changes, and untracked files
  */
-export const git_check_workspace = async (
-	options?: SpawnOptions,
-): Promise<Git_Workspace_Status> => {
-	const {stdout} = await spawn_out('git', ['status', '--porcelain'], options);
+export const git_parse_workspace_status = (stdout: string | null): Git_Workspace_Status => {
 	const lines = stdout?.split('\n').filter(Boolean) ?? [];
 
 	return {
@@ -95,6 +94,17 @@ export const git_check_workspace = async (
 		// ?? prefix means untracked files
 		untracked_files: lines.some((line) => line.startsWith('??')),
 	};
+};
+
+/**
+ * Checks the git workspace status using a single `git status --porcelain` call.
+ * @returns status object with flags for unstaged changes, staged changes, and untracked files
+ */
+export const git_check_workspace = async (
+	options?: SpawnOptions,
+): Promise<Git_Workspace_Status> => {
+	const {stdout} = await spawn_out('git', ['status', '--porcelain'], options);
+	return git_parse_workspace_status(stdout);
 };
 
 /**
