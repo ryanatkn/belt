@@ -1,5 +1,15 @@
 # @ryanatkn/belt
 
+## 0.35.0
+
+### Minor Changes
+
+- default logging to info in production ([ebdd641](https://github.com/ryanatkn/belt/commit/ebdd641))
+
+### Patch Changes
+
+- upstream helpers for `path.ts` and `git.ts` ([#46](https://github.com/ryanatkn/belt/pull/46))
+
 ## 0.34.1
 
 ### Patch Changes
