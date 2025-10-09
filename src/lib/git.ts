@@ -65,41 +65,78 @@ export const git_local_branch_exists = async (
 };
 
 /**
- * TODO make this return an enum and separate the text into a different function
- * @returns an error message if the git workspace has any unstaged or uncommitted changes, or `null` if it's clean
+ * Git workspace status flags indicating which types of changes are present.
  */
-export const git_check_clean_workspace = async (options?: SpawnOptions): Promise<string | null> => {
-	const unstaged_result = await spawn('git', ['diff', '--exit-code', '--quiet'], options);
-	if (!unstaged_result.ok) {
-		return 'git has unstaged changes';
-	}
-	const staged_result = await spawn('git', ['diff', '--exit-code', '--cached', '--quiet'], options);
-	if (!staged_result.ok) {
-		return 'git has staged but uncommitted changes';
-	}
-	const status_result = await spawn_out('git', ['status', '--porcelain'], options);
-	if (status_result.stdout?.length) {
-		return 'git has untracked files';
-	}
-	return null;
+export interface Git_Workspace_Status {
+	unstaged_changes: boolean;
+	staged_changes: boolean;
+	untracked_files: boolean;
+}
+
+/**
+ * Checks the git workspace status using a single `git status --porcelain` call.
+ * @returns status object with flags for unstaged changes, staged changes, and untracked files
+ */
+export const git_check_workspace = async (
+	options?: SpawnOptions,
+): Promise<Git_Workspace_Status> => {
+	const {stdout} = await spawn_out('git', ['status', '--porcelain'], options);
+	const lines = stdout?.split('\n').filter(Boolean) ?? [];
+
+	return {
+		// Y position (index 1) - any non-space, non-?, non-! means unstaged changes
+		unstaged_changes: lines.some(
+			(line) => line.length >= 2 && line[1] !== ' ' && line[1] !== '?' && line[1] !== '!',
+		),
+		// X position (index 0) - any non-space, non-?, non-! means staged changes
+		staged_changes: lines.some(
+			(line) => line.length >= 2 && line[0] !== ' ' && line[0] !== '?' && line[0] !== '!',
+		),
+		// ?? prefix means untracked files
+		untracked_files: lines.some((line) => line.startsWith('??')),
+	};
 };
 
 /**
- * TODO make this return an enum and separate the text into a different function
- * @returns an error message if the git workspace has any unstaged stages, or `null` if it's clean
+ * @returns `true` if the workspace has no changes at all
+ */
+export const git_workspace_is_clean = (status: Git_Workspace_Status): boolean =>
+	!status.unstaged_changes && !status.staged_changes && !status.untracked_files;
+
+/**
+ * @returns `true` if the workspace has no unstaged changes and no untracked files (staged changes are OK)
+ */
+export const git_workspace_is_fully_staged = (status: Git_Workspace_Status): boolean =>
+	!status.unstaged_changes && !status.untracked_files;
+
+/**
+ * Converts a workspace status to a human-readable message.
+ */
+export const git_workspace_status_message = (status: Git_Workspace_Status): string => {
+	if (git_workspace_is_clean(status)) return 'workspace is clean';
+	const issues: string[] = [];
+	if (status.unstaged_changes) issues.push('unstaged changes');
+	if (status.staged_changes) issues.push('staged but uncommitted changes');
+	if (status.untracked_files) issues.push('untracked files');
+	return `git has ${issues.join(', ')}`;
+};
+
+/**
+ * @returns an error message if the git workspace has any unstaged or uncommitted changes, or `null` if it's clean
+ */
+export const git_check_clean_workspace = async (options?: SpawnOptions): Promise<string | null> => {
+	const status = await git_check_workspace(options);
+	return git_workspace_is_clean(status) ? null : git_workspace_status_message(status);
+};
+
+/**
+ * @returns an error message if the git workspace has any unstaged changes or untracked files, or `null` if fully staged
  */
 export const git_check_fully_staged_workspace = async (
 	options?: SpawnOptions,
 ): Promise<string | null> => {
-	const unstaged_result = await spawn('git', ['diff', '--exit-code', '--quiet'], options);
-	if (!unstaged_result.ok) {
-		return 'git has unstaged changes';
-	}
-	const status_result = await spawn_out('git', ['status', '--porcelain'], options);
-	if (status_result.stdout?.includes('??')) {
-		return 'git has untracked files';
-	}
-	return null;
+	const status = await git_check_workspace(options);
+	return git_workspace_is_fully_staged(status) ? null : git_workspace_status_message(status);
 };
 
 /**
