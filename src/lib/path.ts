@@ -1,5 +1,3 @@
-import {fileURLToPath, type URL} from 'node:url';
-
 import type {Flavored} from '$lib/types.js';
 
 /**
@@ -36,7 +34,7 @@ export type File_Filter = (path: string) => boolean;
  * Converts a URL to a file path string, or returns the string as-is.
  */
 export const to_file_path = (path_or_url: string | URL): string =>
-	typeof path_or_url === 'string' ? path_or_url : fileURLToPath(path_or_url);
+	typeof path_or_url === 'string' ? path_or_url : decodeURIComponent(path_or_url.pathname);
 
 /**
  * @example parse_path_parts('./foo/bar/baz.ts') => ['foo', 'foo/bar', 'foo/bar/baz.ts']
