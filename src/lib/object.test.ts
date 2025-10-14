@@ -1,6 +1,6 @@
 import {describe, test, assert} from 'vitest';
 
-import {map_record, omit, pick_by, omit_undefined, reorder, traverse} from '$lib/object.js';
+import {map_record, omit, pick_by, omit_undefined, reorder, traverse} from '$lib/object.ts';
 
 describe('map_record', () => {
 	test('basic behavior', () => {

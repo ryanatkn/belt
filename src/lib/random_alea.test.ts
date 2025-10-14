@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 import {test, assert} from 'vitest';
 
-import {create_random_alea} from '$lib/random_alea.js';
+import {create_random_alea} from '$lib/random_alea.ts';
 
 test('Math.random() replacement', () => {
 	// From http://baagoe.com/en/RandomMusings/javascript/

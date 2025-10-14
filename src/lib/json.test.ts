@@ -1,7 +1,7 @@
 import {test, assert} from 'vitest';
 
-import {to_json_type, embed_json} from '$lib/json.js';
-import {noop} from '$lib/function.js';
+import {to_json_type, embed_json} from '$lib/json.ts';
+import {noop} from '$lib/function.ts';
 
 test('to_json_type', () => {
 	assert.strictEqual(to_json_type(''), 'string');

@@ -1,6 +1,6 @@
 import {describe, test, assert} from 'vitest';
 
-import {Logger, type Logger_State} from '$lib/log.js';
+import {Logger, type Logger_State} from '$lib/log.ts';
 
 const log = new Logger();
 

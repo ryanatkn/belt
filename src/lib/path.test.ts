@@ -6,7 +6,7 @@ import {
 	parse_path_segments,
 	slugify,
 	to_file_path,
-} from '$lib/path.js';
+} from '$lib/path.ts';
 
 test('to_file_path', () => {
 	assert.strictEqual(to_file_path('/foo/bar/baz.ts'), '/foo/bar/baz.ts');

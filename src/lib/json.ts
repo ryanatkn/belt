@@ -1,4 +1,4 @@
-import {is_plain_object} from '$lib/object.js';
+import {is_plain_object} from '$lib/object.ts';
 
 export type Json = Json_Primitive | Json_Object | Json_Array;
 

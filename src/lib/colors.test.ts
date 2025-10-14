@@ -14,7 +14,7 @@ import {
 	rgb_to_hsl,
 	hex_string_to_hsl,
 	type Rgb,
-} from '$lib/colors.js';
+} from '$lib/colors.ts';
 
 test('hex_to_rgb and rgb_to_hex', () => {
 	const rgb: Rgb = [157, 100, 50];

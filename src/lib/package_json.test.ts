@@ -1,6 +1,6 @@
 import {test, assert} from 'vitest';
 
-import {Package_Json, Package_Json_Exports} from '$lib/package_json.js';
+import {Package_Json, Package_Json_Exports} from '$lib/package_json.ts';
 
 test('Package_Json.parse', () => {
 	Package_Json.parse({name: 'abc', version: '123'});
