@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.35.1",
+  "version": "0.36.0",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -425,15 +425,15 @@
           "kind": "type"
         },
         {
-          "name": "to_json_type",
+          "name": "json_type_of",
           "kind": "function"
         },
         {
-          "name": "canonicalize",
+          "name": "json_embed",
           "kind": "function"
         },
         {
-          "name": "embed_json",
+          "name": "json_stringify_deterministic",
           "kind": "function"
         }
       ]
