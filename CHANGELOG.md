@@ -1,5 +1,14 @@
 # @ryanatkn/belt
 
+## 0.36.0
+
+### Minor Changes
+
+- - rename `json_type_of` from `to_json_type` ([4feefaf](https://github.com/ryanatkn/belt/commit/4feefaf))
+  - rename `json_embed` from `embed_json`
+  - rename `json_stringify_deterministic` from `to_deterministic_json`
+  - replace `canonicalize` with `json_stringify_deterministic`
+
 ## 0.35.1
 
 ### Patch Changes
