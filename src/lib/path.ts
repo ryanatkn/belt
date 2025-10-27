@@ -84,7 +84,7 @@ export const parse_path_pieces = (raw_path: string): Array<Path_Piece> => {
 	}
 	let path = '';
 	for (let i = 0; i < path_segments.length; i++) {
-		const path_segment = path_segments[i];
+		const path_segment = path_segments[i]!;
 		path += '/' + path_segment;
 		pieces.push({type: 'piece', name: path_segment, path});
 		if (i !== path_segments.length - 1) {
