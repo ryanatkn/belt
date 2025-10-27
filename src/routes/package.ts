@@ -230,9 +230,9 @@ export const src_json: Src_Json = {
 				{name: 'Json_Object', kind: 'type'},
 				{name: 'Json_Array', kind: 'type'},
 				{name: 'Json_Type', kind: 'type'},
-				{name: 'to_json_type', kind: 'function'},
-				{name: 'canonicalize', kind: 'function'},
-				{name: 'embed_json', kind: 'function'},
+				{name: 'json_type_of', kind: 'function'},
+				{name: 'json_embed', kind: 'function'},
+				{name: 'json_stringify_deterministic', kind: 'function'},
 			],
 		},
 		'./log.js': {
