@@ -130,6 +130,37 @@ bench.add('Date: different timestamps', () => {
 	deep_equal(date_a, date_c);
 });
 
+const ab_a = new ArrayBuffer(64);
+const ab_b = new ArrayBuffer(64);
+const ab_c = new ArrayBuffer(128);
+const ab_view_a = new Uint8Array(ab_a);
+const ab_view_b = new Uint8Array(ab_b);
+for (let i = 0; i < 64; i++) {
+	ab_view_a[i] = i % 256;
+	ab_view_b[i] = i % 256;
+}
+
+bench.add('ArrayBuffer: equal (64 bytes)', () => {
+	deep_equal(ab_a, ab_b);
+});
+
+bench.add('ArrayBuffer: different lengths', () => {
+	deep_equal(ab_a, ab_c);
+});
+
+const large_ab_a = new ArrayBuffer(1024);
+const large_ab_b = new ArrayBuffer(1024);
+const large_ab_view_a = new Uint8Array(large_ab_a);
+const large_ab_view_b = new Uint8Array(large_ab_b);
+for (let i = 0; i < 1024; i++) {
+	large_ab_view_a[i] = i % 256;
+	large_ab_view_b[i] = i % 256;
+}
+
+bench.add('ArrayBuffer: large (1KB)', () => {
+	deep_equal(large_ab_a, large_ab_b);
+});
+
 const err_a = new Error('test message');
 const err_b = new Error('test message');
 const err_c = new Error('different message');

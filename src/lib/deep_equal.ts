@@ -4,7 +4,7 @@ import {Unreachable_Error} from '@ryanatkn/belt/error.js';
  * Deep equality comparison that checks both structure and type.
  *
  * Key behaviors:
- * - Compares by constructor to prevent type confusion (security: `{}` ≠ `[]`, `{}` ≠ `new Map()`)
+ * - Compares by constructor to prevent type confusion (security: `{}` ≠ `[]`, `{}` ≠ `new Map()`, `new ClassA()` ≠ `new ClassB()`)
  * - Prevents asymmetry bugs: `deep_equal(a, b)` always equals `deep_equal(b, a)`
  * - Compares only enumerable own properties (ignores prototypes, symbols, non-enumerable)
  * - Special handling for: Date (timestamp), Number/Boolean (boxed primitives), Error (message/name)
@@ -41,27 +41,6 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			// Cache constructor for reuse in subsequent checks (avoids repeated property access)
 			const a_ctor = (a as any).constructor;
 			if (a_ctor !== (b as any).constructor) return false;
-
-			// TypedArrays: specialized fast path (no recursion needed - elements are always primitives)
-			// ArrayBuffer.isView() catches TypedArrays (Uint8Array, Int32Array, Float64Array, etc.)
-			// DataView is also caught by isView but needs special handling (no indexed access)
-			if (ArrayBuffer.isView(a)) {
-				// DataView: compare byte-by-byte using getUint8
-				if (a_ctor === DataView) {
-					if ((b as DataView).byteLength !== (a as DataView).byteLength) return false;
-					for (let i = 0; i < (a as DataView).byteLength; i++) {
-						if ((a as DataView).getUint8(i) !== (b as DataView).getUint8(i)) return false;
-					}
-					return true;
-				}
-				// TypedArrays: use indexed access (much faster)
-				if ((b as any).length !== (a as any).length) return false;
-				const len = (a as any).length;
-				for (let i = 0; i < len; i++) {
-					if ((a as any)[i] !== (b as any)[i]) return false;
-				}
-				return true;
-			}
 
 			// Regular arrays: inline length check before function call (fast-fail for mismatched lengths)
 			// Use Array.isArray() instead of instanceof Array (JIT-optimized, works cross-realm)
@@ -119,6 +98,42 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			if (a_ctor === Date) {
 				// Using Object.is to handle NaN correctly (invalid dates)
 				return Object.is((a as Date).getTime(), (b as Date).getTime());
+			}
+
+			// ArrayBuffer: convert to Uint8Array views for byte-by-byte comparison
+			if (a_ctor === ArrayBuffer) {
+				const a_buf = a as ArrayBuffer;
+				const b_buf = b as ArrayBuffer;
+				if (a_buf.byteLength !== b_buf.byteLength) return false;
+				const a_view = new Uint8Array(a_buf);
+				const b_view = new Uint8Array(b_buf);
+				const len = a_buf.byteLength;
+				for (let i = 0; i < len; i++) {
+					if (a_view[i] !== b_view[i]) return false;
+				}
+				return true;
+			}
+
+			// TypedArrays: specialized fast path (no recursion needed - elements are always primitives)
+			// ArrayBuffer.isView() catches TypedArrays (Uint8Array, Int32Array, Float64Array, etc.)
+			// DataView is also caught by isView but needs special handling (no indexed access)
+			if (ArrayBuffer.isView(a)) {
+				// DataView: compare byte-by-byte using getUint8
+				if (a_ctor === DataView) {
+					const byteLen = (a as DataView).byteLength;
+					if ((b as DataView).byteLength !== byteLen) return false;
+					for (let i = 0; i < byteLen; i++) {
+						if ((a as DataView).getUint8(i) !== (b as DataView).getUint8(i)) return false;
+					}
+					return true;
+				}
+				// TypedArrays: use indexed access (much faster)
+				if ((b as any).length !== (a as any).length) return false;
+				const len = (a as any).length;
+				for (let i = 0; i < len; i++) {
+					if ((a as any)[i] !== (b as any)[i]) return false;
+				}
+				return true;
 			}
 
 			// Boxed Number objects: compare by primitive value

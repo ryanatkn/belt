@@ -1,4 +1,4 @@
-import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.ts';
+import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.js';
 
 // equal sets
 test_equal_values([

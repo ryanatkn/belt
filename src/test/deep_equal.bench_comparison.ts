@@ -110,7 +110,7 @@ bench.add('nested object: fast-deep-equal', () => {
 });
 
 // =============================================================================
-// Date comparison (our bug fix!)
+// Date comparison
 // =============================================================================
 
 bench.add('Date: deep_equal', () => {
@@ -123,6 +123,31 @@ bench.add('Date: dequal', () => {
 
 bench.add('Date: fast-deep-equal', () => {
 	fastDeepEqual(date_a, date_b);
+});
+
+// =============================================================================
+// ArrayBuffer comparison
+// =============================================================================
+
+const ab_a = new ArrayBuffer(64);
+const ab_b = new ArrayBuffer(64);
+const ab_view_a = new Uint8Array(ab_a);
+const ab_view_b = new Uint8Array(ab_b);
+for (let i = 0; i < 64; i++) {
+	ab_view_a[i] = i % 256;
+	ab_view_b[i] = i % 256;
+}
+
+bench.add('ArrayBuffer (64 bytes): deep_equal', () => {
+	deep_equal(ab_a, ab_b);
+});
+
+bench.add('ArrayBuffer (64 bytes): dequal', () => {
+	dequal(ab_a, ab_b);
+});
+
+bench.add('ArrayBuffer (64 bytes): fast-deep-equal', () => {
+	fastDeepEqual(ab_a, ab_b);
 });
 
 // =============================================================================

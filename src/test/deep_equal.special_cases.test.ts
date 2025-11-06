@@ -160,3 +160,50 @@ test_unequal_values([
 	],
 	['DataView vs Uint8Array (different constructors)', new DataView(new ArrayBuffer(8)), new Uint8Array(8)],
 ]);
+
+// ArrayBuffer comparison
+test('ArrayBuffer equality with same data', () => {
+	const ab1 = new ArrayBuffer(8);
+	const ab2 = new ArrayBuffer(8);
+	const view1 = new Uint8Array(ab1);
+	const view2 = new Uint8Array(ab2);
+	view1[0] = 42;
+	view1[1] = 100;
+	view2[0] = 42;
+	view2[1] = 100;
+	assert.ok(deep_equal(ab1, ab2));
+});
+
+test('ArrayBuffer equality: empty buffers with same length', () => {
+	const ab1 = new ArrayBuffer(16);
+	const ab2 = new ArrayBuffer(16);
+	assert.ok(deep_equal(ab1, ab2));
+});
+
+test('ArrayBuffer inequality with different data', () => {
+	const ab1 = new ArrayBuffer(8);
+	const ab2 = new ArrayBuffer(8);
+	const view1 = new Uint8Array(ab1);
+	const view2 = new Uint8Array(ab2);
+	view1[0] = 42;
+	view2[0] = 99; // different value
+	assert.ok(!deep_equal(ab1, ab2));
+});
+
+test('ArrayBuffer inequality with different lengths', () => {
+	const ab1 = new ArrayBuffer(8);
+	const ab2 = new ArrayBuffer(16);
+	assert.ok(!deep_equal(ab1, ab2));
+});
+
+test('ArrayBuffer vs TypedArray (different constructors)', () => {
+	const ab = new ArrayBuffer(8);
+	const ta = new Uint8Array(8);
+	// Different constructors should not be equal
+	assert.ok(!deep_equal(ab, ta));
+});
+
+test('ArrayBuffer: same reference', () => {
+	const ab = new ArrayBuffer(8);
+	assert.ok(deep_equal(ab, ab));
+});
