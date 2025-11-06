@@ -19,9 +19,8 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 	if (Object.is(a, b)) return true;
 
 	const a_type = typeof a;
-	const b_type = typeof b;
 
-	if (a_type !== b_type) return false;
+	if (a_type !== typeof b) return false;
 
 	switch (a_type) {
 		case 'string':
@@ -144,7 +143,6 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 				return false;
 			}
 
-			// TODO BLOCK profile again
 			// Plain objects: compare enumerable own properties
 			const a_keys = Object.keys(a!);
 			const a_keys_length = a_keys.length;
