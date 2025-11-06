@@ -15,6 +15,8 @@ test_equal_values([
 	// basic arrays
 	['empty arrays', [], []],
 	['arrays with numbers', [1, 2, 3], [1, 2, 3]],
+	['arrays with one element', [1], [1]],
+	['arrays with two elements', [1, 2], [1, 2]],
 	['arrays with strings', ['apple', 'banana'], ['apple', 'banana']],
 	['arrays with mixed types', [1, 'two', true, null], [1, 'two', true, null]],
 	['single element arrays', [42], [42]],
@@ -67,7 +69,11 @@ test_unequal_values([
 		new Uint8Array([1, 3, 2]),
 	],
 	['typed arrays with different lengths', new Uint8Array([1, 2, 3]), new Uint8Array([1, 2])],
-	['typed arrays with different values', new Float64Array([1.5, 2.5]), new Float64Array([1.5, 2.6])],
+	[
+		'typed arrays with different values',
+		new Float64Array([1.5, 2.5]),
+		new Float64Array([1.5, 2.6]),
+	],
 	['BigInt64Array with different values', new BigInt64Array([1n, 2n]), new BigInt64Array([1n, 3n])],
 	// Different typed array types (different constructors)
 	['different typed array types', new Uint8Array([1, 2, 3]), new Int8Array([1, 2, 3])],
@@ -80,3 +86,83 @@ test_unequal_values([
 	['NaN position differences', [1, NaN, 3], [1, 3, NaN]],
 	['null vs undefined in array', [1, null, 3], [1, undefined, 3]],
 ]);
+
+// Small array fast path edge cases (len <= 3)
+// These test the unrolled loop optimization
+test('small array fast path: early exit at each position', () => {
+	// Length 1: fail at index 0
+	assert.ok(!deep_equal([1], [2]));
+	assert.ok(!deep_equal([{a: 1}], [{a: 2}]));
+
+	// Length 2: fail at index 0
+	assert.ok(!deep_equal([1, 2], [99, 2]));
+	assert.ok(!deep_equal([{a: 1}, {b: 2}], [{a: 99}, {b: 2}]));
+
+	// Length 2: fail at index 1
+	assert.ok(!deep_equal([1, 2], [1, 99]));
+	assert.ok(!deep_equal([{a: 1}, {b: 2}], [{a: 1}, {b: 99}]));
+
+	// Length 3: fail at index 0
+	assert.ok(!deep_equal([1, 2, 3], [99, 2, 3]));
+
+	// Length 3: fail at index 1
+	assert.ok(!deep_equal([1, 2, 3], [1, 99, 3]));
+
+	// Length 3: fail at index 2
+	assert.ok(!deep_equal([1, 2, 3], [1, 2, 99]));
+
+	// Length 4: fail at index 0, 1, 2, 3
+	assert.ok(!deep_equal([1, 2, 3, 4], [99, 2, 3, 4]));
+	assert.ok(!deep_equal([1, 2, 3, 4], [1, 99, 3, 4]));
+	assert.ok(!deep_equal([1, 2, 3, 4], [1, 2, 99, 4]));
+	assert.ok(!deep_equal([1, 2, 3, 4], [1, 2, 3, 99]));
+
+	// Length 5: fail at index 0, 1, 2, 3, 4
+	assert.ok(!deep_equal([1, 2, 3, 4, 5], [99, 2, 3, 4, 5]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 99, 3, 4, 5]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 99, 4, 5]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 3, 99, 5]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 3, 4, 99]));
+
+	// Length 6: fail at index 0, 1, 2, 3, 4, 5
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [99, 2, 3, 4, 5, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 99, 3, 4, 5, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 99, 4, 5, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 99, 5, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 99, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 99]));
+});
+
+test('small array fast path: boundary at len 6 vs 7', () => {
+	// len 6 uses unrolled fast path
+	assert.ok(deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 99]));
+
+	// len 7 uses regular loop
+	assert.ok(deep_equal([1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]));
+	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 99]));
+});
+
+test('small array fast path: Object.is semantics', () => {
+	// -0 vs +0 should be DIFFERENT with Object.is (unlike ===)
+	assert.ok(!deep_equal([0], [-0]));
+	assert.ok(!deep_equal([0, 1], [-0, 1]));
+	assert.ok(!deep_equal([0, 1, 2], [-0, 1, 2]));
+	assert.ok(!deep_equal([0, 1, 2, 3], [-0, 1, 2, 3]));
+	assert.ok(!deep_equal([0, 1, 2, 3, 4], [-0, 1, 2, 3, 4]));
+	assert.ok(!deep_equal([0, 1, 2, 3, 4, 5], [-0, 1, 2, 3, 4, 5]));
+
+	// But same sign zeros are equal
+	assert.ok(deep_equal([0], [0]));
+	assert.ok(deep_equal([-0], [-0]));
+	assert.ok(deep_equal([0, 1, 2], [0, 1, 2]));
+	assert.ok(deep_equal([0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5]));
+
+	// NaN should equal NaN with Object.is (unlike ===)
+	assert.ok(deep_equal([NaN], [NaN]));
+	assert.ok(deep_equal([NaN, 1], [NaN, 1]));
+	assert.ok(deep_equal([NaN, 1, 2], [NaN, 1, 2]));
+	assert.ok(deep_equal([NaN, 1, 2, 3], [NaN, 1, 2, 3]));
+	assert.ok(deep_equal([NaN, 1, 2, 3, 4], [NaN, 1, 2, 3, 4]));
+	assert.ok(deep_equal([NaN, 1, 2, 3, 4, 5], [NaN, 1, 2, 3, 4, 5]));
+});

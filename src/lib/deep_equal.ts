@@ -57,7 +57,8 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 				}
 				// TypedArrays: use indexed access (much faster)
 				if ((b as any).length !== (a as any).length) return false;
-				for (let i = 0; i < (a as any).length; i++) {
+				const len = (a as any).length;
+				for (let i = 0; i < len; i++) {
 					if ((a as any)[i] !== (b as any)[i]) return false;
 				}
 				return true;
@@ -68,6 +69,25 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			if (Array.isArray(a)) {
 				const len = a.length;
 				if ((b as any).length !== len) return false;
+
+				// Fast path for small arrays (0-6 elements) - unrolled to avoid loop overhead
+				// Common case: [a, b], [x, y, z], etc. Avoids loop setup/iteration for tiny arrays
+				if (len <= 6) {
+					if (len === 0) return true;
+					if (!deep_equal(a[0], (b as any)[0])) return false;
+					if (len === 1) return true;
+					if (!deep_equal(a[1], (b as any)[1])) return false;
+					if (len === 2) return true;
+					if (!deep_equal(a[2], (b as any)[2])) return false;
+					if (len === 3) return true;
+					if (!deep_equal(a[3], (b as any)[3])) return false;
+					if (len === 4) return true;
+					if (!deep_equal(a[4], (b as any)[4])) return false;
+					if (len === 5) return true;
+					return deep_equal(a[5], (b as any)[5]);
+				}
+
+				// Regular loop for larger arrays
 				for (let i = 0; i < len; i++) {
 					if (!deep_equal(a[i], (b as any)[i])) return false;
 				}
@@ -76,27 +96,28 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 
 			// Use cached constructor for type checks (faster than instanceof - avoids prototype chain walk)
 			if (a_ctor === Set) {
-				const a_set = a as Set<unknown>;
-				const b_set = b as Set<unknown>;
-				if (a_set.size !== b_set.size) return false;
-				for (const a_value of a_set) {
-					if (!b_set.has(a_value)) return false;
+				if ((a as Set<unknown>).size !== (b as Set<unknown>).size) return false;
+				for (const a_value of a as Set<unknown>) {
+					if (!(b as Set<unknown>).has(a_value)) return false;
 				}
 				return true;
 			}
 			if (a_ctor === Map) {
-				const a_map = a as Map<unknown, unknown>;
-				const b_map = b as Map<unknown, unknown>;
-				if (a_map.size !== b_map.size) return false;
-				for (const [key, a_value] of a_map) {
-					if (!b_map.has(key) || !deep_equal(a_value, b_map.get(key))) return false;
+				if ((a as Map<unknown, unknown>).size !== (b as Map<unknown, unknown>).size) return false;
+				for (const [key, a_value] of a as Map<unknown, unknown>) {
+					if (
+						!(b as Map<unknown, unknown>).has(key) ||
+						!deep_equal(a_value, (b as Map<unknown, unknown>).get(key))
+					)
+						return false;
 				}
 				return true;
 			}
 			if (a_ctor === RegExp) {
-				const a_re = a as RegExp;
-				const b_re = b as RegExp;
-				return a_re.source === b_re.source && a_re.flags === b_re.flags;
+				return (
+					(a as RegExp).source === (b as RegExp).source &&
+					(a as RegExp).flags === (b as RegExp).flags
+				);
 			}
 
 			// Date objects: compare by timestamp value
@@ -129,8 +150,10 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 
 			// Plain objects: compare enumerable own properties
 			const a_keys = Object.keys(a!);
-			if (a_keys.length !== Object.keys(b!).length) return false;
-			for (const key of a_keys) {
+			const a_keys_length = a_keys.length;
+			if (a_keys_length !== Object.keys(b!).length) return false;
+			for (let i = 0; i < a_keys_length; i++) {
+				const key = a_keys[i]!;
 				if (!(key in (b as any))) return false;
 				if (!deep_equal((a as any)[key], (b as any)[key])) return false;
 			}
