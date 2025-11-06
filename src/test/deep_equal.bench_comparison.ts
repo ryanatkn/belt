@@ -123,7 +123,7 @@ for (let i = 0; i < 64; i++) {
 
 // Constructor mismatch (fast-fail case)
 const empty_obj = {};
-const empty_arr: any[] = [];
+const empty_arr: Array<any> = [];
 
 // =============================================================================
 // Arrays - granular small sizes to detect performance cliffs
