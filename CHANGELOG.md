@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.36.1
+
+### Patch Changes
+
+- add `deep_equal.ts` ([#50](https://github.com/ryanatkn/belt/pull/50))
+
 ## 0.36.0
 
 ### Minor Changes
