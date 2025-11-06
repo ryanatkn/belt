@@ -132,10 +132,31 @@ test('typed arrays with same buffer but different views', () => {
 	assert.ok(deep_equal(view1, view2));
 });
 
+test('DataView equality with same data', () => {
+	const buffer1 = new ArrayBuffer(8);
+	const buffer2 = new ArrayBuffer(8);
+	const view1 = new DataView(buffer1);
+	const view2 = new DataView(buffer2);
+	view1.setUint32(0, 42);
+	view2.setUint32(0, 42);
+	assert.ok(deep_equal(view1, view2));
+});
+
+test('DataView inequality with different data', () => {
+	const buffer1 = new ArrayBuffer(8);
+	const buffer2 = new ArrayBuffer(8);
+	const view1 = new DataView(buffer1);
+	const view2 = new DataView(buffer2);
+	view1.setUint32(0, 42);
+	view2.setUint32(0, 43);
+	assert.ok(!deep_equal(view1, view2));
+});
+
 test_unequal_values([
 	[
 		'different views of same buffer',
 		new Uint8Array(new ArrayBuffer(8)),
 		new Uint16Array(new ArrayBuffer(8)),
 	],
+	['DataView vs Uint8Array (different constructors)', new DataView(new ArrayBuffer(8)), new Uint8Array(8)],
 ]);

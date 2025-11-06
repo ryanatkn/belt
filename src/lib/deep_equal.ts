@@ -44,13 +44,21 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			if (a_ctor !== (b as any).constructor) return false;
 
 			// TypedArrays: specialized fast path (no recursion needed - elements are always primitives)
-			// ArrayBuffer.isView() catches Uint8Array, Int32Array, Float64Array, etc.
+			// ArrayBuffer.isView() catches TypedArrays (Uint8Array, Int32Array, Float64Array, etc.)
+			// DataView is also caught by isView but needs special handling (no indexed access)
 			if (ArrayBuffer.isView(a)) {
-				const len = a.length;
-				if ((b as any).length !== len) return false;
-				// Direct !== comparison - TypedArrays can only contain numbers
-				for (let i = 0; i < len; i++) {
-					if (a[i] !== (b as any)[i]) return false;
+				// DataView: compare byte-by-byte using getUint8
+				if (a_ctor === DataView) {
+					if ((b as DataView).byteLength !== (a as DataView).byteLength) return false;
+					for (let i = 0; i < (a as DataView).byteLength; i++) {
+						if ((a as DataView).getUint8(i) !== (b as DataView).getUint8(i)) return false;
+					}
+					return true;
+				}
+				// TypedArrays: use indexed access (much faster)
+				if ((b as any).length !== (a as any).length) return false;
+				for (let i = 0; i < (a as any).length; i++) {
+					if ((a as any)[i] !== (b as any)[i]) return false;
 				}
 				return true;
 			}
@@ -120,10 +128,10 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			}
 
 			// Plain objects: compare enumerable own properties
-			const a_keys = Object.keys(a);
-			if (a_keys.length !== Object.keys(b).length) return false;
+			const a_keys = Object.keys(a!);
+			if (a_keys.length !== Object.keys(b!).length) return false;
 			for (const key of a_keys) {
-				if (!(key in b)) return false;
+				if (!(key in (b as any))) return false;
 				if (!deep_equal((a as any)[key], (b as any)[key])) return false;
 			}
 			return true;

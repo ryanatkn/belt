@@ -34,6 +34,9 @@ test_equal_values([
 	['Int32Array', new Int32Array([-1000, 1000]), new Int32Array([-1000, 1000])],
 	['Float32Array', new Float32Array([1.5, 2.5]), new Float32Array([1.5, 2.5])],
 	['Float64Array', new Float64Array([1.5, 2.5]), new Float64Array([1.5, 2.5])],
+	['Uint8ClampedArray', new Uint8ClampedArray([0, 128, 255]), new Uint8ClampedArray([0, 128, 255])],
+	['BigInt64Array', new BigInt64Array([1n, -1n, 0n]), new BigInt64Array([1n, -1n, 0n])],
+	['BigUint64Array', new BigUint64Array([0n, 100n, 1000n]), new BigUint64Array([0n, 100n, 1000n])],
 
 	// special values in arrays
 	['arrays with NaN', [NaN, 1, 2], [NaN, 1, 2]],
@@ -63,9 +66,15 @@ test_unequal_values([
 		new Uint8Array([1, 2, 3]),
 		new Uint8Array([1, 3, 2]),
 	],
-	// note: typed arrays are treated as arrays, so types and values are compared the same way
-	// ['different typed array types', new Uint8Array([1, 2, 3]), new Int8Array([1, 2, 3])],
-	// ['typed array and regular array', new Uint8Array([1, 2, 3]), [1, 2, 3]],
+	['typed arrays with different lengths', new Uint8Array([1, 2, 3]), new Uint8Array([1, 2])],
+	['typed arrays with different values', new Float64Array([1.5, 2.5]), new Float64Array([1.5, 2.6])],
+	['BigInt64Array with different values', new BigInt64Array([1n, 2n]), new BigInt64Array([1n, 3n])],
+	// Different typed array types (different constructors)
+	['different typed array types', new Uint8Array([1, 2, 3]), new Int8Array([1, 2, 3])],
+	['Uint8Array vs Uint8ClampedArray', new Uint8Array([1, 2, 3]), new Uint8ClampedArray([1, 2, 3])],
+	['Float32Array vs Float64Array', new Float32Array([1.5, 2.5]), new Float64Array([1.5, 2.5])],
+	// TypedArray vs regular array (different constructors)
+	['typed array and regular array', new Uint8Array([1, 2, 3]), [1, 2, 3]],
 
 	// special value differences
 	['NaN position differences', [1, NaN, 3], [1, 3, NaN]],
