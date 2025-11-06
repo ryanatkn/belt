@@ -58,16 +58,38 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			// Regular arrays: inline length check before function call (fast-fail for mismatched lengths)
 			// Use Array.isArray() instead of instanceof Array (JIT-optimized, works cross-realm)
 			if (Array.isArray(a)) {
-				if (a.length !== (b as any).length) return false;
-				return deep_equal_arrays(a, b as any);
+				const len = a.length;
+				if ((b as any).length !== len) return false;
+				for (let i = 0; i < len; i++) {
+					if (!deep_equal(a[i], (b as any)[i])) return false;
+				}
+				return true;
 			}
 
 			// Use cached constructor for type checks (faster than instanceof - avoids prototype chain walk)
-			if (a_ctor === Set) return deep_equal_sets(a as Set<unknown>, b as Set<unknown>);
-			if (a_ctor === Map) {
-				return deep_equal_maps(a as Map<unknown, unknown>, b as Map<unknown, unknown>);
+			if (a_ctor === Set) {
+				const a_set = a as Set<unknown>;
+				const b_set = b as Set<unknown>;
+				if (a_set.size !== b_set.size) return false;
+				for (const a_value of a_set) {
+					if (!b_set.has(a_value)) return false;
+				}
+				return true;
 			}
-			if (a_ctor === RegExp) return deep_equal_regexps(a as RegExp, b as RegExp);
+			if (a_ctor === Map) {
+				const a_map = a as Map<unknown, unknown>;
+				const b_map = b as Map<unknown, unknown>;
+				if (a_map.size !== b_map.size) return false;
+				for (const [key, a_value] of a_map) {
+					if (!b_map.has(key) || !deep_equal(a_value, b_map.get(key))) return false;
+				}
+				return true;
+			}
+			if (a_ctor === RegExp) {
+				const a_re = a as RegExp;
+				const b_re = b as RegExp;
+				return a_re.source === b_re.source && a_re.flags === b_re.flags;
+			}
 
 			// Date objects: compare by timestamp value
 			if (a_ctor === Date) {
@@ -97,50 +119,16 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 				return false;
 			}
 
-			return deep_equal_objects(a as object, b as object);
+			// Plain objects: compare enumerable own properties
+			const a_keys = Object.keys(a);
+			if (a_keys.length !== Object.keys(b).length) return false;
+			for (const key of a_keys) {
+				if (!(key in b)) return false;
+				if (!deep_equal((a as any)[key], (b as any)[key])) return false;
+			}
+			return true;
 		}
 		default:
 			throw new Unreachable_Error(a_type);
 	}
 };
-
-export const deep_equal_objects = (a: object, b: object): boolean => {
-	const a_keys = Object.keys(a);
-	if (a_keys.length !== Object.keys(b).length) return false;
-	for (const key of a_keys) {
-		if (!(key in b)) return false;
-		if (!deep_equal((a as any)[key], (b as any)[key])) return false;
-	}
-	return true;
-};
-
-export const deep_equal_arrays = (a: Array<unknown>, b: Array<unknown>): boolean => {
-	if (a.length !== b.length) return false;
-	for (let i = 0; i < a.length; i++) {
-		if (!deep_equal(a[i], b[i])) return false;
-	}
-	return true;
-};
-
-// Two maps containing deeply equal object keys, but different references,
-// are considered not equal to each other.
-export const deep_equal_maps = (a: Map<unknown, unknown>, b: Map<unknown, unknown>): boolean => {
-	if (a.size !== b.size) return false;
-	for (const [key, a_value] of a) {
-		if (!b.has(key) || !deep_equal(a_value, b.get(key))) return false;
-	}
-	return true;
-};
-
-// Two sets containing deeply equal objects, but different references,
-// are considered not equal to each other.
-export const deep_equal_sets = (a: Set<unknown>, b: Set<unknown>): boolean => {
-	if (a.size !== b.size) return false;
-	for (const a_value of a) {
-		if (!b.has(a_value)) return false;
-	}
-	return true;
-};
-
-export const deep_equal_regexps = (a: RegExp, b: RegExp): boolean =>
-	a.source === b.source && a.flags === b.flags;

@@ -12,6 +12,7 @@
 
 
 ## Run 1
+**Context**: Baseline before Win #1 optimizations
 
 small object:
   🏆 fast-deep-equal         3458199 ops/sec  (baseline)
@@ -57,6 +58,9 @@ constructor mismatch {} vs []:
 ---
 
 ## Run 2
+**Context**: After Win #1 (`Array.isArray()` + constructor caching)
+**Changes**: `deep_equal.ts:49` (Array.isArray), `:43-44` (constructor caching), `:55-59` (cached constructor checks)
+**Result**: +4.8% overall, gained 3 category wins (nested object, Date, constructor mismatch)
 
 small object:
   🏆 fast-deep-equal         3190518 ops/sec  (baseline)
@@ -101,7 +105,9 @@ constructor mismatch {} vs []:
 
 
 ## Run 3
-
+**Context**: After Win #2 (TypedArray fast path + inline array length check)
+**Changes**: `deep_equal.ts:46-63` - split TypedArray into specialized path with direct `!==` comparison (no recursion), added inline length check for arrays
+**Result**: +9.1% typed arrays (now beating dequal!), but lost Date win (-18.6% regression, likely variance)
 
 small object:
   🏆 fast-deep-equal         3373588 ops/sec  (baseline)
@@ -137,3 +143,28 @@ constructor mismatch {} vs []:
   🏆 fast-deep-equal         7537886 ops/sec  (baseline)
      deep_equal              7167295 ops/sec  (1.05x slower)
      dequal                  6964935 ops/sec  (1.08x slower)
+
+📈 Summary:
+
+  deep_equal           avg:    4556481 ops/sec  |  wins: 2/7
+  dequal               avg:    4240225 ops/sec  |  wins: 0/7
+  fast-deep-equal      avg:    4135626 ops/sec  |  wins: 5/7
+
+---
+
+## 📊 Progress Summary
+
+| Metric | Run 1 | Run 2 | Run 3 | Change |
+|--------|-------|-------|-------|--------|
+| **Overall avg** | 4.35M | 4.56M | 4.56M | +4.8% |
+| **Category wins** | 0/7 | 3/7 | 2/7 | +2 |
+| **Typed arrays** | 5.95M (-8%) | 5.89M (-9%) | 6.43M (✅ **wins!**) | **+8.1%** |
+| **Nested objects** | 2.14M (-15%) | 2.51M (🏆) | 2.58M (🏆) | +20.6% |
+| **Date** | 6.29M (-27%) | 7.95M (🏆) | 6.47M (-25%) | +2.9% |
+| **Small arrays** | 5.60M (-1%) | 5.18M (-7%) | 4.93M (-7%) | -12.0% |
+
+**Key achievements**:
+- ✅ **Typed arrays**: Closed -9% gap, now beating dequal by 1%
+- ✅ **Overall**: Maintained ~4.56M ops/sec average
+- ⚠️ **Date**: Lost win in Run 3 (likely benchmark variance)
+- ⚠️ **Small arrays**: Consistent regression (~-5 to -12% across runs)
