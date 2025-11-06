@@ -26,109 +26,84 @@ if (gc) {
 	});
 }
 
-// Test data
-const small_obj_a = {id: 1, name: 'alice', active: true, count: 42, tags: ['a', 'b']};
-const small_obj_b = {id: 1, name: 'alice', active: true, count: 42, tags: ['a', 'b']};
-const small_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const small_arr_copy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// =============================================================================
+// Test data - comprehensive coverage of realistic patterns and sizes
+// =============================================================================
+
+// Arrays: small baseline (1, 3), then representative larger sizes
+const arr_1 = [1];
+const arr_1_copy = [1];
+const arr_3 = [1, 2, 3];
+const arr_3_copy = [1, 2, 3];
+const arr_10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arr_10_copy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arr_50 = Array.from({length: 50}, (_, i) => i);
+const arr_50_copy = Array.from({length: 50}, (_, i) => i);
+const arr_100 = Array.from({length: 100}, (_, i) => i);
+const arr_100_copy = Array.from({length: 100}, (_, i) => i);
+const arr_500 = Array.from({length: 500}, (_, i) => i);
+const arr_500_copy = Array.from({length: 500}, (_, i) => i);
+
+// Objects: small baseline (1, 3), then realistic larger sizes
+const obj_1_a = {a: 1};
+const obj_1_b = {a: 1};
+const obj_3_a = {a: 1, b: 2, c: 3};
+const obj_3_b = {a: 1, b: 2, c: 3};
+const obj_10_a: Record<string, number> = {};
+const obj_10_b: Record<string, number> = {};
+for (let i = 0; i < 10; i++) {
+	obj_10_a[`key_${i}`] = i;
+	obj_10_b[`key_${i}`] = i;
+}
+const obj_20_a: Record<string, number> = {};
+const obj_20_b: Record<string, number> = {};
+for (let i = 0; i < 20; i++) {
+	obj_20_a[`key_${i}`] = i;
+	obj_20_b[`key_${i}`] = i;
+}
+const obj_50_a: Record<string, number> = {};
+const obj_50_b: Record<string, number> = {};
+for (let i = 0; i < 50; i++) {
+	obj_50_a[`key_${i}`] = i;
+	obj_50_b[`key_${i}`] = i;
+}
+const obj_100_a: Record<string, number> = {};
+const obj_100_b: Record<string, number> = {};
+for (let i = 0; i < 100; i++) {
+	obj_100_a[`key_${i}`] = i;
+	obj_100_b[`key_${i}`] = i;
+}
+
+// Mixed structures: real-world patterns
+const arr_of_objs_a = Array.from({length: 10}, (_, i) => ({id: i, name: `item_${i}`, value: i * 10}));
+const arr_of_objs_b = Array.from({length: 10}, (_, i) => ({id: i, name: `item_${i}`, value: i * 10}));
+
+const obj_with_arrays_a = {
+	tags: ['javascript', 'typescript', 'node'],
+	scores: [98, 87, 92, 88],
+	meta: {created: '2024-01-15', updated: '2024-01-20'},
+};
+const obj_with_arrays_b = {
+	tags: ['javascript', 'typescript', 'node'],
+	scores: [98, 87, 92, 88],
+	meta: {created: '2024-01-15', updated: '2024-01-20'},
+};
+
+const nested_shallow_a = {data: {user: {id: 1, name: 'alice'}}};
+const nested_shallow_b = {data: {user: {id: 1, name: 'alice'}}};
+
+const nested_deep_a = {a: {b: {c: {d: {e: 'deep'}}}}};
+const nested_deep_b = {a: {b: {c: {d: {e: 'deep'}}}}};
+
+// TypedArrays
 const uint8 = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 const uint8_copy = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-const nested = {a: {b: {c: {d: {e: 'deep'}}}}};
-const nested_copy = {a: {b: {c: {d: {e: 'deep'}}}}};
+
+// Other types
 const date_a = new Date('2024-01-15');
 const date_b = new Date('2024-01-15');
 
-const large_obj: Record<string, number> = {};
-const large_obj_copy: Record<string, number> = {};
-for (let i = 0; i < 100; i++) {
-	large_obj[`key_${i}`] = i;
-	large_obj_copy[`key_${i}`] = i;
-}
-
-// =============================================================================
-// Small object comparison
-// =============================================================================
-
-bench.add('small object: deep_equal', () => {
-	deep_equal(small_obj_a, small_obj_b);
-});
-
-bench.add('small object: dequal', () => {
-	dequal(small_obj_a, small_obj_b);
-});
-
-bench.add('small object: fast-deep-equal', () => {
-	fastDeepEqual(small_obj_a, small_obj_b);
-});
-
-// =============================================================================
-// Small array comparison
-// =============================================================================
-
-bench.add('small array: deep_equal', () => {
-	deep_equal(small_arr, small_arr_copy);
-});
-
-bench.add('small array: dequal', () => {
-	dequal(small_arr, small_arr_copy);
-});
-
-bench.add('small array: fast-deep-equal', () => {
-	fastDeepEqual(small_arr, small_arr_copy);
-});
-
-// =============================================================================
-// Typed array comparison (our optimization target!)
-// =============================================================================
-
-bench.add('typed array: deep_equal', () => {
-	deep_equal(uint8, uint8_copy);
-});
-
-bench.add('typed array: dequal', () => {
-	dequal(uint8, uint8_copy);
-});
-
-bench.add('typed array: fast-deep-equal', () => {
-	fastDeepEqual(uint8, uint8_copy);
-});
-
-// =============================================================================
-// Nested object comparison
-// =============================================================================
-
-bench.add('nested object: deep_equal', () => {
-	deep_equal(nested, nested_copy);
-});
-
-bench.add('nested object: dequal', () => {
-	dequal(nested, nested_copy);
-});
-
-bench.add('nested object: fast-deep-equal', () => {
-	fastDeepEqual(nested, nested_copy);
-});
-
-// =============================================================================
-// Date comparison
-// =============================================================================
-
-bench.add('Date: deep_equal', () => {
-	deep_equal(date_a, date_b);
-});
-
-bench.add('Date: dequal', () => {
-	dequal(date_a, date_b);
-});
-
-bench.add('Date: fast-deep-equal', () => {
-	fastDeepEqual(date_a, date_b);
-});
-
-// =============================================================================
-// ArrayBuffer comparison
-// =============================================================================
-
+// ArrayBuffer
 const ab_a = new ArrayBuffer(64);
 const ab_b = new ArrayBuffer(64);
 const ab_view_a = new Uint8Array(ab_a);
@@ -138,49 +113,113 @@ for (let i = 0; i < 64; i++) {
 	ab_view_b[i] = i % 256;
 }
 
-bench.add('ArrayBuffer (64 bytes): deep_equal', () => {
-	deep_equal(ab_a, ab_b);
-});
-
-bench.add('ArrayBuffer (64 bytes): dequal', () => {
-	dequal(ab_a, ab_b);
-});
-
-bench.add('ArrayBuffer (64 bytes): fast-deep-equal', () => {
-	fastDeepEqual(ab_a, ab_b);
-});
+// Constructor mismatch (fast-fail case)
+const empty_obj = {};
+const empty_arr: any[] = [];
 
 // =============================================================================
-// Large object comparison
+// Arrays - granular small sizes to detect performance cliffs
 // =============================================================================
 
-bench.add('large object (100 props): deep_equal', () => {
-	deep_equal(large_obj, large_obj_copy);
-});
+bench.add('array (1 element): deep_equal', () => deep_equal(arr_1, arr_1_copy));
+bench.add('array (1 element): dequal', () => dequal(arr_1, arr_1_copy));
+bench.add('array (1 element): fast-deep-equal', () => fastDeepEqual(arr_1, arr_1_copy));
 
-bench.add('large object (100 props): dequal', () => {
-	dequal(large_obj, large_obj_copy);
-});
+bench.add('array (3 elements): deep_equal', () => deep_equal(arr_3, arr_3_copy));
+bench.add('array (3 elements): dequal', () => dequal(arr_3, arr_3_copy));
+bench.add('array (3 elements): fast-deep-equal', () => fastDeepEqual(arr_3, arr_3_copy));
 
-bench.add('large object (100 props): fast-deep-equal', () => {
-	fastDeepEqual(large_obj, large_obj_copy);
-});
+bench.add('array (10 elements): deep_equal', () => deep_equal(arr_10, arr_10_copy));
+bench.add('array (10 elements): dequal', () => dequal(arr_10, arr_10_copy));
+bench.add('array (10 elements): fast-deep-equal', () => fastDeepEqual(arr_10, arr_10_copy));
+
+bench.add('array (50 elements): deep_equal', () => deep_equal(arr_50, arr_50_copy));
+bench.add('array (50 elements): dequal', () => dequal(arr_50, arr_50_copy));
+bench.add('array (50 elements): fast-deep-equal', () => fastDeepEqual(arr_50, arr_50_copy));
+
+bench.add('array (100 elements): deep_equal', () => deep_equal(arr_100, arr_100_copy));
+bench.add('array (100 elements): dequal', () => dequal(arr_100, arr_100_copy));
+bench.add('array (100 elements): fast-deep-equal', () => fastDeepEqual(arr_100, arr_100_copy));
+
+bench.add('array (500 elements): deep_equal', () => deep_equal(arr_500, arr_500_copy));
+bench.add('array (500 elements): dequal', () => dequal(arr_500, arr_500_copy));
+bench.add('array (500 elements): fast-deep-equal', () => fastDeepEqual(arr_500, arr_500_copy));
 
 // =============================================================================
-// Constructor mismatch (our security fix!)
+// Objects - granular small sizes + realistic larger sizes
 // =============================================================================
 
-bench.add('constructor mismatch {} vs []: deep_equal', () => {
-	deep_equal({}, []);
-});
+bench.add('object (1 prop): deep_equal', () => deep_equal(obj_1_a, obj_1_b));
+bench.add('object (1 prop): dequal', () => dequal(obj_1_a, obj_1_b));
+bench.add('object (1 prop): fast-deep-equal', () => fastDeepEqual(obj_1_a, obj_1_b));
 
-bench.add('constructor mismatch {} vs []: dequal', () => {
-	dequal({}, []);
-});
+bench.add('object (3 props): deep_equal', () => deep_equal(obj_3_a, obj_3_b));
+bench.add('object (3 props): dequal', () => dequal(obj_3_a, obj_3_b));
+bench.add('object (3 props): fast-deep-equal', () => fastDeepEqual(obj_3_a, obj_3_b));
 
-bench.add('constructor mismatch {} vs []: fast-deep-equal', () => {
-	fastDeepEqual({}, []);
-});
+bench.add('object (10 props): deep_equal', () => deep_equal(obj_10_a, obj_10_b));
+bench.add('object (10 props): dequal', () => dequal(obj_10_a, obj_10_b));
+bench.add('object (10 props): fast-deep-equal', () => fastDeepEqual(obj_10_a, obj_10_b));
+
+bench.add('object (20 props): deep_equal', () => deep_equal(obj_20_a, obj_20_b));
+bench.add('object (20 props): dequal', () => dequal(obj_20_a, obj_20_b));
+bench.add('object (20 props): fast-deep-equal', () => fastDeepEqual(obj_20_a, obj_20_b));
+
+bench.add('object (50 props): deep_equal', () => deep_equal(obj_50_a, obj_50_b));
+bench.add('object (50 props): dequal', () => dequal(obj_50_a, obj_50_b));
+bench.add('object (50 props): fast-deep-equal', () => fastDeepEqual(obj_50_a, obj_50_b));
+
+bench.add('object (100 props): deep_equal', () => deep_equal(obj_100_a, obj_100_b));
+bench.add('object (100 props): dequal', () => dequal(obj_100_a, obj_100_b));
+bench.add('object (100 props): fast-deep-equal', () => fastDeepEqual(obj_100_a, obj_100_b));
+
+// =============================================================================
+// Mixed structures - real-world patterns
+// =============================================================================
+
+bench.add('array of objects (10 items): deep_equal', () => deep_equal(arr_of_objs_a, arr_of_objs_b));
+bench.add('array of objects (10 items): dequal', () => dequal(arr_of_objs_a, arr_of_objs_b));
+bench.add('array of objects (10 items): fast-deep-equal', () => fastDeepEqual(arr_of_objs_a, arr_of_objs_b));
+
+bench.add('object with arrays: deep_equal', () => deep_equal(obj_with_arrays_a, obj_with_arrays_b));
+bench.add('object with arrays: dequal', () => dequal(obj_with_arrays_a, obj_with_arrays_b));
+bench.add('object with arrays: fast-deep-equal', () => fastDeepEqual(obj_with_arrays_a, obj_with_arrays_b));
+
+bench.add('nested shallow (2 levels): deep_equal', () => deep_equal(nested_shallow_a, nested_shallow_b));
+bench.add('nested shallow (2 levels): dequal', () => dequal(nested_shallow_a, nested_shallow_b));
+bench.add('nested shallow (2 levels): fast-deep-equal', () => fastDeepEqual(nested_shallow_a, nested_shallow_b));
+
+bench.add('nested deep (5 levels): deep_equal', () => deep_equal(nested_deep_a, nested_deep_b));
+bench.add('nested deep (5 levels): dequal', () => dequal(nested_deep_a, nested_deep_b));
+bench.add('nested deep (5 levels): fast-deep-equal', () => fastDeepEqual(nested_deep_a, nested_deep_b));
+
+// =============================================================================
+// TypedArrays and binary data
+// =============================================================================
+
+bench.add('typed array (10 elements): deep_equal', () => deep_equal(uint8, uint8_copy));
+bench.add('typed array (10 elements): dequal', () => dequal(uint8, uint8_copy));
+bench.add('typed array (10 elements): fast-deep-equal', () => fastDeepEqual(uint8, uint8_copy));
+
+bench.add('ArrayBuffer (64 bytes): deep_equal', () => deep_equal(ab_a, ab_b));
+bench.add('ArrayBuffer (64 bytes): dequal', () => dequal(ab_a, ab_b));
+bench.add('ArrayBuffer (64 bytes): fast-deep-equal', () => fastDeepEqual(ab_a, ab_b));
+
+// =============================================================================
+// Other types
+// =============================================================================
+
+bench.add('Date: deep_equal', () => deep_equal(date_a, date_b));
+bench.add('Date: dequal', () => dequal(date_a, date_b));
+bench.add('Date: fast-deep-equal', () => fastDeepEqual(date_a, date_b));
+
+// =============================================================================
+// Fast-fail cases
+// =============================================================================
+
+bench.add('constructor mismatch {} vs []: deep_equal', () => deep_equal(empty_obj, empty_arr));
+bench.add('constructor mismatch {} vs []: dequal', () => dequal(empty_obj, empty_arr));
+bench.add('constructor mismatch {} vs []: fast-deep-equal', () => fastDeepEqual(empty_obj, empty_arr));
 
 // =============================================================================
 // Run and report
