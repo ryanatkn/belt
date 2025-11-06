@@ -75,8 +75,16 @@ for (let i = 0; i < 100; i++) {
 }
 
 // Mixed structures: real-world patterns
-const arr_of_objs_a = Array.from({length: 10}, (_, i) => ({id: i, name: `item_${i}`, value: i * 10}));
-const arr_of_objs_b = Array.from({length: 10}, (_, i) => ({id: i, name: `item_${i}`, value: i * 10}));
+const arr_of_objs_a = Array.from({length: 10}, (_, i) => ({
+	id: i,
+	name: `item_${i}`,
+	value: i * 10,
+}));
+const arr_of_objs_b = Array.from({length: 10}, (_, i) => ({
+	id: i,
+	name: `item_${i}`,
+	value: i * 10,
+}));
 
 const obj_with_arrays_a = {
 	tags: ['javascript', 'typescript', 'node'],
@@ -177,21 +185,33 @@ bench.add('object (100 props): fast-deep-equal', () => fastDeepEqual(obj_100_a, 
 // Mixed structures - real-world patterns
 // =============================================================================
 
-bench.add('array of objects (10 items): deep_equal', () => deep_equal(arr_of_objs_a, arr_of_objs_b));
+bench.add('array of objects (10 items): deep_equal', () =>
+	deep_equal(arr_of_objs_a, arr_of_objs_b),
+);
 bench.add('array of objects (10 items): dequal', () => dequal(arr_of_objs_a, arr_of_objs_b));
-bench.add('array of objects (10 items): fast-deep-equal', () => fastDeepEqual(arr_of_objs_a, arr_of_objs_b));
+bench.add('array of objects (10 items): fast-deep-equal', () =>
+	fastDeepEqual(arr_of_objs_a, arr_of_objs_b),
+);
 
 bench.add('object with arrays: deep_equal', () => deep_equal(obj_with_arrays_a, obj_with_arrays_b));
 bench.add('object with arrays: dequal', () => dequal(obj_with_arrays_a, obj_with_arrays_b));
-bench.add('object with arrays: fast-deep-equal', () => fastDeepEqual(obj_with_arrays_a, obj_with_arrays_b));
+bench.add('object with arrays: fast-deep-equal', () =>
+	fastDeepEqual(obj_with_arrays_a, obj_with_arrays_b),
+);
 
-bench.add('nested shallow (2 levels): deep_equal', () => deep_equal(nested_shallow_a, nested_shallow_b));
+bench.add('nested shallow (2 levels): deep_equal', () =>
+	deep_equal(nested_shallow_a, nested_shallow_b),
+);
 bench.add('nested shallow (2 levels): dequal', () => dequal(nested_shallow_a, nested_shallow_b));
-bench.add('nested shallow (2 levels): fast-deep-equal', () => fastDeepEqual(nested_shallow_a, nested_shallow_b));
+bench.add('nested shallow (2 levels): fast-deep-equal', () =>
+	fastDeepEqual(nested_shallow_a, nested_shallow_b),
+);
 
 bench.add('nested deep (5 levels): deep_equal', () => deep_equal(nested_deep_a, nested_deep_b));
 bench.add('nested deep (5 levels): dequal', () => dequal(nested_deep_a, nested_deep_b));
-bench.add('nested deep (5 levels): fast-deep-equal', () => fastDeepEqual(nested_deep_a, nested_deep_b));
+bench.add('nested deep (5 levels): fast-deep-equal', () =>
+	fastDeepEqual(nested_deep_a, nested_deep_b),
+);
 
 // =============================================================================
 // TypedArrays and binary data
@@ -219,7 +239,9 @@ bench.add('Date: fast-deep-equal', () => fastDeepEqual(date_a, date_b));
 
 bench.add('constructor mismatch {} vs []: deep_equal', () => deep_equal(empty_obj, empty_arr));
 bench.add('constructor mismatch {} vs []: dequal', () => dequal(empty_obj, empty_arr));
-bench.add('constructor mismatch {} vs []: fast-deep-equal', () => fastDeepEqual(empty_obj, empty_arr));
+bench.add('constructor mismatch {} vs []: fast-deep-equal', () =>
+	fastDeepEqual(empty_obj, empty_arr),
+);
 
 // =============================================================================
 // Run and report
