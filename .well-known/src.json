@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.36.0",
+  "version": "0.36.1",
   "modules": {
     "./array.js": {
       "path": "array.ts",
@@ -150,6 +150,15 @@
         },
         {
           "name": "create_counter",
+          "kind": "function"
+        }
+      ]
+    },
+    "./deep_equal.js": {
+      "path": "deep_equal.ts",
+      "declarations": [
+        {
+          "name": "deep_equal",
           "kind": "function"
         }
       ]
