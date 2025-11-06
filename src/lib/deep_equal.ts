@@ -43,12 +43,23 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			const a_ctor = (a as any).constructor;
 			if (a_ctor !== (b as any).constructor) return false;
 
-			// Arrays and typed arrays: use fast numeric indexing path
+			// TypedArrays: specialized fast path (no recursion needed - elements are always primitives)
 			// ArrayBuffer.isView() catches Uint8Array, Int32Array, Float64Array, etc.
-			// This is ~6-10x faster than falling through to Object.keys() iteration
+			if (ArrayBuffer.isView(a)) {
+				const len = a.length;
+				if ((b as any).length !== len) return false;
+				// Direct !== comparison - TypedArrays can only contain numbers
+				for (let i = 0; i < len; i++) {
+					if (a[i] !== (b as any)[i]) return false;
+				}
+				return true;
+			}
+
+			// Regular arrays: inline length check before function call (fast-fail for mismatched lengths)
 			// Use Array.isArray() instead of instanceof Array (JIT-optimized, works cross-realm)
-			if (Array.isArray(a) || ArrayBuffer.isView(a)) {
-				return deep_equal_arrays(a as any, b as any);
+			if (Array.isArray(a)) {
+				if (a.length !== (b as any).length) return false;
+				return deep_equal_arrays(a, b as any);
 			}
 
 			// Use cached constructor for type checks (faster than instanceof - avoids prototype chain walk)

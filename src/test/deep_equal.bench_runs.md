@@ -98,3 +98,42 @@ constructor mismatch {} vs []:
   deep_equal           avg:    4557996 ops/sec  |  wins: 3/7
   dequal               avg:    4274532 ops/sec  |  wins: 1/7
   fast-deep-equal      avg:    4015961 ops/sec  |  wins: 3/7
+
+
+## Run 3
+
+
+small object:
+  🏆 fast-deep-equal         3373588 ops/sec  (baseline)
+     deep_equal              3125300 ops/sec  (1.08x slower)
+     dequal                  2496075 ops/sec  (1.35x slower)
+
+small array:
+  🏆 fast-deep-equal         5271177 ops/sec  (baseline)
+     deep_equal              4926555 ops/sec  (1.07x slower)
+     dequal                  4804352 ops/sec  (1.10x slower)
+
+typed array:
+  🏆 deep_equal              6429607 ops/sec  (baseline)
+     dequal                  6363975 ops/sec  (1.01x slower)
+     fast-deep-equal         2042049 ops/sec  (3.15x slower)
+
+nested object:
+  🏆 deep_equal              2580150 ops/sec  (baseline)
+     fast-deep-equal         2441185 ops/sec  (1.06x slower)
+     dequal                  2023838 ops/sec  (1.27x slower)
+
+Date:
+  🏆 fast-deep-equal         8058626 ops/sec  (baseline)
+     dequal                  7076381 ops/sec  (1.14x slower)
+     deep_equal              6468707 ops/sec  (1.25x slower)
+
+large object (100 props):
+  🏆 fast-deep-equal          216872 ops/sec  (baseline)
+     deep_equal               209760 ops/sec  (1.03x slower)
+     dequal                   152019 ops/sec  (1.43x slower)
+
+constructor mismatch {} vs []:
+  🏆 fast-deep-equal         7537886 ops/sec  (baseline)
+     deep_equal              7167295 ops/sec  (1.05x slower)
+     dequal                  6964935 ops/sec  (1.08x slower)
