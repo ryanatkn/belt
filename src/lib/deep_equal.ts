@@ -70,9 +70,9 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 				const len = a.length;
 				if ((b as any).length !== len) return false;
 
-				// Fast path for small arrays (0-6 elements) - unrolled to avoid loop overhead
+				// Fast path for small arrays (0-4 elements) - unrolled to avoid loop overhead
 				// Common case: [a, b], [x, y, z], etc. Avoids loop setup/iteration for tiny arrays
-				if (len <= 6) {
+				if (len <= 4) {
 					if (len === 0) return true;
 					if (!deep_equal(a[0], (b as any)[0])) return false;
 					if (len === 1) return true;
@@ -80,11 +80,7 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 					if (len === 2) return true;
 					if (!deep_equal(a[2], (b as any)[2])) return false;
 					if (len === 3) return true;
-					if (!deep_equal(a[3], (b as any)[3])) return false;
-					if (len === 4) return true;
-					if (!deep_equal(a[4], (b as any)[4])) return false;
-					if (len === 5) return true;
-					return deep_equal(a[5], (b as any)[5]);
+					return deep_equal(a[3], (b as any)[3]);
 				}
 
 				// Regular loop for larger arrays
@@ -148,6 +144,7 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 				return false;
 			}
 
+			// TODO BLOCK profile again
 			// Plain objects: compare enumerable own properties
 			const a_keys = Object.keys(a!);
 			const a_keys_length = a_keys.length;

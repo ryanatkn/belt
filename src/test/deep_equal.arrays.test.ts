@@ -19,7 +19,7 @@ test_equal_values([
 	['arrays with two elements', [1, 2], [1, 2]],
 	['arrays with strings', ['apple', 'banana'], ['apple', 'banana']],
 	['arrays with mixed types', [1, 'two', true, null], [1, 'two', true, null]],
-	['single element arrays', [42], [42]],
+	['arrays with one element', [1], [1]],
 
 	// nested arrays
 	['nested arrays', [1, [2, 3]], [1, [2, 3]]],
@@ -87,82 +87,55 @@ test_unequal_values([
 	['null vs undefined in array', [1, null, 3], [1, undefined, 3]],
 ]);
 
-// Small array fast path edge cases (len <= 3)
+// Small array fast path edge cases (len <= 4)
 // These test the unrolled loop optimization
-test('small array fast path: early exit at each position', () => {
+test_unequal_values([
 	// Length 1: fail at index 0
-	assert.ok(!deep_equal([1], [2]));
-	assert.ok(!deep_equal([{a: 1}], [{a: 2}]));
+	['small array (len 1): primitives differ at index 0', [1], [2]],
+	['small array (len 1): objects differ at index 0', [{a: 1}], [{a: 2}]],
 
-	// Length 2: fail at index 0
-	assert.ok(!deep_equal([1, 2], [99, 2]));
-	assert.ok(!deep_equal([{a: 1}, {b: 2}], [{a: 99}, {b: 2}]));
+	// Length 2: fail at index 0 or 1
+	['small array (len 2): fail at index 0', [1, 2], [99, 2]],
+	['small array (len 2): fail at index 0 (objects)', [{a: 1}, {b: 2}], [{a: 99}, {b: 2}]],
+	['small array (len 2): fail at index 1', [1, 2], [1, 99]],
+	['small array (len 2): fail at index 1 (objects)', [{a: 1}, {b: 2}], [{a: 1}, {b: 99}]],
 
-	// Length 2: fail at index 1
-	assert.ok(!deep_equal([1, 2], [1, 99]));
-	assert.ok(!deep_equal([{a: 1}, {b: 2}], [{a: 1}, {b: 99}]));
+	// Length 3: fail at index 0, 1, or 2
+	['small array (len 3): fail at index 0', [1, 2, 3], [99, 2, 3]],
+	['small array (len 3): fail at index 1', [1, 2, 3], [1, 99, 3]],
+	['small array (len 3): fail at index 2', [1, 2, 3], [1, 2, 99]],
 
-	// Length 3: fail at index 0
-	assert.ok(!deep_equal([1, 2, 3], [99, 2, 3]));
+	// Length 4: fail at index 0, 1, 2, or 3
+	['small array (len 4): fail at index 0', [1, 2, 3, 4], [99, 2, 3, 4]],
+	['small array (len 4): fail at index 1', [1, 2, 3, 4], [1, 99, 3, 4]],
+	['small array (len 4): fail at index 2', [1, 2, 3, 4], [1, 2, 99, 4]],
+	['small array (len 4): fail at index 3', [1, 2, 3, 4], [1, 2, 3, 99]],
 
-	// Length 3: fail at index 1
-	assert.ok(!deep_equal([1, 2, 3], [1, 99, 3]));
+	// Boundary test: len 4 (fast path) vs len 5 (regular loop) - inequality
+	['small array boundary: len 4 fail at last index', [1, 2, 3, 4], [1, 2, 3, 99]],
+	['small array boundary: len 5 fail at last index', [1, 2, 3, 4, 5], [1, 2, 3, 4, 99]],
 
-	// Length 3: fail at index 2
-	assert.ok(!deep_equal([1, 2, 3], [1, 2, 99]));
+	// Object.is semantics: -0 vs +0 should be DIFFERENT
+	['small array -0 vs +0: len 1', [0], [-0]],
+	['small array -0 vs +0: len 2', [0, 1], [-0, 1]],
+	['small array -0 vs +0: len 3', [0, 1, 2], [-0, 1, 2]],
+	['small array -0 vs +0: len 4', [0, 1, 2, 3], [-0, 1, 2, 3]],
+]);
 
-	// Length 4: fail at index 0, 1, 2, 3
-	assert.ok(!deep_equal([1, 2, 3, 4], [99, 2, 3, 4]));
-	assert.ok(!deep_equal([1, 2, 3, 4], [1, 99, 3, 4]));
-	assert.ok(!deep_equal([1, 2, 3, 4], [1, 2, 99, 4]));
-	assert.ok(!deep_equal([1, 2, 3, 4], [1, 2, 3, 99]));
+test_equal_values([
+	// Boundary test: len 4 (fast path) vs len 5 (regular loop) - equality
+	['small array boundary: len 4 all equal', [1, 2, 3, 4], [1, 2, 3, 4]],
+	['small array boundary: len 5 all equal', [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]],
 
-	// Length 5: fail at index 0, 1, 2, 3, 4
-	assert.ok(!deep_equal([1, 2, 3, 4, 5], [99, 2, 3, 4, 5]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 99, 3, 4, 5]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 99, 4, 5]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 3, 99, 5]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5], [1, 2, 3, 4, 99]));
+	// Object.is semantics: same sign zeros are equal
+	['small array +0 vs +0: len 1', [0], [0]],
+	['small array -0 vs -0: len 1', [-0], [-0]],
+	['small array +0 vs +0: len 3', [0, 1, 2], [0, 1, 2]],
+	['small array +0 vs +0: len 4', [0, 1, 2, 3], [0, 1, 2, 3]],
 
-	// Length 6: fail at index 0, 1, 2, 3, 4, 5
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [99, 2, 3, 4, 5, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 99, 3, 4, 5, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 99, 4, 5, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 99, 5, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 99, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 99]));
-});
-
-test('small array fast path: boundary at len 6 vs 7', () => {
-	// len 6 uses unrolled fast path
-	assert.ok(deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 99]));
-
-	// len 7 uses regular loop
-	assert.ok(deep_equal([1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]));
-	assert.ok(!deep_equal([1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 99]));
-});
-
-test('small array fast path: Object.is semantics', () => {
-	// -0 vs +0 should be DIFFERENT with Object.is (unlike ===)
-	assert.ok(!deep_equal([0], [-0]));
-	assert.ok(!deep_equal([0, 1], [-0, 1]));
-	assert.ok(!deep_equal([0, 1, 2], [-0, 1, 2]));
-	assert.ok(!deep_equal([0, 1, 2, 3], [-0, 1, 2, 3]));
-	assert.ok(!deep_equal([0, 1, 2, 3, 4], [-0, 1, 2, 3, 4]));
-	assert.ok(!deep_equal([0, 1, 2, 3, 4, 5], [-0, 1, 2, 3, 4, 5]));
-
-	// But same sign zeros are equal
-	assert.ok(deep_equal([0], [0]));
-	assert.ok(deep_equal([-0], [-0]));
-	assert.ok(deep_equal([0, 1, 2], [0, 1, 2]));
-	assert.ok(deep_equal([0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5]));
-
-	// NaN should equal NaN with Object.is (unlike ===)
-	assert.ok(deep_equal([NaN], [NaN]));
-	assert.ok(deep_equal([NaN, 1], [NaN, 1]));
-	assert.ok(deep_equal([NaN, 1, 2], [NaN, 1, 2]));
-	assert.ok(deep_equal([NaN, 1, 2, 3], [NaN, 1, 2, 3]));
-	assert.ok(deep_equal([NaN, 1, 2, 3, 4], [NaN, 1, 2, 3, 4]));
-	assert.ok(deep_equal([NaN, 1, 2, 3, 4, 5], [NaN, 1, 2, 3, 4, 5]));
-});
+	// Object.is semantics: NaN should equal NaN
+	['small array NaN: len 1', [NaN], [NaN]],
+	['small array NaN: len 2', [NaN, 1], [NaN, 1]],
+	['small array NaN: len 3', [NaN, 1, 2], [NaN, 1, 2]],
+	['small array NaN: len 4', [NaN, 1, 2, 3], [NaN, 1, 2, 3]],
+]);
