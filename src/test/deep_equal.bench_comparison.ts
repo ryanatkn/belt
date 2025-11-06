@@ -1,8 +1,8 @@
 import {Bench, hrtimeNow} from 'tinybench';
 import {dequal} from 'dequal';
 import fastDeepEqual from 'fast-deep-equal';
-// @ts-expect-error
-import {deep_equal} from '../lib/deep_equal.ts';
+
+import {deep_equal} from '$lib/deep_equal.js';
 
 /* eslint-disable no-console */
 

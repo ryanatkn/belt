@@ -1,5 +1,8 @@
 import {Bench, hrtimeNow} from 'tinybench';
+
 import {deep_equal} from '$lib/deep_equal.js';
+
+/* eslint-disable no-console, no-new-wrappers */
 
 // Benchmark deep_equal performance across common use cases
 // Focus: constructor check overhead, instanceof optimization potential, typed arrays
@@ -272,22 +275,22 @@ try {
 
 	// Calculate some insights
 	const fastest = bench.tasks.reduce((a, b) => {
-		const a_hz = a.result?.hz ?? 0;
-		const b_hz = b.result?.hz ?? 0;
+		const a_hz = a.result?.throughput.mean ?? 0;
+		const b_hz = b.result?.throughput.mean ?? 0;
 		return a_hz > b_hz ? a : b;
 	});
 
 	const slowest = bench.tasks.reduce((a, b) => {
-		const a_hz = a.result?.hz ?? Infinity;
-		const b_hz = b.result?.hz ?? Infinity;
+		const a_hz = a.result?.throughput.mean ?? Infinity;
+		const b_hz = b.result?.throughput.mean ?? Infinity;
 		return a_hz < b_hz ? a : b;
 	});
 
 	console.log('\n📈 Insights:');
-	console.log(`  Fastest: ${fastest.name} (${fastest.result?.hz?.toFixed(0)} ops/sec)`);
-	console.log(`  Slowest: ${slowest.name} (${slowest.result?.hz?.toFixed(0)} ops/sec)`);
+	console.log(`  Fastest: ${fastest.name} (${fastest.result?.throughput.mean.toFixed(0)} ops/sec)`);
+	console.log(`  Slowest: ${slowest.name} (${slowest.result?.throughput.mean.toFixed(0)} ops/sec)`);
 	console.log(
-		`  Speed ratio: ${((fastest.result?.hz ?? 0) / (slowest.result?.hz ?? 1)).toFixed(0)}x\n`,
+		`  Speed ratio: ${((fastest.result?.throughput.mean ?? 0) / (slowest.result?.throughput.mean ?? 1)).toFixed(0)}x\n`,
 	);
 } catch (error) {
 	console.error('Benchmark failed:', error);

@@ -1,6 +1,9 @@
 import {describe, test, assert} from 'vitest';
+
 import {deep_equal} from '$lib/deep_equal.js';
 import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.js';
+
+/* eslint-disable no-new-wrappers */
 
 describe('edge cases', () => {
 	describe('prototypes', () => {

@@ -1,4 +1,5 @@
 import {test, assert} from 'vitest';
+
 import {deep_equal} from '$lib/deep_equal.js';
 
 /**

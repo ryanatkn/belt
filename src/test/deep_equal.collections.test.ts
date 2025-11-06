@@ -1,4 +1,5 @@
 import {describe} from 'vitest';
+
 import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.js';
 
 describe('collections', () => {
