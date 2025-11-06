@@ -43,7 +43,6 @@ describe('special cases', () => {
 	describe('symbol keys', () => {
 		const sym1 = Symbol('test');
 		const sym2 = Symbol('test');
-		const sym3 = Symbol('other');
 
 		test('symbols are ignored by Object.keys', () => {
 			const a = {[sym1]: 'value1', regular: 'prop'};
