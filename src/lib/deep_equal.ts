@@ -47,21 +47,6 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			if (Array.isArray(a)) {
 				const len = a.length;
 				if ((b as any).length !== len) return false;
-
-				// Fast path for small arrays (0-4 elements) - unrolled to avoid loop overhead
-				// Common case: [a, b], [x, y, z], etc. Avoids loop setup/iteration for tiny arrays
-				if (len <= 4) {
-					if (len === 0) return true;
-					if (!deep_equal(a[0], (b as any)[0])) return false;
-					if (len === 1) return true;
-					if (!deep_equal(a[1], (b as any)[1])) return false;
-					if (len === 2) return true;
-					if (!deep_equal(a[2], (b as any)[2])) return false;
-					if (len === 3) return true;
-					return deep_equal(a[3], (b as any)[3]);
-				}
-
-				// Regular loop for larger arrays
 				for (let i = 0; i < len; i++) {
 					if (!deep_equal(a[i], (b as any)[i])) return false;
 				}
@@ -102,12 +87,10 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 
 			// ArrayBuffer: convert to Uint8Array views for byte-by-byte comparison
 			if (a_ctor === ArrayBuffer) {
-				const a_buf = a as ArrayBuffer;
-				const b_buf = b as ArrayBuffer;
-				if (a_buf.byteLength !== b_buf.byteLength) return false;
-				const a_view = new Uint8Array(a_buf);
-				const b_view = new Uint8Array(b_buf);
-				const len = a_buf.byteLength;
+				if ((a as ArrayBuffer).byteLength !== (b as ArrayBuffer).byteLength) return false;
+				const a_view = new Uint8Array(a as ArrayBuffer);
+				const b_view = new Uint8Array(b as ArrayBuffer);
+				const len = (a as ArrayBuffer).byteLength;
 				for (let i = 0; i < len; i++) {
 					if (a_view[i] !== b_view[i]) return false;
 				}
@@ -120,9 +103,9 @@ export const deep_equal = (a: unknown, b: unknown): boolean => {
 			if (ArrayBuffer.isView(a)) {
 				// DataView: compare byte-by-byte using getUint8
 				if (a_ctor === DataView) {
-					const byteLen = (a as DataView).byteLength;
-					if ((b as DataView).byteLength !== byteLen) return false;
-					for (let i = 0; i < byteLen; i++) {
+					const byte_len = (a as DataView).byteLength;
+					if ((b as DataView).byteLength !== byte_len) return false;
+					for (let i = 0; i < byte_len; i++) {
 						if ((a as DataView).getUint8(i) !== (b as DataView).getUint8(i)) return false;
 					}
 					return true;
