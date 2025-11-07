@@ -2,7 +2,6 @@ import type {styleText} from 'node:util';
 import {DEV} from 'esm-env';
 
 import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-import {traverse} from '$lib/object.js';
 
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
@@ -238,46 +237,21 @@ export class Logger extends Base_Logger {
 	static console: Logger_State['console'] = console;
 	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	// TODO ideally `is_multiline` would be done in `#resolve_values`
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('red', `${Logger.char_error.repeat(3)}error\n`),
+		st('red', `${Logger.char_error}error${Logger.char_error} `),
 	];
-	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('red', `\n${Logger.char_error.repeat(3)}`),
-	];
+	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
 	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('yellow', `${Logger.char_warn.repeat(3)}warn\n`),
+		st('yellow', `${Logger.char_warn}warn${Logger.char_warn} `),
 	];
-	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('yellow', `\n${Logger.char_warn.repeat(3)}`),
-	];
+	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
 	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
 	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
-	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
-		st('gray', is_multiline(args) ? `${Logger.char_debug.repeat(3)}debug\n` : Logger.char_info),
+	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
+		st('gray', `${Logger.char_debug}debug${Logger.char_debug} `),
 	];
-	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = (st, args) => [
-		is_multiline(args) ? st('gray', `\n${Logger.char_debug.repeat(3)}`) : '',
-	];
+	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
 }
-
-// TODO improve
-const is_multiline = (data: unknown): boolean => {
-	let multiline = false;
-	traverse(data, (_key, value) => {
-		if (multiline) return;
-		const type = typeof value;
-		if (type === 'string') {
-			const m = value.includes('\n');
-			if (m) multiline = true;
-		} else if (type === 'object' && value !== null) {
-			// TODO hacky and inefficient
-			multiline = true;
-		}
-		return false;
-	});
-	return multiline;
-};
 
 /**
  * The `System_Logger` is distinct from the `Logger`
