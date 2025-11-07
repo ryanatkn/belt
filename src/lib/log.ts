@@ -240,17 +240,17 @@ export class Logger extends Base_Logger {
 	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
 		st('red', `${Logger.char_error}error${Logger.char_error} `),
 	];
-	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
+	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
 		st('yellow', `${Logger.char_warn}warn${Logger.char_warn} `),
 	];
-	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
-	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
-	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => null;
+	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
 		st('gray', `${Logger.char_debug}debug${Logger.char_debug} `),
 	];
-	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = (_st, _args) => [];
+	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
 }
 
 /**
