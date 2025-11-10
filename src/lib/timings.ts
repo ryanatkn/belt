@@ -31,6 +31,9 @@ export class Timings {
 		this.decimals = decimals;
 	}
 
+	/**
+	 * Starts a timing operation for the given key.
+	 */
 	start(key: Timings_Key, decimals = this.decimals): () => number {
 		const final_key = this.next_key(key);
 		this.stopwatches.set(final_key, create_stopwatch(decimals));
@@ -47,6 +50,9 @@ export class Timings {
 		}
 	}
 
+	/**
+	 * Stops a timing operation and records the elapsed time.
+	 */
 	private stop(key: Timings_Key): number {
 		const stopwatch = this.stopwatches.get(key);
 		if (!stopwatch) return 0; // TODO maybe warn?

@@ -21,9 +21,11 @@ const should_log = (max: Log_Level, level: Log_Level): boolean =>
 
 /**
  * Sets the log level for both the main and system loggers.
- * @param level The desired log level.
- * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
+ * @param level the desired log level
+ * @param configure_main_logger set the `Logger` log level, defaults to `true`
+ * @param configure_system_logger set the `System_Logger` log level, defaults to `true`
+ * @mutates Logger.level sets static property if `configure_main_logger` is true
+ * @mutates System_Logger.level sets static property if `configure_system_logger` is true
  */
 export const configure_log_level = (
 	level: Log_Level,
@@ -47,9 +49,11 @@ const DEFAULT_LOG_LEVEL: Log_Level =
 /**
  * Sets the colors helper for both the main and system loggers.
  * By default logging uses no colors.
- * @param st A `node:util` `styleText`-compatible function.
- * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
+ * @param st a `node:util` `styleText`-compatible function
+ * @param configure_main_logger set the `Logger` log level, defaults to `true`
+ * @param configure_system_logger set the `System_Logger` log level, defaults to `true`
+ * @mutates Logger.st sets static property if `configure_main_logger` is true
+ * @mutates System_Logger.st sets static property if `configure_system_logger` is true
  */
 export const configure_log_colors = (
 	st: typeof styleText,
