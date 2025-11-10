@@ -17,14 +17,12 @@ export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
  */
 export type Console_Type = Pick<typeof console, 'error' | 'warn' | 'log'>;
 
-// Log level constants
 const CHAR_ERROR = '🞩';
 const CHAR_WARN = '⚑';
 const CHAR_INFO = '➤';
 const CHAR_DEBUG = '┆';
 
-// Log level utilities
-const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
+const LOG_LEVEL_VALUES: Record<Log_Level, number | undefined> = {
 	off: 0,
 	error: 1,
 	warn: 2,
@@ -47,9 +45,9 @@ export const log_level_to_number = (level: Log_Level): number => {
 	return value;
 };
 
-function should_log(current_level: Log_Level, message_level: Log_Level): boolean {
-	return LOG_LEVEL_VALUES[current_level] >= LOG_LEVEL_VALUES[message_level];
-}
+const should_log = (current_level: Log_Level, message_level: Log_Level): boolean => {
+	return LOG_LEVEL_VALUES[current_level]! >= LOG_LEVEL_VALUES[message_level]!;
+};
 
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
@@ -67,7 +65,7 @@ const NO_COLOR_ST: typeof styleText = (_: string, s: string) => s;
  * - Instance-based configuration (no global state)
  * - Child loggers with automatic label concatenation
  * - Parent chain inheritance for level, console, and colors
- * - Auto-detect TTY for colors
+ * - Respects NO_COLOR environment variable
  * - Fail-fast label validation
  *
  * @example
@@ -106,8 +104,10 @@ export class Logger {
 		this.level = options.level ?? this.parent?.level ?? DEFAULT_LOG_LEVEL;
 		this.console = options.console ?? this.parent?.console ?? console;
 
-		// Colors: options > parent > TTY auto-detect
-		this.colors = options.colors ?? this.parent?.colors ?? process.stdout.isTTY ?? false;
+		// Colors: options > parent > NO_COLOR env var
+		// NO_COLOR standard: if set (to any value), disable colors
+		const has_no_color = typeof process !== 'undefined' && process.env.NO_COLOR !== undefined;
+		this.colors = options.colors ?? this.parent?.colors ?? !has_no_color;
 		this.#st = this.colors ? styleText : NO_COLOR_ST;
 	}
 
@@ -215,7 +215,7 @@ export interface Logger_Options {
 
 	/**
 	 * Whether to use colors in output.
-	 * Inherits from parent or auto-detects TTY.
+	 * Inherits from parent or defaults to enabled (unless NO_COLOR env var is set).
 	 */
 	colors?: boolean;
 }
