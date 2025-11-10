@@ -106,8 +106,3 @@ export const print_timings = (timings: Timings, log: Logger): void => {
 	}
 };
 
-/**
- * Formats a log label `string` for printing.
- */
-export const print_log_label = (label: string, color = st.bind(null, 'magenta')): string =>
-	`${st('gray', '[')}${color(label)}${st('gray', ']')}`;

@@ -1,41 +1,55 @@
-import type {styleText} from 'node:util';
+import {styleText} from 'node:util';
 import {DEV} from 'esm-env';
 
-import {EMPTY_ARRAY, to_array} from '$lib/array.js';
-
+/**
+ * Log level hierarchy from least to most verbose.
+ * - `'off'`: No logging
+ * - `'error'`: Only errors
+ * - `'warn'`: Errors and warnings
+ * - `'info'`: Errors, warnings, and info (default)
+ * - `'debug'`: All messages including debug
+ */
 export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
-const LOG_LEVEL_VALUES = {
+/**
+ * Console interface subset used by Logger for output.
+ * Allows custom console implementations for testing.
+ */
+export type Console_Type = Pick<typeof console, 'error' | 'warn' | 'log'>;
+
+// Log level constants
+const CHAR_ERROR = '🞩';
+const CHAR_WARN = '⚑';
+const CHAR_INFO = '➤';
+const CHAR_DEBUG = '┆';
+
+// Log level utilities
+const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
 	off: 0,
 	error: 1,
 	warn: 2,
 	info: 3,
 	debug: 4,
-} as const satisfies Record<Log_Level, number>;
-
-export const to_log_level_value = (level: Log_Level): number => LOG_LEVEL_VALUES[level] ?? 4; // eslint-disable-line @typescript-eslint/no-unnecessary-condition
-
-const should_log = (max: Log_Level, level: Log_Level): boolean =>
-	to_log_level_value(max) >= to_log_level_value(level);
+};
 
 /**
- * Sets the log level for both the main and system loggers.
- * @param level The desired log level.
- * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
+ * Converts a log level to its numeric value for comparison.
+ * Higher numbers indicate more verbose logging.
+ * @param level The log level to convert
+ * @returns Numeric value (0-4)
+ * @throws {Error} If an invalid log level is provided
  */
-export const configure_log_level = (
-	level: Log_Level,
-	configure_main_logger = true,
-	configure_system_logger = true,
-): void => {
-	if (configure_main_logger) {
-		Logger.level = level;
+export const log_level_to_number = (level: Log_Level): number => {
+	const value = LOG_LEVEL_VALUES[level];
+	if (value === undefined) {
+		throw new Error(`Invalid log level: '${level}'`);
 	}
-	if (configure_system_logger) {
-		System_Logger.level = level;
-	}
+	return value;
 };
+
+function should_log(current_level: Log_Level, message_level: Log_Level): boolean {
+	return LOG_LEVEL_VALUES[current_level] >= LOG_LEVEL_VALUES[message_level];
+}
 
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
@@ -43,244 +57,176 @@ const DEFAULT_LOG_LEVEL: Log_Level =
 		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ??
 	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
-/**
- * Sets the colors helper for both the main and system loggers.
- * By default logging uses no colors.
- * @param st A `node:util` `styleText`-compatible function.
- * @param configure_main_logger Set the `Logger` log level? Defaults to `true`.
- * @param configure_system_logger Set the `System_Logger` log level? Defaults to `true`.
- */
-export const configure_log_colors = (
-	st: typeof styleText,
-	configure_main_logger = true,
-	configure_system_logger = true,
-): void => {
-	if (configure_main_logger) {
-		Logger.st = st;
-	}
-	if (configure_system_logger) {
-		System_Logger.st = st;
-	}
-};
-
-export type Log = (...args: Array<any>) => void;
+// Identity function for when colors are disabled
+const NO_COLOR_ST: typeof styleText = (_: string, s: string) => s;
 
 /**
- * The `Logger` accepts a `Logger_State` argument for custom behavior,
- * which by default is the `Logger` class itself,
- * where its static properties are the `Logger_State` values.
- * Though the code is more verbose and slower as a result,
- * the tradeoffs make sense for logging in development.
+ * Simple, flexible logger with support for child loggers and automatic context.
  *
- * Properties like the static `Logger.level` can be mutated
- * to affect all loggers that get instantiated with the default state,
- * but loggers can also be instantiated with other state
- * that isn't affected by these globally mutable values.
+ * Features:
+ * - Instance-based configuration (no global state)
+ * - Child loggers with automatic label concatenation
+ * - Parent chain inheritance for level, console, and colors
+ * - Auto-detect TTY for colors
+ * - Fail-fast label validation
  *
- * Custom loggers like `System_Logger` (see below)
- * demonstrate extending `Logger` to partition logging concerns.
- * User code is given a lot of control and flexibility.
+ * @example
+ * ```ts
+ * // Basic logger
+ * const log = new Logger('app');
+ * log.info('starting'); // [app] ➤ starting
+ *
+ * // Child logger
+ * const db_log = log.child('db');
+ * db_log.info('connected'); // [app__db] ➤ connected
+ *
+ * // Custom configuration
+ * const verbose_log = new Logger('debug', { level: 'debug', colors: true });
+ * ```
  */
-export interface Logger_State {
-	level: Log_Level;
-	st: typeof styleText;
-	console: Pick<typeof console, 'error' | 'warn' | 'log'>;
-	prefixes?: Logger_Prefixes_And_Suffixes_Getter;
-	suffixes?: Logger_Prefixes_And_Suffixes_Getter;
-	error_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
-	error_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
-	warn_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
-	warn_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
-	info_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
-	info_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
-	debug_prefixes?: Logger_Prefixes_And_Suffixes_Getter;
-	debug_suffixes?: Logger_Prefixes_And_Suffixes_Getter;
-}
+export class Logger {
+	readonly label?: string;
+	readonly level: Log_Level;
+	readonly parent?: Logger;
+	readonly colors: boolean;
 
-export type Logger_Prefixes_And_Suffixes_Getter = (
-	st: typeof styleText,
-	args: Array<unknown>,
-) => Array<unknown> | null;
+	readonly #console: Console_Type;
+	readonly #st: typeof styleText;
 
-const EMPTY_GETTER: Logger_Prefixes_And_Suffixes_Getter = () => EMPTY_ARRAY;
+	constructor(label?: string, options: Logger_Options = {}) {
+		// Validate label
+		if (label?.includes(':')) {
+			throw new Error(`Logger label '${label}' contains reserved character ':'`);
+		}
 
-/**
- * The base class of `Logger` that's available to be extended by users.
- * See `System_Logger` for an example of extending `Logger` with minimal boilerplate.
- */
-export class Base_Logger {
-	prefixes: Logger_Prefixes_And_Suffixes_Getter;
-	suffixes: Logger_Prefixes_And_Suffixes_Getter;
-	state: Logger_State; // can be the implementing class constructor
+		this.label = label;
+		this.parent = (options as Internal_Logger_Options).parent;
 
-	constructor(prefixes: any, suffixes: any, state: Logger_State) {
-		const prefixes_array = to_array(prefixes);
-		const suffixes_array = to_array(suffixes);
-		this.prefixes =
-			prefixes == null
-				? EMPTY_GETTER
-				: typeof prefixes === 'function'
-					? prefixes
-					: () => prefixes_array;
-		this.suffixes =
-			suffixes == null
-				? EMPTY_GETTER
-				: typeof suffixes === 'function'
-					? suffixes
-					: () => suffixes_array;
-		this.state = state;
+		// Inherit configuration from parent or use defaults
+		this.level = options.level ?? this.parent?.level ?? DEFAULT_LOG_LEVEL;
+		this.#console = options.console ?? this.parent?.#console ?? console;
+
+		// Colors: options > parent > TTY auto-detect
+		this.colors = options.colors ?? this.parent?.colors ?? process.stdout.isTTY ?? false;
+		this.#st = this.colors ? styleText : NO_COLOR_ST;
+	}
+
+	/**
+	 * Creates a child logger with automatic label concatenation.
+	 * Children inherit parent configuration unless overridden.
+	 *
+	 * @param label Child label (will be concatenated with parent label using `__`)
+	 * @param options Optional configuration overrides
+	 * @returns New Logger instance with concatenated label
+	 *
+	 * @example
+	 * ```ts
+	 * const app_log = new Logger('app');
+	 * const db_log = app_log.child('db'); // label: 'app__db'
+	 * ```
+	 */
+	child(label: string, options: Child_Logger_Options = {}): Logger {
+		if (label === '') {
+			throw new Error('Logger label cannot be empty when creating child');
+		}
+
+		const child_label = this.label ? `${this.label}__${label}` : label;
+
+		// Pass parent reference and config
+		return new Logger(child_label, {
+			level: options.level,
+			parent: this,
+		} as Internal_Logger_Options);
 	}
 
 	error(...args: Array<unknown>): void {
-		if (!should_log(this.state.level, 'error')) return;
-		this.state.console.error(
-			...this.#resolve_values(
-				args,
-				this.state.prefixes,
-				this.state.error_prefixes,
-				this.prefixes,
-			).concat(
-				args,
-				this.#resolve_values(args, this.suffixes, this.state.error_suffixes, this.state.suffixes),
-			),
-		);
+		if (!should_log(this.level, 'error')) return;
+		const prefix = this.#format_prefix('error');
+		this.#console.error(...prefix, ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
-		if (!should_log(this.state.level, 'warn')) return;
-		this.state.console.warn(
-			...this.#resolve_values(
-				args,
-				this.state.prefixes,
-				this.state.warn_prefixes,
-				this.prefixes,
-			).concat(
-				args,
-				this.#resolve_values(args, this.suffixes, this.state.warn_suffixes, this.state.suffixes),
-			),
-		);
+		if (!should_log(this.level, 'warn')) return;
+		const prefix = this.#format_prefix('warn');
+		this.#console.warn(...prefix, ...args);
 	}
 
 	info(...args: Array<unknown>): void {
-		if (!should_log(this.state.level, 'info')) return;
-		this.state.console.log(
-			...this.#resolve_values(
-				args,
-				this.state.prefixes,
-				this.state.info_prefixes,
-				this.prefixes,
-			).concat(
-				args,
-				this.#resolve_values(args, this.suffixes, this.state.info_suffixes, this.state.suffixes),
-			),
-		);
+		if (!should_log(this.level, 'info')) return;
+		const prefix = this.#format_prefix('info');
+		this.#console.log(...prefix, ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
-		if (!should_log(this.state.level, 'debug')) return;
-		this.state.console.log(
-			...this.#resolve_values(
-				args,
-				this.state.prefixes,
-				this.state.debug_prefixes,
-				this.prefixes,
-			).concat(
-				args,
-				this.#resolve_values(args, this.suffixes, this.state.debug_suffixes, this.state.suffixes),
-			),
-		);
+		if (!should_log(this.level, 'debug')) return;
+		const prefix = this.#format_prefix('debug');
+		this.#console.log(...prefix, ...args);
 	}
 
-	// TODO maybe rename to `log` to match the console method?
 	plain(...args: Array<unknown>): void {
-		this.state.console.log(...args);
+		this.#console.log(...args);
 	}
 
-	newline(count = 1): void {
-		this.state.console.log('\n'.repeat(count));
-	}
+	#format_prefix(method: 'error' | 'warn' | 'info' | 'debug'): Array<unknown> {
+		const prefix: Array<unknown> = [];
 
-	#resolve_values(
-		args: Array<unknown>,
-		...getters: Array<Logger_Prefixes_And_Suffixes_Getter | undefined>
-	): Array<unknown> {
-		let resolved: Array<unknown> | undefined;
-		const {st} = this.state;
-		for (const getter of getters) {
-			const values = getter?.(st, args);
-			if (!values) continue;
-			for (const value of values) {
-				(resolved ??= []).push(value);
-			}
+		// Add method-specific prefix
+		switch (method) {
+			case 'error':
+				prefix.push(this.#st('red', `${CHAR_ERROR}error${CHAR_ERROR} `));
+				break;
+			case 'warn':
+				prefix.push(this.#st('yellow', `${CHAR_WARN}warn${CHAR_WARN} `));
+				break;
+			case 'info':
+				prefix.push(this.#st('cyan', CHAR_INFO));
+				break;
+			case 'debug':
+				prefix.push(this.#st('gray', `${CHAR_DEBUG}debug${CHAR_DEBUG} `));
+				break;
 		}
-		return resolved ?? EMPTY_ARRAY;
+
+		// Add label if present
+		if (this.label) {
+			prefix.push(this.#format_label(this.label));
+		}
+
+		return prefix;
+	}
+
+	#format_label(label: string): string {
+		return `${this.#st('gray', '[')}${this.#st('magenta', label)}${this.#st('gray', ']')}`;
 	}
 }
 
-/**
- * The default implementation of `Base_Logger`.
- */
-export class Logger extends Base_Logger {
-	constructor(prefixes?: any, suffixes?: any, state: Logger_State = Logger) {
-		super(prefixes, suffixes, state);
-	}
+export interface Logger_Options {
+	/**
+	 * Log level for this logger instance.
+	 * Inherits from parent or defaults to 'info'.
+	 */
+	level?: Log_Level;
 
-	// These properties can be mutated at runtime
-	// to affect all loggers instantiated with the default `state`.
-	// See the comment on `Logger_State` for more.
-	static level: Log_Level = DEFAULT_LOG_LEVEL; // to set alongside the `System_Logger` value, see `configure_log_level`
-	static char_debug = '┆'; // '┇';
-	static char_info = '➤';
-	static char_warn = '⚑';
-	static char_error = '🞩';
-	static st: typeof styleText = (_, s) => s; // to set alongside the `System_Logger` value, see `configure_log_colors`
-	static console: Logger_State['console'] = console;
-	static prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static error_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('red', `${Logger.char_error}error${Logger.char_error} `),
-	];
-	static error_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static warn_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('yellow', `${Logger.char_warn}warn${Logger.char_warn} `),
-	];
-	static warn_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static info_prefixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static info_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
-	static debug_prefixes: Logger_Prefixes_And_Suffixes_Getter = (st, _args) => [
-		st('gray', `${Logger.char_debug}debug${Logger.char_debug} `),
-	];
-	static debug_suffixes: Logger_Prefixes_And_Suffixes_Getter = EMPTY_GETTER;
+	/**
+	 * Console interface for output.
+	 * Inherits from parent or defaults to global console.
+	 * Useful for testing.
+	 */
+	console?: Console_Type;
+
+	/**
+	 * Whether to use colors in output.
+	 * Inherits from parent or auto-detects TTY.
+	 */
+	colors?: boolean;
 }
 
 /**
- * The `System_Logger` is distinct from the `Logger`
- * to cleanly separate Felt's logging from user logging, decoupling their log levels.
- * Felt internally uses `System_Logger`, not `Logger` directly.
- * This allows user code to simply import and use `Logger`.
- * `System_Logger` is still made available to user code,
- * and users can always extend `Logger` with their own custom versions.
+ * Configuration options for child loggers.
+ * Child loggers can only override level, inheriting console and colors from parent.
  */
-export class System_Logger extends Base_Logger {
-	constructor(prefixes?: any, suffixes?: any, state: Logger_State = System_Logger) {
-		super(prefixes, suffixes, state);
-	}
+export type Child_Logger_Options = Pick<Logger_Options, 'level'>;
 
-	// These properties can be mutated at runtime
-	// to affect all loggers instantiated with the default `state`.
-	// See the comment on `Logger_State` for more.
-	static level: Log_Level = Logger.level; // to set alongside the `Logger` value, see `configure_log_level`
-	static st: typeof styleText = Logger.st; // to set alongside the `Logger` value, see `configure_log_colors`
-	static console: Logger_State['console'] = console;
-	// These can be reassigned to avoid sharing with the `Logger` instance.
-	static prefixes = Logger.prefixes;
-	static suffixes = Logger.suffixes;
-	static error_prefixes = Logger.error_prefixes;
-	static error_suffixes = Logger.error_suffixes;
-	static warn_prefixes = Logger.warn_prefixes;
-	static warn_suffixes = Logger.warn_suffixes;
-	static info_prefixes = Logger.info_prefixes;
-	static info_suffixes = Logger.info_suffixes;
-	static debug_prefixes = Logger.debug_prefixes;
-	static debug_suffixes = Logger.debug_suffixes;
+// Internal type for child() implementation
+interface Internal_Logger_Options extends Logger_Options {
+	parent?: Logger;
 }
