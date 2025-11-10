@@ -22,6 +22,11 @@ const CHAR_WARN = '⚑';
 const CHAR_INFO = '➤';
 const CHAR_DEBUG = '┆';
 
+// Pre-computed method prefix strings
+const ERROR_PREFIX_STR = `${CHAR_ERROR}error${CHAR_ERROR} `;
+const WARN_PREFIX_STR = `${CHAR_WARN}warn${CHAR_WARN} `;
+const DEBUG_PREFIX_STR = `${CHAR_DEBUG}debug${CHAR_DEBUG} `;
+
 const LOG_LEVEL_VALUES: Record<Log_Level, number | undefined> = {
 	off: 0,
 	error: 1,
@@ -45,10 +50,6 @@ export const log_level_to_number = (level: Log_Level): number => {
 	return value;
 };
 
-const should_log = (current_level: Log_Level, message_level: Log_Level): boolean => {
-	return LOG_LEVEL_VALUES[current_level]! >= LOG_LEVEL_VALUES[message_level]!;
-};
-
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
 		? null
@@ -56,7 +57,7 @@ const DEFAULT_LOG_LEVEL: Log_Level =
 	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
 // Identity function for when colors are disabled
-const NO_COLOR_ST: typeof styleText = (_: string, s: string) => s;
+const NO_COLOR_ST: typeof styleText = (_: unknown, s: string) => s;
 
 /**
  * Simple, flexible logger with support for child loggers and automatic context.
@@ -90,6 +91,11 @@ export class Logger {
 
 	readonly console: Console_Type;
 	readonly #st: typeof styleText;
+	readonly #level_value: number;
+	readonly #error_label: string;
+	readonly #warn_label: string;
+	readonly #info_label: string;
+	readonly #debug_label: string;
 
 	constructor(label?: string, options: Logger_Options = {}) {
 		// Validate label
@@ -102,6 +108,7 @@ export class Logger {
 
 		// Inherit configuration from parent or use defaults
 		this.level = options.level ?? this.parent?.level ?? DEFAULT_LOG_LEVEL;
+		this.#level_value = LOG_LEVEL_VALUES[this.level]!;
 		this.console = options.console ?? this.parent?.console ?? console;
 
 		// Colors: options > parent > NO_COLOR env var
@@ -109,6 +116,25 @@ export class Logger {
 		const has_no_color = typeof process !== 'undefined' && process.env.NO_COLOR !== undefined;
 		this.colors = options.colors ?? this.parent?.colors ?? !has_no_color;
 		this.#st = this.colors ? styleText : NO_COLOR_ST;
+
+		// Pre-compute all formatted strings for maximum performance
+		const error_prefix = this.#st('red', ERROR_PREFIX_STR);
+		const warn_prefix = this.#st('yellow', WARN_PREFIX_STR);
+		const info_prefix = this.#st('cyan', CHAR_INFO);
+		const debug_prefix = this.#st('gray', DEBUG_PREFIX_STR);
+
+		// Pre-compute formatted label if present
+		const formatted_label = this.label
+			? this.colors
+				? `${this.#st('gray', '[')}${this.#st('magenta', this.label)}${this.#st('gray', ']')}`
+				: `[${this.label}]`
+			: '';
+
+		// Combine method prefix with label for single property access
+		this.#error_label = formatted_label ? `${error_prefix} ${formatted_label}` : error_prefix;
+		this.#warn_label = formatted_label ? `${warn_prefix} ${formatted_label}` : warn_prefix;
+		this.#info_label = formatted_label ? `${info_prefix} ${formatted_label}` : info_prefix;
+		this.#debug_label = formatted_label ? `${debug_prefix} ${formatted_label}` : debug_prefix;
 	}
 
 	/**
@@ -140,62 +166,27 @@ export class Logger {
 	}
 
 	error(...args: Array<unknown>): void {
-		if (!should_log(this.level, 'error')) return;
-		const prefix = this.#format_prefix('error');
-		this.console.error(...prefix, ...args);
+		if (this.#level_value < 1) return; // error = 1
+		this.console.error(this.#error_label, ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
-		if (!should_log(this.level, 'warn')) return;
-		const prefix = this.#format_prefix('warn');
-		this.console.warn(...prefix, ...args);
+		if (this.#level_value < 2) return; // warn = 2
+		this.console.warn(this.#warn_label, ...args);
 	}
 
 	info(...args: Array<unknown>): void {
-		if (!should_log(this.level, 'info')) return;
-		const prefix = this.#format_prefix('info');
-		this.console.log(...prefix, ...args);
+		if (this.#level_value < 3) return; // info = 3
+		this.console.log(this.#info_label, ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
-		if (!should_log(this.level, 'debug')) return;
-		const prefix = this.#format_prefix('debug');
-		this.console.log(...prefix, ...args);
+		if (this.#level_value < 4) return; // debug = 4
+		this.console.log(this.#debug_label, ...args);
 	}
 
 	plain(...args: Array<unknown>): void {
 		this.console.log(...args);
-	}
-
-	#format_prefix(method: 'error' | 'warn' | 'info' | 'debug'): Array<unknown> {
-		const prefix: Array<unknown> = [];
-
-		// Add method-specific prefix
-		switch (method) {
-			case 'error':
-				prefix.push(this.#st('red', `${CHAR_ERROR}error${CHAR_ERROR} `));
-				break;
-			case 'warn':
-				prefix.push(this.#st('yellow', `${CHAR_WARN}warn${CHAR_WARN} `));
-				break;
-			case 'info':
-				prefix.push(this.#st('cyan', CHAR_INFO));
-				break;
-			case 'debug':
-				prefix.push(this.#st('gray', `${CHAR_DEBUG}debug${CHAR_DEBUG} `));
-				break;
-		}
-
-		// Add label if present
-		if (this.label) {
-			prefix.push(this.#format_label(this.label));
-		}
-
-		return prefix;
-	}
-
-	#format_label(label: string): string {
-		return `${this.#st('gray', '[')}${this.#st('magenta', label)}${this.#st('gray', ']')}`;
 	}
 }
 
