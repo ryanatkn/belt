@@ -90,7 +90,7 @@ export class Logger {
 	readonly parent?: Logger;
 	readonly colors: boolean;
 
-	readonly #console: Console_Type;
+	readonly console: Console_Type;
 	readonly #st: typeof styleText;
 
 	constructor(label?: string, options: Logger_Options = {}) {
@@ -104,7 +104,7 @@ export class Logger {
 
 		// Inherit configuration from parent or use defaults
 		this.level = options.level ?? this.parent?.level ?? DEFAULT_LOG_LEVEL;
-		this.#console = options.console ?? this.parent?.#console ?? console;
+		this.console = options.console ?? this.parent?.console ?? console;
 
 		// Colors: options > parent > TTY auto-detect
 		this.colors = options.colors ?? this.parent?.colors ?? process.stdout.isTTY ?? false;
@@ -142,29 +142,29 @@ export class Logger {
 	error(...args: Array<unknown>): void {
 		if (!should_log(this.level, 'error')) return;
 		const prefix = this.#format_prefix('error');
-		this.#console.error(...prefix, ...args);
+		this.console.error(...prefix, ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
 		if (!should_log(this.level, 'warn')) return;
 		const prefix = this.#format_prefix('warn');
-		this.#console.warn(...prefix, ...args);
+		this.console.warn(...prefix, ...args);
 	}
 
 	info(...args: Array<unknown>): void {
 		if (!should_log(this.level, 'info')) return;
 		const prefix = this.#format_prefix('info');
-		this.#console.log(...prefix, ...args);
+		this.console.log(...prefix, ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
 		if (!should_log(this.level, 'debug')) return;
 		const prefix = this.#format_prefix('debug');
-		this.#console.log(...prefix, ...args);
+		this.console.log(...prefix, ...args);
 	}
 
 	plain(...args: Array<unknown>): void {
-		this.#console.log(...args);
+		this.console.log(...args);
 	}
 
 	#format_prefix(method: 'error' | 'warn' | 'info' | 'debug'): Array<unknown> {
