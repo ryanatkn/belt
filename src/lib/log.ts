@@ -85,17 +85,20 @@ const NO_COLOR_ST: typeof styleText = (_: unknown, s: string) => s;
  */
 export class Logger {
 	readonly label?: string;
-	readonly level: Log_Level;
 	readonly parent?: Logger;
-	readonly colors: boolean;
 
-	readonly console: Console_Type;
-	readonly #st: typeof styleText;
-	readonly #level_value: number;
-	readonly #error_label: string;
-	readonly #warn_label: string;
-	readonly #info_label: string;
-	readonly #debug_label: string;
+	// Private override fields (undefined = inherit from parent)
+	#level_override?: Log_Level;
+	#colors_override?: boolean;
+	#console_override?: Console_Type;
+
+	// Cached values (recomputed when config changes)
+	#st: typeof styleText;
+	#level_value: number;
+	#error_label: string;
+	#warn_label: string;
+	#info_label: string;
+	#debug_label: string;
 
 	constructor(label?: string, options: Logger_Options = {}) {
 		// Validate label
@@ -106,18 +109,108 @@ export class Logger {
 		this.label = label;
 		this.parent = (options as Internal_Logger_Options).parent;
 
-		// Inherit configuration from parent or use defaults
-		this.level = options.level ?? this.parent?.level ?? DEFAULT_LOG_LEVEL;
-		this.#level_value = LOG_LEVEL_VALUES[this.level]!;
-		this.console = options.console ?? this.parent?.console ?? console;
+		// Set overrides if provided (undefined = inherit from parent)
+		if (options.level !== undefined) {
+			this.#level_override = options.level;
+		}
+		if (options.colors !== undefined) {
+			this.#colors_override = options.colors;
+		}
+		if (options.console !== undefined) {
+			this.#console_override = options.console;
+		}
 
-		// Colors: options > parent > NO_COLOR env var
-		// NO_COLOR standard: if set (to any value), disable colors
+		// Initialize cached values (will be computed by #recompute_cache)
+		this.#st = NO_COLOR_ST;
+		this.#level_value = 0;
+		this.#error_label = '';
+		this.#warn_label = '';
+		this.#info_label = '';
+		this.#debug_label = '';
+
+		// Compute all cached values based on effective config
+		this.#recompute_cache();
+	}
+
+	/**
+	 * Dynamic getter for level - checks override, then parent, then default.
+	 */
+	get level(): Log_Level {
+		if (this.#level_override !== undefined) {
+			return this.#level_override;
+		}
+		if (this.parent) {
+			return this.parent.level;
+		}
+		return DEFAULT_LOG_LEVEL;
+	}
+
+	/**
+	 * Setter for level - creates override and recomputes cached values.
+	 */
+	set level(value: Log_Level) {
+		const numeric_value = LOG_LEVEL_VALUES[value];
+		if (numeric_value === undefined) {
+			throw new Error(`Invalid log level: '${value}'`);
+		}
+		this.#level_override = value;
+		this.#recompute_cache();
+	}
+
+	/**
+	 * Dynamic getter for colors - checks override, then parent, then NO_COLOR env.
+	 */
+	get colors(): boolean {
+		if (this.#colors_override !== undefined) {
+			return this.#colors_override;
+		}
+		if (this.parent) {
+			return this.parent.colors;
+		}
 		const has_no_color = typeof process !== 'undefined' && process.env.NO_COLOR !== undefined;
-		this.colors = options.colors ?? this.parent?.colors ?? !has_no_color;
+		return !has_no_color;
+	}
+
+	/**
+	 * Setter for colors - creates override and recomputes cached values.
+	 */
+	set colors(value: boolean) {
+		this.#colors_override = value;
+		this.#recompute_cache();
+	}
+
+	/**
+	 * Dynamic getter for console - checks override, then parent, then global console.
+	 */
+	get console(): Console_Type {
+		if (this.#console_override !== undefined) {
+			return this.#console_override;
+		}
+		if (this.parent) {
+			return this.parent.console;
+		}
+		return console;
+	}
+
+	/**
+	 * Setter for console - creates override (no cache recompute needed).
+	 */
+	set console(value: Console_Type) {
+		this.#console_override = value;
+	}
+
+	/**
+	 * Recomputes all cached values based on current effective configuration.
+	 * Called when level or colors changes.
+	 */
+	#recompute_cache(): void {
+		// Update style text function based on current colors
 		this.#st = this.colors ? styleText : NO_COLOR_ST;
 
-		// Pre-compute all formatted strings for maximum performance
+		// Update cached numeric level
+		this.#level_value = LOG_LEVEL_VALUES[this.level]!;
+
+		// Pre-compute method prefixes
 		const error_prefix = this.#st('red', ERROR_PREFIX_STR);
 		const warn_prefix = this.#st('yellow', WARN_PREFIX_STR);
 		const info_prefix = this.#st('cyan', CHAR_INFO);
@@ -166,22 +259,22 @@ export class Logger {
 	}
 
 	error(...args: Array<unknown>): void {
-		if (this.#level_value < 1) return; // error = 1
+		if (LOG_LEVEL_VALUES[this.level]! < 1) return; // error = 1
 		this.console.error(this.#error_label, ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
-		if (this.#level_value < 2) return; // warn = 2
+		if (LOG_LEVEL_VALUES[this.level]! < 2) return; // warn = 2
 		this.console.warn(this.#warn_label, ...args);
 	}
 
 	info(...args: Array<unknown>): void {
-		if (this.#level_value < 3) return; // info = 3
+		if (LOG_LEVEL_VALUES[this.level]! < 3) return; // info = 3
 		this.console.log(this.#info_label, ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
-		if (this.#level_value < 4) return; // debug = 4
+		if (LOG_LEVEL_VALUES[this.level]! < 4) return; // debug = 4
 		this.console.log(this.#debug_label, ...args);
 	}
 
