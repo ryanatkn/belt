@@ -167,7 +167,9 @@ export class Logger {
 		if (this.parent) {
 			return this.parent.colors;
 		}
-		const has_no_color = typeof process !== 'undefined' && process.env.NO_COLOR !== undefined;
+		const has_no_color =
+			typeof process !== 'undefined' &&
+			(process.env.NO_COLOR !== undefined || process.env.CLAUDECODE !== undefined);
 		return !has_no_color;
 	}
 
