@@ -57,7 +57,7 @@ describe('Logger > Edge Cases', () => {
 		assert.equal(level4.level, 'debug');
 
 		// Check labels
-		assert.equal(level4.label, 'root__l1__l2__l3__l4');
+		assert.equal(level4.label, 'root:l1:l2:l3:l4');
 
 		// Check console inheritance
 		level4.error('test');
@@ -71,7 +71,7 @@ describe('Logger > Edge Cases', () => {
 		const child3 = child2.child('d');
 		const child4 = child3.child('e');
 
-		assert.equal(child4.label, 'a__b__c__d__e');
+		assert.equal(child4.label, 'a:b:c:d:e');
 		assert.equal(child4.parent, child3);
 		assert.equal(child3.parent, child2);
 		assert.equal(child2.parent, child1);

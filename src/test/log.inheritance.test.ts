@@ -8,7 +8,7 @@ describe('Logger > Child Loggers', () => {
 		const parent = new Logger('parent');
 		const child = parent.child('child');
 
-		assert.equal(child.label, 'parent__child');
+		assert.equal(child.label, 'parent:child');
 	});
 
 	test('child() without parent label', () => {
@@ -24,7 +24,7 @@ describe('Logger > Child Loggers', () => {
 		const level2 = level1.child('l2');
 		const level3 = level2.child('l3');
 
-		assert.equal(level3.label, 'root__l1__l2__l3');
+		assert.equal(level3.label, 'root:l1:l2:l3');
 	});
 
 	test('child logger output includes full label path', () => {
@@ -36,7 +36,7 @@ describe('Logger > Child Loggers', () => {
 
 		assert.ok(ctx.logged_args);
 		assert.ok(
-			ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('[parent__child]')),
+			ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('[parent:child]')),
 		);
 	});
 });
@@ -97,7 +97,7 @@ describe('Logger > Inheritance', () => {
 		assert.ok(ctx.logged_args);
 
 		// Check label inheritance
-		assert.equal(child.label, 'root__parent__child');
+		assert.equal(child.label, 'root:parent:child');
 	});
 });
 
