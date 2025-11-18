@@ -6,6 +6,7 @@ import {create_test_context} from './log_test_helpers.js';
 describe('Logger > Additional Edge Cases', () => {
 	test('invalid level string throws error', () => {
 		assert.throws(() => {
+			// eslint-disable-next-line no-new
 			new Logger('test', {level: 'invalid' as any});
 		});
 	});
