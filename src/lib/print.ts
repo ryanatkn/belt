@@ -109,4 +109,3 @@ export const print_timings = (timings: Timings, log: Logger): void => {
 		log.debug(print_timing(key, timing));
 	}
 };
-
