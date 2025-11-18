@@ -1,0 +1,201 @@
+import {describe, test, assert} from 'vitest';
+
+import {Logger} from '$lib/log.js';
+import {create_test_context} from './log_test_helpers.js';
+
+describe('Logger > Core Functionality', () => {
+	test('Logger with label formats prefix', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {console: ctx.console, colors: false, level: 'info'});
+
+		log.info('message');
+
+		assert.ok(ctx.logged_args);
+		assert.ok(ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('[test]')));
+	});
+
+	test('Logger without label has no bracket prefix', () => {
+		const ctx = create_test_context();
+		const log = new Logger(undefined, {console: ctx.console, colors: false, level: 'info'});
+
+		log.info('message');
+
+		assert.ok(ctx.logged_args);
+		assert.ok(!ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('[')));
+	});
+
+	test('Log level filtering', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'warn', console: ctx.console, colors: false});
+
+		log.info('hidden');
+		assert.equal(ctx.logged_args, undefined);
+
+		log.warn('shown');
+		assert.ok(ctx.warn_args);
+	});
+
+	test('All log methods work', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'debug', console: ctx.console, colors: false});
+
+		log.error('error message');
+		assert.ok(ctx.error_args);
+		assert.ok(ctx.error_args.some((arg) => typeof arg === 'string' && arg.includes('error')));
+		ctx.error_args = undefined;
+
+		log.warn('warn message');
+		assert.ok(ctx.warn_args);
+		assert.ok(ctx.warn_args.some((arg) => typeof arg === 'string' && arg.includes('warn')));
+		ctx.warn_args = undefined;
+
+		log.info('info message');
+		assert.ok(ctx.logged_args);
+		ctx.logged_args = undefined;
+
+		log.debug('debug message');
+		assert.ok(ctx.logged_args);
+		assert.ok(ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('debug')));
+		ctx.logged_args = undefined;
+	});
+
+	test('plain() bypasses level filtering and formatting', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'off', console: ctx.console, colors: false});
+
+		log.info('hidden');
+		assert.equal(ctx.logged_args, undefined);
+
+		log.plain('shown');
+		assert.deepStrictEqual(ctx.logged_args, ['shown']);
+	});
+
+	test('boundary level check - logging at exact threshold', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'warn', console: ctx.console, colors: false});
+
+		// At threshold - should show
+		log.warn('shown');
+		assert.ok(ctx.warn_args);
+		ctx.warn_args = undefined;
+
+		// Below threshold - should be hidden
+		log.info('hidden');
+		assert.equal(ctx.logged_args, undefined);
+
+		// Above threshold - should show
+		log.error('shown');
+		assert.ok(ctx.error_args);
+	});
+});
+
+describe('Logger > Label Validation', () => {
+	test('label with colon is allowed', () => {
+		const log = new Logger('user:123');
+		assert.equal(log.label, 'user:123');
+	});
+
+	test('empty child label throws error', () => {
+		const parent = new Logger('parent');
+		assert.throws(() => parent.child(''), /cannot be empty/);
+	});
+
+	test('empty root label is allowed', () => {
+		const log = new Logger('');
+		assert.equal(log.label, '');
+	});
+
+	test('empty label produces no brackets in output', () => {
+		const ctx = create_test_context();
+		const log = new Logger('', {console: ctx.console, colors: false, level: 'info'});
+
+		log.info('message');
+
+		assert.ok(ctx.logged_args);
+		// Should not contain brackets since label is empty
+		assert.ok(!ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes('[')));
+		assert.ok(!ctx.logged_args.some((arg) => typeof arg === 'string' && arg.includes(']')));
+	});
+
+	test('label with multiple colons is allowed', () => {
+		const log = new Logger('user:123:456');
+		assert.equal(log.label, 'user:123:456');
+	});
+});
+
+describe('Logger > Configuration', () => {
+	test('colors option controls styling', () => {
+		const ctx = create_test_context();
+
+		const colored = new Logger('test', {colors: true, console: ctx.console});
+		assert.equal(colored.colors, true);
+
+		const plain = new Logger('test', {colors: false, console: ctx.console});
+		assert.equal(plain.colors, false);
+	});
+
+	test('default log level is used when not specified', () => {
+		const log = new Logger('test');
+
+		// Default level should be set (varies by environment: 'off' in vitest, 'debug' in DEV, 'info' in prod)
+		assert.ok(['off', 'info', 'debug'].includes(log.level));
+	});
+
+	test('custom level overrides default', () => {
+		const log = new Logger('test', {level: 'error'});
+
+		assert.equal(log.level, 'error');
+	});
+
+	test('level off silences all logging', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'off', console: ctx.console, colors: false});
+
+		log.error('hidden');
+		assert.equal(ctx.error_args, undefined);
+
+		log.warn('hidden');
+		assert.equal(ctx.warn_args, undefined);
+
+		log.info('hidden');
+		assert.equal(ctx.logged_args, undefined);
+
+		log.debug('hidden');
+		assert.equal(ctx.logged_args, undefined);
+	});
+
+	test('level debug shows all messages', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {level: 'debug', console: ctx.console, colors: false});
+
+		log.debug('shown');
+		assert.ok(ctx.logged_args);
+		ctx.logged_args = undefined;
+
+		log.info('shown');
+		assert.ok(ctx.logged_args);
+		ctx.logged_args = undefined;
+
+		log.warn('shown');
+		assert.ok(ctx.warn_args);
+		ctx.warn_args = undefined;
+
+		log.error('shown');
+		assert.ok(ctx.error_args);
+	});
+});
+
+describe('Logger > Multiple Arguments', () => {
+	test('logger passes through multiple arguments', () => {
+		const ctx = create_test_context();
+		const log = new Logger('test', {console: ctx.console, colors: false, level: 'info'});
+
+		log.info('message', 42, {foo: 'bar'}, ['array']);
+
+		assert.ok(ctx.logged_args);
+		assert.ok(ctx.logged_args.includes('message'));
+		assert.ok(ctx.logged_args.includes(42));
+		assert.ok(ctx.logged_args.some((arg) => typeof arg === 'object' && arg !== null && 'foo' in arg && (arg as any).foo === 'bar'));
+		assert.ok(ctx.logged_args.some((arg) => Array.isArray(arg)));
+	});
+});

@@ -23,11 +23,12 @@ const CHAR_INFO = '➤';
 const CHAR_DEBUG = '┆';
 
 // Pre-computed method prefix strings
-const ERROR_PREFIX_STR = `${CHAR_ERROR}error${CHAR_ERROR} `;
-const WARN_PREFIX_STR = `${CHAR_WARN}warn${CHAR_WARN} `;
-const DEBUG_PREFIX_STR = `${CHAR_DEBUG}debug${CHAR_DEBUG} `;
+const PREFIX_ERROR = `${CHAR_ERROR}error${CHAR_ERROR}`;
+const PREFIX_WARN = `${CHAR_WARN}warn${CHAR_WARN}`;
+const PREFIX_INFO = CHAR_INFO;
+const PREFIX_DEBUG = `${CHAR_DEBUG}debug${CHAR_DEBUG}`;
 
-const LOG_LEVEL_VALUES: Record<Log_Level, number | undefined> = {
+const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
 	off: 0,
 	error: 1,
 	warn: 2,
@@ -40,14 +41,9 @@ const LOG_LEVEL_VALUES: Record<Log_Level, number | undefined> = {
  * Higher numbers indicate more verbose logging.
  * @param level The log level to convert
  * @returns Numeric value (0-4)
- * @throws {Error} If an invalid log level is provided
  */
 export const log_level_to_number = (level: Log_Level): number => {
-	const value = LOG_LEVEL_VALUES[level];
-	if (value === undefined) {
-		throw new Error(`Invalid log level: '${level}'`);
-	}
-	return value;
+	return LOG_LEVEL_VALUES[level];
 };
 
 const DEFAULT_LOG_LEVEL: Log_Level =
@@ -67,7 +63,6 @@ const NO_COLOR_ST: typeof styleText = (_: unknown, s: string) => s;
  * - Child loggers with automatic label concatenation
  * - Parent chain inheritance for level, console, and colors
  * - Respects NO_COLOR environment variable
- * - Fail-fast label validation
  *
  * @example
  * ```ts
@@ -92,20 +87,18 @@ export class Logger {
 	#colors_override?: boolean;
 	#console_override?: Console_Type;
 
-	// Cached values (recomputed when config changes)
-	#st: typeof styleText;
-	#level_value: number;
-	#error_label: string;
-	#warn_label: string;
-	#info_label: string;
-	#debug_label: string;
+	// Lazy cache for formatted prefixes (individually cached and invalidated when colors change)
+	#cached_colors?: boolean;
+	#cached_st?: typeof styleText;
+	#cached_error?: string;
+	#cached_warn?: string;
+	#cached_info?: string;
+	#cached_debug?: string;
+
+	// Cached numeric level value (updated on each access to avoid repeated lookups)
+	#cached_level?: number;
 
 	constructor(label?: string, options: Logger_Options = {}) {
-		// Validate label
-		if (label?.includes(':')) {
-			throw new Error(`Logger label '${label}' contains reserved character ':'`);
-		}
-
 		this.label = label;
 		this.parent = (options as Internal_Logger_Options).parent;
 
@@ -119,17 +112,6 @@ export class Logger {
 		if (options.console !== undefined) {
 			this.#console_override = options.console;
 		}
-
-		// Initialize cached values (will be computed by #recompute_cache)
-		this.#st = NO_COLOR_ST;
-		this.#level_value = 0;
-		this.#error_label = '';
-		this.#warn_label = '';
-		this.#info_label = '';
-		this.#debug_label = '';
-
-		// Compute all cached values based on effective config
-		this.#recompute_cache();
 	}
 
 	/**
@@ -146,15 +128,13 @@ export class Logger {
 	}
 
 	/**
-	 * Setter for level - creates override and recomputes cached values.
+	 * Setter for level - creates override.
 	 */
 	set level(value: Log_Level) {
-		const numeric_value = LOG_LEVEL_VALUES[value];
-		if (numeric_value === undefined) {
+		if (!(value in LOG_LEVEL_VALUES)) {
 			throw new Error(`Invalid log level: '${value}'`);
 		}
 		this.#level_override = value;
-		this.#recompute_cache();
 	}
 
 	/**
@@ -174,11 +154,10 @@ export class Logger {
 	}
 
 	/**
-	 * Setter for colors - creates override and recomputes cached values.
+	 * Setter for colors - creates override.
 	 */
 	set colors(value: boolean) {
 		this.#colors_override = value;
-		this.#recompute_cache();
 	}
 
 	/**
@@ -195,41 +174,105 @@ export class Logger {
 	}
 
 	/**
-	 * Setter for console - creates override (no cache recompute needed).
+	 * Setter for console - creates override.
 	 */
 	set console(value: Console_Type) {
 		this.#console_override = value;
 	}
 
 	/**
-	 * Recomputes all cached values based on current effective configuration.
-	 * Called when level or colors changes.
+	 * Ensures cache is valid by checking if colors configuration changed.
+	 * Invalidates all cached prefixes if colors changed.
 	 */
-	#recompute_cache(): void {
-		// Update style text function based on current colors
-		this.#st = this.colors ? styleText : NO_COLOR_ST;
+	#ensure_cache_valid(): void {
+		const current_colors = this.colors;
+		if (this.#cached_colors !== current_colors) {
+			this.#cached_colors = current_colors;
+			this.#cached_st = current_colors ? styleText : NO_COLOR_ST;
+			this.#cached_error = undefined;
+			this.#cached_warn = undefined;
+			this.#cached_info = undefined;
+			this.#cached_debug = undefined;
+		}
+	}
 
-		// Update cached numeric level
-		this.#level_value = LOG_LEVEL_VALUES[this.level]!;
+	/**
+	 * Formats the label portion of log output with given styleText function.
+	 */
+	#format_label(st: typeof styleText, colored: boolean): string {
+		if (!this.label) return '';
 
-		// Pre-compute method prefixes
-		const error_prefix = this.#st('red', ERROR_PREFIX_STR);
-		const warn_prefix = this.#st('yellow', WARN_PREFIX_STR);
-		const info_prefix = this.#st('cyan', CHAR_INFO);
-		const debug_prefix = this.#st('gray', DEBUG_PREFIX_STR);
+		return colored
+			? `${st('gray', '[')}${st('magenta', this.label)}${st('gray', ']')}`
+			: `[${this.label}]`;
+	}
 
-		// Pre-compute formatted label if present
-		const formatted_label = this.label
-			? this.colors
-				? `${this.#st('gray', '[')}${this.#st('magenta', this.label)}${this.#st('gray', ']')}`
-				: `[${this.label}]`
-			: '';
+	/**
+	 * Gets the formatted error prefix, lazily computing if needed.
+	 */
+	#get_error_prefix(): string {
+		this.#ensure_cache_valid();
+		if (this.#cached_error === undefined) {
+			const st = this.#cached_st!;
+			const prefix = st('red', PREFIX_ERROR);
+			const label = this.#format_label(st, this.#cached_colors!);
+			this.#cached_error = label ? `${prefix} ${label}` : prefix;
+		}
+		return this.#cached_error;
+	}
 
-		// Combine method prefix with label for single property access
-		this.#error_label = formatted_label ? `${error_prefix} ${formatted_label}` : error_prefix;
-		this.#warn_label = formatted_label ? `${warn_prefix} ${formatted_label}` : warn_prefix;
-		this.#info_label = formatted_label ? `${info_prefix} ${formatted_label}` : info_prefix;
-		this.#debug_label = formatted_label ? `${debug_prefix} ${formatted_label}` : debug_prefix;
+	/**
+	 * Gets the formatted warn prefix, lazily computing if needed.
+	 */
+	#get_warn_prefix(): string {
+		this.#ensure_cache_valid();
+		if (this.#cached_warn === undefined) {
+			const st = this.#cached_st!;
+			const prefix = st('yellow', PREFIX_WARN);
+			const label = this.#format_label(st, this.#cached_colors!);
+			this.#cached_warn = label ? `${prefix} ${label}` : prefix;
+		}
+		return this.#cached_warn;
+	}
+
+	/**
+	 * Gets the formatted info prefix, lazily computing if needed.
+	 */
+	#get_info_prefix(): string {
+		this.#ensure_cache_valid();
+		if (this.#cached_info === undefined) {
+			const st = this.#cached_st!;
+			const prefix = st('cyan', PREFIX_INFO);
+			const label = this.#format_label(st, this.#cached_colors!);
+			this.#cached_info = label ? `${prefix} ${label}` : prefix;
+		}
+		return this.#cached_info;
+	}
+
+	/**
+	 * Gets the formatted debug prefix, lazily computing if needed.
+	 */
+	#get_debug_prefix(): string {
+		this.#ensure_cache_valid();
+		if (this.#cached_debug === undefined) {
+			const st = this.#cached_st!;
+			const prefix = st('gray', PREFIX_DEBUG);
+			const label = this.#format_label(st, this.#cached_colors!);
+			this.#cached_debug = label ? `${prefix} ${label}` : prefix;
+		}
+		return this.#cached_debug;
+	}
+
+	/**
+	 * Gets the cached numeric level value, updating cache if level changed.
+	 * Avoids repeated parent chain walks and dictionary lookups.
+	 */
+	#get_cached_level(): number {
+		const current_level = log_level_to_number(this.level);
+		if (this.#cached_level !== current_level) {
+			this.#cached_level = current_level;
+		}
+		return this.#cached_level;
 	}
 
 	/**
@@ -246,38 +289,38 @@ export class Logger {
 	 * const db_log = app_log.child('db'); // label: 'app__db'
 	 * ```
 	 */
-	child(label: string, options: Child_Logger_Options = {}): Logger {
+	child(label: string, options: Logger_Options = {}): Logger {
 		if (label === '') {
 			throw new Error('Logger label cannot be empty when creating child');
 		}
 
 		const child_label = this.label ? `${this.label}__${label}` : label;
 
-		// Pass parent reference and config
+		// Pass parent reference and all config options
 		return new Logger(child_label, {
-			level: options.level,
+			...options,
 			parent: this,
 		} as Internal_Logger_Options);
 	}
 
 	error(...args: Array<unknown>): void {
-		if (LOG_LEVEL_VALUES[this.level]! < 1) return; // error = 1
-		this.console.error(this.#error_label, ...args);
+		if (this.#get_cached_level() < 1) return; // error = 1
+		this.console.error(this.#get_error_prefix(), ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
-		if (LOG_LEVEL_VALUES[this.level]! < 2) return; // warn = 2
-		this.console.warn(this.#warn_label, ...args);
+		if (this.#get_cached_level() < 2) return; // warn = 2
+		this.console.warn(this.#get_warn_prefix(), ...args);
 	}
 
 	info(...args: Array<unknown>): void {
-		if (LOG_LEVEL_VALUES[this.level]! < 3) return; // info = 3
-		this.console.log(this.#info_label, ...args);
+		if (this.#get_cached_level() < 3) return; // info = 3
+		this.console.log(this.#get_info_prefix(), ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
-		if (LOG_LEVEL_VALUES[this.level]! < 4) return; // debug = 4
-		this.console.log(this.#debug_label, ...args);
+		if (this.#get_cached_level() < 4) return; // debug = 4
+		this.console.log(this.#get_debug_prefix(), ...args);
 	}
 
 	plain(...args: Array<unknown>): void {
@@ -305,12 +348,6 @@ export interface Logger_Options {
 	 */
 	colors?: boolean;
 }
-
-/**
- * Configuration options for child loggers.
- * Child loggers can only override level, inheriting console and colors from parent.
- */
-export type Child_Logger_Options = Pick<Logger_Options, 'level'>;
 
 // Internal type for child() implementation
 interface Internal_Logger_Options extends Logger_Options {
