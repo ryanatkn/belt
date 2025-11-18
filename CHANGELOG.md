@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.37.0
+
+### Minor Changes
+
+- simplify logging ([#51](https://github.com/ryanatkn/belt/pull/51))
+
 ## 0.36.1
 
 ### Patch Changes
