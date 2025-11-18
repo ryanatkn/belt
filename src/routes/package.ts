@@ -248,8 +248,9 @@ export const src_json: Src_Json = {
 			path: 'log.ts',
 			declarations: [
 				{name: 'Log_Level', kind: 'type'},
-				{name: 'Console_Type', kind: 'type'},
+				{name: 'Log_Console', kind: 'type'},
 				{name: 'log_level_to_number', kind: 'function'},
+				{name: 'log_level_parse', kind: 'function'},
 				{name: 'Logger', kind: 'class'},
 				{name: 'Logger_Options', kind: 'type'},
 			],
