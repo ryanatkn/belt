@@ -59,14 +59,14 @@ describe('Logger > Core Functionality', () => {
 		ctx.logged_args = undefined;
 	});
 
-	test('plain() bypasses level filtering and formatting', () => {
+	test('raw() bypasses level filtering and formatting', () => {
 		const ctx = create_test_context();
 		const log = new Logger('test', {level: 'off', console: ctx.console, colors: false});
 
 		log.info('hidden');
 		assert.equal(ctx.logged_args, undefined);
 
-		log.plain('shown');
+		log.raw('shown');
 		assert.deepStrictEqual(ctx.logged_args, ['shown']);
 	});
 

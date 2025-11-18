@@ -19,13 +19,16 @@ export type Log_Console = Pick<typeof console, 'error' | 'warn' | 'log'>;
 
 const CHAR_ERROR = '🞩';
 const CHAR_WARN = '⚑';
-// const CHAR_INFO = ''; // not used, not customizable
+// Info logs have no character prefix - they only show the label.
+// This is by design: info is the "default" log level for standard output,
+// so it gets minimal visual noise. Error, warn, and debug have distinctive
+// prefixes to make them stand out from normal info logs.
 const CHAR_DEBUG = '┆';
 
 // Pre-computed method prefix strings
 const PREFIX_ERROR = `${CHAR_ERROR}error${CHAR_ERROR}`;
 const PREFIX_WARN = `${CHAR_WARN}warn${CHAR_WARN}`;
-// const PREFIX_INFO = CHAR_INFO; // not used, not customizable
+// Info has no prefix - see CHAR_DEBUG comment above
 const PREFIX_DEBUG = `${CHAR_DEBUG}debug${CHAR_DEBUG}`;
 
 const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
@@ -106,6 +109,14 @@ export class Logger {
 	#cached_level_string?: Log_Level;
 	#cached_level?: number;
 
+	/**
+	 * Creates a new Logger instance.
+	 *
+	 * @param label Optional label for this logger. Can be `undefined` for no label, or an
+	 *   empty string `''` which is functionally equivalent (both produce no brackets in output).
+	 *   Note: Empty strings are only allowed for root loggers - child loggers cannot have empty labels.
+	 * @param options Optional configuration for level, colors, and console
+	 */
 	constructor(label?: string, options: Logger_Options = {}) {
 		this.label = label;
 		this.parent = (options as Internal_Logger_Options).parent;
@@ -145,7 +156,11 @@ export class Logger {
 	}
 
 	/**
-	 * Dynamic getter for colors - checks override, then parent, then NO_COLOR env.
+	 * Dynamic getter for colors - checks override, then parent, then environment variables.
+	 *
+	 * Colors are disabled if either the `NO_COLOR` or `CLAUDECODE` environment variable is set.
+	 * The `CLAUDECODE` check disables colors in Claude Code environments where ANSI color codes
+	 * may not render correctly in the output.
 	 */
 	get colors(): boolean {
 		if (this.#colors_override !== undefined) {
@@ -201,8 +216,48 @@ export class Logger {
 	}
 
 	/**
-	 * Ensures cache is valid by checking if colors configuration changed.
-	 * Invalidates all cached prefixes if colors changed.
+	 * Clears the level override for this logger, restoring inheritance from parent.
+	 * After calling this, the logger will dynamically inherit the level from its parent
+	 * (or use the default level if it has no parent).
+	 */
+	clear_level_override(): void {
+		this.#level_override = undefined;
+		this.#cached_level_string = undefined;
+		this.#cached_level = undefined;
+	}
+
+	/**
+	 * Clears the colors override for this logger, restoring inheritance from parent.
+	 * After calling this, the logger will dynamically inherit colors from its parent
+	 * (or use the default colors behavior if it has no parent).
+	 */
+	clear_colors_override(): void {
+		this.#colors_override = undefined;
+		// Invalidate prefix caches since colors affect them
+		this.#cached_colors = undefined;
+		this.#cached_error = undefined;
+		this.#cached_warn = undefined;
+		this.#cached_info = undefined;
+		this.#cached_debug = undefined;
+	}
+
+	/**
+	 * Clears the console override for this logger, restoring inheritance from parent.
+	 * After calling this, the logger will dynamically inherit the console from its parent
+	 * (or use the global console if it has no parent).
+	 */
+	clear_console_override(): void {
+		this.#console_override = undefined;
+	}
+
+	/**
+	 * Ensures prefix cache is valid by checking if colors configuration changed.
+	 * Uses pull-based invalidation: checks colors on each access and invalidates cached
+	 * prefixes if colors changed. This automatically handles inheritance changes since
+	 * `this.colors` getter walks the parent chain on each access.
+	 *
+	 * Invalidates all 4 cached prefix strings when colors change, since they all depend
+	 * on the color configuration.
 	 */
 	#ensure_cache_valid(): void {
 		const current_colors = this.colors;
@@ -218,6 +273,7 @@ export class Logger {
 
 	/**
 	 * Formats the label portion of log output with given styleText function.
+	 * Applies color styling if enabled, otherwise returns plain bracketed label.
 	 */
 	#format_label(st: typeof styleText, colored: boolean): string {
 		if (!this.label) return '';
@@ -228,7 +284,9 @@ export class Logger {
 	}
 
 	/**
-	 * Gets the formatted error prefix, lazily computing if needed.
+	 * Gets the formatted error prefix, lazily computing and caching if needed.
+	 * Lazy computation means prefixes are only built when the corresponding log method
+	 * is first called, avoiding work for unused log levels.
 	 */
 	#get_error_prefix(): string {
 		this.#ensure_cache_valid();
@@ -242,7 +300,7 @@ export class Logger {
 	}
 
 	/**
-	 * Gets the formatted warn prefix, lazily computing if needed.
+	 * Gets the formatted warn prefix, lazily computing and caching if needed.
 	 */
 	#get_warn_prefix(): string {
 		this.#ensure_cache_valid();
@@ -256,7 +314,8 @@ export class Logger {
 	}
 
 	/**
-	 * Gets the formatted info prefix, lazily computing if needed.
+	 * Gets the formatted info prefix, lazily computing and caching if needed.
+	 * Note: info has no colored prefix character, only the label.
 	 */
 	#get_info_prefix(): string {
 		this.#ensure_cache_valid();
@@ -269,7 +328,7 @@ export class Logger {
 	}
 
 	/**
-	 * Gets the formatted debug prefix, lazily computing if needed.
+	 * Gets the formatted debug prefix, lazily computing and caching if needed.
 	 */
 	#get_debug_prefix(): string {
 		this.#ensure_cache_valid();
@@ -284,7 +343,9 @@ export class Logger {
 
 	/**
 	 * Gets the cached numeric level value, updating cache if level changed.
-	 * Caches based on resolved level string to avoid repeated dictionary lookups.
+	 * Called on every log method invocation to check if the message should be filtered.
+	 * Caches the numeric value (from LOG_LEVEL_VALUES dictionary) to avoid repeated lookups.
+	 * Uses pull-based invalidation: checks `this.level` getter which handles inheritance.
 	 */
 	#get_cached_level(): number {
 		const current_level_string = this.level;
@@ -299,14 +360,18 @@ export class Logger {
 	 * Creates a child logger with automatic label concatenation.
 	 * Children inherit parent configuration unless overridden.
 	 *
-	 * @param label Child label (will be concatenated with parent label using `:`)
+	 * @param label Child label (will be concatenated with parent label using `:`).
+	 *   Cannot be an empty string - empty labels would result in confusing output like `parent:`
+	 *   with a trailing colon. Use `undefined` or `''` only for root loggers.
 	 * @param options Optional configuration overrides
 	 * @returns New Logger instance with concatenated label
+	 * @throws Error if label is an empty string
 	 *
 	 * @example
 	 * ```ts
 	 * const app_log = new Logger('app');
 	 * const db_log = app_log.child('db'); // label: 'app:db'
+	 * const query_log = db_log.child('query'); // label: 'app:db:query'
 	 * ```
 	 */
 	child(label: string, options: Logger_Options = {}): Logger {
@@ -324,32 +389,55 @@ export class Logger {
 		return new Logger(child_label, internal_options);
 	}
 
+	/**
+	 * Logs an error message with `🞩error🞩` prefix.
+	 * Only outputs if current level is `error` or higher.
+	 */
 	error(...args: Array<unknown>): void {
 		if (this.#get_cached_level() < LOG_LEVEL_VALUES.error) return;
 		this.console.error(this.#get_error_prefix(), ...args);
 	}
 
+	/**
+	 * Logs a warning message with `⚑warn⚑` prefix.
+	 * Only outputs if current level is `warn` or higher.
+	 */
 	warn(...args: Array<unknown>): void {
 		if (this.#get_cached_level() < LOG_LEVEL_VALUES.warn) return;
 		this.console.warn(this.#get_warn_prefix(), ...args);
 	}
 
+	/**
+	 * Logs an informational message.
+	 * Unlike error/warn/debug, info has no character prefix - only the label is shown.
+	 * This keeps standard output clean since info is the default log level.
+	 * Only outputs if current level is `info` or higher.
+	 */
 	info(...args: Array<unknown>): void {
 		if (this.#get_cached_level() < LOG_LEVEL_VALUES.info) return;
 		this.console.log(this.#get_info_prefix(), ...args);
 	}
 
+	/**
+	 * Logs a debug message with `┆debug┆` prefix.
+	 * Only outputs if current level is `debug`.
+	 */
 	debug(...args: Array<unknown>): void {
 		if (this.#get_cached_level() < LOG_LEVEL_VALUES.debug) return;
 		this.console.log(this.#get_debug_prefix(), ...args);
 	}
 
 	/**
-	 * Logs a plain message without any prefix or formatting.
+	 * Logs raw output without any prefix, formatting, or level filtering.
+	 * Bypasses the logger's level checking, prefix formatting, and color application entirely.
 	 * Useful for outputting structured data or when you need full control over formatting.
-	 * @param args Values to log
+	 *
+	 * Note: This method ignores the configured log level - it always outputs regardless of
+	 * whether the logger is set to 'off' or any other level.
+	 *
+	 * @param args Values to log directly to console
 	 */
-	plain(...args: Array<unknown>): void {
+	raw(...args: Array<unknown>): void {
 		this.console.log(...args);
 	}
 }
