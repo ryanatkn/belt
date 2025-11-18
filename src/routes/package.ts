@@ -252,7 +252,6 @@ export const src_json: Src_Json = {
 				{name: 'log_level_to_number', kind: 'function'},
 				{name: 'Logger', kind: 'class'},
 				{name: 'Logger_Options', kind: 'type'},
-				{name: 'Child_Logger_Options', kind: 'type'},
 			],
 		},
 		'./map.js': {
