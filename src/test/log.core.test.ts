@@ -51,7 +51,7 @@ describe('Logger > Core Functionality', () => {
 
 		log.info('info message');
 		assert.ok(ctx.logged_args);
-		ctx.logged_args = undefined;
+		ctx.logged_args = undefined as any;
 
 		log.debug('debug message');
 		assert.ok(ctx.logged_args);
@@ -195,7 +195,12 @@ describe('Logger > Multiple Arguments', () => {
 		assert.ok(ctx.logged_args);
 		assert.ok(ctx.logged_args.includes('message'));
 		assert.ok(ctx.logged_args.includes(42));
-		assert.ok(ctx.logged_args.some((arg) => typeof arg === 'object' && arg !== null && 'foo' in arg && (arg as any).foo === 'bar'));
+		assert.ok(
+			ctx.logged_args.some(
+				(arg) =>
+					typeof arg === 'object' && arg !== null && 'foo' in arg && (arg as any).foo === 'bar',
+			),
+		);
 		assert.ok(ctx.logged_args.some((arg) => Array.isArray(arg)));
 	});
 });
