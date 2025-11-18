@@ -19,13 +19,13 @@ export type Log_Console = Pick<typeof console, 'error' | 'warn' | 'log'>;
 
 const CHAR_ERROR = '🞩';
 const CHAR_WARN = '⚑';
-const CHAR_INFO = '➤';
+// const CHAR_INFO = ''; // not used, not customizable
 const CHAR_DEBUG = '┆';
 
 // Pre-computed method prefix strings
 const PREFIX_ERROR = `${CHAR_ERROR}error${CHAR_ERROR}`;
 const PREFIX_WARN = `${CHAR_WARN}warn${CHAR_WARN}`;
-const PREFIX_INFO = CHAR_INFO;
+// const PREFIX_INFO = CHAR_INFO; // not used, not customizable
 const PREFIX_DEBUG = `${CHAR_DEBUG}debug${CHAR_DEBUG}`;
 
 const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
@@ -80,7 +80,7 @@ const NO_COLOR_ST: typeof styleText = (_: string | Array<string>, s: string) => 
  *
  * // Child logger
  * const db_log = log.child('db');
- * db_log.info('connected'); // [app__db] ➤ connected
+ * db_log.info('connected'); // [app:db] ➤ connected
  *
  * // Custom configuration
  * const verbose_log = new Logger('debug', { level: 'debug', colors: true });
@@ -188,6 +188,19 @@ export class Logger {
 	}
 
 	/**
+	 * Gets the root logger by walking up the parent chain.
+	 * Useful for setting global configuration that affects all child loggers.
+	 * @returns The root logger (the one without a parent)
+	 */
+	get root(): Logger {
+		let current: Logger = this; // eslint-disable-line consistent-this, @typescript-eslint/no-this-alias
+		while (current.parent) {
+			current = current.parent;
+		}
+		return current;
+	}
+
+	/**
 	 * Ensures cache is valid by checking if colors configuration changed.
 	 * Invalidates all cached prefixes if colors changed.
 	 */
@@ -249,9 +262,8 @@ export class Logger {
 		this.#ensure_cache_valid();
 		if (this.#cached_info === undefined) {
 			const st = this.#cached_st!;
-			const prefix = st('cyan', PREFIX_INFO);
 			const label = this.#format_label(st, this.#cached_colors!);
-			this.#cached_info = label ? `${prefix} ${label}` : prefix;
+			this.#cached_info = label || '';
 		}
 		return this.#cached_info;
 	}
@@ -287,14 +299,14 @@ export class Logger {
 	 * Creates a child logger with automatic label concatenation.
 	 * Children inherit parent configuration unless overridden.
 	 *
-	 * @param label Child label (will be concatenated with parent label using `__`)
+	 * @param label Child label (will be concatenated with parent label using `:`)
 	 * @param options Optional configuration overrides
 	 * @returns New Logger instance with concatenated label
 	 *
 	 * @example
 	 * ```ts
 	 * const app_log = new Logger('app');
-	 * const db_log = app_log.child('db'); // label: 'app__db'
+	 * const db_log = app_log.child('db'); // label: 'app:db'
 	 * ```
 	 */
 	child(label: string, options: Logger_Options = {}): Logger {
@@ -302,7 +314,7 @@ export class Logger {
 			throw new Error('Logger label cannot be empty when creating child');
 		}
 
-		const child_label = this.label ? `${this.label}__${label}` : label;
+		const child_label = this.label ? `${this.label}:${label}` : label;
 
 		// Pass parent reference and all config options
 		const internal_options: Internal_Logger_Options = {
