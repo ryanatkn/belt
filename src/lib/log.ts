@@ -44,14 +44,24 @@ const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
  */
 export const log_level_to_number = (level: Log_Level): number => LOG_LEVEL_VALUES[level];
 
+/**
+ * Parses and validates a log level string.
+ * @param value The value to parse as a log level
+ * @returns The validated log level, or undefined if value is undefined
+ * @throws Error if value is provided but invalid
+ */
+export const log_level_parse = (value: string | undefined): Log_Level | undefined => {
+	if (!value) return undefined;
+	if (value in LOG_LEVEL_VALUES) return value as Log_Level;
+	throw new Error(`Invalid log level: '${value}'`);
+};
+
 const DEFAULT_LOG_LEVEL: Log_Level =
-	(typeof process === 'undefined'
-		? undefined
-		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ??
+	(typeof process === 'undefined' ? undefined : log_level_parse(process.env.PUBLIC_LOG_LEVEL)) ??
 	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
 // Identity function for when colors are disabled
-const NO_COLOR_ST: typeof styleText = (_: unknown, s: string) => s;
+const NO_COLOR_ST: typeof styleText = (_: string | Array<string>, s: string) => s;
 
 /**
  * Simple, flexible logger with support for child loggers and automatic context.
@@ -102,9 +112,7 @@ export class Logger {
 
 		// Set overrides if provided (undefined = inherit from parent)
 		if (options.level !== undefined) {
-			if (!(options.level in LOG_LEVEL_VALUES)) {
-				throw new Error(`Invalid log level: '${options.level}'`);
-			}
+			log_level_parse(options.level); // throws if invalid
 			this.#level_override = options.level;
 		}
 		if (options.colors !== undefined) {
@@ -132,9 +140,7 @@ export class Logger {
 	 * Setter for level - creates override.
 	 */
 	set level(value: Log_Level) {
-		if (!(value in LOG_LEVEL_VALUES)) {
-			throw new Error(`Invalid log level: '${value}'`);
-		}
+		log_level_parse(value); // throws if invalid
 		this.#level_override = value;
 	}
 
@@ -326,6 +332,11 @@ export class Logger {
 		this.console.log(this.#get_debug_prefix(), ...args);
 	}
 
+	/**
+	 * Logs a plain message without any prefix or formatting.
+	 * Useful for outputting structured data or when you need full control over formatting.
+	 * @param args Values to log
+	 */
 	plain(...args: Array<unknown>): void {
 		this.console.log(...args);
 	}
