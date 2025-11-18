@@ -248,15 +248,11 @@ export const src_json: Src_Json = {
 			path: 'log.ts',
 			declarations: [
 				{name: 'Log_Level', kind: 'type'},
-				{name: 'to_log_level_value', kind: 'function'},
-				{name: 'configure_log_level', kind: 'function'},
-				{name: 'configure_log_colors', kind: 'function'},
-				{name: 'Log', kind: 'type'},
-				{name: 'Logger_State', kind: 'type'},
-				{name: 'Logger_Prefixes_And_Suffixes_Getter', kind: 'type'},
-				{name: 'Base_Logger', kind: 'class'},
+				{name: 'Log_Console', kind: 'type'},
+				{name: 'log_level_to_number', kind: 'function'},
+				{name: 'log_level_parse', kind: 'function'},
 				{name: 'Logger', kind: 'class'},
-				{name: 'System_Logger', kind: 'class'},
+				{name: 'Logger_Options', kind: 'type'},
 			],
 		},
 		'./map.js': {
@@ -357,7 +353,6 @@ export const src_json: Src_Json = {
 				{name: 'print_error', kind: 'function'},
 				{name: 'print_timing', kind: 'function'},
 				{name: 'print_timings', kind: 'function'},
-				{name: 'print_log_label', kind: 'function'},
 			],
 		},
 		'./process.js': {

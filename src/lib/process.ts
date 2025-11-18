@@ -5,11 +5,11 @@ import {
 } from 'node:child_process';
 import {styleText as st} from 'node:util';
 
-import {System_Logger} from '$lib/log.js';
-import {print_error, print_key_value, print_log_label} from '$lib/print.js';
+import {Logger} from '$lib/log.js';
+import {print_error, print_key_value} from '$lib/print.js';
 import type {Result} from '$lib/result.js';
 
-const log = new System_Logger(print_log_label('process'));
+const log = new Logger('process');
 
 export interface Spawned_Process {
 	child: ChildProcess;
@@ -149,7 +149,7 @@ export const attach_process_error_handlers = (
 		if (label) {
 			const error_text = map_error_text?.(err, origin) ?? print_error(err);
 			if (error_text) {
-				new System_Logger(print_log_label(label, st.bind(null, 'red'))).error(error_text);
+				new Logger(label).error(error_text);
 			}
 		}
 		await despawn_all();
