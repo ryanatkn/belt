@@ -1,4 +1,4 @@
-import {Logger, type Console_Type} from '$lib/log.js';
+import {Logger, type Log_Console} from '$lib/log.js';
 
 const log = new Logger();
 
@@ -6,7 +6,7 @@ export interface Test_Context {
 	logged_args?: Array<unknown>;
 	error_args?: Array<unknown>;
 	warn_args?: Array<unknown>;
-	console: Console_Type;
+	console: Log_Console;
 }
 
 export const create_test_context = (): Test_Context => {

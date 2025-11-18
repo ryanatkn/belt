@@ -15,7 +15,7 @@ export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
  * Console interface subset used by Logger for output.
  * Allows custom console implementations for testing.
  */
-export type Console_Type = Pick<typeof console, 'error' | 'warn' | 'log'>;
+export type Log_Console = Pick<typeof console, 'error' | 'warn' | 'log'>;
 
 const CHAR_ERROR = '🞩';
 const CHAR_WARN = '⚑';
@@ -42,13 +42,11 @@ const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
  * @param level The log level to convert
  * @returns Numeric value (0-4)
  */
-export const log_level_to_number = (level: Log_Level): number => {
-	return LOG_LEVEL_VALUES[level];
-};
+export const log_level_to_number = (level: Log_Level): number => LOG_LEVEL_VALUES[level];
 
 const DEFAULT_LOG_LEVEL: Log_Level =
 	(typeof process === 'undefined'
-		? null
+		? undefined
 		: (process.env.PUBLIC_LOG_LEVEL as Log_Level | undefined)) ??
 	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
@@ -85,7 +83,7 @@ export class Logger {
 	// Private override fields (undefined = inherit from parent)
 	#level_override?: Log_Level;
 	#colors_override?: boolean;
-	#console_override?: Console_Type;
+	#console_override?: Log_Console;
 
 	// Lazy cache for formatted prefixes (individually cached and invalidated when colors change)
 	#cached_colors?: boolean;
@@ -95,7 +93,7 @@ export class Logger {
 	#cached_info?: string;
 	#cached_debug?: string;
 
-	// Cached numeric level value (updated on each access to avoid repeated lookups)
+	#cached_level_string?: Log_Level;
 	#cached_level?: number;
 
 	constructor(label?: string, options: Logger_Options = {}) {
@@ -104,6 +102,9 @@ export class Logger {
 
 		// Set overrides if provided (undefined = inherit from parent)
 		if (options.level !== undefined) {
+			if (!(options.level in LOG_LEVEL_VALUES)) {
+				throw new Error(`Invalid log level: '${options.level}'`);
+			}
 			this.#level_override = options.level;
 		}
 		if (options.colors !== undefined) {
@@ -163,7 +164,7 @@ export class Logger {
 	/**
 	 * Dynamic getter for console - checks override, then parent, then global console.
 	 */
-	get console(): Console_Type {
+	get console(): Log_Console {
 		if (this.#console_override !== undefined) {
 			return this.#console_override;
 		}
@@ -176,7 +177,7 @@ export class Logger {
 	/**
 	 * Setter for console - creates override.
 	 */
-	set console(value: Console_Type) {
+	set console(value: Log_Console) {
 		this.#console_override = value;
 	}
 
@@ -265,14 +266,15 @@ export class Logger {
 
 	/**
 	 * Gets the cached numeric level value, updating cache if level changed.
-	 * Avoids repeated parent chain walks and dictionary lookups.
+	 * Caches based on resolved level string to avoid repeated dictionary lookups.
 	 */
 	#get_cached_level(): number {
-		const current_level = log_level_to_number(this.level);
-		if (this.#cached_level !== current_level) {
-			this.#cached_level = current_level;
+		const current_level_string = this.level;
+		if (this.#cached_level_string !== current_level_string) {
+			this.#cached_level_string = current_level_string;
+			this.#cached_level = LOG_LEVEL_VALUES[current_level_string];
 		}
-		return this.#cached_level;
+		return this.#cached_level!;
 	}
 
 	/**
@@ -297,29 +299,30 @@ export class Logger {
 		const child_label = this.label ? `${this.label}__${label}` : label;
 
 		// Pass parent reference and all config options
-		return new Logger(child_label, {
+		const internal_options: Internal_Logger_Options = {
 			...options,
 			parent: this,
-		} as Internal_Logger_Options);
+		};
+		return new Logger(child_label, internal_options);
 	}
 
 	error(...args: Array<unknown>): void {
-		if (this.#get_cached_level() < 1) return; // error = 1
+		if (this.#get_cached_level() < LOG_LEVEL_VALUES.error) return;
 		this.console.error(this.#get_error_prefix(), ...args);
 	}
 
 	warn(...args: Array<unknown>): void {
-		if (this.#get_cached_level() < 2) return; // warn = 2
+		if (this.#get_cached_level() < LOG_LEVEL_VALUES.warn) return;
 		this.console.warn(this.#get_warn_prefix(), ...args);
 	}
 
 	info(...args: Array<unknown>): void {
-		if (this.#get_cached_level() < 3) return; // info = 3
+		if (this.#get_cached_level() < LOG_LEVEL_VALUES.info) return;
 		this.console.log(this.#get_info_prefix(), ...args);
 	}
 
 	debug(...args: Array<unknown>): void {
-		if (this.#get_cached_level() < 4) return; // debug = 4
+		if (this.#get_cached_level() < LOG_LEVEL_VALUES.debug) return;
 		this.console.log(this.#get_debug_prefix(), ...args);
 	}
 
@@ -340,7 +343,7 @@ export interface Logger_Options {
 	 * Inherits from parent or defaults to global console.
 	 * Useful for testing.
 	 */
-	console?: Console_Type;
+	console?: Log_Console;
 
 	/**
 	 * Whether to use colors in output.
