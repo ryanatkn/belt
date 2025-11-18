@@ -5,6 +5,10 @@ import type {Logger} from '$lib/log.js';
 
 export let st: typeof styleText = (_, v) => v;
 
+/**
+ * Configures the module-level styling function for colored output.
+ * @mutates st assigns the module-level `st` variable
+ */
 export const configure_print_colors = (
 	s: typeof styleText | null | undefined,
 ): typeof styleText => {

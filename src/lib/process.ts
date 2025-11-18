@@ -65,6 +65,7 @@ export const spawn_out = async (
  * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
  * Also returns a convenient `closed` promise.
  * If you only need `closed`, prefer the shorthand function `spawn`.
+ * @mutates global_spawn calls `register_global_spawn()` which adds to the module-level Set
  */
 export const spawn_process = (
 	command: string,
@@ -93,8 +94,9 @@ export const global_spawn: Set<ChildProcess> = new Set();
 
 /**
  * Returns a function that unregisters the `child`.
- * @param child
- * @returns
+ * @param child the child process to register
+ * @returns cleanup function that removes the child from `global_spawn`
+ * @mutates global_spawn adds child to the module-level Set, and the returned function removes it
  */
 export const register_global_spawn = (child: ChildProcess): (() => void) => {
 	if (global_spawn.has(child)) {
@@ -125,6 +127,7 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 
 /**
  * Kills all globally registered child processes.
+ * @mutates global_spawn indirectly removes processes through `despawn()` calls
  */
 export const despawn_all = (): Promise<Array<Spawn_Result>> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));

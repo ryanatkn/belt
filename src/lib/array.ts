@@ -7,7 +7,10 @@ export const EMPTY_ARRAY: Array<any> = Object.freeze([]) as any;
 export const to_array = <T>(value: T): T extends ReadonlyArray<any> ? T : Array<T> =>
 	Array.isArray(value) ? (value as any) : ([value] as any);
 
-/** Removes an element from `array` at `index` in an unordered manner. */
+/**
+ * Removes an element from `array` at `index` in an unordered manner.
+ * @mutates array swaps element at index with last element, then removes last element
+ */
 export const remove_unordered = (array: Array<any>, index: number): void => {
 	array[index] = array[array.length - 1];
 	array.pop();
