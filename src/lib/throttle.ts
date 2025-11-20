@@ -1,5 +1,5 @@
-import {create_deferred, type Deferred} from './async.ts';
-import {EMPTY_OBJECT} from './object.ts';
+import {create_deferred, type Deferred} from './async.js';
+import {EMPTY_OBJECT} from './object.js';
 
 export interface Throttle_Options {
 	/**

@@ -1,4 +1,4 @@
-import type {Omit_Strict} from './types.ts';
+import type {Omit_Strict} from './types.js';
 
 /**
  * Returns a boolean indicating if `value` is
