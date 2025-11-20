@@ -1,7 +1,7 @@
 import {describe, test, assert} from 'vitest';
 
-import {deep_equal} from '$lib/deep_equal.js';
-import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.js';
+import {deep_equal} from '$lib/deep_equal.ts';
+import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.ts';
 
 describe('arrays', () => {
 	// note: arrays are NOT equal to objects (different type check via instanceof)

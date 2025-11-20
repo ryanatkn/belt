@@ -1,12 +1,12 @@
 import {describe, test, assert} from 'vitest';
 
-import {deep_equal} from '$lib/deep_equal.js';
+import {deep_equal} from '$lib/deep_equal.ts';
 import {
 	test_equal_values,
 	test_unequal_values,
 	assert_equal,
 	assert_not_equal,
-} from './deep_equal_test_helpers.js';
+} from './deep_equal_test_helpers.ts';
 
 describe('special cases', () => {
 	describe('circular references', () => {

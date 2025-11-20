@@ -2,7 +2,7 @@ import {Bench, hrtimeNow} from 'tinybench';
 import {dequal} from 'dequal';
 import fastDeepEqual from 'fast-deep-equal';
 
-import {deep_equal} from '$lib/deep_equal.js';
+import {deep_equal} from '$lib/deep_equal.ts';
 
 /* eslint-disable no-console */
 
