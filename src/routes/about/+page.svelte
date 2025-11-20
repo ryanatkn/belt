@@ -4,8 +4,8 @@
 	import Community_Links_Panel from '@ryanatkn/fuz/Community_Links_Panel.svelte';
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
 
-	import {package_json, src_json} from '$routes/package.js';
-	import {parse_pkg} from '$lib/pkg.js';
+	import {package_json, src_json} from '$routes/package.ts';
+	import {parse_pkg} from '$lib/pkg.ts';
 
 	// TODO hacky - maybe put in context?
 	const pkg = parse_pkg(package_json, src_json);

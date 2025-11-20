@@ -12,7 +12,7 @@ import {
 	deindent,
 	count_graphemes,
 	strip_ansi,
-} from '$lib/string.js';
+} from '$lib/string.ts';
 
 describe('truncate', () => {
 	test('basic behavior', () => {

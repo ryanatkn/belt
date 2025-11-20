@@ -1,8 +1,8 @@
 import {z} from 'zod';
 
-import {count_graphemes} from '$lib/string.js';
-import {transform_empty_object_to_undefined} from '$lib/object.js';
-import {Url} from '$lib/url.js';
+import {count_graphemes} from './string.ts';
+import {transform_empty_object_to_undefined} from './object.ts';
+import {Url} from './url.ts';
 
 export const Package_Json_Repository = z.union([
 	z.string(),

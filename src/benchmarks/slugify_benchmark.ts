@@ -1,6 +1,6 @@
 import {Bench} from 'tinybench';
 
-import {slugify} from '$lib/path.js';
+import {slugify} from '$lib/path.ts';
 
 /* eslint-disable no-console */
 

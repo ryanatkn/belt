@@ -1,4 +1,4 @@
-import type {Array_Element} from '$lib/types.js';
+import type {Array_Element} from './types.ts';
 
 /**
  * Generates a random `number` between `min` and `max`.

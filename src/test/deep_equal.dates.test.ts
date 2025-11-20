@@ -1,6 +1,6 @@
 import {describe} from 'vitest';
 
-import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.js';
+import {test_equal_values, test_unequal_values} from './deep_equal_test_helpers.ts';
 
 // Date objects are compared by their timestamp values using .getTime()
 

@@ -34,6 +34,12 @@ import {type Result, unwrap} from '@ryanatkn/belt/result.js';
 import {random_int} from '@ryanatkn/belt/random.js';
 ```
 
+`.ts` imports also work:
+
+```ts
+import {deep_equal} from '@ryanatkn/belt/deep_equal.ts';
+```
+
 Docs are a work in progress -
 see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com) and
 [/src/routes/package.ts](https://github.com/ryanatkn/belt/blob/main/src/routes/package.ts),

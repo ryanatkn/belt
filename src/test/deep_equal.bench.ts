@@ -1,6 +1,6 @@
 import {Bench, hrtimeNow} from 'tinybench';
 
-import {deep_equal} from '$lib/deep_equal.js';
+import {deep_equal} from '$lib/deep_equal.ts';
 
 /* eslint-disable no-console, no-new-wrappers */
 

@@ -1,6 +1,6 @@
 import {test, assert} from 'vitest';
 
-import {spawn, spawn_out} from '$lib/process.js';
+import {spawn, spawn_out} from '$lib/process.ts';
 
 test('spawn', async () => {
 	const result = await spawn('echo', ['a', 'b']);

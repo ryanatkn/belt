@@ -1,6 +1,6 @@
 import {test, assert} from 'vitest';
 
-import {wait} from '$lib/async.js';
+import {wait} from '$lib/async.ts';
 
 test('basic behavior', async () => {
 	await wait();

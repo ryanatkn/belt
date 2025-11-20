@@ -1,7 +1,7 @@
 import {describe, test, assert} from 'vitest';
 
-import {Logger} from '$lib/log.js';
-import {create_test_context} from './log_test_helpers.js';
+import {Logger} from '$lib/log.ts';
+import {create_test_context} from './log_test_helpers.ts';
 
 describe('Logger > Child Loggers', () => {
 	test('child() creates logger with concatenated label', () => {

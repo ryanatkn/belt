@@ -6,8 +6,8 @@
 	import {belt_logo} from '@ryanatkn/fuz/logos.js';
 	import {resolve} from '$app/paths';
 
-	import {package_json, src_json} from '$routes/package.js';
-	import {parse_pkg} from '$lib/pkg.js';
+	import {package_json, src_json} from '$routes/package.ts';
+	import {parse_pkg} from '$lib/pkg.ts';
 
 	const pkg = parse_pkg(package_json, src_json);
 </script>

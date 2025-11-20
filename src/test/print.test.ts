@@ -1,6 +1,6 @@
 import {test, assert, beforeAll, afterAll} from 'vitest';
 
-import {print_ms, st, configure_print_colors} from '$lib/print.js';
+import {print_ms, st, configure_print_colors} from '$lib/print.ts';
 
 let original_st: typeof st;
 
