@@ -1,5 +1,26 @@
 # @ryanatkn/belt
 
+## 0.37.0
+
+### Minor Changes
+
+- simplify logging ([#51](https://github.com/ryanatkn/belt/pull/51))
+
+## 0.36.1
+
+### Patch Changes
+
+- add `deep_equal.ts` ([#50](https://github.com/ryanatkn/belt/pull/50))
+
+## 0.36.0
+
+### Minor Changes
+
+- - rename `json_type_of` from `to_json_type` ([4feefaf](https://github.com/ryanatkn/belt/commit/4feefaf))
+  - rename `json_embed` from `embed_json`
+  - rename `json_stringify_deterministic` from `to_deterministic_json`
+  - replace `canonicalize` with `json_stringify_deterministic`
+
 ## 0.35.1
 
 ### Patch Changes

@@ -1,10 +1,10 @@
 import {z} from 'zod';
 
-import type {Flavored} from '$lib/types.ts';
-import type {Logger} from '$lib/log.ts';
-import {EMPTY_OBJECT} from '$lib/object.ts';
-import type {Result} from '$lib/result.ts';
-import {canonicalize} from '$lib/json.ts';
+import type {Flavored} from '$lib/types.js';
+import type {Logger} from '$lib/log.js';
+import {EMPTY_OBJECT} from '$lib/object.js';
+import type {Result} from '$lib/result.js';
+import {json_stringify_deterministic} from '$lib/json.js';
 
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
@@ -48,6 +48,7 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
  * If the `value` is cached, only the cached safe subset of the `headers` are returned.
  * (currently just `etag` and `last-modified`)
  * Otherwise the full `res.headers` are included.
+ * @mutates options.cache calls `cache.set()` to store fetched results if cache is provided
  */
 export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	url: string | URL,
@@ -215,7 +216,7 @@ export const to_fetch_value_cache_key = (
 ): Fetch_Value_Cache_Key => {
 	let key = method + KEY_SEPARATOR + url;
 	if (params != null) {
-		key += KEY_SEPARATOR + JSON.stringify(canonicalize(params));
+		key += KEY_SEPARATOR + json_stringify_deterministic(params);
 	}
 	return key;
 };

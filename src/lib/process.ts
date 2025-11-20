@@ -5,11 +5,11 @@ import {
 } from 'node:child_process';
 import {styleText as st} from 'node:util';
 
-import {System_Logger} from '$lib/log.ts';
-import {print_error, print_key_value, print_log_label} from '$lib/print.ts';
-import type {Result} from '$lib/result.ts';
+import {Logger} from '$lib/log.js';
+import {print_error, print_key_value} from '$lib/print.js';
+import type {Result} from '$lib/result.js';
 
-const log = new System_Logger(print_log_label('process'));
+const log = new Logger('process');
 
 export interface Spawned_Process {
 	child: ChildProcess;
@@ -65,6 +65,7 @@ export const spawn_out = async (
  * Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.
  * Also returns a convenient `closed` promise.
  * If you only need `closed`, prefer the shorthand function `spawn`.
+ * @mutates global_spawn calls `register_global_spawn()` which adds to the module-level Set
  */
 export const spawn_process = (
 	command: string,
@@ -93,8 +94,9 @@ export const global_spawn: Set<ChildProcess> = new Set();
 
 /**
  * Returns a function that unregisters the `child`.
- * @param child
- * @returns
+ * @param child the child process to register
+ * @returns cleanup function that removes the child from `global_spawn`
+ * @mutates global_spawn adds child to the module-level Set, and the returned function removes it
  */
 export const register_global_spawn = (child: ChildProcess): (() => void) => {
 	if (global_spawn.has(child)) {
@@ -125,6 +127,7 @@ export const despawn = (child: ChildProcess): Promise<Spawn_Result> => {
 
 /**
  * Kills all globally registered child processes.
+ * @mutates global_spawn indirectly removes processes through `despawn()` calls
  */
 export const despawn_all = (): Promise<Array<Spawn_Result>> =>
 	Promise.all(Array.from(global_spawn, (child) => despawn(child)));
@@ -146,7 +149,7 @@ export const attach_process_error_handlers = (
 		if (label) {
 			const error_text = map_error_text?.(err, origin) ?? print_error(err);
 			if (error_text) {
-				new System_Logger(print_log_label(label, st.bind(null, 'red'))).error(error_text);
+				new Logger(label).error(error_text);
 			}
 		}
 		await despawn_all();

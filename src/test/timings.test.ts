@@ -5,7 +5,7 @@ import {create_stopwatch, Timings} from '$lib/timings.ts';
 test('stopwatch', () => {
 	const stopwatch = create_stopwatch(4);
 	const elapsed = stopwatch();
-	assert.ok(elapsed.toString().split('.')[1].length <= 4);
+	assert.ok((elapsed.toString().split('.')[1]?.length ?? 0) <= 4);
 });
 
 test('start and stop multiple overlapping timings', () => {
@@ -20,7 +20,7 @@ test('start and stop multiple overlapping timings', () => {
 	timing2();
 	const elapsed = timings.get('foo');
 	timings.get('bar');
-	assert.ok(elapsed.toString().split('.')[1].length <= 4);
+	assert.ok((elapsed.toString().split('.')[1]?.length ?? 0) <= 4);
 	assert.deepEqual(
 		Array.from(timings.entries(), (e) => e[0]),
 		['foo', 'foo_2', 'foo_3'],

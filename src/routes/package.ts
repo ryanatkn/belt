@@ -5,7 +5,7 @@ import type {Src_Json} from '$lib/src_json.js';
 
 export const package_json: Package_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.35.1',
+	version: '0.37.0',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -27,6 +27,10 @@ export const package_json: Package_Json = {
 		preview: 'vite preview',
 		deploy: 'gro deploy',
 		benchmark: 'gro run src/benchmarks/slugify_benchmark.ts',
+		'benchmark-deep-equal':
+			'node --max-old-space-size=8192 --expose-gc --import @ryanatkn/gro/register.js src/lib/deep_equal.bench_comparison.ts',
+		'benchmark-deep-equal-deno':
+			'deno run --allow-read --allow-env --v8-flags=--expose-gc src/lib/deep_equal.bench_comparison.ts',
 	},
 	type: 'module',
 	engines: {node: '>=22.15'},
@@ -41,13 +45,14 @@ export const package_json: Package_Json = {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.8.0',
 		'@ryanatkn/fuz': '^0.147.0',
-		'@ryanatkn/gro': '^0.169.1',
+		'@ryanatkn/gro': '^0.171.0',
 		'@ryanatkn/moss': '^0.36.0',
 		'@sveltejs/adapter-static': '^3.0.9',
 		'@sveltejs/kit': '^2.46.4',
 		'@sveltejs/package': '^2.5.4',
 		'@sveltejs/vite-plugin-svelte': '^6.2.1',
 		'@types/node': '^24.3.0',
+		dequal: '^2.0.3',
 		eslint: '^9.34.0',
 		'eslint-plugin-svelte': '^3.11.0',
 		'esm-env': '^1.2.2',
@@ -81,7 +86,7 @@ export const package_json: Package_Json = {
 
 export const src_json: Src_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.35.1',
+	version: '0.37.0',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
@@ -135,6 +140,10 @@ export const src_json: Src_Json = {
 				{name: 'Create_Counter', kind: 'type'},
 				{name: 'create_counter', kind: 'function'},
 			],
+		},
+		'./deep_equal.js': {
+			path: 'deep_equal.ts',
+			declarations: [{name: 'deep_equal', kind: 'function'}],
 		},
 		'./dom.js': {
 			path: 'dom.ts',
@@ -230,24 +239,20 @@ export const src_json: Src_Json = {
 				{name: 'Json_Object', kind: 'type'},
 				{name: 'Json_Array', kind: 'type'},
 				{name: 'Json_Type', kind: 'type'},
-				{name: 'to_json_type', kind: 'function'},
-				{name: 'canonicalize', kind: 'function'},
-				{name: 'embed_json', kind: 'function'},
+				{name: 'json_type_of', kind: 'function'},
+				{name: 'json_embed', kind: 'function'},
+				{name: 'json_stringify_deterministic', kind: 'function'},
 			],
 		},
 		'./log.js': {
 			path: 'log.ts',
 			declarations: [
 				{name: 'Log_Level', kind: 'type'},
-				{name: 'to_log_level_value', kind: 'function'},
-				{name: 'configure_log_level', kind: 'function'},
-				{name: 'configure_log_colors', kind: 'function'},
-				{name: 'Log', kind: 'type'},
-				{name: 'Logger_State', kind: 'type'},
-				{name: 'Logger_Prefixes_And_Suffixes_Getter', kind: 'type'},
-				{name: 'Base_Logger', kind: 'class'},
+				{name: 'Log_Console', kind: 'type'},
+				{name: 'log_level_to_number', kind: 'function'},
+				{name: 'log_level_parse', kind: 'function'},
 				{name: 'Logger', kind: 'class'},
-				{name: 'System_Logger', kind: 'class'},
+				{name: 'Logger_Options', kind: 'type'},
 			],
 		},
 		'./map.js': {
@@ -348,7 +353,6 @@ export const src_json: Src_Json = {
 				{name: 'print_error', kind: 'function'},
 				{name: 'print_timing', kind: 'function'},
 				{name: 'print_timings', kind: 'function'},
-				{name: 'print_log_label', kind: 'function'},
 			],
 		},
 		'./process.js': {

@@ -1,5 +1,3 @@
-import {is_plain_object} from '$lib/object.ts';
-
 export type Json = Json_Primitive | Json_Object | Json_Array;
 
 export type Json_Primitive = string | number | boolean | null;
@@ -14,10 +12,10 @@ export interface Json_Array extends Array<Json> {} // eslint-disable-line @types
 export type Json_Type = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
 /**
- * Converts `value` to a `Json_Type`, which is like `typeof json`
- * but includes `'arrays'` and omits `'undefined'`.
+ * Returns the `Json_Type` of `value`, which is like `typeof json`
+ * but includes `'array'` and omits `'undefined'`.
  */
-export const to_json_type = (value: Json): Json_Type | undefined => {
+export const json_type_of = (value: Json): Json_Type | undefined => {
 	const type = typeof value;
 	switch (type) {
 		case 'string':
@@ -35,33 +33,29 @@ export const to_json_type = (value: Json): Json_Type | undefined => {
 };
 
 /**
- * Converts `value` to a best-effort canonicalized version, so objects have their keys sorted.
- * Expected to be JSON and may fail for other datatypes.
- */
-export const canonicalize = <T extends Json>(value: T): T => {
-	if (!value || !is_plain_object(value)) {
-		return value;
-	}
-	return Object.fromEntries(
-		Object.entries(value)
-			.sort((a, b) => (a[0] > b[0] ? 1 : -1))
-			.map(([k, v]) => [k, canonicalize(v)]),
-	) as any;
-};
-
-/**
  * Embeds `data` as a JSON string, escaping single quotes.
  * Useful for optimizing JSON in JS because it parses faster.
  */
-export const embed_json = <T>(data: T, stringify: (data: T) => string = JSON.stringify): string =>
+export const json_embed = <T>(data: T, stringify: (data: T) => string = JSON.stringify): string =>
 	`JSON.parse('${stringify(data).replaceAll("'", "\\'").replaceAll('\n', '\\\n')}')`;
 
-// 	const jsonString = stringify(data)
-// 		.replace(/\\/g, '\\\\')
-// 		.replace(/'/g, "\\'")
-// 		.replace(/\n/g, '\\n')
-// 		.replace(/\r/g, '\\r')
-// 		.replace(/\t/g, '\\t');
-
-// 	return `JSON.parse('${jsonString}')`;
-// };
+/**
+ * Serializes a value to JSON with deterministic key ordering.
+ * Recursively sorts object keys alphabetically for consistent hashing.
+ * Arrays and primitives are serialized as-is.
+ *
+ * @param value Any JSON-serializable value
+ * @returns Deterministic JSON string representation
+ */
+export const json_stringify_deterministic = (value: unknown): string =>
+	JSON.stringify(value, (_key, val) => {
+		if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
+			const sorted: Record<string, unknown> = {};
+			const keys = Object.keys(val).sort();
+			for (const k of keys) {
+				sorted[k] = val[k];
+			}
+			return sorted;
+		}
+		return val;
+	});

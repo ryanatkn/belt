@@ -28,7 +28,8 @@ export const hex_to_rgb = (hex: number): Rgb => [(hex >> 16) & 255, (hex >> 8) &
 
 export const hex_string_to_rgb = (hex: string): Rgb => {
 	var h = hex[0] === '#' ? hex.substring(1) : hex;
-	return [parseInt(h[0] + h[1], 16), parseInt(h[2] + h[3], 16), parseInt(h[4] + h[5], 16)];
+	if (h.length !== 6 && h.length !== 8) throw new Error('invalid hex string');
+	return [parseInt(h[0]! + h[1]!, 16), parseInt(h[2]! + h[3]!, 16), parseInt(h[4]! + h[5]!, 16)];
 };
 
 export const rgb_to_hex_string = (r: number, g: number, b: number): string =>

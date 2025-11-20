@@ -5,6 +5,10 @@ import type {Logger} from '$lib/log.ts';
 
 export let st: typeof styleText = (_, v) => v;
 
+/**
+ * Configures the module-level styling function for colored output.
+ * @mutates st assigns the module-level `st` variable
+ */
 export const configure_print_colors = (
 	s: typeof styleText | null | undefined,
 ): typeof styleText => {
@@ -105,9 +109,3 @@ export const print_timings = (timings: Timings, log: Logger): void => {
 		log.debug(print_timing(key, timing));
 	}
 };
-
-/**
- * Formats a log label `string` for printing.
- */
-export const print_log_label = (label: string, color = st.bind(null, 'magenta')): string =>
-	`${st('gray', '[')}${color(label)}${st('gray', ']')}`;
