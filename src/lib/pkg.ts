@@ -1,7 +1,7 @@
-import {ensure_end, strip_end, strip_start} from './string.ts';
-import type {Package_Json} from './package_json.ts';
-import type {Src_Json} from './src_json.ts';
-import type {Url} from './url.ts';
+import {ensure_end, strip_end, strip_start} from './string.js';
+import type {Package_Json} from './package_json.js';
+import type {Src_Json} from './src_json.js';
+import type {Url} from './url.js';
 
 // TODO could probably improve this a lot
 /**
