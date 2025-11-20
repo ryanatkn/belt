@@ -1,5 +1,5 @@
 ---
-'@ryanatkn/belt': minor
+'@ryanatkn/belt': patch
 ---
 
-revert internal paths to `.js` and change external imports to only `.ts`, no more `.js`
+revert internal paths to `.js`
