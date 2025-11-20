@@ -5,9 +5,9 @@ import {
 } from 'node:child_process';
 import {styleText as st} from 'node:util';
 
-import {Logger} from '$lib/log.js';
-import {print_error, print_key_value} from '$lib/print.js';
-import type {Result} from '$lib/result.js';
+import {Logger} from './log.ts';
+import {print_error, print_key_value} from './print.ts';
+import type {Result} from './result.ts';
 
 const log = new Logger('process');
 

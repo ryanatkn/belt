@@ -2,9 +2,9 @@ import type {SpawnOptions} from 'node:child_process';
 import {z} from 'zod';
 import {existsSync} from 'node:fs';
 
-import {spawn, spawn_out} from '$lib/process.ts';
-import type {Flavored} from '$lib/types.ts';
-import {to_file_path} from '$lib/path.ts';
+import {spawn, spawn_out} from './process.ts';
+import type {Flavored} from './types.ts';
+import {to_file_path} from './path.ts';
 
 export const Git_Origin = z.string();
 export type Git_Origin = Flavored<string, 'Git_Origin'>;

@@ -1,7 +1,7 @@
 import type {styleText} from 'node:util';
 
-import type {Timings} from '$lib/timings.ts';
-import type {Logger} from '$lib/log.ts';
+import type {Timings} from './timings.ts';
+import type {Logger} from './log.ts';
 
 export let st: typeof styleText = (_, v) => v;
 
