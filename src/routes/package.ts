@@ -44,9 +44,9 @@ export const package_json: Package_Json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.9.0',
-		'@ryanatkn/fuz': '^0.147.0',
-		'@ryanatkn/gro': '^0.171.0',
-		'@ryanatkn/moss': '^0.36.0',
+		'@ryanatkn/fuz': '^0.151.1',
+		'@ryanatkn/gro': '^0.173.0',
+		'@ryanatkn/moss': '^0.37.0',
 		'@sveltejs/adapter-static': '^3.0.9',
 		'@sveltejs/kit': '^2.46.4',
 		'@sveltejs/package': '^2.5.4',
