@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.37.2
+
+### Patch Changes
+
+- revert internal paths to `.js` ([#54](https://github.com/ryanatkn/belt/pull/54))
+
 ## 0.37.1
 
 ### Patch Changes
