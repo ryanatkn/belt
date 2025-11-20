@@ -112,10 +112,6 @@
   ],
   "exports": {
     "./package.json": "./package.json",
-    "./*.js": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
-    },
     "./*.ts": {
       "types": "./dist/*.d.ts",
       "default": "./dist/*.js"
