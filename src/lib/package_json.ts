@@ -33,23 +33,17 @@ export const Package_Json_Funding = z.union([
 ]);
 export type Package_Json_Funding = z.infer<typeof Package_Json_Funding>;
 
-// TODO doesnt look like zod4 can do this still? can't use a getter in the record value type
-// Helper to create a recursive type that represents export conditions and values
-const create_export_value_schema = (): z.ZodType => {
-	return z.lazy(() =>
-		z.union([
-			z.string(),
-			z.null(),
-			z.record(
-				z.string(),
-				z.lazy(() => export_value_schema),
-			),
-		]),
-	);
-};
-
 // The base export value schema that can be a string, null, or nested conditions
-const export_value_schema = create_export_value_schema();
+const export_value_schema: z.ZodType = z.lazy(() =>
+	z.union([
+		z.string(),
+		z.null(),
+		z.record(
+			z.string(),
+			z.lazy(() => export_value_schema),
+		),
+	]),
+);
 export const Export_Value = export_value_schema;
 export type Export_Value = z.infer<typeof Export_Value>;
 

@@ -66,7 +66,7 @@ export type Component_Prop_Info = z.infer<typeof Component_Prop_Info>;
 /**
  * Identifier metadata with rich TypeScript/JSDoc information.
  */
-export const Identifier_Json: z.ZodType<Identifier_Json> = z.looseObject({
+export const Identifier_Json = z.looseObject({
 	name: z.string(),
 	kind: Identifier_Kind,
 	doc_comment: z.string().optional(),
@@ -91,32 +91,17 @@ export const Identifier_Json: z.ZodType<Identifier_Json> = z.looseObject({
 	since: z.string().optional(),
 	extends: z.array(z.string()).optional(),
 	implements: z.array(z.string()).optional(),
-	members: z.lazy(() => z.array(Identifier_Json)).optional(),
-	properties: z.lazy(() => z.array(Identifier_Json)).optional(),
+	/** Recursive: class/interface members. */
+	get members() {
+		return z.array(Identifier_Json).optional();
+	},
+	/** Recursive: type properties. */
+	get properties() {
+		return z.array(Identifier_Json).optional();
+	},
 	props: z.array(Component_Prop_Info).optional(),
 });
-export type Identifier_Json = {
-	name: string;
-	kind: Identifier_Kind;
-	doc_comment?: string;
-	type_signature?: string;
-	modifiers?: Array<string>;
-	source_line?: number;
-	parameters?: Array<Parameter_Info>;
-	return_type?: string;
-	return_description?: string;
-	generic_params?: Array<Generic_Param_Info>;
-	examples?: Array<string>;
-	deprecated_message?: string;
-	see_also?: Array<string>;
-	throws?: Array<{type?: string; description: string}>;
-	since?: string;
-	extends?: Array<string>;
-	implements?: Array<string>;
-	members?: Array<Identifier_Json>;
-	properties?: Array<Identifier_Json>;
-	props?: Array<Component_Prop_Info>;
-};
+export type Identifier_Json = z.infer<typeof Identifier_Json>;
 
 /**
  * Module information with metadata.
