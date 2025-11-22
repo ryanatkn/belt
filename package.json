@@ -61,7 +61,7 @@
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.1",
     "@ryanatkn/eslint-config": "^0.9.0",
-    "@ryanatkn/fuz": "^0.152.0",
+    "@ryanatkn/fuz": "^0.153.0",
     "@ryanatkn/gro": "^0.173.2",
     "@ryanatkn/moss": "^0.37.0",
     "@sveltejs/adapter-static": "^3.0.9",
