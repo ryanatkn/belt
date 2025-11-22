@@ -5,7 +5,7 @@ import type {Src_Json} from '$lib/src_json.js';
 
 export const package_json: Package_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.37.1',
+	version: '0.37.2',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -44,9 +44,9 @@ export const package_json: Package_Json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.9.0',
-		'@ryanatkn/fuz': '^0.147.0',
-		'@ryanatkn/gro': '^0.173.1',
-		'@ryanatkn/moss': '^0.36.0',
+		'@ryanatkn/fuz': '^0.151.2',
+		'@ryanatkn/gro': '^0.173.2',
+		'@ryanatkn/moss': '^0.37.0',
 		'@sveltejs/adapter-static': '^3.0.9',
 		'@sveltejs/kit': '^2.46.4',
 		'@sveltejs/package': '^2.5.4',
@@ -86,7 +86,7 @@ export const package_json: Package_Json = {
 
 export const src_json: Src_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.37.1',
+	version: '0.37.2',
 	modules: {
 		'./array.js': {
 			path: 'array.ts',
@@ -329,13 +329,13 @@ export const src_json: Src_Json = {
 				{name: 'slugify', kind: 'function'},
 			],
 		},
-		'./pkg.js': {
-			path: 'pkg.ts',
+		'./pkg_json.js': {
+			path: 'pkg_json.ts',
 			declarations: [
-				{name: 'Pkg', kind: 'type'},
-				{name: 'parse_pkg', kind: 'function'},
-				{name: 'parse_repo_name', kind: 'function'},
-				{name: 'parse_org_url', kind: 'function'},
+				{name: 'Pkg_Json', kind: 'type'},
+				{name: 'pkg_json_parse', kind: 'function'},
+				{name: 'pkg_repo_name_parse', kind: 'function'},
+				{name: 'pkg_org_url_parse', kind: 'function'},
 			],
 		},
 		'./print.js': {
@@ -415,10 +415,12 @@ export const src_json: Src_Json = {
 		'./src_json.js': {
 			path: 'src_json.ts',
 			declarations: [
-				{name: 'Src_Module_Declaration_Kind', kind: 'variable'},
-				{name: 'Src_Module_Declaration', kind: 'variable'},
-				{name: 'Src_Module', kind: 'variable'},
-				{name: 'Src_Modules', kind: 'variable'},
+				{name: 'Identifier_Kind', kind: 'variable'},
+				{name: 'Generic_Param_Info', kind: 'variable'},
+				{name: 'Parameter_Info', kind: 'variable'},
+				{name: 'Component_Prop_Info', kind: 'variable'},
+				{name: 'Identifier_Json', kind: 'variable'},
+				{name: 'Module_Json', kind: 'variable'},
 				{name: 'Src_Json', kind: 'variable'},
 			],
 		},
