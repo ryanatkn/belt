@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
-	import Community_Links_Panel from '@ryanatkn/fuz/Community_Links_Panel.svelte';
+	import Ecosystem_Links_Panel from '@ryanatkn/fuz/Ecosystem_Links_Panel.svelte';
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
 	import {Pkg} from '@ryanatkn/fuz/pkg.svelte.js';
 
@@ -23,7 +23,7 @@
 			<Package_Detail {pkg} />
 		</div>
 	</section>
-	<Community_Links_Panel />
+	<Ecosystem_Links_Panel />
 	<section class="box">
 		<Docs_Footer {pkg} />
 	</section>
