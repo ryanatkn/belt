@@ -2,4 +2,4 @@
 '@ryanatkn/belt': minor
 ---
 
-migrate types to `src_json.ts` from fuz
+migrate `src_json.ts` from fuz
