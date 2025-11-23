@@ -1,10 +1,10 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.37.2",
-  "modules": {
-    "./array.js": {
+  "version": "0.38.0",
+  "modules": [
+    {
       "path": "array.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "EMPTY_ARRAY",
           "kind": "variable"
@@ -23,9 +23,9 @@
         }
       ]
     },
-    "./async.js": {
+    {
       "path": "async.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Async_Status",
           "kind": "type"
@@ -48,9 +48,9 @@
         }
       ]
     },
-    "./colors.js": {
+    {
       "path": "colors.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Hsl",
           "kind": "type"
@@ -137,9 +137,9 @@
         }
       ]
     },
-    "./counter.js": {
+    {
       "path": "counter.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Counter",
           "kind": "type"
@@ -154,18 +154,18 @@
         }
       ]
     },
-    "./deep_equal.js": {
+    {
       "path": "deep_equal.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "deep_equal",
           "kind": "function"
         }
       ]
     },
-    "./dom.js": {
+    {
       "path": "dom.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "is_editable",
           "kind": "function"
@@ -192,9 +192,9 @@
         }
       ]
     },
-    "./error.js": {
+    {
       "path": "error.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Unreachable_Error",
           "kind": "class"
@@ -205,9 +205,9 @@
         }
       ]
     },
-    "./fetch.js": {
+    {
       "path": "fetch.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Fetch_Value_Options",
           "kind": "type"
@@ -242,9 +242,9 @@
         }
       ]
     },
-    "./function.js": {
+    {
       "path": "function.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "noop",
           "kind": "function"
@@ -271,9 +271,9 @@
         }
       ]
     },
-    "./git.js": {
+    {
       "path": "git.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Git_Origin",
           "kind": "variable"
@@ -376,9 +376,9 @@
         }
       ]
     },
-    "./id.js": {
+    {
       "path": "id.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Uuid",
           "kind": "type"
@@ -401,18 +401,18 @@
         }
       ]
     },
-    "./iterator.js": {
+    {
       "path": "iterator.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "count_iterator",
           "kind": "function"
         }
       ]
     },
-    "./json.js": {
+    {
       "path": "json.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Json",
           "kind": "type"
@@ -447,9 +447,9 @@
         }
       ]
     },
-    "./log.js": {
+    {
       "path": "log.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Log_Level",
           "kind": "type"
@@ -476,9 +476,9 @@
         }
       ]
     },
-    "./map.js": {
+    {
       "path": "map.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "sort_map",
           "kind": "function"
@@ -489,9 +489,9 @@
         }
       ]
     },
-    "./maths.js": {
+    {
       "path": "maths.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "clamp",
           "kind": "function"
@@ -578,9 +578,9 @@
         }
       ]
     },
-    "./object.js": {
+    {
       "path": "object.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "is_plain_object",
           "kind": "function"
@@ -619,9 +619,9 @@
         }
       ]
     },
-    "./package_json.js": {
+    {
       "path": "package_json.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Package_Json_Repository",
           "kind": "variable"
@@ -648,9 +648,9 @@
         }
       ]
     },
-    "./path.js": {
+    {
       "path": "path.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Path_Id",
           "kind": "type"
@@ -697,30 +697,30 @@
         }
       ]
     },
-    "./pkg.js": {
-      "path": "pkg.ts",
-      "declarations": [
+    {
+      "path": "pkg_json.ts",
+      "identifiers": [
         {
-          "name": "Pkg",
+          "name": "Pkg_Json",
           "kind": "type"
         },
         {
-          "name": "parse_pkg",
+          "name": "pkg_json_parse",
           "kind": "function"
         },
         {
-          "name": "parse_repo_name",
+          "name": "pkg_repo_name_parse",
           "kind": "function"
         },
         {
-          "name": "parse_org_url",
+          "name": "pkg_org_url_parse",
           "kind": "function"
         }
       ]
     },
-    "./print.js": {
+    {
       "path": "print.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "st",
           "kind": "function"
@@ -771,9 +771,9 @@
         }
       ]
     },
-    "./process.js": {
+    {
       "path": "process.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Spawned_Process",
           "kind": "type"
@@ -840,9 +840,9 @@
         }
       ]
     },
-    "./random_alea.js": {
+    {
       "path": "random_alea.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Alea",
           "kind": "type"
@@ -857,9 +857,9 @@
         }
       ]
     },
-    "./random.js": {
+    {
       "path": "random.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "random_float",
           "kind": "function"
@@ -882,9 +882,9 @@
         }
       ]
     },
-    "./regexp.js": {
+    {
       "path": "regexp.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "escape_regexp",
           "kind": "function"
@@ -895,9 +895,9 @@
         }
       ]
     },
-    "./result.js": {
+    {
       "path": "result.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Result",
           "kind": "type"
@@ -924,34 +924,50 @@
         }
       ]
     },
-    "./src_json.js": {
+    {
       "path": "src_json.ts",
-      "declarations": [
+      "identifiers": [
         {
-          "name": "Src_Module_Declaration_Kind",
+          "name": "Identifier_Kind",
           "kind": "variable"
         },
         {
-          "name": "Src_Module_Declaration",
+          "name": "Generic_Param_Info",
           "kind": "variable"
         },
         {
-          "name": "Src_Module",
+          "name": "Parameter_Info",
           "kind": "variable"
         },
         {
-          "name": "Src_Modules",
+          "name": "Component_Prop_Info",
+          "kind": "variable"
+        },
+        {
+          "name": "Identifier_Json",
+          "kind": "variable"
+        },
+        {
+          "name": "Module_Json",
           "kind": "variable"
         },
         {
           "name": "Src_Json",
           "kind": "variable"
+        },
+        {
+          "name": "identifier_get_display_name",
+          "kind": "function"
+        },
+        {
+          "name": "identifier_generate_import",
+          "kind": "function"
         }
       ]
     },
-    "./string.js": {
+    {
       "path": "string.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "truncate",
           "kind": "function"
@@ -1002,9 +1018,9 @@
         }
       ]
     },
-    "./throttle.js": {
+    {
       "path": "throttle.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Throttle_Options",
           "kind": "type"
@@ -1015,9 +1031,9 @@
         }
       ]
     },
-    "./timings.js": {
+    {
       "path": "timings.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Stopwatch",
           "kind": "type"
@@ -1036,9 +1052,9 @@
         }
       ]
     },
-    "./types.js": {
+    {
       "path": "types.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "Class_Constructor",
           "kind": "type"
@@ -1101,9 +1117,9 @@
         }
       ]
     },
-    "./url.js": {
+    {
       "path": "url.ts",
-      "declarations": [
+      "identifiers": [
         {
           "name": "format_url",
           "kind": "function"
@@ -1114,5 +1130,5 @@
         }
       ]
     }
-  }
+  ]
 }
