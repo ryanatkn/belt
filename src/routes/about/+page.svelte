@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
+	// import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import Ecosystem_Links_Panel from '@ryanatkn/fuz/Ecosystem_Links_Panel.svelte';
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
@@ -18,11 +18,11 @@
 		</header>
 		<Breadcrumb>{package_json.glyph}</Breadcrumb>
 	</section>
-	<section class="box width_100 mb_lg">
+	<!-- <section class="box width_100 mb_lg">
 		<div class="panel p_md width_upto_md">
 			<Package_Detail {pkg} />
 		</div>
-	</section>
+	</section> -->
 	<Ecosystem_Links_Panel />
 	<section class="box">
 		<Docs_Footer {pkg} />

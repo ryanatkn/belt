@@ -47,16 +47,6 @@ a.chip {
 .display_inline_block {
 	display: inline-block;
 }
-.display_flex {
-	display: flex;
-}
-.flex_1 {
-	flex: 1;
-}
-.font_size_xl {
-	font-size: var(--font_size_xl);
-	--font_size: var(--font_size_xl);
-}
 .text_align_center {
 	text-align: center;
 }
@@ -88,9 +78,6 @@ a.chip {
 }
 .mt_xl5 {
 	margin-top: var(--space_xl5);
-}
-.mr_xs {
-	margin-right: var(--space_xs);
 }
 .mb_lg {
 	margin-bottom: var(--space_lg);
