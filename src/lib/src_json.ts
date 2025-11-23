@@ -100,6 +100,21 @@ export const Identifier_Json = z.looseObject({
 		return z.array(Identifier_Json).optional();
 	},
 	props: z.array(Component_Prop_Info).optional(),
+	/**
+	 * Module paths (relative to src/lib) that also re-export this identifier.
+	 * The identifier's canonical location is the module where it appears in `identifiers`.
+	 */
+	also_exported_from: z.array(z.string()).optional(),
+	/**
+	 * For renamed re-exports (`export {foo as bar}`), points to the original identifier.
+	 * The current identifier is an alias created by the re-export.
+	 */
+	alias_of: z
+		.object({
+			module: z.string(),
+			name: z.string(),
+		})
+		.optional(),
 });
 export type Identifier_Json = z.infer<typeof Identifier_Json>;
 
@@ -129,3 +144,46 @@ export const Src_Json = z.looseObject({
 	modules: z.array(Module_Json).optional(),
 });
 export type Src_Json = z.infer<typeof Src_Json>;
+
+/**
+ * Format identifier name with generic parameters for display.
+ * @example identifier_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})
+ * // => 'Map<K, V>'
+ */
+export const identifier_get_display_name = (identifier: Identifier_Json): string => {
+	if (!identifier.generic_params?.length) return identifier.name;
+	const params = identifier.generic_params.map((p) => {
+		let param = p.name;
+		if (p.constraint) param += ` extends ${p.constraint}`;
+		if (p.default_type) param += ` = ${p.default_type}`;
+		return param;
+	});
+	return `${identifier.name}<${params.join(', ')}>`;
+};
+
+/**
+ * Generate TypeScript import statement for an identifier.
+ * @example identifier_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')
+ * // => "import type {Foo} from '@pkg/lib/foo.js';"
+ */
+export const identifier_generate_import = (
+	identifier: Identifier_Json,
+	module_path: string,
+	pkg_name: string,
+): string => {
+	const js_path = module_path.replace(/\.ts$/, '.js');
+	const specifier = `${pkg_name}/${js_path}`;
+
+	// Handle default exports by converting module name to PascalCase
+	if (identifier.name === 'default') {
+		const module_name = module_path.replace(/\.(js|ts|svelte)$/, '');
+		const pascal_case = module_name
+			.split(/[-_]/)
+			.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+			.join('');
+		return `import ${pascal_case} from '${specifier}';`;
+	}
+
+	const import_keyword = identifier.kind === 'type' ? 'import type' : 'import';
+	return `${import_keyword} {${identifier.name}} from '${specifier}';`;
+};

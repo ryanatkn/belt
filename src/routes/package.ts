@@ -65,7 +65,7 @@ export const package_json: Package_Json = {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.9.0',
 		'@ryanatkn/fuz': '^0.155.0',
-		'@ryanatkn/gro': 'file:../gro',
+		'@ryanatkn/gro': '^0.173.2',
 		'@ryanatkn/moss': '^0.37.0',
 		'@sveltejs/adapter-static': '^3.0.9',
 		'@sveltejs/kit': '^2.49.0',
@@ -2796,7 +2796,7 @@ export const src_json: Src_Json = {
 						},
 						{
 							name: 'src_json',
-							type: '{ [x: string]: unknown; name: string; version: string; modules?: { [x: string]: unknown; path: string; identifiers?: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; ... 17 more ...; props?: { ...; }[] | undefined; }[] | undefined;...',
+							type: '{ [x: string]: unknown; name: string; version: string; modules?: { [x: string]: unknown; path: string; identifiers?: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; ... 19 more ...; alias_of?: { ...; } | undefined; }[] | undefined...',
 							optional: false,
 						},
 					],
@@ -3759,15 +3759,15 @@ export const src_json: Src_Json = {
 					doc_comment: 'Identifier metadata with rich TypeScript/JSDoc information.',
 					source_line: 69,
 					type_signature:
-						'ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 17 more ...; props: ZodOptional<...>; }, $loose>',
+						'ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>',
 				},
 				{
 					name: 'Module_Json',
 					kind: 'type',
 					doc_comment: 'Module information with metadata.',
-					source_line: 109,
+					source_line: 124,
 					type_signature:
-						'ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 17 more ...; props: ZodOptional<...>; }, $loose>>...',
+						'ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loos...',
 				},
 				{
 					name: 'Src_Json',
@@ -3776,9 +3776,57 @@ export const src_json: Src_Json = {
 					see_also: [
 						'https://github.com/ryanatkn/gro/blob/main/src/docs/gro_plugin_sveltekit_app.md#well-known-src',
 					],
-					source_line: 126,
+					source_line: 141,
 					type_signature:
-						'ZodObject<{ name: ZodString; version: ZodString; modules: ZodOptional<ZodArray<ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; ... 6 more ...; css: "css"; }>; ... 17 more ...; props: ZodOptional<...>; }, $loose>>>; module_comment: ZodO...',
+						'ZodObject<{ name: ZodString; version: ZodString; modules: ZodOptional<ZodArray<ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; ... 6 more ...; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>>>; module_comment: Z...',
+				},
+				{
+					name: 'identifier_get_display_name',
+					kind: 'function',
+					doc_comment: 'Format identifier name with generic parameters for display.',
+					examples: [
+						"identifier_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})\n// => 'Map<K, V>'",
+					],
+					source_line: 153,
+					type_signature:
+						'(identifier: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }): string',
+					return_type: 'string',
+					parameters: [
+						{
+							name: 'identifier',
+							type: '{ [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }',
+							optional: false,
+						},
+					],
+				},
+				{
+					name: 'identifier_generate_import',
+					kind: 'function',
+					doc_comment: 'Generate TypeScript import statement for an identifier.',
+					examples: [
+						"identifier_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')\n// => \"import type {Foo} from '@pkg/lib/foo.js';\"",
+					],
+					source_line: 169,
+					type_signature:
+						'(identifier: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }, module_path: string, pkg_name: string): string',
+					return_type: 'string',
+					parameters: [
+						{
+							name: 'identifier',
+							type: '{ [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }',
+							optional: false,
+						},
+						{
+							name: 'module_path',
+							type: 'string',
+							optional: false,
+						},
+						{
+							name: 'pkg_name',
+							type: 'string',
+							optional: false,
+						},
+					],
 				},
 			],
 		},
