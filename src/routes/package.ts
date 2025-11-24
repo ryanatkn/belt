@@ -991,6 +991,53 @@ export const src_json: Src_Json = {
 			dependencies: ['json.ts', 'object.ts'],
 		},
 		{
+			path: 'fs.ts',
+			identifiers: [
+				{
+					name: 'fs_exists',
+					kind: 'function',
+					doc_comment: 'Checks if a file or directory exists.',
+					source_line: 8,
+					type_signature: '(path: string): Promise<boolean>',
+					return_type: 'Promise<boolean>',
+					parameters: [
+						{
+							name: 'path',
+							type: 'string',
+							optional: false,
+						},
+					],
+				},
+				{
+					name: 'fs_empty_dir',
+					kind: 'function',
+					doc_comment: 'Empties a directory with an optional `filter`.',
+					source_line: 20,
+					type_signature:
+						'(dir: string, filter?: ((path: string) => boolean) | undefined, options?: RmOptions | undefined): Promise<void>',
+					return_type: 'Promise<void>',
+					parameters: [
+						{
+							name: 'dir',
+							type: 'string',
+							optional: false,
+						},
+						{
+							name: 'filter',
+							type: '((path: string) => boolean) | undefined',
+							optional: true,
+						},
+						{
+							name: 'options',
+							type: 'RmOptions | undefined',
+							optional: true,
+						},
+					],
+				},
+			],
+			dependents: ['git.ts'],
+		},
+		{
 			path: 'function.ts',
 			identifiers: [
 				{
@@ -1597,7 +1644,7 @@ export const src_json: Src_Json = {
 					],
 				},
 			],
-			dependencies: ['path.ts', 'process.ts'],
+			dependencies: ['fs.ts', 'path.ts', 'process.ts'],
 		},
 		{
 			path: 'id.ts',
