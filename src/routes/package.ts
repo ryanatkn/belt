@@ -1011,10 +1011,11 @@ export const src_json: Src_Json = {
 				{
 					name: 'fs_empty_dir',
 					kind: 'function',
-					doc_comment: 'Empties a directory with an optional `filter`.',
+					doc_comment:
+						'Empties a directory, recursively by default. If `should_remove` is provided, only entries where it returns `true` are removed.',
 					source_line: 20,
 					type_signature:
-						'(dir: string, filter?: ((path: string) => boolean) | undefined, options?: RmOptions | undefined): Promise<void>',
+						'(dir: string, should_remove?: ((name: string) => boolean) | undefined, options?: RmOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
@@ -1023,8 +1024,8 @@ export const src_json: Src_Json = {
 							optional: false,
 						},
 						{
-							name: 'filter',
-							type: '((path: string) => boolean) | undefined',
+							name: 'should_remove',
+							type: '((name: string) => boolean) | undefined',
 							optional: true,
 						},
 						{

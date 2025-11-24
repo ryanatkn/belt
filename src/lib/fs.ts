@@ -15,17 +15,14 @@ export const fs_exists = async (path: string): Promise<boolean> => {
 };
 
 /**
- * Empties a directory with an optional `filter`.
+ * Empties a directory, recursively by default. If `should_remove` is provided, only entries where it returns `true` are removed.
  */
 export const fs_empty_dir = async (
 	dir: string,
-	filter?: (path: string) => boolean,
+	should_remove?: (name: string) => boolean,
 	options?: RmOptions,
 ): Promise<void> => {
 	const entries = await readdir(dir);
-	await Promise.all(
-		entries
-			.filter((path) => !filter || filter(path))
-			.map((path) => rm(join(dir, path), {...options, recursive: true})),
-	);
+	const to_remove = should_remove ? entries.filter(should_remove) : entries;
+	await Promise.all(to_remove.map((name) => rm(join(dir, name), {recursive: true, ...options})));
 };
