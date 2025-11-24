@@ -6,7 +6,7 @@ export const tomes: Array<Tome> = [
 	{
 		name: 'api',
 		category: 'reference',
-		component: Api_Page,
+		Component: Api_Page,
 		related_tomes: [],
 		related_modules: [],
 		related_identifiers: [],
@@ -14,7 +14,7 @@ export const tomes: Array<Tome> = [
 	{
 		name: 'package',
 		category: 'reference',
-		component: Package_Page,
+		Component: Package_Page,
 		related_tomes: [],
 		related_modules: [],
 		related_identifiers: [],
