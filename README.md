@@ -40,10 +40,7 @@ import {random_int} from '@ryanatkn/belt/random.js';
 import {deep_equal} from '@ryanatkn/belt/deep_equal.ts';
 ```
 
-Docs are a work in progress -
-see the available modules at [belt.ryanatkn.com](https://belt.ryanatkn.com) and
-[/src/routes/package.ts](https://github.com/ryanatkn/belt/blob/main/src/routes/package.ts),
-I recommend reading the source code for now when the doc comments and types are insufficient.
+Docs at [belt.ryanatkn.com/docs](https://belt.ryanatkn.com/docs).
 
 ## build
 
