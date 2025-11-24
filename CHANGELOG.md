@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.38.1
+
+### Patch Changes
+
+- add `fs.ts` with `fs_exists` and `fs_empty_dir` ([#56](https://github.com/ryanatkn/belt/pull/56))
+
 ## 0.38.0
 
 ### Minor Changes
