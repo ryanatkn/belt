@@ -1,4 +1,4 @@
-import type {Flavored} from './types.ts';
+import type {Flavored} from './types.js';
 
 /**
  * An absolute path on the filesystem. Named "id" to be consistent with Rollup.

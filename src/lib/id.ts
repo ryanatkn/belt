@@ -1,5 +1,5 @@
-import type {Flavored} from './types.ts';
-import {create_counter} from './counter.ts';
+import type {Flavored} from './types.js';
+import {create_counter} from './counter.js';
 
 export type Uuid = Flavored<string, 'Uuid'>;
 

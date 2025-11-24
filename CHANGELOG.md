@@ -1,5 +1,24 @@
 # @ryanatkn/belt
 
+## 0.38.0
+
+### Minor Changes
+
+- migrate `src_json.ts` from fuz ([#55](https://github.com/ryanatkn/belt/pull/55))
+- rename pkg_json identifiers ([#55](https://github.com/ryanatkn/belt/pull/55))
+
+## 0.37.2
+
+### Patch Changes
+
+- revert internal paths to `.js` ([#54](https://github.com/ryanatkn/belt/pull/54))
+
+## 0.37.1
+
+### Patch Changes
+
+- switch to ts imports ([#48](https://github.com/ryanatkn/belt/pull/48))
+
 ## 0.37.0
 
 ### Minor Changes

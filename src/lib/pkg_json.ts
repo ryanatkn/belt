@@ -1,13 +1,12 @@
-import {ensure_end, strip_end, strip_start} from './string.ts';
-import type {Package_Json} from './package_json.ts';
-import type {Src_Json} from './src_json.ts';
-import type {Url} from './url.ts';
+import {ensure_end, strip_end, strip_start} from './string.js';
+import type {Package_Json} from './package_json.js';
+import type {Src_Json} from './src_json.js';
+import type {Url} from './url.js';
 
-// TODO could probably improve this a lot
 /**
  * Combines `package_json` and `src_json` into a more convenient format.
  */
-export interface Pkg {
+export interface Pkg_Json {
 	package_json: Package_Json;
 	src_json: Src_Json;
 	name: string; // '@ryanatkn/fuz_library'
@@ -25,7 +24,7 @@ export interface Pkg {
 	published: boolean;
 }
 
-export const parse_pkg = (package_json: Package_Json, src_json: Src_Json): Pkg => {
+export const pkg_json_parse = (package_json: Package_Json, src_json: Src_Json): Pkg_Json => {
 	const {name} = package_json;
 
 	// TODO hacky
@@ -42,7 +41,7 @@ export const parse_pkg = (package_json: Package_Json, src_json: Src_Json): Pkg =
 			: null,
 	);
 	if (!repo_url) {
-		throw Error('failed to parse pkg - `repo_url` is required in package_json');
+		throw Error('failed to parse pkg_json - `repo_url` is required in package_json');
 	}
 
 	const homepage_url = package_json.homepage ?? null;
@@ -55,7 +54,7 @@ export const parse_pkg = (package_json: Package_Json, src_json: Src_Json): Pkg =
 
 	const changelog_url = published && repo_url ? repo_url + '/blob/main/CHANGELOG.md' : null;
 
-	const repo_name = parse_repo_name(name);
+	const repo_name = pkg_repo_name_parse(name);
 
 	const owner_name = repo_url ? strip_start(repo_url, 'https://github.com/').split('/')[0]! : null;
 
@@ -83,7 +82,7 @@ export const parse_pkg = (package_json: Package_Json, src_json: Src_Json): Pkg =
 };
 
 // TODO proper parsing with a schema
-export const parse_repo_name = (name: string): string => {
+export const pkg_repo_name_parse = (name: string): string => {
 	if (name[0] === '@') {
 		const parts = name.split('/');
 		if (parts.length < 2) {
@@ -94,7 +93,7 @@ export const parse_repo_name = (name: string): string => {
 	return name;
 };
 
-export const parse_org_url = (pkg: Pkg): string | null => {
+export const pkg_org_url_parse = (pkg: Pkg_Json): string | null => {
 	const {repo_name, repo_url} = pkg;
 	if (!repo_url) return null;
 	const suffix = '/' + repo_name;
