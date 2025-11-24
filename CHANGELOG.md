@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.38.2
+
+### Patch Changes
+
+- improve `fs_empty_dir` internals ([8f4cb8d](https://github.com/ryanatkn/belt/commit/8f4cb8d))
+
 ## 0.38.1
 
 ### Patch Changes
