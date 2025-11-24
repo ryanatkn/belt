@@ -5,11 +5,9 @@
 	import Svg from '@ryanatkn/fuz/Svg.svelte';
 	import {belt_logo} from '@ryanatkn/fuz/logos.js';
 	import {resolve} from '$app/paths';
-	import {Pkg} from '@ryanatkn/fuz/pkg.svelte.js';
+	import {pkg_context} from '@ryanatkn/fuz/pkg.svelte.js';
 
-	import {package_json, src_json} from '$routes/package.ts';
-
-	const pkg = new Pkg(package_json, src_json);
+	const pkg = pkg_context.get();
 </script>
 
 <main class="box mb_xl5">
@@ -19,15 +17,8 @@
 			{#snippet logo()}<div class="logo"><Svg data={belt_logo} /></div>{/snippet}
 		</Package_Summary>
 	</section>
-	<aside class="width_upto_sm mb_xl5">
-		⚠️ Belt's docs are a work in progress. For now see <a href={resolve('/about')}>the about page</a
-		>
-		and
-		<a href="https://github.com/ryanatkn/belt/tree/main/src/lib">source code</a>. It's all
-		TypeScript and most nontrivial stuff has doc comments.
-	</aside>
 	<section class="box">
-		<Card href={resolve('/about')} icon="">about</Card>
+		<Card href={resolve('/docs')}>docs{#snippet icon()}{pkg.package_json.glyph}{/snippet}</Card>
 	</section>
 	<section>
 		<Docs_Footer {pkg} />
