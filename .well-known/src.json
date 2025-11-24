@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "modules": [
     {
       "path": "array.ts",
@@ -238,6 +238,19 @@
         },
         {
           "name": "deserialize_cache",
+          "kind": "function"
+        }
+      ]
+    },
+    {
+      "path": "fs.ts",
+      "identifiers": [
+        {
+          "name": "fs_exists",
+          "kind": "function"
+        },
+        {
+          "name": "fs_empty_dir",
           "kind": "function"
         }
       ]
