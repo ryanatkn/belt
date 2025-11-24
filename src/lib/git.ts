@@ -1,10 +1,10 @@
 import type {SpawnOptions} from 'node:child_process';
 import {z} from 'zod';
-import {existsSync} from 'node:fs';
 
 import {spawn, spawn_out} from './process.js';
 import type {Flavored} from './types.js';
 import {to_file_path} from './path.js';
+import {fs_exists} from './fs.js';
 
 export const Git_Origin = z.string();
 export type Git_Origin = Flavored<string, 'Git_Origin'>;
@@ -31,7 +31,7 @@ export const git_remote_branch_exists = async (
 	options?: SpawnOptions,
 ): Promise<boolean> => {
 	const final_branch = branch ?? (await git_current_branch_name(options));
-	if (options?.cwd && !existsSync(to_file_path(options.cwd))) {
+	if (options?.cwd && !(await fs_exists(to_file_path(options.cwd)))) {
 		return false;
 	}
 	const result = await spawn(
@@ -57,7 +57,7 @@ export const git_local_branch_exists = async (
 	branch: Git_Branch,
 	options?: SpawnOptions,
 ): Promise<boolean> => {
-	if (options?.cwd && !existsSync(to_file_path(options.cwd))) {
+	if (options?.cwd && !(await fs_exists(to_file_path(options.cwd)))) {
 		return false;
 	}
 	const result = await spawn('git', ['show-ref', '--quiet', 'refs/heads/' + branch], options);
