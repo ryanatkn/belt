@@ -2,7 +2,7 @@
 // Do not edit directly - regenerated on build
 
 import type {Package_Json} from './package_json.js';
-import type {Src_Json} from '@ryanatkn/fuz/src_json.js';
+import type {Src_Json} from './src_json.js';
 
 export const package_json: Package_Json = {
 	name: '@ryanatkn/belt',
@@ -64,9 +64,9 @@ export const package_json: Package_Json = {
 	devDependencies: {
 		'@changesets/changelog-git': '^0.2.1',
 		'@ryanatkn/eslint-config': '^0.9.0',
-		'@ryanatkn/fuz': '^0.156.0',
-		'@ryanatkn/gro': '^0.174.1',
-		'@ryanatkn/moss': '^0.37.0',
+		'@ryanatkn/fuz': '^0.159.0',
+		'@ryanatkn/gro': '^0.174.2',
+		'@ryanatkn/moss': '^0.38.0',
 		'@sveltejs/adapter-static': '^3.0.9',
 		'@sveltejs/kit': '^2.49.0',
 		'@sveltejs/package': '^2.5.6',
