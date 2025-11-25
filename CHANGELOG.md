@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.40.0
+
+### Minor Changes
+
+- rework `library_json.ts` and `source_json.ts` ([a87a166](https://github.com/ryanatkn/belt/commit/a87a166))
+
 ## 0.39.0
 
 ### Minor Changes
