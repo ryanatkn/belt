@@ -3,32 +3,32 @@ import type {Flavored} from './types.js';
 /**
  * An absolute path on the filesystem. Named "id" to be consistent with Rollup.
  */
-export type Path_Id = Flavored<string, 'Path_Id'>;
+export type PathId = Flavored<string, 'PathId'>;
 
 /**
  * Basic information about a filesystem path.
  */
-export interface Path_Info {
-	id: Path_Id;
+export interface PathInfo {
+	id: PathId;
 	is_directory: boolean;
 }
 
 /**
  * A resolved path with both the original path string and its absolute id.
  */
-export interface Resolved_Path extends Path_Info {
+export interface ResolvedPath extends PathInfo {
 	path: string;
 }
 
 /**
  * A filter function for paths, can distinguish between files and directories.
  */
-export type Path_Filter = (path: string, is_directory: boolean) => boolean;
+export type PathFilter = (path: string, is_directory: boolean) => boolean;
 
 /**
  * A filter function for file paths only.
  */
-export type File_Filter = (path: string) => boolean;
+export type FileFilter = (path: string) => boolean;
 
 /**
  * Converts a URL to a file path string, or returns the string as-is.
@@ -61,23 +61,23 @@ export const parse_path_segments = (path: string): Array<string> =>
 /**
  * A piece of a parsed path, either a path segment or separator.
  */
-export type Path_Piece =
+export type PathPiece =
 	| {
 			type: 'piece';
-			path: Path_Id;
+			path: PathId;
 			name: string;
 	  }
 	| {
 			type: 'separator';
-			path: Path_Id;
+			path: PathId;
 	  };
 
 /**
  * Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.
  * @todo maybe rethink this API, it's a bit weird, but fits the usage in `ui/Breadcrumbs.svelte`
  */
-export const parse_path_pieces = (raw_path: string): Array<Path_Piece> => {
-	const pieces: Array<Path_Piece> = [];
+export const parse_path_pieces = (raw_path: string): Array<PathPiece> => {
+	const pieces: Array<PathPiece> = [];
 	const path_segments = parse_path_segments(raw_path);
 	if (path_segments.length) {
 		pieces.push({type: 'separator', path: '/'});

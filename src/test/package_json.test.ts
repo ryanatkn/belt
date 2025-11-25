@@ -1,42 +1,42 @@
 import {test, assert} from 'vitest';
 
-import {Package_Json, Package_Json_Exports} from '$lib/package_json.ts';
+import {PackageJson, PackageJsonExports} from '$lib/package_json.ts';
 
-test('Package_Json.parse', () => {
-	Package_Json.parse({name: 'abc', version: '123'});
+test('PackageJson.parse', () => {
+	PackageJson.parse({name: 'abc', version: '123'});
 });
 
-test('Package_Json.parse fails with bad data', () => {
+test('PackageJson.parse fails with bad data', () => {
 	let err;
 	try {
-		Package_Json.parse({version: '123'});
+		PackageJson.parse({version: '123'});
 	} catch (_err) {
 		err = _err;
 	}
 	assert.ok(err);
 });
 
-test('`Package_Json_Exports` parses simple string exports', () => {
+test('`PackageJsonExports` parses simple string exports', () => {
 	const exports = {
 		'.': './index.js',
 		'./lib': './lib/index.js',
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
 
-test('`Package_Json_Exports` parses null exports', () => {
+test('`PackageJsonExports` parses null exports', () => {
 	const exports = {
 		'.': './index.js',
 		'./internal/*': null,
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
 
-test('`Package_Json_Exports` parses basic conditional exports', () => {
+test('`PackageJsonExports` parses basic conditional exports', () => {
 	const exports = {
 		'.': {
 			import: './index.mjs',
@@ -44,12 +44,12 @@ test('`Package_Json_Exports` parses basic conditional exports', () => {
 			default: './index.js',
 		},
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
 
-test('`Package_Json_Exports` parses nested conditional exports', () => {
+test('`PackageJsonExports` parses nested conditional exports', () => {
 	const exports = {
 		'./feature': {
 			node: {
@@ -59,12 +59,12 @@ test('`Package_Json_Exports` parses nested conditional exports', () => {
 			default: './feature.mjs',
 		},
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
 
-test('`Package_Json_Exports` parses deeply nested conditional exports', () => {
+test('`PackageJsonExports` parses deeply nested conditional exports', () => {
 	const exports = {
 		'./advanced': {
 			node: {
@@ -80,12 +80,12 @@ test('`Package_Json_Exports` parses deeply nested conditional exports', () => {
 			default: './feature.mjs',
 		},
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
 
-test('`Package_Json_Exports` parses mixed exports types', () => {
+test('`PackageJsonExports` parses mixed exports types', () => {
 	const exports = {
 		'.': './index.js',
 		'./lib': {
@@ -100,7 +100,7 @@ test('`Package_Json_Exports` parses mixed exports types', () => {
 			},
 		},
 	};
-	const parsed = Package_Json_Exports.safeParse(exports);
+	const parsed = PackageJsonExports.safeParse(exports);
 	assert.ok(parsed.success);
 	assert.deepEqual(exports, parsed.data);
 });
@@ -128,7 +128,7 @@ test('rejects invalid exports', () => {
 	];
 
 	for (const invalid_export of invalid_exports) {
-		const parsed = Package_Json_Exports.safeParse(invalid_export);
+		const parsed = PackageJsonExports.safeParse(invalid_export);
 		assert.ok(!parsed.success);
 	}
 });

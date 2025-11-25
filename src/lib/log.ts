@@ -9,13 +9,13 @@ import {DEV} from 'esm-env';
  * - `'info'`: Errors, warnings, and info (default)
  * - `'debug'`: All messages including debug
  */
-export type Log_Level = 'off' | 'error' | 'warn' | 'info' | 'debug';
+export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
 
 /**
  * Console interface subset used by Logger for output.
  * Allows custom console implementations for testing.
  */
-export type Log_Console = Pick<typeof console, 'error' | 'warn' | 'log'>;
+export type LogConsole = Pick<typeof console, 'error' | 'warn' | 'log'>;
 
 const CHAR_ERROR = '🞩';
 const CHAR_WARN = '⚑';
@@ -31,7 +31,7 @@ const PREFIX_WARN = `${CHAR_WARN}warn${CHAR_WARN}`;
 // Info has no prefix - see CHAR_DEBUG comment above
 const PREFIX_DEBUG = `${CHAR_DEBUG}debug${CHAR_DEBUG}`;
 
-const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
+const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
 	off: 0,
 	error: 1,
 	warn: 2,
@@ -45,7 +45,7 @@ const LOG_LEVEL_VALUES: Record<Log_Level, number> = {
  * @param level The log level to convert
  * @returns Numeric value (0-4)
  */
-export const log_level_to_number = (level: Log_Level): number => LOG_LEVEL_VALUES[level];
+export const log_level_to_number = (level: LogLevel): number => LOG_LEVEL_VALUES[level];
 
 /**
  * Parses and validates a log level string.
@@ -53,13 +53,13 @@ export const log_level_to_number = (level: Log_Level): number => LOG_LEVEL_VALUE
  * @returns The validated log level, or undefined if value is undefined
  * @throws Error if value is provided but invalid
  */
-export const log_level_parse = (value: string | undefined): Log_Level | undefined => {
+export const log_level_parse = (value: string | undefined): LogLevel | undefined => {
 	if (!value) return undefined;
-	if (value in LOG_LEVEL_VALUES) return value as Log_Level;
+	if (value in LOG_LEVEL_VALUES) return value as LogLevel;
 	throw new Error(`Invalid log level: '${value}'`);
 };
 
-const DEFAULT_LOG_LEVEL: Log_Level =
+const DEFAULT_LOG_LEVEL: LogLevel =
 	(typeof process === 'undefined' ? undefined : log_level_parse(process.env.PUBLIC_LOG_LEVEL)) ??
 	(process.env.VITEST ? 'off' : DEV ? 'debug' : 'info');
 
@@ -94,9 +94,9 @@ export class Logger {
 	readonly parent?: Logger;
 
 	// Private override fields (undefined = inherit from parent)
-	#level_override?: Log_Level;
+	#level_override?: LogLevel;
 	#colors_override?: boolean;
-	#console_override?: Log_Console;
+	#console_override?: LogConsole;
 
 	// Lazy cache for formatted prefixes (individually cached and invalidated when colors change)
 	#cached_colors?: boolean;
@@ -106,7 +106,7 @@ export class Logger {
 	#cached_info?: string;
 	#cached_debug?: string;
 
-	#cached_level_string?: Log_Level;
+	#cached_level_string?: LogLevel;
 	#cached_level?: number;
 
 	/**
@@ -117,9 +117,9 @@ export class Logger {
 	 *   Note: Empty strings are only allowed for root loggers - child loggers cannot have empty labels.
 	 * @param options Optional configuration for level, colors, and console
 	 */
-	constructor(label?: string, options: Logger_Options = {}) {
+	constructor(label?: string, options: LoggerOptions = {}) {
 		this.label = label;
-		this.parent = (options as Internal_Logger_Options).parent;
+		this.parent = (options as InternalLoggerOptions).parent;
 
 		// Set overrides if provided (undefined = inherit from parent)
 		if (options.level !== undefined) {
@@ -137,7 +137,7 @@ export class Logger {
 	/**
 	 * Dynamic getter for level - checks override, then parent, then default.
 	 */
-	get level(): Log_Level {
+	get level(): LogLevel {
 		if (this.#level_override !== undefined) {
 			return this.#level_override;
 		}
@@ -150,7 +150,7 @@ export class Logger {
 	/**
 	 * Setter for level - creates override.
 	 */
-	set level(value: Log_Level) {
+	set level(value: LogLevel) {
 		log_level_parse(value); // throws if invalid
 		this.#level_override = value;
 	}
@@ -185,7 +185,7 @@ export class Logger {
 	/**
 	 * Dynamic getter for console - checks override, then parent, then global console.
 	 */
-	get console(): Log_Console {
+	get console(): LogConsole {
 		if (this.#console_override !== undefined) {
 			return this.#console_override;
 		}
@@ -198,7 +198,7 @@ export class Logger {
 	/**
 	 * Setter for console - creates override.
 	 */
-	set console(value: Log_Console) {
+	set console(value: LogConsole) {
 		this.#console_override = value;
 	}
 
@@ -374,7 +374,7 @@ export class Logger {
 	 * const query_log = db_log.child('query'); // label: 'app:db:query'
 	 * ```
 	 */
-	child(label: string, options: Logger_Options = {}): Logger {
+	child(label: string, options: LoggerOptions = {}): Logger {
 		if (label === '') {
 			throw new Error('Logger label cannot be empty when creating child');
 		}
@@ -382,7 +382,7 @@ export class Logger {
 		const child_label = this.label ? `${this.label}:${label}` : label;
 
 		// Pass parent reference and all config options
-		const internal_options: Internal_Logger_Options = {
+		const internal_options: InternalLoggerOptions = {
 			...options,
 			parent: this,
 		};
@@ -442,19 +442,19 @@ export class Logger {
 	}
 }
 
-export interface Logger_Options {
+export interface LoggerOptions {
 	/**
 	 * Log level for this logger instance.
 	 * Inherits from parent or defaults to 'info'.
 	 */
-	level?: Log_Level;
+	level?: LogLevel;
 
 	/**
 	 * Console interface for output.
 	 * Inherits from parent or defaults to global console.
 	 * Useful for testing.
 	 */
-	console?: Log_Console;
+	console?: LogConsole;
 
 	/**
 	 * Whether to use colors in output.
@@ -464,6 +464,6 @@ export interface Logger_Options {
 }
 
 // Internal type for child() implementation
-interface Internal_Logger_Options extends Logger_Options {
+interface InternalLoggerOptions extends LoggerOptions {
 	parent?: Logger;
 }

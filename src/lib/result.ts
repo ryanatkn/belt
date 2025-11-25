@@ -3,9 +3,9 @@
  * Uses the type system to strongly type error return values when desired.
  * Catching errors is then reserved for unexpected situations.
  */
-export type Result<T_Value = object, T_Error = object> =
-	| ({ok: true} & T_Value)
-	| ({ok: false} & T_Error);
+export type Result<TValue = object, TError = object> =
+	| ({ok: true} & TValue)
+	| ({ok: false} & TError);
 
 /**
  * Frozen object representing a successful result.
@@ -25,11 +25,11 @@ export const NOT_OK = Object.freeze({ok: false} as const);
  * @param message Optional custom error message.
  * @returns The wrapped value.
  */
-export const unwrap = <T_Value extends {value?: unknown}, T_Error extends {message?: string}>(
-	result: Result<T_Value, T_Error>,
+export const unwrap = <TValue extends {value?: unknown}, TError extends {message?: string}>(
+	result: Result<TValue, TError>,
 	message?: string,
-): T_Value['value'] => {
-	if (!result.ok) throw new Result_Error(result, message);
+): TValue['value'] => {
+	if (!result.ok) throw new ResultError(result, message);
 	return result.value;
 };
 
@@ -40,13 +40,13 @@ export const unwrap = <T_Value extends {value?: unknown}, T_Error extends {messa
  * Useful for generic handling of unwrapped results
  * to forward custom messages and other failed result data.
  */
-export class Result_Error extends Error {
+export class ResultError extends Error {
 	static DEFAULT_MESSAGE = 'unknown error';
 
 	readonly result: {ok: false; message?: string};
 
 	constructor(result: {ok: false; message?: string}, message?: string, options?: ErrorOptions) {
-		super(message ?? result.message ?? Result_Error.DEFAULT_MESSAGE, options);
+		super(message ?? result.message ?? ResultError.DEFAULT_MESSAGE, options);
 		this.result = result;
 	}
 }
@@ -58,10 +58,10 @@ export class Result_Error extends Error {
  * @param message Optional custom error message.
  * @returns The type-narrowed result.
  */
-export const unwrap_error = <T_Error extends object>(
-	result: Result<object, T_Error>,
+export const unwrap_error = <TError extends object>(
+	result: Result<object, TError>,
 	message = 'Failed to unwrap result error',
-): {ok: false} & T_Error => {
+): {ok: false} & TError => {
 	if (result.ok) throw Error(message);
 	return result;
 };

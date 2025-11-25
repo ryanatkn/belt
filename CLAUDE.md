@@ -11,7 +11,7 @@ focuses on pure TypeScript helpers.
 Belt is a **foundational utility library**:
 
 - Pure TypeScript utilities (string, array, object, async, etc.)
-- Zod schemas for common data structures (`Package_Json`)
+- Zod schemas for common data structures (`PackageJson`)
 - No UI components, no Svelte dependency
 - Used by gro (build tools) and fuz (UI/stack)
 
@@ -34,12 +34,12 @@ Belt is a **foundational utility library**:
 
 ### Types and validation
 
-- `package_json.ts` - `Package_Json` Zod schema with gro extensions (glyph,
+- `package_json.ts` - `PackageJson` Zod schema with gro extensions (glyph,
   logo, motto, etc.)
-- `src_json.ts` - `Src_Json`, `Module_Json`, `Identifier_Json` Zod schemas for
+- `src_json.ts` - `SrcJson`, `ModuleJson`, `IdentifierJson` Zod schemas for
   `.well-known/src.json` metadata (shared by gro for generation and fuz for UI)
-- `pkg_json.ts` - `Pkg_Json` enriched package representation combining
-  `Package_Json` and `Src_Json`
+- `pkg_json.ts` - `PkgJson` enriched package representation combining
+  `PackageJson` and `SrcJson`
 - `result.ts` - Result type pattern
 - `error.ts` - error utilities
 
@@ -66,7 +66,7 @@ Belt is a **foundational utility library**:
 ## Code style
 
 - `snake_case` for identifiers
-- `Upper_Snake_Case` for types
+- `UpperSnakeCase` for types
 - explicit file extensions in imports
 - tab indentation, 100 character width
 

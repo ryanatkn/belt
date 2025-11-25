@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Package_Summary from '@ryanatkn/fuz/Package_Summary.svelte';
-	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
+	import PackageSummary from '@ryanatkn/fuz/PackageSummary.svelte';
+	import DocsFooter from '@ryanatkn/fuz/DocsFooter.svelte';
 	import Card from '@ryanatkn/fuz/Card.svelte';
 	import Svg from '@ryanatkn/fuz/Svg.svelte';
 	import {belt_logo} from '@ryanatkn/fuz/logos.js';
@@ -12,16 +12,16 @@
 
 <main class="box mb_xl5">
 	<section>
-		<Package_Summary {pkg}>
+		<PackageSummary {pkg}>
 			{#snippet repo_name()}<h1 class="mt_xl mb_xl">belt</h1>{/snippet}
 			{#snippet logo()}<div class="logo"><Svg data={belt_logo} /></div>{/snippet}
-		</Package_Summary>
+		</PackageSummary>
 	</section>
 	<section class="box">
 		<Card href={resolve('/docs')}>docs{#snippet icon()}{pkg.package_json.glyph}{/snippet}</Card>
 	</section>
 	<section>
-		<Docs_Footer {pkg} />
+		<DocsFooter {pkg} />
 	</section>
 </main>
 

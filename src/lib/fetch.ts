@@ -9,15 +9,15 @@ import {json_stringify_deterministic} from './json.js';
 const DEFAULT_GITHUB_API_ACCEPT_HEADER = 'application/vnd.github+json';
 const DEFAULT_GITHUB_API_VERSION_HEADER = '2022-11-28';
 
-export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
+export interface FetchValueOptions<TValue, TParams = undefined> {
 	/**
 	 * The `request.headers` take precedence over the headers computed from other options.
 	 */
 	request?: RequestInit;
-	params?: T_Params;
-	parse?: (v: any) => T_Value;
+	params?: TParams;
+	parse?: (v: any) => TValue;
 	token?: string | null;
-	cache?: Fetch_Value_Cache | null;
+	cache?: FetchValueCache | null;
 	return_early_from_cache?: boolean; // TODO name?
 	log?: Logger;
 	fetch?: typeof globalThis.fetch;
@@ -50,10 +50,10 @@ export interface Fetch_Value_Options<T_Value, T_Params = undefined> {
  * Otherwise the full `res.headers` are included.
  * @mutates options.cache calls `cache.set()` to store fetched results if cache is provided
  */
-export const fetch_value = async <T_Value = any, T_Params = undefined>(
+export const fetch_value = async <TValue = any, TParams = undefined>(
 	url: string | URL,
-	options?: Fetch_Value_Options<T_Value, T_Params>,
-): Promise<Result<{value: T_Value; headers: Headers}, {status: number; message: string}>> => {
+	options?: FetchValueOptions<TValue, TParams>,
+): Promise<Result<{value: TValue; headers: Headers}, {status: number; message: string}>> => {
 	const {
 		request,
 		params,
@@ -148,7 +148,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 	log?.debug('[fetch_value] fetched json', url, parsed);
 
 	if (key) {
-		const result: Fetch_Value_Cache_Item = {
+		const result: FetchValueCacheItem = {
 			key,
 			url: url_str,
 			params,
@@ -165,7 +165,7 @@ export const fetch_value = async <T_Value = any, T_Params = undefined>(
 /**
  * Returns a subset of headers that are safe to store in a `fetch_value` cache.
  */
-const to_cached_headers = (cached: Fetch_Value_Cache_Item): Headers => {
+const to_cached_headers = (cached: FetchValueCacheItem): Headers => {
 	const headers = new Headers();
 	if (cached.etag) {
 		headers.set('etag', cached.etag);
@@ -188,24 +188,24 @@ const print_ratelimit_headers = (headers: Headers): string => {
 	return limit || remaining ? `ratelimit ${remaining} of ${limit}` : '';
 };
 
-export const Fetch_Value_Cache_Key = z.string();
-export type Fetch_Value_Cache_Key = Flavored<
-	z.infer<typeof Fetch_Value_Cache_Key>,
-	'Fetch_Value_Cache_Key'
+export const FetchValueCacheKey = z.string();
+export type FetchValueCacheKey = Flavored<
+	z.infer<typeof FetchValueCacheKey>,
+	'FetchValueCacheKey'
 >;
 
-export const Fetch_Value_Cache_Item = z.object({
-	key: Fetch_Value_Cache_Key,
+export const FetchValueCacheItem = z.object({
+	key: FetchValueCacheKey,
 	url: z.string(),
 	params: z.any(),
 	value: z.any(),
 	etag: z.string().nullable(),
 	last_modified: z.string().nullable(),
 });
-export type Fetch_Value_Cache_Item = z.infer<typeof Fetch_Value_Cache_Item>;
+export type FetchValueCacheItem = z.infer<typeof FetchValueCacheItem>;
 
-export const Fetch_Value_Cache = z.map(Fetch_Value_Cache_Key, Fetch_Value_Cache_Item);
-export type Fetch_Value_Cache = z.infer<typeof Fetch_Value_Cache>;
+export const FetchValueCache = z.map(FetchValueCacheKey, FetchValueCacheItem);
+export type FetchValueCache = z.infer<typeof FetchValueCache>;
 
 const KEY_SEPARATOR = '::';
 
@@ -213,7 +213,7 @@ export const to_fetch_value_cache_key = (
 	url: string,
 	params: any,
 	method: string,
-): Fetch_Value_Cache_Key => {
+): FetchValueCacheKey => {
 	let key = method + KEY_SEPARATOR + url;
 	if (params != null) {
 		key += KEY_SEPARATOR + json_stringify_deterministic(params);
@@ -222,13 +222,13 @@ export const to_fetch_value_cache_key = (
 };
 
 /**
- * Converts `Fetch_Value_Cache` to a JSON string.
+ * Converts `FetchValueCache` to a JSON string.
  */
-export const serialize_cache = (cache: Fetch_Value_Cache): string =>
+export const serialize_cache = (cache: FetchValueCache): string =>
 	JSON.stringify(Array.from(cache.entries()));
 
 /**
- * Converts a serialized cache string to a `Fetch_Value_Cache`.
+ * Converts a serialized cache string to a `FetchValueCache`.
  */
-export const deserialize_cache = (serialized: string): Fetch_Value_Cache =>
-	Fetch_Value_Cache.parse(new Map(JSON.parse(serialized)));
+export const deserialize_cache = (serialized: string): FetchValueCache =>
+	FetchValueCache.parse(new Map(JSON.parse(serialized)));

@@ -15,7 +15,7 @@ export const is_uuid = (str: string): str is Uuid => UUID_MATCHER.test(str);
  */
 export const UUID_MATCHER = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/iu;
 
-export type Client_Id_Creator = () => string;
+export type ClientIdCreator = () => string;
 
 /**
  * Creates a string id generator function, outputting `${name}_${count}` by default.
@@ -24,7 +24,7 @@ export const create_client_id_creator = (
 	name: string,
 	count?: number,
 	separator = '_',
-): Client_Id_Creator => {
+): ClientIdCreator => {
 	const counter = create_counter(count);
 	return () => `${name}${separator}${counter()}`;
 };

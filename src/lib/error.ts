@@ -2,7 +2,7 @@
  * Error for asserting unreachable code paths in TypeScript.
  * Useful for exhaustive matching.
  */
-export class Unreachable_Error extends Error {
+export class UnreachableError extends Error {
 	constructor(value: never, message = `Unreachable case: ${value}`, options?: ErrorOptions) {
 		super(message, options);
 	}
@@ -18,5 +18,5 @@ export const unreachable: (value: never, message?: string) => asserts value is n
 	value,
 	message,
 ) => {
-	throw new Unreachable_Error(value, message);
+	throw new UnreachableError(value, message);
 };

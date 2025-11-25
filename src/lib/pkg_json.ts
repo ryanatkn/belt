@@ -1,14 +1,14 @@
 import {ensure_end, strip_end, strip_start} from './string.js';
-import type {Package_Json} from './package_json.js';
-import type {Src_Json} from './src_json.js';
+import type {PackageJson} from './package_json.js';
+import type {SrcJson} from './src_json.js';
 import type {Url} from './url.js';
 
 /**
  * Combines `package_json` and `src_json` into a more convenient format.
  */
-export interface Pkg_Json {
-	package_json: Package_Json;
-	src_json: Src_Json;
+export interface PkgJson {
+	package_json: PackageJson;
+	src_json: SrcJson;
 	name: string; // '@ryanatkn/fuz_library'
 	repo_name: string; // fuz_library
 	repo_url: Url; // 'https://github.com/ryanatkn/fuz'
@@ -24,7 +24,7 @@ export interface Pkg_Json {
 	published: boolean;
 }
 
-export const pkg_json_parse = (package_json: Package_Json, src_json: Src_Json): Pkg_Json => {
+export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): PkgJson => {
 	const {name} = package_json;
 
 	// TODO hacky
@@ -93,7 +93,7 @@ export const pkg_repo_name_parse = (name: string): string => {
 	return name;
 };
 
-export const pkg_org_url_parse = (pkg: Pkg_Json): string | null => {
+export const pkg_org_url_parse = (pkg: PkgJson): string | null => {
 	const {repo_name, repo_url} = pkg;
 	if (!repo_url) return null;
 	const suffix = '/' + repo_name;

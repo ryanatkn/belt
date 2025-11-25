@@ -1,16 +1,16 @@
-import {Logger, type Log_Console} from '$lib/log.ts';
+import {Logger, type LogConsole} from '$lib/log.ts';
 
 const log = new Logger();
 
-export interface Test_Context {
+export interface TestContext {
 	logged_args?: Array<unknown>;
 	error_args?: Array<unknown>;
 	warn_args?: Array<unknown>;
-	console: Log_Console;
+	console: LogConsole;
 }
 
-export const create_test_context = (): Test_Context => {
-	const ctx: Test_Context = {
+export const create_test_context = (): TestContext => {
+	const ctx: TestContext = {
 		logged_args: undefined,
 		error_args: undefined,
 		warn_args: undefined,

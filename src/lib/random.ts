@@ -1,4 +1,4 @@
-import type {Array_Element} from './types.js';
+import type {ArrayElement} from './types.js';
 
 /**
  * Generates a random `number` between `min` and `max`.
@@ -25,7 +25,7 @@ export const random_boolean = (random = Math.random): boolean => random() > 0.5;
 export const random_item = <T extends ReadonlyArray<any>>(
 	arr: T,
 	random = Math.random,
-): Array_Element<T> => arr[random_int(0, arr.length - 1, random)];
+): ArrayElement<T> => arr[random_int(0, arr.length - 1, random)];
 
 /**
  * Mutates `array` with random ordering.

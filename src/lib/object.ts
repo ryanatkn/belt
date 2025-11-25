@@ -1,4 +1,4 @@
-import type {Omit_Strict} from './types.js';
+import type {OmitStrict} from './types.js';
 
 /**
  * Returns a boolean indicating if `value` is
@@ -30,7 +30,7 @@ export const map_record = <T, K extends string | number, U>(
 export const omit = <T extends Record<K, any>, K extends keyof T>(
 	obj: T,
 	keys: Array<K>,
-): Omit_Strict<T, K> => {
+): OmitStrict<T, K> => {
 	const result = {} as T;
 	for (const key in obj) {
 		if (!keys.includes(key as any)) {

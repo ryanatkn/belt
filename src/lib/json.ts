@@ -1,21 +1,21 @@
-export type Json = Json_Primitive | Json_Object | Json_Array;
+export type Json = JsonPrimitive | JsonObject | JsonArray;
 
-export type Json_Primitive = string | number | boolean | null;
+export type JsonPrimitive = string | number | boolean | null;
 
-export interface Json_Object extends Record<string, Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
+export interface JsonObject extends Record<string, Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
 
-export interface Json_Array extends Array<Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
+export interface JsonArray extends Array<Json> {} // eslint-disable-line @typescript-eslint/no-empty-object-type
 
 /**
  * Like `typeof json`, but includes arrays. Excludes `'undefined'` because it's not valid JSON.
  */
-export type Json_Type = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
+export type JsonType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
 /**
- * Returns the `Json_Type` of `value`, which is like `typeof json`
+ * Returns the `JsonType` of `value`, which is like `typeof json`
  * but includes `'array'` and omits `'undefined'`.
  */
-export const json_type_of = (value: Json): Json_Type | undefined => {
+export const json_type_of = (value: Json): JsonType | undefined => {
 	const type = typeof value;
 	switch (type) {
 		case 'string':

@@ -1,7 +1,7 @@
 import {create_deferred, type Deferred} from './async.js';
 import {EMPTY_OBJECT} from './object.js';
 
-export interface Throttle_Options {
+export interface ThrottleOptions {
 	/**
 	 * Enforced milliseconds between calls. For `when='trailing'` this is the debounce delay.
 	 */
@@ -28,7 +28,7 @@ export interface Throttle_Options {
  */
 export const throttle = <T extends (...args: Array<any>) => Promise<void>>(
 	cb: T,
-	{delay = 0, when = 'both'}: Throttle_Options = EMPTY_OBJECT,
+	{delay = 0, when = 'both'}: ThrottleOptions = EMPTY_OBJECT,
 ): T => {
 	let pending_promise: Promise<void> | null = null;
 	let next_args: Array<any> | null = null;
