@@ -6,7 +6,7 @@ import type {Src_Json} from './src_json.js';
 
 export const package_json: Package_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.38.2',
+	version: '0.39.0',
 	description: 'utility belt for JS',
 	glyph: '🦕',
 	logo: 'logo.svg',
@@ -120,7 +120,7 @@ export const package_json: Package_Json = {
 
 export const src_json: Src_Json = {
 	name: '@ryanatkn/belt',
-	version: '0.38.2',
+	version: '0.39.0',
 	modules: [
 		{
 			path: 'array.ts',

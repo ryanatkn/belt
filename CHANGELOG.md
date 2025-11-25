@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.39.0
+
+### Minor Changes
+
+- rename `PascalCase` from `Upper_Snake_Case` (lol) ([#58](https://github.com/ryanatkn/belt/pull/58))
+
 ## 0.38.2
 
 ### Patch Changes
