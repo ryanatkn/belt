@@ -1837,6 +1837,141 @@ export const src_json: Src_Json = {
 			dependents: ['fetch.ts'],
 		},
 		{
+			path: 'library_json.ts',
+			identifiers: [
+				{
+					name: 'LibraryJson',
+					kind: 'type',
+					doc_comment: "A library's package.json and source metadata with computed properties.",
+					source_line: 13,
+					type_signature: 'LibraryJson',
+					properties: [
+						{
+							name: 'package_json',
+							kind: 'variable',
+							type_signature: 'PackageJson',
+						},
+						{
+							name: 'source_json',
+							kind: 'variable',
+							type_signature: 'SourceJson',
+						},
+						{
+							name: 'name',
+							kind: 'variable',
+							type_signature: 'string',
+							doc_comment: 'Package name, e.g. `@ryanatkn/fuz`.',
+						},
+						{
+							name: 'repo_name',
+							kind: 'variable',
+							type_signature: 'string',
+							doc_comment: 'Name without scope, e.g. `fuz`.',
+						},
+						{
+							name: 'repo_url',
+							kind: 'variable',
+							type_signature: 'Url',
+							doc_comment: 'GitHub repo URL, e.g. `https://github.com/ryanatkn/fuz`.',
+						},
+						{
+							name: 'owner_name',
+							kind: 'variable',
+							type_signature: 'string | null',
+							doc_comment: 'GitHub user/org, e.g. `ryanatkn`.',
+						},
+						{
+							name: 'homepage_url',
+							kind: 'variable',
+							type_signature: 'Url | null',
+						},
+						{
+							name: 'logo_url',
+							kind: 'variable',
+							type_signature: 'Url | null',
+							doc_comment: 'Logo URL, falls back to `favicon.png`.',
+						},
+						{
+							name: 'logo_alt',
+							kind: 'variable',
+							type_signature: 'string',
+						},
+						{
+							name: 'npm_url',
+							kind: 'variable',
+							type_signature: 'Url | null',
+						},
+						{
+							name: 'changelog_url',
+							kind: 'variable',
+							type_signature: 'Url | null',
+						},
+						{
+							name: 'published',
+							kind: 'variable',
+							type_signature: 'boolean',
+							doc_comment: 'True if has exports and version is not `0.0.1`.',
+						},
+					],
+				},
+				{
+					name: 'library_json_parse',
+					kind: 'function',
+					doc_comment:
+						'Creates a `LibraryJson` with computed properties from package.json and source metadata.',
+					source_line: 37,
+					type_signature:
+						'(package_json: { [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }, source_json: { ...; }): LibraryJson',
+					return_type: 'LibraryJson',
+					parameters: [
+						{
+							name: 'package_json',
+							type: '{ [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }',
+							optional: false,
+						},
+						{
+							name: 'source_json',
+							type: '{ [x: string]: unknown; name: string; version: string; modules?: { [x: string]: unknown; path: string; declarations?: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; ... 19 more ...; alias_of?: { ...; } | undefined; }[] | undefine...',
+							optional: false,
+						},
+					],
+				},
+				{
+					name: 'library_repo_name_parse',
+					kind: 'function',
+					doc_comment: 'Extracts repo name from a package name, e.g. `@ryanatkn/fuz` → `fuz`.',
+					source_line: 97,
+					type_signature: '(name: string): string',
+					return_type: 'string',
+					parameters: [
+						{
+							name: 'name',
+							type: 'string',
+							optional: false,
+						},
+					],
+				},
+				{
+					name: 'library_org_url_parse',
+					kind: 'function',
+					doc_comment:
+						'Extracts GitHub org URL from a library, e.g. `https://github.com/ryanatkn`.',
+					source_line: 111,
+					type_signature: '(library: LibraryJson): string | null',
+					return_type: 'string | null',
+					parameters: [
+						{
+							name: 'library',
+							type: 'LibraryJson',
+							optional: false,
+						},
+					],
+				},
+			],
+			module_comment: 'Library metadata combining package.json with analyzed source.',
+			dependencies: ['string.ts'],
+		},
+		{
 			path: 'log.ts',
 			identifiers: [
 				{
@@ -2758,130 +2893,6 @@ export const src_json: Src_Json = {
 			dependents: ['git.ts'],
 		},
 		{
-			path: 'pkg_json.ts',
-			identifiers: [
-				{
-					name: 'PkgJson',
-					kind: 'type',
-					doc_comment: 'Combines `package_json` and `src_json` into a more convenient format.',
-					source_line: 9,
-					type_signature: 'PkgJson',
-					properties: [
-						{
-							name: 'package_json',
-							kind: 'variable',
-							type_signature: 'PackageJson',
-						},
-						{
-							name: 'src_json',
-							kind: 'variable',
-							type_signature: 'SrcJson',
-						},
-						{
-							name: 'name',
-							kind: 'variable',
-							type_signature: 'string',
-						},
-						{
-							name: 'repo_name',
-							kind: 'variable',
-							type_signature: 'string',
-						},
-						{
-							name: 'repo_url',
-							kind: 'variable',
-							type_signature: 'Url',
-						},
-						{
-							name: 'owner_name',
-							kind: 'variable',
-							type_signature: 'string | null',
-							doc_comment: 'The github user/org.',
-						},
-						{
-							name: 'homepage_url',
-							kind: 'variable',
-							type_signature: 'Url | null',
-						},
-						{
-							name: 'logo_url',
-							kind: 'variable',
-							type_signature: 'Url | null',
-						},
-						{
-							name: 'logo_alt',
-							kind: 'variable',
-							type_signature: 'string',
-						},
-						{
-							name: 'npm_url',
-							kind: 'variable',
-							type_signature: 'Url | null',
-						},
-						{
-							name: 'changelog_url',
-							kind: 'variable',
-							type_signature: 'Url | null',
-						},
-						{
-							name: 'published',
-							kind: 'variable',
-							type_signature: 'boolean',
-						},
-					],
-				},
-				{
-					name: 'pkg_json_parse',
-					kind: 'function',
-					source_line: 27,
-					type_signature:
-						'(package_json: { [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }, src_json: { ...; }): PkgJson',
-					return_type: 'PkgJson',
-					parameters: [
-						{
-							name: 'package_json',
-							type: '{ [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }',
-							optional: false,
-						},
-						{
-							name: 'src_json',
-							type: '{ [x: string]: unknown; name: string; version: string; modules?: { [x: string]: unknown; path: string; identifiers?: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; ... 19 more ...; alias_of?: { ...; } | undefined; }[] | undefined...',
-							optional: false,
-						},
-					],
-				},
-				{
-					name: 'pkg_repo_name_parse',
-					kind: 'function',
-					source_line: 85,
-					type_signature: '(name: string): string',
-					return_type: 'string',
-					parameters: [
-						{
-							name: 'name',
-							type: 'string',
-							optional: false,
-						},
-					],
-				},
-				{
-					name: 'pkg_org_url_parse',
-					kind: 'function',
-					source_line: 96,
-					type_signature: '(pkg: PkgJson): string | null',
-					return_type: 'string | null',
-					parameters: [
-						{
-							name: 'pkg',
-							type: 'PkgJson',
-							optional: false,
-						},
-					],
-				},
-			],
-			dependencies: ['string.ts'],
-		},
-		{
 			path: 'print.ts',
 			identifiers: [
 				{
@@ -3766,13 +3777,13 @@ export const src_json: Src_Json = {
 			],
 		},
 		{
-			path: 'src_json.ts',
+			path: 'source_json.ts',
 			identifiers: [
 				{
-					name: 'IdentifierKind',
+					name: 'DeclarationKind',
 					kind: 'type',
-					doc_comment: 'Identifier kinds for exported symbols.',
-					source_line: 6,
+					doc_comment: 'The kind of exported declaration.',
+					source_line: 16,
 					type_signature:
 						'ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>',
 				},
@@ -3780,7 +3791,7 @@ export const src_json: Src_Json = {
 					name: 'GenericParamInfo',
 					kind: 'type',
 					doc_comment: 'Generic type parameter information.',
-					source_line: 21,
+					source_line: 31,
 					type_signature:
 						'ZodObject<{ name: ZodString; constraint: ZodOptional<ZodString>; default_type: ZodOptional<ZodString>; }, $loose>',
 				},
@@ -3789,7 +3800,7 @@ export const src_json: Src_Json = {
 					kind: 'type',
 					doc_comment:
 						'Parameter information for functions and methods.\n\nKept distinct from ComponentPropInfo despite structural similarity.\nFunction parameters form a tuple with positional semantics:\ncalling order matters (`fn(a, b)` vs `fn(b, a)`),\nmay include rest parameters and destructuring patterns.',
-					source_line: 39,
+					source_line: 49,
 					type_signature:
 						'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; }, $loose>',
 				},
@@ -3798,70 +3809,68 @@ export const src_json: Src_Json = {
 					kind: 'type',
 					doc_comment:
 						'Component prop information for Svelte components.\n\nKept distinct from ParameterInfo despite structural similarity.\nComponent props are named attributes with different semantics:\nno positional order when passing (`<Foo {a} {b} />` = `<Foo {b} {a} />`),\nsupport two-way binding via `$bindable` rune.',
-					source_line: 56,
+					source_line: 66,
 					type_signature:
 						'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; bindable: ZodOptional<...>; }, $loose>',
 				},
 				{
-					name: 'IdentifierJson',
+					name: 'DeclarationJson',
 					kind: 'type',
-					doc_comment: 'Identifier metadata with rich TypeScript/JSDoc information.',
-					source_line: 69,
+					doc_comment:
+						'Metadata for an exported declaration (function, type, class, component, etc.).\n\nExtracted from TypeScript source and JSDoc/TSDoc comments at build time.',
+					source_line: 81,
 					type_signature:
 						'ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>',
 				},
 				{
 					name: 'ModuleJson',
 					kind: 'type',
-					doc_comment: 'Module information with metadata.',
-					source_line: 124,
+					doc_comment: 'A source file in `src/lib/` with its exported declarations.',
+					source_line: 145,
 					type_signature:
-						'ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loos...',
+						'ZodObject<{ path: ZodString; declarations: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loo...',
 				},
 				{
-					name: 'SrcJson',
+					name: 'SourceJson',
 					kind: 'type',
-					doc_comment: 'Top-level source metadata.',
-					see_also: [
-						'https://github.com/ryanatkn/gro/blob/main/src/docs/gro_plugin_sveltekit_app.md#well-known-src',
-					],
-					source_line: 141,
+					doc_comment: "Metadata for a library's `src/lib/` exports.",
+					source_line: 161,
 					type_signature:
-						'ZodObject<{ name: ZodString; version: ZodString; modules: ZodOptional<ZodArray<ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; ... 6 more ...; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>>>; module_comment: Z...',
+						'ZodObject<{ name: ZodString; version: ZodString; modules: ZodOptional<ZodArray<ZodObject<{ path: ZodString; declarations: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; ... 6 more ...; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>>>; module_comment: ...',
 				},
 				{
-					name: 'identifier_get_display_name',
+					name: 'declaration_get_display_name',
 					kind: 'function',
-					doc_comment: 'Format identifier name with generic parameters for display.',
+					doc_comment: 'Format declaration name with generic parameters for display.',
 					examples: [
-						"identifier_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})\n// => 'Map<K, V>'",
+						"declaration_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})\n// => 'Map<K, V>'",
 					],
-					source_line: 153,
+					source_line: 173,
 					type_signature:
-						'(identifier: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }): string',
+						'(declaration: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }): string',
 					return_type: 'string',
 					parameters: [
 						{
-							name: 'identifier',
+							name: 'declaration',
 							type: '{ [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }',
 							optional: false,
 						},
 					],
 				},
 				{
-					name: 'identifier_generate_import',
+					name: 'declaration_generate_import',
 					kind: 'function',
-					doc_comment: 'Generate TypeScript import statement for an identifier.',
+					doc_comment: 'Generate TypeScript import statement for a declaration.',
 					examples: [
-						"identifier_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')\n// => \"import type {Foo} from '@pkg/lib/foo.js';\"",
+						"declaration_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')\n// => \"import type {Foo} from '@pkg/lib/foo.js';\"",
 					],
-					source_line: 169,
+					source_line: 189,
 					type_signature:
-						'(identifier: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }, module_path: string, pkg_name: string): string',
+						'(declaration: { [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }, module_path: string, library_name: string): string',
 					return_type: 'string',
 					parameters: [
 						{
-							name: 'identifier',
+							name: 'declaration',
 							type: '{ [x: string]: unknown; name: string; kind: "function" | "type" | "variable" | "class" | "constructor" | "component" | "json" | "css"; doc_comment?: string | undefined; type_signature?: string | undefined; ... 17 more ...; alias_of?: { ...; } | undefined; }',
 							optional: false,
 						},
@@ -3871,13 +3880,15 @@ export const src_json: Src_Json = {
 							optional: false,
 						},
 						{
-							name: 'pkg_name',
+							name: 'library_name',
 							type: 'string',
 							optional: false,
 						},
 					],
 				},
 			],
+			module_comment:
+				'Metadata types for library source code analysis.\n\nThese types represent the structure of `src/lib/` exports,\nextracted at build time via TypeScript compiler analysis.\nUsed for generating API documentation and enabling code search.\n\nHierarchy: SourceJson → ModuleJson → DeclarationJson',
 		},
 		{
 			path: 'string.ts',
@@ -4116,7 +4127,7 @@ export const src_json: Src_Json = {
 				},
 			],
 			dependencies: ['iterator.ts'],
-			dependents: ['package_json.ts', 'pkg_json.ts', 'url.ts'],
+			dependents: ['library_json.ts', 'package_json.ts', 'url.ts'],
 		},
 		{
 			path: 'throttle.ts',

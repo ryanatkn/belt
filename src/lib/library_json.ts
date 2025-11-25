@@ -1,30 +1,40 @@
+/**
+ * Library metadata combining package.json with analyzed source.
+ */
+
 import {ensure_end, strip_end, strip_start} from './string.js';
 import type {PackageJson} from './package_json.js';
-import type {SrcJson} from './src_json.js';
+import type {SourceJson} from './source_json.js';
 import type {Url} from './url.js';
 
 /**
- * Combines `package_json` and `src_json` into a more convenient format.
+ * A library's package.json and source metadata with computed properties.
  */
-export interface PkgJson {
+export interface LibraryJson {
 	package_json: PackageJson;
-	src_json: SrcJson;
-	name: string; // '@ryanatkn/fuz_library'
-	repo_name: string; // fuz_library
-	repo_url: Url; // 'https://github.com/ryanatkn/fuz'
-	/**
-	 * The github user/org.
-	 */
-	owner_name: string | null; // 'fuz-dev'
-	homepage_url: Url | null; // 'https://www.fuz.dev/'
-	logo_url: Url | null; // 'https://www.fuz.dev/logo.svg' falling back to 'https://www.fuz.dev/favicon.png'
-	logo_alt: string; // 'icon for gro'
-	npm_url: Url | null; // 'https://npmjs.com/package/@ryanatkn/fuz_library'
+	source_json: SourceJson;
+	/** Package name, e.g. `@ryanatkn/fuz`. */
+	name: string;
+	/** Name without scope, e.g. `fuz`. */
+	repo_name: string;
+	/** GitHub repo URL, e.g. `https://github.com/ryanatkn/fuz`. */
+	repo_url: Url;
+	/** GitHub user/org, e.g. `ryanatkn`. */
+	owner_name: string | null;
+	homepage_url: Url | null;
+	/** Logo URL, falls back to `favicon.png`. */
+	logo_url: Url | null;
+	logo_alt: string;
+	npm_url: Url | null;
 	changelog_url: Url | null;
+	/** True if has exports and version is not `0.0.1`. */
 	published: boolean;
 }
 
-export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): PkgJson => {
+/**
+ * Creates a `LibraryJson` with computed properties from package.json and source metadata.
+ */
+export const library_json_parse = (package_json: PackageJson, source_json: SourceJson): LibraryJson => {
 	const {name} = package_json;
 
 	// TODO hacky
@@ -41,7 +51,7 @@ export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): Pk
 			: null,
 	);
 	if (!repo_url) {
-		throw Error('failed to parse pkg_json - `repo_url` is required in package_json');
+		throw Error('failed to parse library_json - `repo_url` is required in package_json');
 	}
 
 	const homepage_url = package_json.homepage ?? null;
@@ -54,7 +64,7 @@ export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): Pk
 
 	const changelog_url = published && repo_url ? repo_url + '/blob/main/CHANGELOG.md' : null;
 
-	const repo_name = pkg_repo_name_parse(name);
+	const repo_name = library_repo_name_parse(name);
 
 	const owner_name = repo_url ? strip_start(repo_url, 'https://github.com/').split('/')[0]! : null;
 
@@ -67,7 +77,7 @@ export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): Pk
 
 	return {
 		package_json,
-		src_json,
+		source_json,
 		name,
 		repo_name,
 		repo_url,
@@ -81,8 +91,10 @@ export const pkg_json_parse = (package_json: PackageJson, src_json: SrcJson): Pk
 	};
 };
 
-// TODO proper parsing with a schema
-export const pkg_repo_name_parse = (name: string): string => {
+/**
+ * Extracts repo name from a package name, e.g. `@ryanatkn/fuz` → `fuz`.
+ */
+export const library_repo_name_parse = (name: string): string => {
 	if (name[0] === '@') {
 		const parts = name.split('/');
 		if (parts.length < 2) {
@@ -93,8 +105,11 @@ export const pkg_repo_name_parse = (name: string): string => {
 	return name;
 };
 
-export const pkg_org_url_parse = (pkg: PkgJson): string | null => {
-	const {repo_name, repo_url} = pkg;
+/**
+ * Extracts GitHub org URL from a library, e.g. `https://github.com/ryanatkn`.
+ */
+export const library_org_url_parse = (library: LibraryJson): string | null => {
+	const {repo_name, repo_url} = library;
 	if (!repo_url) return null;
 	const suffix = '/' + repo_name;
 	if (repo_url.endsWith(suffix)) {

@@ -1,9 +1,19 @@
+/**
+ * Metadata types for library source code analysis.
+ *
+ * These types represent the structure of `src/lib/` exports,
+ * extracted at build time via TypeScript compiler analysis.
+ * Used for generating API documentation and enabling code search.
+ *
+ * Hierarchy: SourceJson → ModuleJson → DeclarationJson
+ */
+
 import {z} from 'zod';
 
 /**
- * Identifier kinds for exported symbols.
+ * The kind of exported declaration.
  */
-export const IdentifierKind = z.enum([
+export const DeclarationKind = z.enum([
 	'type',
 	'function',
 	'variable',
@@ -13,7 +23,7 @@ export const IdentifierKind = z.enum([
 	'json',
 	'css',
 ]);
-export type IdentifierKind = z.infer<typeof IdentifierKind>;
+export type DeclarationKind = z.infer<typeof DeclarationKind>;
 
 /**
  * Generic type parameter information.
@@ -64,50 +74,61 @@ export const ComponentPropInfo = z.looseObject({
 export type ComponentPropInfo = z.infer<typeof ComponentPropInfo>;
 
 /**
- * Identifier metadata with rich TypeScript/JSDoc information.
+ * Metadata for an exported declaration (function, type, class, component, etc.).
+ *
+ * Extracted from TypeScript source and JSDoc/TSDoc comments at build time.
  */
-export const IdentifierJson = z.looseObject({
+export const DeclarationJson = z.looseObject({
+	/** The exported name. */
 	name: z.string(),
-	kind: IdentifierKind,
+	kind: DeclarationKind,
+	/** JSDoc/TSDoc comment in mdz format. */
 	doc_comment: z.string().optional(),
+	/** Full TypeScript type signature. */
 	type_signature: z.string().optional(),
 	/** TypeScript modifiers like `readonly`, `private`, or `static`. */
 	modifiers: z.array(z.string()).optional(),
+	/** 1-indexed line number in source file. */
 	source_line: z.number().optional(),
+	/** Function/method parameters. */
 	parameters: z.array(ParameterInfo).optional(),
+	/** Function/method return type. */
 	return_type: z.string().optional(),
-	/** Function return value description from `@returns` or `@return` tag. */
+	/** Return value description from `@returns` tag. */
 	return_description: z.string().optional(),
+	/** Generic type parameters like `<T, U>`. */
 	generic_params: z.array(GenericParamInfo).optional(),
 	/** Code examples from `@example` tags. */
 	examples: z.array(z.string()).optional(),
-	/** Deprecation warning from `@deprecated` tag. */
+	/** Deprecation message from `@deprecated` tag. */
 	deprecated_message: z.string().optional(),
-	/** Related items from `@see` tags. */
+	/** Related items from `@see` tags, in mdz format. */
 	see_also: z.array(z.string()).optional(),
-	/** Exceptions/errors thrown from `@throws` tags. */
+	/** Exceptions from `@throws` tags. */
 	throws: z.array(z.looseObject({type: z.string().optional(), description: z.string()})).optional(),
-	/** Version information from `@since` tag. */
+	/** Version introduced, from `@since` tag. */
 	since: z.string().optional(),
+	/** Extended classes/interfaces. */
 	extends: z.array(z.string()).optional(),
+	/** Implemented interfaces. */
 	implements: z.array(z.string()).optional(),
-	/** Recursive: class/interface members. */
+	/** Class or interface members (recursive). */
 	get members() {
-		return z.array(IdentifierJson).optional();
+		return z.array(DeclarationJson).optional();
 	},
-	/** Recursive: type properties. */
+	/** Type/interface properties (recursive). */
 	get properties() {
-		return z.array(IdentifierJson).optional();
+		return z.array(DeclarationJson).optional();
 	},
+	/** Svelte component props. */
 	props: z.array(ComponentPropInfo).optional(),
 	/**
-	 * Module paths (relative to src/lib) that also re-export this identifier.
-	 * The identifier's canonical location is the module where it appears in `identifiers`.
+	 * Module paths (relative to src/lib) that re-export this declaration.
+	 * The canonical location is this module's `declarations` array.
 	 */
 	also_exported_from: z.array(z.string()).optional(),
 	/**
-	 * For renamed re-exports (`export {foo as bar}`), points to the original identifier.
-	 * The current identifier is an alias created by the re-export.
+	 * For renamed re-exports (`export {foo as bar}`), the original declaration.
 	 */
 	alias_of: z
 		.object({
@@ -116,66 +137,65 @@ export const IdentifierJson = z.looseObject({
 		})
 		.optional(),
 });
-export type IdentifierJson = z.infer<typeof IdentifierJson>;
+export type DeclarationJson = z.infer<typeof DeclarationJson>;
 
 /**
- * Module information with metadata.
+ * A source file in `src/lib/` with its exported declarations.
  */
 export const ModuleJson = z.looseObject({
-	/** Module path relative to src/lib. */
+	/** Path relative to src/lib (e.g., `helpers.ts`). */
 	path: z.string(),
-	identifiers: z.array(IdentifierJson).optional(),
+	declarations: z.array(DeclarationJson).optional(),
+	/** File-level JSDoc comment. */
 	module_comment: z.string().optional(),
-	/** Module paths (relative to src/lib) that this module imports. */
+	/** Modules this imports (paths relative to src/lib). */
 	dependencies: z.array(z.string()).optional(),
-	/** Module paths (relative to src/lib) that import this module. */
+	/** Modules that import this (paths relative to src/lib). */
 	dependents: z.array(z.string()).optional(),
 });
 export type ModuleJson = z.infer<typeof ModuleJson>;
 
 /**
- * Top-level source metadata.
- *
- * @see https://github.com/ryanatkn/gro/blob/main/src/docs/gro_plugin_sveltekit_app.md#well-known-src
+ * Metadata for a library's `src/lib/` exports.
  */
-export const SrcJson = z.looseObject({
+export const SourceJson = z.looseObject({
 	name: z.string(),
 	version: z.string(),
 	modules: z.array(ModuleJson).optional(),
 });
-export type SrcJson = z.infer<typeof SrcJson>;
+export type SourceJson = z.infer<typeof SourceJson>;
 
 /**
- * Format identifier name with generic parameters for display.
- * @example identifier_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})
+ * Format declaration name with generic parameters for display.
+ * @example declaration_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})
  * // => 'Map<K, V>'
  */
-export const identifier_get_display_name = (identifier: IdentifierJson): string => {
-	if (!identifier.generic_params?.length) return identifier.name;
-	const params = identifier.generic_params.map((p) => {
+export const declaration_get_display_name = (declaration: DeclarationJson): string => {
+	if (!declaration.generic_params?.length) return declaration.name;
+	const params = declaration.generic_params.map((p) => {
 		let param = p.name;
 		if (p.constraint) param += ` extends ${p.constraint}`;
 		if (p.default_type) param += ` = ${p.default_type}`;
 		return param;
 	});
-	return `${identifier.name}<${params.join(', ')}>`;
+	return `${declaration.name}<${params.join(', ')}>`;
 };
 
 /**
- * Generate TypeScript import statement for an identifier.
- * @example identifier_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')
+ * Generate TypeScript import statement for a declaration.
+ * @example declaration_generate_import({name: 'Foo', kind: 'type'}, 'foo.ts', '@pkg/lib')
  * // => "import type {Foo} from '@pkg/lib/foo.js';"
  */
-export const identifier_generate_import = (
-	identifier: IdentifierJson,
+export const declaration_generate_import = (
+	declaration: DeclarationJson,
 	module_path: string,
-	pkg_name: string,
+	library_name: string,
 ): string => {
 	const js_path = module_path.replace(/\.ts$/, '.js');
-	const specifier = `${pkg_name}/${js_path}`;
+	const specifier = `${library_name}/${js_path}`;
 
 	// Handle default exports by converting module name to PascalCase
-	if (identifier.name === 'default') {
+	if (declaration.name === 'default') {
 		const module_name = module_path.replace(/\.(js|ts|svelte)$/, '');
 		const pascal_case = module_name
 			.split(/[-_]/)
@@ -184,6 +204,6 @@ export const identifier_generate_import = (
 		return `import ${pascal_case} from '${specifier}';`;
 	}
 
-	const import_keyword = identifier.kind === 'type' ? 'import type' : 'import';
-	return `${import_keyword} {${identifier.name}} from '${specifier}';`;
+	const import_keyword = declaration.kind === 'type' ? 'import type' : 'import';
+	return `${import_keyword} {${declaration.name}} from '${specifier}';`;
 };
