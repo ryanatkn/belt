@@ -65,8 +65,9 @@ Belt is a **foundational utility library**:
 
 ## Code style
 
-- `snake_case` for identifiers
-- `UpperSnakeCase` for types
+- `snake_case` for most identifiers (files, variables, functions, types) instead
+  of camelCase
+- `PascalCase` for types, class names, and Svelte components
 - explicit file extensions in imports
 - tab indentation, 100 character width
 
