@@ -172,8 +172,8 @@ export const src_json: Src_Json = {
 					doc_comment:
 						'Returns a function that returns the next item in the `array`\nin a linear sequence, looping back to index 0 when it reaches the end.',
 					source_line: 23,
-					type_signature: '<T extends ReadonlyArray<any>>(array: T): () => Array_Element<T>',
-					return_type: '() => Array_Element<T>',
+					type_signature: '<T extends ReadonlyArray<any>>(array: T): () => ArrayElement<T>',
+					return_type: '() => ArrayElement<T>',
 					parameters: [
 						{
 							name: 'array',
@@ -188,10 +188,10 @@ export const src_json: Src_Json = {
 			path: 'async.ts',
 			identifiers: [
 				{
-					name: 'Async_Status',
+					name: 'AsyncStatus',
 					kind: 'type',
 					source_line: 1,
-					type_signature: 'Async_Status',
+					type_signature: 'AsyncStatus',
 				},
 				{
 					name: 'wait',
@@ -597,10 +597,10 @@ export const src_json: Src_Json = {
 					type_signature: 'Counter',
 				},
 				{
-					name: 'Create_Counter',
+					name: 'CreateCounter',
 					kind: 'type',
 					source_line: 3,
-					type_signature: 'Create_Counter',
+					type_signature: 'CreateCounter',
 				},
 				{
 					name: 'create_counter',
@@ -769,7 +769,7 @@ export const src_json: Src_Json = {
 			path: 'error.ts',
 			identifiers: [
 				{
-					name: 'Unreachable_Error',
+					name: 'UnreachableError',
 					kind: 'class',
 					doc_comment:
 						'Error for asserting unreachable code paths in TypeScript.\nUseful for exhaustive matching.',
@@ -781,7 +781,7 @@ export const src_json: Src_Json = {
 							name: 'constructor',
 							kind: 'constructor',
 							type_signature:
-								'(value: never, message?: string, options?: ErrorOptions | undefined): Unreachable_Error',
+								'(value: never, message?: string, options?: ErrorOptions | undefined): UnreachableError',
 							parameters: [
 								{
 									name: 'value',
@@ -830,16 +830,16 @@ export const src_json: Src_Json = {
 			path: 'fetch.ts',
 			identifiers: [
 				{
-					name: 'Fetch_Value_Options',
+					name: 'FetchValueOptions',
 					kind: 'type',
 					source_line: 12,
-					type_signature: 'Fetch_Value_Options<T_Value, T_Params>',
+					type_signature: 'FetchValueOptions<TValue, TParams>',
 					generic_params: [
 						{
-							name: 'T_Value',
+							name: 'TValue',
 						},
 						{
-							name: 'T_Params',
+							name: 'TParams',
 							default_type: 'undefined',
 						},
 					],
@@ -854,12 +854,12 @@ export const src_json: Src_Json = {
 						{
 							name: 'params',
 							kind: 'variable',
-							type_signature: 'T_Params',
+							type_signature: 'TParams',
 						},
 						{
 							name: 'parse',
 							kind: 'variable',
-							type_signature: '(v: any) => T_Value',
+							type_signature: '(v: any) => TValue',
 						},
 						{
 							name: 'token',
@@ -869,7 +869,7 @@ export const src_json: Src_Json = {
 						{
 							name: 'cache',
 							kind: 'variable',
-							type_signature: 'Fetch_Value_Cache | null',
+							type_signature: 'FetchValueCache | null',
 						},
 						{
 							name: 'return_early_from_cache',
@@ -895,9 +895,9 @@ export const src_json: Src_Json = {
 						"Specializes `fetch` with some slightly different behavior and additional features:\n\n- throws on ratelimit errors to mitigate unintentional abuse\n- optional `parse` function called on the return value\n- optional cache (different from the browser cache,\n\t the caller can serialize it so e.g. dev setups can avoid hitting the network)\n- optional simplified API for authorization and data types\n  (you can still provide headers directly)\n\nUnlike `fetch`, this throws on ratelimits (status code 429)\nto halt whatever is happpening in its tracks to avoid accidental abuse,\nbut returns a `Result` in all other cases.\nHandling ratelimit headers with more sophistication gets tricky because behavior\ndiffers across services.\n(e.g. Mastodon returns an ISO string for `x-ratelimit-reset`,\nbut GitHub returns `Date.now()/1000`,\nand other services may do whatever, or even use a different header)\n\nIt's also stateless to avoid the complexity and bugs,\nso we don't try to track `x-ratelimit-remaining` per domain.\n\nIf the `value` is cached, only the cached safe subset of the `headers` are returned.\n(currently just `etag` and `last-modified`)\nOtherwise the full `res.headers` are included.",
 					source_line: 53,
 					type_signature:
-						'<T_Value = any, T_Params = undefined>(url: string | URL, options?: Fetch_Value_Options<T_Value, T_Params> | undefined): Promise<Result<{ value: T_Value; headers: Headers; }, { ...; }>>',
+						'<TValue = any, TParams = undefined>(url: string | URL, options?: FetchValueOptions<TValue, TParams> | undefined): Promise<Result<{ value: TValue; headers: Headers; }, { ...; }>>',
 					return_type:
-						'Promise<Result<{ value: T_Value; headers: Headers; }, { status: number; message: string; }>>',
+						'Promise<Result<{ value: TValue; headers: Headers; }, { status: number; message: string; }>>',
 					parameters: [
 						{
 							name: 'url',
@@ -906,26 +906,26 @@ export const src_json: Src_Json = {
 						},
 						{
 							name: 'options',
-							type: 'Fetch_Value_Options<T_Value, T_Params> | undefined',
+							type: 'FetchValueOptions<TValue, TParams> | undefined',
 							optional: true,
 						},
 					],
 				},
 				{
-					name: 'Fetch_Value_Cache_Key',
+					name: 'FetchValueCacheKey',
 					kind: 'type',
 					source_line: 191,
 					type_signature: 'ZodString',
 				},
 				{
-					name: 'Fetch_Value_Cache_Item',
+					name: 'FetchValueCacheItem',
 					kind: 'type',
 					source_line: 197,
 					type_signature:
 						'ZodObject<{ key: ZodString; url: ZodString; params: ZodAny; value: ZodAny; etag: ZodNullable<ZodString>; last_modified: ZodNullable<ZodString>; }, $strip>',
 				},
 				{
-					name: 'Fetch_Value_Cache',
+					name: 'FetchValueCache',
 					kind: 'type',
 					source_line: 207,
 					type_signature:
@@ -935,8 +935,8 @@ export const src_json: Src_Json = {
 					name: 'to_fetch_value_cache_key',
 					kind: 'function',
 					source_line: 212,
-					type_signature: '(url: string, params: any, method: string): Fetch_Value_Cache_Key',
-					return_type: 'Fetch_Value_Cache_Key',
+					type_signature: '(url: string, params: any, method: string): FetchValueCacheKey',
+					return_type: 'FetchValueCacheKey',
 					parameters: [
 						{
 							name: 'url',
@@ -958,7 +958,7 @@ export const src_json: Src_Json = {
 				{
 					name: 'serialize_cache',
 					kind: 'function',
-					doc_comment: 'Converts `Fetch_Value_Cache` to a JSON string.',
+					doc_comment: 'Converts `FetchValueCache` to a JSON string.',
 					source_line: 227,
 					type_signature:
 						'(cache: Map<string, { key: string; url: string; params: any; value: any; etag: string | null; last_modified: string | null; }>): string',
@@ -974,7 +974,7 @@ export const src_json: Src_Json = {
 				{
 					name: 'deserialize_cache',
 					kind: 'function',
-					doc_comment: 'Converts a serialized cache string to a `Fetch_Value_Cache`.',
+					doc_comment: 'Converts a serialized cache string to a `FetchValueCache`.',
 					source_line: 233,
 					type_signature:
 						'(serialized: string): Map<string, { key: string; url: string; params: any; value: any; etag: string | null; last_modified: string | null; }>',
@@ -1129,13 +1129,13 @@ export const src_json: Src_Json = {
 			path: 'git.ts',
 			identifiers: [
 				{
-					name: 'Git_Origin',
+					name: 'GitOrigin',
 					kind: 'type',
 					source_line: 9,
 					type_signature: 'ZodString',
 				},
 				{
-					name: 'Git_Branch',
+					name: 'GitBranch',
 					kind: 'type',
 					source_line: 12,
 					type_signature: 'ZodString',
@@ -1145,8 +1145,8 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: 'Returns the current git branch name or throws if something goes wrong.',
 					source_line: 18,
-					type_signature: '(options?: SpawnOptions | undefined): Promise<Git_Branch>',
-					return_type: 'Promise<Git_Branch>',
+					type_signature: '(options?: SpawnOptions | undefined): Promise<GitBranch>',
+					return_type: 'Promise<GitBranch>',
 					parameters: [
 						{
 							name: 'options',
@@ -1161,19 +1161,19 @@ export const src_json: Src_Json = {
 					doc_comment: '',
 					source_line: 28,
 					type_signature:
-						'(origin?: Git_Origin, branch?: Git_Branch | undefined, options?: SpawnOptions | undefined): Promise<boolean>',
+						'(origin?: GitOrigin, branch?: GitBranch | undefined, options?: SpawnOptions | undefined): Promise<boolean>',
 					return_type: 'Promise<boolean>',
 					return_description: 'a boolean indicating if the remote git branch exists',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
-							default_value: "'origin' as Git_Origin",
+							default_value: "'origin' as GitOrigin",
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch | undefined',
+							type: 'GitBranch | undefined',
 							optional: true,
 						},
 						{
@@ -1189,13 +1189,13 @@ export const src_json: Src_Json = {
 					doc_comment: '',
 					source_line: 56,
 					type_signature:
-						'(branch: Git_Branch, options?: SpawnOptions | undefined): Promise<boolean>',
+						'(branch: GitBranch, options?: SpawnOptions | undefined): Promise<boolean>',
 					return_type: 'Promise<boolean>',
 					return_description: 'a boolean indicating if the local git branch exists',
 					parameters: [
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1206,11 +1206,11 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Git_Workspace_Status',
+					name: 'GitWorkspaceStatus',
 					kind: 'type',
 					doc_comment: 'Git workspace status flags indicating which types of changes are present.',
 					source_line: 70,
-					type_signature: 'Git_Workspace_Status',
+					type_signature: 'GitWorkspaceStatus',
 					properties: [
 						{
 							name: 'unstaged_changes',
@@ -1235,8 +1235,8 @@ export const src_json: Src_Json = {
 					doc_comment:
 						'Parses the output of `git status --porcelain -z` (v1 format) into a status object.\nThis is a pure function that can be tested independently.\n\nFormat: XY path\\0 where:\n- X = staged status (index)\n- Y = unstaged status (work tree)\n- path = file path (unescaped with -z)\n\nSupported status codes:\n- M = modified\n- A = added\n- D = deleted\n- R = renamed\n- C = copied\n- T = type changed (regular file, symbolic link or submodule)\n- U = unmerged\n- ? = untracked\n- ! = ignored\n\nFor renames/copies: XY new\\0old\\0 (two NUL-separated paths)\n\nNote: This implementation treats submodules the same as regular files.\nSubmodule-specific status codes (lowercase m, ?) are interpreted as changes.',
 					source_line: 104,
-					type_signature: '(stdout: string | null): Git_Workspace_Status',
-					return_type: 'Git_Workspace_Status',
+					type_signature: '(stdout: string | null): GitWorkspaceStatus',
+					return_type: 'GitWorkspaceStatus',
 					return_description:
 						'status object with flags for unstaged changes, staged changes, and untracked files',
 					parameters: [
@@ -1254,8 +1254,8 @@ export const src_json: Src_Json = {
 					doc_comment:
 						'Checks the git workspace status using a single `git status --porcelain -z` call.\nThe -z format provides more reliable parsing by using NUL separators and avoiding escaping.',
 					source_line: 154,
-					type_signature: '(options?: SpawnOptions | undefined): Promise<Git_Workspace_Status>',
-					return_type: 'Promise<Git_Workspace_Status>',
+					type_signature: '(options?: SpawnOptions | undefined): Promise<GitWorkspaceStatus>',
+					return_type: 'Promise<GitWorkspaceStatus>',
 					return_description:
 						'status object with flags for unstaged changes, staged changes, and untracked files',
 					parameters: [
@@ -1271,13 +1271,13 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: '',
 					source_line: 164,
-					type_signature: '(status: Git_Workspace_Status): boolean',
+					type_signature: '(status: GitWorkspaceStatus): boolean',
 					return_type: 'boolean',
 					return_description: '`true` if the workspace has no changes at all',
 					parameters: [
 						{
 							name: 'status',
-							type: 'Git_Workspace_Status',
+							type: 'GitWorkspaceStatus',
 							optional: false,
 						},
 					],
@@ -1287,14 +1287,14 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: '',
 					source_line: 170,
-					type_signature: '(status: Git_Workspace_Status): boolean',
+					type_signature: '(status: GitWorkspaceStatus): boolean',
 					return_type: 'boolean',
 					return_description:
 						'`true` if the workspace has no unstaged changes and no untracked files (staged changes are OK)',
 					parameters: [
 						{
 							name: 'status',
-							type: 'Git_Workspace_Status',
+							type: 'GitWorkspaceStatus',
 							optional: false,
 						},
 					],
@@ -1304,12 +1304,12 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: 'Converts a workspace status to a human-readable message.',
 					source_line: 176,
-					type_signature: '(status: Git_Workspace_Status): string',
+					type_signature: '(status: GitWorkspaceStatus): string',
 					return_type: 'string',
 					parameters: [
 						{
 							name: 'status',
-							type: 'Git_Workspace_Status',
+							type: 'GitWorkspaceStatus',
 							optional: false,
 						},
 					],
@@ -1354,18 +1354,18 @@ export const src_json: Src_Json = {
 					doc_comment: 'Calls `git fetch` and throws if anything goes wrong.',
 					source_line: 206,
 					type_signature:
-						'(origin?: Git_Origin, branch?: Git_Branch | undefined, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin?: GitOrigin, branch?: GitBranch | undefined, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
-							default_value: "'origin' as Git_Origin",
+							default_value: "'origin' as GitOrigin",
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch | undefined',
+							type: 'GitBranch | undefined',
 							optional: true,
 						},
 						{
@@ -1381,13 +1381,13 @@ export const src_json: Src_Json = {
 					doc_comment: 'Calls `git checkout` and throws if anything goes wrong.',
 					source_line: 225,
 					type_signature:
-						'(branch: Git_Branch, options?: SpawnOptions | undefined): Promise<Git_Branch | null>',
-					return_type: 'Promise<Git_Branch | null>',
+						'(branch: GitBranch, options?: SpawnOptions | undefined): Promise<GitBranch | null>',
+					return_type: 'Promise<GitBranch | null>',
 					return_description: 'the previous branch name, if it changed',
 					parameters: [
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1403,18 +1403,18 @@ export const src_json: Src_Json = {
 					doc_comment: 'Calls `git pull` and throws if anything goes wrong.',
 					source_line: 243,
 					type_signature:
-						'(origin?: Git_Origin, branch?: Git_Branch | undefined, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin?: GitOrigin, branch?: GitBranch | undefined, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
-							default_value: "'origin' as Git_Origin",
+							default_value: "'origin' as GitOrigin",
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch | undefined',
+							type: 'GitBranch | undefined',
 							optional: true,
 						},
 						{
@@ -1430,17 +1430,17 @@ export const src_json: Src_Json = {
 					doc_comment: 'Calls `git push` and throws if anything goes wrong.',
 					source_line: 259,
 					type_signature:
-						'(origin: Git_Origin, branch?: Git_Branch | undefined, options?: SpawnOptions | undefined, set_upstream?: boolean): Promise<void>',
+						'(origin: GitOrigin, branch?: GitBranch | undefined, options?: SpawnOptions | undefined, set_upstream?: boolean): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch | undefined',
+							type: 'GitBranch | undefined',
 							optional: true,
 						},
 						{
@@ -1462,18 +1462,18 @@ export const src_json: Src_Json = {
 					doc_comment: 'Calls `git push` and throws if anything goes wrong.',
 					source_line: 277,
 					type_signature:
-						'(origin?: Git_Origin, branch?: Git_Branch | undefined, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin?: GitOrigin, branch?: GitBranch | undefined, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
-							default_value: "'origin' as Git_Origin",
+							default_value: "'origin' as GitOrigin",
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch | undefined',
+							type: 'GitBranch | undefined',
 							optional: true,
 						},
 						{
@@ -1488,12 +1488,12 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: 'Deletes a branch locally and throws if anything goes wrong.',
 					source_line: 299,
-					type_signature: '(branch: Git_Branch, options?: SpawnOptions | undefined): Promise<void>',
+					type_signature: '(branch: GitBranch, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1509,17 +1509,17 @@ export const src_json: Src_Json = {
 					doc_comment: 'Deletes a branch remotely and throws if anything goes wrong.',
 					source_line: 312,
 					type_signature:
-						'(origin: Git_Origin, branch: Git_Branch, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin: GitOrigin, branch: GitBranch, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1536,17 +1536,17 @@ export const src_json: Src_Json = {
 						'Resets the `target` branch back to its first commit both locally and remotely.',
 					source_line: 326,
 					type_signature:
-						'(origin: Git_Origin, branch: Git_Branch, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin: GitOrigin, branch: GitBranch, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1615,17 +1615,17 @@ export const src_json: Src_Json = {
 						'Clones a branch locally to another directory and updates the origin to match the source.',
 					source_line: 379,
 					type_signature:
-						'(origin: Git_Origin, branch: Git_Branch, source_dir: string, target_dir: string, options?: SpawnOptions | undefined): Promise<void>',
+						'(origin: GitOrigin, branch: GitBranch, source_dir: string, target_dir: string, options?: SpawnOptions | undefined): Promise<void>',
 					return_type: 'Promise<void>',
 					parameters: [
 						{
 							name: 'origin',
-							type: 'Git_Origin',
+							type: 'GitOrigin',
 							optional: false,
 						},
 						{
 							name: 'branch',
-							type: 'Git_Branch',
+							type: 'GitBranch',
 							optional: false,
 						},
 						{
@@ -1681,10 +1681,10 @@ export const src_json: Src_Json = {
 					type_signature: 'RegExp',
 				},
 				{
-					name: 'Client_Id_Creator',
+					name: 'ClientIdCreator',
 					kind: 'type',
 					source_line: 18,
-					type_signature: 'Client_Id_Creator',
+					type_signature: 'ClientIdCreator',
 				},
 				{
 					name: 'create_client_id_creator',
@@ -1693,8 +1693,8 @@ export const src_json: Src_Json = {
 						'Creates a string id generator function, outputting `${name}_${count}` by default.',
 					source_line: 23,
 					type_signature:
-						'(name: string, count?: number | undefined, separator?: string): Client_Id_Creator',
-					return_type: 'Client_Id_Creator',
+						'(name: string, count?: number | undefined, separator?: string): ClientIdCreator',
+					return_type: 'ClientIdCreator',
 					parameters: [
 						{
 							name: 'name',
@@ -1748,43 +1748,43 @@ export const src_json: Src_Json = {
 					type_signature: 'Json',
 				},
 				{
-					name: 'Json_Primitive',
+					name: 'JsonPrimitive',
 					kind: 'type',
 					source_line: 3,
-					type_signature: 'Json_Primitive',
+					type_signature: 'JsonPrimitive',
 				},
 				{
-					name: 'Json_Object',
+					name: 'JsonObject',
 					kind: 'type',
 					source_line: 5,
-					type_signature: 'Json_Object',
+					type_signature: 'JsonObject',
 					extends: ['Record<string, Json>'],
 					properties: [],
 				},
 				{
-					name: 'Json_Array',
+					name: 'JsonArray',
 					kind: 'type',
 					source_line: 7,
-					type_signature: 'Json_Array',
+					type_signature: 'JsonArray',
 					extends: ['Array<Json>'],
 					properties: [],
 				},
 				{
-					name: 'Json_Type',
+					name: 'JsonType',
 					kind: 'type',
 					doc_comment:
 						"Like `typeof json`, but includes arrays. Excludes `'undefined'` because it's not valid JSON.",
 					source_line: 12,
-					type_signature: 'Json_Type',
+					type_signature: 'JsonType',
 				},
 				{
 					name: 'json_type_of',
 					kind: 'function',
 					doc_comment:
-						"Returns the `Json_Type` of `value`, which is like `typeof json`\nbut includes `'array'` and omits `'undefined'`.",
+						"Returns the `JsonType` of `value`, which is like `typeof json`\nbut includes `'array'` and omits `'undefined'`.",
 					source_line: 18,
-					type_signature: '(value: Json): Json_Type | undefined',
-					return_type: 'Json_Type | undefined',
+					type_signature: '(value: Json): JsonType | undefined',
+					return_type: 'JsonType | undefined',
 					parameters: [
 						{
 							name: 'value',
@@ -1840,20 +1840,20 @@ export const src_json: Src_Json = {
 			path: 'log.ts',
 			identifiers: [
 				{
-					name: 'Log_Level',
+					name: 'LogLevel',
 					kind: 'type',
 					doc_comment:
 						"Log level hierarchy from least to most verbose.\n- `'off'`: No logging\n- `'error'`: Only errors\n- `'warn'`: Errors and warnings\n- `'info'`: Errors, warnings, and info (default)\n- `'debug'`: All messages including debug",
 					source_line: 12,
-					type_signature: 'Log_Level',
+					type_signature: 'LogLevel',
 				},
 				{
-					name: 'Log_Console',
+					name: 'LogConsole',
 					kind: 'type',
 					doc_comment:
 						'Console interface subset used by Logger for output.\nAllows custom console implementations for testing.',
 					source_line: 18,
-					type_signature: 'Log_Console',
+					type_signature: 'LogConsole',
 				},
 				{
 					name: 'log_level_to_number',
@@ -1861,13 +1861,13 @@ export const src_json: Src_Json = {
 					doc_comment:
 						'Converts a log level to its numeric value for comparison.\nHigher numbers indicate more verbose logging.',
 					source_line: 48,
-					type_signature: '(level: Log_Level): number',
+					type_signature: '(level: LogLevel): number',
 					return_type: 'number',
 					return_description: 'Numeric value (0-4)',
 					parameters: [
 						{
 							name: 'level',
-							type: 'Log_Level',
+							type: 'LogLevel',
 							optional: false,
 							description: 'The log level to convert',
 						},
@@ -1884,8 +1884,8 @@ export const src_json: Src_Json = {
 						},
 					],
 					source_line: 56,
-					type_signature: '(value: string | undefined): Log_Level | undefined',
-					return_type: 'Log_Level | undefined',
+					type_signature: '(value: string | undefined): LogLevel | undefined',
+					return_type: 'LogLevel | undefined',
 					return_description: 'The validated log level, or undefined if value is undefined',
 					parameters: [
 						{
@@ -1922,7 +1922,7 @@ export const src_json: Src_Json = {
 							name: 'constructor',
 							kind: 'constructor',
 							doc_comment: 'Creates a new Logger instance.',
-							type_signature: '(label?: string | undefined, options?: Logger_Options): Logger',
+							type_signature: '(label?: string | undefined, options?: LoggerOptions): Logger',
 							parameters: [
 								{
 									name: 'label',
@@ -1933,7 +1933,7 @@ export const src_json: Src_Json = {
 								},
 								{
 									name: 'options',
-									type: 'Logger_Options',
+									type: 'LoggerOptions',
 									optional: false,
 									description: 'Optional configuration for level, colors, and console',
 									default_value: '{}',
@@ -1972,7 +1972,7 @@ export const src_json: Src_Json = {
 							kind: 'function',
 							doc_comment:
 								'Creates a child logger with automatic label concatenation.\nChildren inherit parent configuration unless overridden.',
-							type_signature: '(label: string, options?: Logger_Options): Logger',
+							type_signature: '(label: string, options?: LoggerOptions): Logger',
 							return_type: 'Logger',
 							return_description: 'New Logger instance with concatenated label',
 							parameters: [
@@ -1985,7 +1985,7 @@ export const src_json: Src_Json = {
 								},
 								{
 									name: 'options',
-									type: 'Logger_Options',
+									type: 'LoggerOptions',
 									optional: false,
 									description: 'Optional configuration overrides',
 									default_value: '{}',
@@ -2077,22 +2077,22 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Logger_Options',
+					name: 'LoggerOptions',
 					kind: 'type',
 					source_line: 445,
-					type_signature: 'Logger_Options',
+					type_signature: 'LoggerOptions',
 					properties: [
 						{
 							name: 'level',
 							kind: 'variable',
-							type_signature: 'Log_Level',
+							type_signature: 'LogLevel',
 							doc_comment:
 								"Log level for this logger instance.\nInherits from parent or defaults to 'info'.",
 						},
 						{
 							name: 'console',
 							kind: 'variable',
-							type_signature: 'Log_Console',
+							type_signature: 'LogConsole',
 							doc_comment:
 								'Console interface for output.\nInherits from parent or defaults to global console.\nUseful for testing.',
 						},
@@ -2424,8 +2424,8 @@ export const src_json: Src_Json = {
 					doc_comment: 'Creates a new object without the specified `keys`.',
 					source_line: 30,
 					type_signature:
-						'<T extends Record<K, any>, K extends keyof T>(obj: T, keys: K[]): Omit_Strict<T, K>',
-					return_type: 'Omit_Strict<T, K>',
+						'<T extends Record<K, any>, K extends keyof T>(obj: T, keys: K[]): OmitStrict<T, K>',
+					return_type: 'OmitStrict<T, K>',
 					parameters: [
 						{
 							name: 'obj',
@@ -2551,34 +2551,34 @@ export const src_json: Src_Json = {
 			path: 'package_json.ts',
 			identifiers: [
 				{
-					name: 'Package_Json_Repository',
+					name: 'PackageJsonRepository',
 					kind: 'type',
 					source_line: 7,
 					type_signature:
 						'ZodUnion<readonly [ZodString, ZodObject<{ type: ZodString; url: ZodURL; directory: ZodOptional<ZodString>; }, $loose>]>',
 				},
 				{
-					name: 'Package_Json_Author',
+					name: 'PackageJsonAuthor',
 					kind: 'type',
 					source_line: 17,
 					type_signature:
 						'ZodUnion<readonly [ZodString, ZodObject<{ name: ZodString; email: ZodOptional<ZodEmail>; url: ZodOptional<ZodURL>; }, $loose>]>',
 				},
 				{
-					name: 'Package_Json_Funding',
+					name: 'PackageJsonFunding',
 					kind: 'type',
 					source_line: 27,
 					type_signature:
 						'ZodUnion<readonly [ZodString, ZodObject<{ type: ZodString; url: ZodURL; }, $loose>]>',
 				},
 				{
-					name: 'Export_Value',
+					name: 'ExportValue',
 					kind: 'type',
 					source_line: 47,
 					type_signature: 'ZodType<unknown, unknown, $ZodTypeInternals<unknown, unknown>>',
 				},
 				{
-					name: 'Package_Json_Exports',
+					name: 'PackageJsonExports',
 					kind: 'type',
 					doc_comment:
 						'Package exports can be:\n1. A string (shorthand for main export)\n2. null (to block exports)\n3. A record of export conditions/paths',
@@ -2587,7 +2587,7 @@ export const src_json: Src_Json = {
 						'ZodUnion<readonly [ZodString, ZodNull, ZodRecord<ZodString, ZodType<unknown, unknown, $ZodTypeInternals<unknown, unknown>>>]>',
 				},
 				{
-					name: 'Package_Json',
+					name: 'PackageJson',
 					kind: 'type',
 					doc_comment: '',
 					see_also: ['https://docs.npmjs.com/cli/v10/configuring-npm/package-json'],
@@ -2602,24 +2602,24 @@ export const src_json: Src_Json = {
 			path: 'path.ts',
 			identifiers: [
 				{
-					name: 'Path_Id',
+					name: 'PathId',
 					kind: 'type',
 					doc_comment:
 						'An absolute path on the filesystem. Named "id" to be consistent with Rollup.',
 					source_line: 6,
-					type_signature: 'Path_Id',
+					type_signature: 'PathId',
 				},
 				{
-					name: 'Path_Info',
+					name: 'PathInfo',
 					kind: 'type',
 					doc_comment: 'Basic information about a filesystem path.',
 					source_line: 11,
-					type_signature: 'Path_Info',
+					type_signature: 'PathInfo',
 					properties: [
 						{
 							name: 'id',
 							kind: 'variable',
-							type_signature: 'Path_Id',
+							type_signature: 'PathId',
 						},
 						{
 							name: 'is_directory',
@@ -2629,12 +2629,12 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Resolved_Path',
+					name: 'ResolvedPath',
 					kind: 'type',
 					doc_comment: 'A resolved path with both the original path string and its absolute id.',
 					source_line: 19,
-					type_signature: 'Resolved_Path',
-					extends: ['Path_Info'],
+					type_signature: 'ResolvedPath',
+					extends: ['PathInfo'],
 					properties: [
 						{
 							name: 'path',
@@ -2644,19 +2644,19 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Path_Filter',
+					name: 'PathFilter',
 					kind: 'type',
 					doc_comment:
 						'A filter function for paths, can distinguish between files and directories.',
 					source_line: 26,
-					type_signature: 'Path_Filter',
+					type_signature: 'PathFilter',
 				},
 				{
-					name: 'File_Filter',
+					name: 'FileFilter',
 					kind: 'type',
 					doc_comment: 'A filter function for file paths only.',
 					source_line: 31,
-					type_signature: 'File_Filter',
+					type_signature: 'FileFilter',
 				},
 				{
 					name: 'to_file_path',
@@ -2708,11 +2708,11 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Path_Piece',
+					name: 'PathPiece',
 					kind: 'type',
 					doc_comment: 'A piece of a parsed path, either a path segment or separator.',
 					source_line: 64,
-					type_signature: 'Path_Piece',
+					type_signature: 'PathPiece',
 				},
 				{
 					name: 'parse_path_pieces',
@@ -2720,8 +2720,8 @@ export const src_json: Src_Json = {
 					doc_comment:
 						"Treats all paths as absolute, so the first piece is always a `'/'` with type `'separator'`.",
 					source_line: 79,
-					type_signature: '(raw_path: string): Path_Piece[]',
-					return_type: 'Path_Piece[]',
+					type_signature: '(raw_path: string): PathPiece[]',
+					return_type: 'PathPiece[]',
 					parameters: [
 						{
 							name: 'raw_path',
@@ -2761,21 +2761,21 @@ export const src_json: Src_Json = {
 			path: 'pkg_json.ts',
 			identifiers: [
 				{
-					name: 'Pkg_Json',
+					name: 'PkgJson',
 					kind: 'type',
 					doc_comment: 'Combines `package_json` and `src_json` into a more convenient format.',
 					source_line: 9,
-					type_signature: 'Pkg_Json',
+					type_signature: 'PkgJson',
 					properties: [
 						{
 							name: 'package_json',
 							kind: 'variable',
-							type_signature: 'Package_Json',
+							type_signature: 'PackageJson',
 						},
 						{
 							name: 'src_json',
 							kind: 'variable',
-							type_signature: 'Src_Json',
+							type_signature: 'SrcJson',
 						},
 						{
 							name: 'name',
@@ -2835,8 +2835,8 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					source_line: 27,
 					type_signature:
-						'(package_json: { [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }, src_json: { ...; }): Pkg_Json',
-					return_type: 'Pkg_Json',
+						'(package_json: { [x: string]: unknown; name: string; version: string; private?: boolean | undefined; public?: boolean | undefined; description?: string | undefined; motto?: string | undefined; glyph?: string | undefined; ... 24 more ...; exports?: string | ... 2 more ... | undefined; }, src_json: { ...; }): PkgJson',
+					return_type: 'PkgJson',
 					parameters: [
 						{
 							name: 'package_json',
@@ -2868,12 +2868,12 @@ export const src_json: Src_Json = {
 					name: 'pkg_org_url_parse',
 					kind: 'function',
 					source_line: 96,
-					type_signature: '(pkg: Pkg_Json): string | null',
+					type_signature: '(pkg: PkgJson): string | null',
 					return_type: 'string | null',
 					parameters: [
 						{
 							name: 'pkg',
-							type: 'Pkg_Json',
+							type: 'PkgJson',
 							optional: false,
 						},
 					],
@@ -3116,10 +3116,10 @@ export const src_json: Src_Json = {
 			path: 'process.ts',
 			identifiers: [
 				{
-					name: 'Spawned_Process',
+					name: 'SpawnedProcess',
 					kind: 'type',
 					source_line: 14,
-					type_signature: 'Spawned_Process',
+					type_signature: 'SpawnedProcess',
 					properties: [
 						{
 							name: 'child',
@@ -3129,7 +3129,7 @@ export const src_json: Src_Json = {
 						{
 							name: 'closed',
 							kind: 'variable',
-							type_signature: 'Promise<Spawn_Result>',
+							type_signature: 'Promise<SpawnResult>',
 						},
 					],
 				},
@@ -3157,10 +3157,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Spawn_Result',
+					name: 'SpawnResult',
 					kind: 'type',
 					source_line: 27,
-					type_signature: 'Spawn_Result',
+					type_signature: 'SpawnResult',
 				},
 				{
 					name: 'spawn',
@@ -3169,8 +3169,8 @@ export const src_json: Src_Json = {
 						'A convenient promise wrapper around `spawn_process`\nintended for commands that have an end, not long running-processes like watchers.\nAny more advanced usage should use `spawn_process` directly for access to the `child` process.',
 					source_line: 34,
 					type_signature:
-						'(command: string, args?: readonly string[] | undefined, options?: SpawnOptions | undefined): Promise<Spawn_Result>',
-					return_type: 'Promise<Spawn_Result>',
+						'(command: string, args?: readonly string[] | undefined, options?: SpawnOptions | undefined): Promise<SpawnResult>',
+					return_type: 'Promise<SpawnResult>',
 					parameters: [
 						{
 							name: 'args',
@@ -3180,15 +3180,15 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Spawned_Out',
+					name: 'SpawnedOut',
 					kind: 'type',
 					source_line: 37,
-					type_signature: 'Spawned_Out',
+					type_signature: 'SpawnedOut',
 					properties: [
 						{
 							name: 'result',
 							kind: 'variable',
-							type_signature: 'Spawn_Result',
+							type_signature: 'SpawnResult',
 						},
 						{
 							name: 'stdout',
@@ -3209,8 +3209,8 @@ export const src_json: Src_Json = {
 						'Similar to `spawn` but buffers and returns `stdout` and `stderr` as strings.',
 					source_line: 46,
 					type_signature:
-						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): Promise<Spawned_Out>',
-					return_type: 'Promise<Spawned_Out>',
+						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): Promise<SpawnedOut>',
+					return_type: 'Promise<SpawnedOut>',
 					parameters: [
 						{
 							name: 'command',
@@ -3237,8 +3237,8 @@ export const src_json: Src_Json = {
 						'Wraps the normal Node `childProcess.spawn` with graceful child shutdown behavior.\nAlso returns a convenient `closed` promise.\nIf you only need `closed`, prefer the shorthand function `spawn`.',
 					source_line: 70,
 					type_signature:
-						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): Spawned_Process',
-					return_type: 'Spawned_Process',
+						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): SpawnedProcess',
+					return_type: 'SpawnedProcess',
 					parameters: [
 						{
 							name: 'command',
@@ -3300,10 +3300,10 @@ export const src_json: Src_Json = {
 				{
 					name: 'despawn',
 					kind: 'function',
-					doc_comment: 'Kills a child process and returns a `Spawn_Result`.',
+					doc_comment: 'Kills a child process and returns a `SpawnResult`.',
 					source_line: 117,
-					type_signature: '(child: ChildProcess): Promise<Spawn_Result>',
-					return_type: 'Promise<Spawn_Result>',
+					type_signature: '(child: ChildProcess): Promise<SpawnResult>',
+					return_type: 'Promise<SpawnResult>',
 					parameters: [
 						{
 							name: 'child',
@@ -3317,8 +3317,8 @@ export const src_json: Src_Json = {
 					kind: 'function',
 					doc_comment: 'Kills all globally registered child processes.',
 					source_line: 132,
-					type_signature: '(): Promise<Spawn_Result[]>',
-					return_type: 'Promise<Spawn_Result[]>',
+					type_signature: '(): Promise<SpawnResult[]>',
+					return_type: 'Promise<SpawnResult[]>',
 					parameters: [],
 				},
 				{
@@ -3355,23 +3355,23 @@ export const src_json: Src_Json = {
 				{
 					name: 'print_spawn_result',
 					kind: 'function',
-					doc_comment: 'Formats a `Spawn_Result` for printing.',
+					doc_comment: 'Formats a `SpawnResult` for printing.',
 					source_line: 163,
-					type_signature: '(result: Spawn_Result): string',
+					type_signature: '(result: SpawnResult): string',
 					return_type: 'string',
 					parameters: [
 						{
 							name: 'result',
-							type: 'Spawn_Result',
+							type: 'SpawnResult',
 							optional: false,
 						},
 					],
 				},
 				{
-					name: 'Restartable_Process',
+					name: 'RestartableProcess',
 					kind: 'type',
 					source_line: 171,
-					type_signature: 'Restartable_Process',
+					type_signature: 'RestartableProcess',
 					properties: [
 						{
 							name: 'restart',
@@ -3392,8 +3392,8 @@ export const src_json: Src_Json = {
 						'Like `spawn_process` but with `restart` and `kill`,\nhandling many concurrent `restart` calls gracefully.',
 					source_line: 180,
 					type_signature:
-						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): Restartable_Process',
-					return_type: 'Restartable_Process',
+						'(command: string, args?: readonly string[], options?: SpawnOptions | undefined): RestartableProcess',
+					return_type: 'RestartableProcess',
 					parameters: [
 						{
 							name: 'command',
@@ -3557,8 +3557,8 @@ export const src_json: Src_Json = {
 					doc_comment: 'Selects a random item from an array.',
 					source_line: 25,
 					type_signature:
-						'<T extends ReadonlyArray<any>>(arr: T, random?: () => number): Array_Element<T>',
-					return_type: 'Array_Element<T>',
+						'<T extends ReadonlyArray<any>>(arr: T, random?: () => number): ArrayElement<T>',
+					return_type: 'ArrayElement<T>',
 					parameters: [
 						{
 							name: 'arr',
@@ -3641,14 +3641,14 @@ export const src_json: Src_Json = {
 					doc_comment:
 						'An alternative pattern to throwing and catching errors.\nUses the type system to strongly type error return values when desired.\nCatching errors is then reserved for unexpected situations.',
 					source_line: 6,
-					type_signature: 'Result<T_Value, T_Error>',
+					type_signature: 'Result<TValue, TError>',
 					generic_params: [
 						{
-							name: 'T_Value',
+							name: 'TValue',
 							default_type: 'object',
 						},
 						{
-							name: 'T_Error',
+							name: 'TError',
 							default_type: 'object',
 						},
 					],
@@ -3674,13 +3674,13 @@ export const src_json: Src_Json = {
 						'A helper that says,\n"hey I know this is wrapped in a `Result`, but I expect it to be `ok`,\nso if it\'s not, I understand it will throw an error that wraps the result".',
 					source_line: 28,
 					type_signature:
-						'<T_Value extends { value?: unknown; }, T_Error extends { message?: string; }>(result: Result<T_Value, T_Error>, message?: string | undefined): T_Value["value"]',
-					return_type: 'T_Value["value"]',
+						'<TValue extends { value?: unknown; }, TError extends { message?: string; }>(result: Result<TValue, TError>, message?: string | undefined): TValue["value"]',
+					return_type: 'TValue["value"]',
 					return_description: 'The wrapped value.',
 					parameters: [
 						{
 							name: 'result',
-							type: 'Result<T_Value, T_Error>',
+							type: 'Result<TValue, TError>',
 							optional: false,
 							description: 'Some `Result` object.',
 						},
@@ -3693,7 +3693,7 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Result_Error',
+					name: 'ResultError',
 					kind: 'class',
 					doc_comment:
 						"A custom error class that's thrown by `unwrap`.\nWraps a failed `Result` with an optional message,\nand also accepts an optional message that overrides the result's.\nUseful for generic handling of unwrapped results\nto forward custom messages and other failed result data.",
@@ -3716,7 +3716,7 @@ export const src_json: Src_Json = {
 							name: 'constructor',
 							kind: 'constructor',
 							type_signature:
-								'(result: { ok: false; message?: string | undefined; }, message?: string | undefined, options?: ErrorOptions | undefined): Result_Error',
+								'(result: { ok: false; message?: string | undefined; }, message?: string | undefined, options?: ErrorOptions | undefined): ResultError',
 							parameters: [
 								{
 									name: 'result',
@@ -3744,13 +3744,13 @@ export const src_json: Src_Json = {
 						'A helper that does the opposite of `unwrap`, throwing if the `Result` is ok.\nNote that while `unwrap` returns the wrapped `value`, `unwrap_error` returns the entire result.',
 					source_line: 61,
 					type_signature:
-						'<T_Error extends object>(result: Result<object, T_Error>, message?: string): { ok: false; } & T_Error',
-					return_type: '{ ok: false; } & T_Error',
+						'<TError extends object>(result: Result<object, TError>, message?: string): { ok: false; } & TError',
+					return_type: '{ ok: false; } & TError',
 					return_description: 'The type-narrowed result.',
 					parameters: [
 						{
 							name: 'result',
-							type: 'Result<object, T_Error>',
+							type: 'Result<object, TError>',
 							optional: false,
 							description: 'Some `Result` object.',
 						},
@@ -3769,7 +3769,7 @@ export const src_json: Src_Json = {
 			path: 'src_json.ts',
 			identifiers: [
 				{
-					name: 'Identifier_Kind',
+					name: 'IdentifierKind',
 					kind: 'type',
 					doc_comment: 'Identifier kinds for exported symbols.',
 					source_line: 6,
@@ -3777,7 +3777,7 @@ export const src_json: Src_Json = {
 						'ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>',
 				},
 				{
-					name: 'Generic_Param_Info',
+					name: 'GenericParamInfo',
 					kind: 'type',
 					doc_comment: 'Generic type parameter information.',
 					source_line: 21,
@@ -3785,25 +3785,25 @@ export const src_json: Src_Json = {
 						'ZodObject<{ name: ZodString; constraint: ZodOptional<ZodString>; default_type: ZodOptional<ZodString>; }, $loose>',
 				},
 				{
-					name: 'Parameter_Info',
+					name: 'ParameterInfo',
 					kind: 'type',
 					doc_comment:
-						'Parameter information for functions and methods.\n\nKept distinct from Component_Prop_Info despite structural similarity.\nFunction parameters form a tuple with positional semantics:\ncalling order matters (`fn(a, b)` vs `fn(b, a)`),\nmay include rest parameters and destructuring patterns.',
+						'Parameter information for functions and methods.\n\nKept distinct from ComponentPropInfo despite structural similarity.\nFunction parameters form a tuple with positional semantics:\ncalling order matters (`fn(a, b)` vs `fn(b, a)`),\nmay include rest parameters and destructuring patterns.',
 					source_line: 39,
 					type_signature:
 						'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; }, $loose>',
 				},
 				{
-					name: 'Component_Prop_Info',
+					name: 'ComponentPropInfo',
 					kind: 'type',
 					doc_comment:
-						'Component prop information for Svelte components.\n\nKept distinct from Parameter_Info despite structural similarity.\nComponent props are named attributes with different semantics:\nno positional order when passing (`<Foo {a} {b} />` = `<Foo {b} {a} />`),\nsupport two-way binding via `$bindable` rune.',
+						'Component prop information for Svelte components.\n\nKept distinct from ParameterInfo despite structural similarity.\nComponent props are named attributes with different semantics:\nno positional order when passing (`<Foo {a} {b} />` = `<Foo {b} {a} />`),\nsupport two-way binding via `$bindable` rune.',
 					source_line: 56,
 					type_signature:
 						'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; bindable: ZodOptional<...>; }, $loose>',
 				},
 				{
-					name: 'Identifier_Json',
+					name: 'IdentifierJson',
 					kind: 'type',
 					doc_comment: 'Identifier metadata with rich TypeScript/JSDoc information.',
 					source_line: 69,
@@ -3811,7 +3811,7 @@ export const src_json: Src_Json = {
 						'ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loose>',
 				},
 				{
-					name: 'Module_Json',
+					name: 'ModuleJson',
 					kind: 'type',
 					doc_comment: 'Module information with metadata.',
 					source_line: 124,
@@ -3819,7 +3819,7 @@ export const src_json: Src_Json = {
 						'ZodObject<{ path: ZodString; identifiers: ZodOptional<ZodArray<ZodObject<{ name: ZodString; kind: ZodEnum<{ function: "function"; type: "type"; variable: "variable"; class: "class"; constructor: "constructor"; component: "component"; json: "json"; css: "css"; }>; ... 19 more ...; alias_of: ZodOptional<...>; }, $loos...',
 				},
 				{
-					name: 'Src_Json',
+					name: 'SrcJson',
 					kind: 'type',
 					doc_comment: 'Top-level source metadata.',
 					see_also: [
@@ -4122,10 +4122,10 @@ export const src_json: Src_Json = {
 			path: 'throttle.ts',
 			identifiers: [
 				{
-					name: 'Throttle_Options',
+					name: 'ThrottleOptions',
 					kind: 'type',
 					source_line: 4,
-					type_signature: 'Throttle_Options',
+					type_signature: 'ThrottleOptions',
 					properties: [
 						{
 							name: 'delay',
@@ -4149,7 +4149,7 @@ export const src_json: Src_Json = {
 						'Throttles calls to a callback that returns a void promise.\nImmediately invokes the callback on the first call unless `leading=false`.\nIf the throttled function is called while the promise is already pending,\nthe call is queued to run after the pending promise completes plus `delay`,\nand only the last call is invoked.\nIn other words, all calls and their args are discarded\nduring the pending window except for the most recent.\nUnlike debouncing, this calls the throttled callback\nboth on the leading and trailing edges of the delay window by default,\nand this can be customized by setting `leading` or `trailing.\nIt also differs from a queue where every call to the throttled callback eventually runs.',
 					source_line: 29,
 					type_signature:
-						'<T extends (...args: Array<any>) => Promise<void>>(cb: T, { delay, when }?: Throttle_Options): T',
+						'<T extends (...args: Array<any>) => Promise<void>>(cb: T, { delay, when }?: ThrottleOptions): T',
 					return_type: 'T',
 					return_description: 'same as `cb`',
 					parameters: [
@@ -4160,7 +4160,7 @@ export const src_json: Src_Json = {
 						},
 						{
 							name: '__1',
-							type: 'Throttle_Options',
+							type: 'ThrottleOptions',
 							optional: false,
 							default_value: 'EMPTY_OBJECT',
 						},
@@ -4195,10 +4195,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Timings_Key',
+					name: 'TimingsKey',
 					kind: 'type',
 					source_line: 18,
-					type_signature: 'Timings_Key',
+					type_signature: 'TimingsKey',
 				},
 				{
 					name: 'Timings',
@@ -4217,13 +4217,13 @@ export const src_json: Src_Json = {
 							name: 'timings',
 							kind: 'variable',
 							modifiers: ['private', 'readonly'],
-							type_signature: 'Map<Timings_Key, number | undefined>',
+							type_signature: 'Map<TimingsKey, number | undefined>',
 						},
 						{
 							name: 'stopwatches',
 							kind: 'variable',
 							modifiers: ['private', 'readonly'],
-							type_signature: 'Map<Timings_Key, Stopwatch>',
+							type_signature: 'Map<TimingsKey, Stopwatch>',
 						},
 						{
 							name: 'constructor',
@@ -4241,12 +4241,12 @@ export const src_json: Src_Json = {
 							name: 'start',
 							kind: 'function',
 							doc_comment: 'Starts a timing operation for the given key.',
-							type_signature: '(key: Timings_Key, decimals?: number | undefined): () => number',
+							type_signature: '(key: TimingsKey, decimals?: number | undefined): () => number',
 							return_type: '() => number',
 							parameters: [
 								{
 									name: 'key',
-									type: 'Timings_Key',
+									type: 'TimingsKey',
 									optional: false,
 								},
 								{
@@ -4261,12 +4261,12 @@ export const src_json: Src_Json = {
 							name: 'next_key',
 							kind: 'function',
 							modifiers: ['private'],
-							type_signature: '(key: Timings_Key): Timings_Key',
-							return_type: 'Timings_Key',
+							type_signature: '(key: TimingsKey): TimingsKey',
+							return_type: 'TimingsKey',
 							parameters: [
 								{
 									name: 'key',
-									type: 'Timings_Key',
+									type: 'TimingsKey',
 									optional: false,
 								},
 							],
@@ -4276,12 +4276,12 @@ export const src_json: Src_Json = {
 							kind: 'function',
 							modifiers: ['private'],
 							doc_comment: 'Stops a timing operation and records the elapsed time.',
-							type_signature: '(key: Timings_Key): number',
+							type_signature: '(key: TimingsKey): number',
 							return_type: 'number',
 							parameters: [
 								{
 									name: 'key',
-									type: 'Timings_Key',
+									type: 'TimingsKey',
 									optional: false,
 								},
 							],
@@ -4289,12 +4289,12 @@ export const src_json: Src_Json = {
 						{
 							name: 'get',
 							kind: 'function',
-							type_signature: '(key: Timings_Key): number',
+							type_signature: '(key: TimingsKey): number',
 							return_type: 'number',
 							parameters: [
 								{
 									name: 'key',
-									type: 'Timings_Key',
+									type: 'TimingsKey',
 									optional: false,
 								},
 							],
@@ -4302,8 +4302,8 @@ export const src_json: Src_Json = {
 						{
 							name: 'entries',
 							kind: 'function',
-							type_signature: '(): IterableIterator<[Timings_Key, number | undefined]>',
-							return_type: 'IterableIterator<[Timings_Key, number | undefined]>',
+							type_signature: '(): IterableIterator<[TimingsKey, number | undefined]>',
+							return_type: 'IterableIterator<[TimingsKey, number | undefined]>',
 							parameters: [],
 						},
 						{
@@ -4330,26 +4330,26 @@ export const src_json: Src_Json = {
 			path: 'types.ts',
 			identifiers: [
 				{
-					name: 'Class_Constructor',
+					name: 'ClassConstructor',
 					kind: 'type',
 					source_line: 11,
-					type_signature: 'Class_Constructor<T_Instance, T_Args>',
+					type_signature: 'ClassConstructor<TInstance, TArgs>',
 					generic_params: [
 						{
-							name: 'T_Instance',
+							name: 'TInstance',
 						},
 						{
-							name: 'T_Args',
+							name: 'TArgs',
 							constraint: 'Array<any>',
 							default_type: 'Array<any>',
 						},
 					],
 				},
 				{
-					name: 'Omit_Strict',
+					name: 'OmitStrict',
 					kind: 'type',
 					source_line: 15,
-					type_signature: 'Omit_Strict<T, K>',
+					type_signature: 'OmitStrict<T, K>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4361,7 +4361,7 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Pick_Union',
+					name: 'PickUnion',
 					kind: 'type',
 					doc_comment: 'Like `Pick` but works for type unions.',
 					see_also: [
@@ -4369,19 +4369,19 @@ export const src_json: Src_Json = {
 						'https://stackoverflow.com/users/5770132/oblosys',
 					],
 					source_line: 23,
-					type_signature: 'Pick_Union<T, K>',
+					type_signature: 'PickUnion<T, K>',
 					generic_params: [
 						{
 							name: 'T',
 						},
 						{
 							name: 'K',
-							constraint: 'Keyof_Union<T>',
+							constraint: 'KeyofUnion<T>',
 						},
 					],
 				},
 				{
-					name: 'Keyof_Union',
+					name: 'KeyofUnion',
 					kind: 'type',
 					doc_comment: 'Like `keyof` but works for type unions.',
 					see_also: [
@@ -4389,7 +4389,7 @@ export const src_json: Src_Json = {
 						'https://stackoverflow.com/users/5770132/oblosys',
 					],
 					source_line: 35,
-					type_signature: 'Keyof_Union<T>',
+					type_signature: 'KeyofUnion<T>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4397,10 +4397,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Partial_Except',
+					name: 'PartialExcept',
 					kind: 'type',
 					source_line: 40,
-					type_signature: 'Partial_Except<T, K>',
+					type_signature: 'PartialExcept<T, K>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4412,10 +4412,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Partial_Only',
+					name: 'PartialOnly',
 					kind: 'type',
 					source_line: 43,
-					type_signature: 'Partial_Only<T, K>',
+					type_signature: 'PartialOnly<T, K>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4427,10 +4427,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Partial_Values',
+					name: 'PartialValues',
 					kind: 'type',
 					source_line: 47,
-					type_signature: 'Partial_Values<T>',
+					type_signature: 'PartialValues<T>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4465,10 +4465,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Not_Null',
+					name: 'NotNull',
 					kind: 'type',
 					source_line: 56,
-					type_signature: 'Not_Null<T>',
+					type_signature: 'NotNull<T>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4476,10 +4476,10 @@ export const src_json: Src_Json = {
 					],
 				},
 				{
-					name: 'Array_Element',
+					name: 'ArrayElement',
 					kind: 'type',
 					source_line: 58,
-					type_signature: 'Array_Element<T>',
+					type_signature: 'ArrayElement<T>',
 					generic_params: [
 						{
 							name: 'T',
@@ -4496,13 +4496,13 @@ export const src_json: Src_Json = {
 						'https://github.com/colinhacks/zod#brand',
 					],
 					source_line: 90,
-					type_signature: 'Flavored<T_Value, T_Name>',
+					type_signature: 'Flavored<TValue, TName>',
 					generic_params: [
 						{
-							name: 'T_Value',
+							name: 'TValue',
 						},
 						{
-							name: 'T_Name',
+							name: 'TName',
 						},
 					],
 				},
@@ -4522,13 +4522,13 @@ export const src_json: Src_Json = {
 					name: 'Branded',
 					kind: 'type',
 					source_line: 95,
-					type_signature: 'Branded<T_Value, T_Name>',
+					type_signature: 'Branded<TValue, TName>',
 					generic_params: [
 						{
-							name: 'T_Value',
+							name: 'TValue',
 						},
 						{
-							name: 'T_Name',
+							name: 'TName',
 						},
 					],
 				},

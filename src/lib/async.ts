@@ -1,4 +1,4 @@
-export type Async_Status = 'initial' | 'pending' | 'success' | 'failure';
+export type AsyncStatus = 'initial' | 'pending' | 'success' | 'failure';
 
 /**
  * Waits for the given `duration` before resolving.

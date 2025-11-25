@@ -3,7 +3,7 @@ import {z} from 'zod';
 /**
  * Identifier kinds for exported symbols.
  */
-export const Identifier_Kind = z.enum([
+export const IdentifierKind = z.enum([
 	'type',
 	'function',
 	'variable',
@@ -13,12 +13,12 @@ export const Identifier_Kind = z.enum([
 	'json',
 	'css',
 ]);
-export type Identifier_Kind = z.infer<typeof Identifier_Kind>;
+export type IdentifierKind = z.infer<typeof IdentifierKind>;
 
 /**
  * Generic type parameter information.
  */
-export const Generic_Param_Info = z.looseObject({
+export const GenericParamInfo = z.looseObject({
 	/** Parameter name like `T`. */
 	name: z.string(),
 	/** Constraint like `string` from `T extends string`. */
@@ -26,34 +26,34 @@ export const Generic_Param_Info = z.looseObject({
 	/** Default type like `unknown` from `T = unknown`. */
 	default_type: z.string().optional(),
 });
-export type Generic_Param_Info = z.infer<typeof Generic_Param_Info>;
+export type GenericParamInfo = z.infer<typeof GenericParamInfo>;
 
 /**
  * Parameter information for functions and methods.
  *
- * Kept distinct from Component_Prop_Info despite structural similarity.
+ * Kept distinct from ComponentPropInfo despite structural similarity.
  * Function parameters form a tuple with positional semantics:
  * calling order matters (`fn(a, b)` vs `fn(b, a)`),
  * may include rest parameters and destructuring patterns.
  */
-export const Parameter_Info = z.looseObject({
+export const ParameterInfo = z.looseObject({
 	name: z.string(),
 	type: z.string(),
 	optional: z.boolean(),
 	description: z.string().optional(),
 	default_value: z.string().optional(),
 });
-export type Parameter_Info = z.infer<typeof Parameter_Info>;
+export type ParameterInfo = z.infer<typeof ParameterInfo>;
 
 /**
  * Component prop information for Svelte components.
  *
- * Kept distinct from Parameter_Info despite structural similarity.
+ * Kept distinct from ParameterInfo despite structural similarity.
  * Component props are named attributes with different semantics:
  * no positional order when passing (`<Foo {a} {b} />` = `<Foo {b} {a} />`),
  * support two-way binding via `$bindable` rune.
  */
-export const Component_Prop_Info = z.looseObject({
+export const ComponentPropInfo = z.looseObject({
 	name: z.string(),
 	type: z.string(),
 	optional: z.boolean(),
@@ -61,24 +61,24 @@ export const Component_Prop_Info = z.looseObject({
 	default_value: z.string().optional(),
 	bindable: z.boolean().optional(),
 });
-export type Component_Prop_Info = z.infer<typeof Component_Prop_Info>;
+export type ComponentPropInfo = z.infer<typeof ComponentPropInfo>;
 
 /**
  * Identifier metadata with rich TypeScript/JSDoc information.
  */
-export const Identifier_Json = z.looseObject({
+export const IdentifierJson = z.looseObject({
 	name: z.string(),
-	kind: Identifier_Kind,
+	kind: IdentifierKind,
 	doc_comment: z.string().optional(),
 	type_signature: z.string().optional(),
 	/** TypeScript modifiers like `readonly`, `private`, or `static`. */
 	modifiers: z.array(z.string()).optional(),
 	source_line: z.number().optional(),
-	parameters: z.array(Parameter_Info).optional(),
+	parameters: z.array(ParameterInfo).optional(),
 	return_type: z.string().optional(),
 	/** Function return value description from `@returns` or `@return` tag. */
 	return_description: z.string().optional(),
-	generic_params: z.array(Generic_Param_Info).optional(),
+	generic_params: z.array(GenericParamInfo).optional(),
 	/** Code examples from `@example` tags. */
 	examples: z.array(z.string()).optional(),
 	/** Deprecation warning from `@deprecated` tag. */
@@ -93,13 +93,13 @@ export const Identifier_Json = z.looseObject({
 	implements: z.array(z.string()).optional(),
 	/** Recursive: class/interface members. */
 	get members() {
-		return z.array(Identifier_Json).optional();
+		return z.array(IdentifierJson).optional();
 	},
 	/** Recursive: type properties. */
 	get properties() {
-		return z.array(Identifier_Json).optional();
+		return z.array(IdentifierJson).optional();
 	},
-	props: z.array(Component_Prop_Info).optional(),
+	props: z.array(ComponentPropInfo).optional(),
 	/**
 	 * Module paths (relative to src/lib) that also re-export this identifier.
 	 * The identifier's canonical location is the module where it appears in `identifiers`.
@@ -116,41 +116,41 @@ export const Identifier_Json = z.looseObject({
 		})
 		.optional(),
 });
-export type Identifier_Json = z.infer<typeof Identifier_Json>;
+export type IdentifierJson = z.infer<typeof IdentifierJson>;
 
 /**
  * Module information with metadata.
  */
-export const Module_Json = z.looseObject({
+export const ModuleJson = z.looseObject({
 	/** Module path relative to src/lib. */
 	path: z.string(),
-	identifiers: z.array(Identifier_Json).optional(),
+	identifiers: z.array(IdentifierJson).optional(),
 	module_comment: z.string().optional(),
 	/** Module paths (relative to src/lib) that this module imports. */
 	dependencies: z.array(z.string()).optional(),
 	/** Module paths (relative to src/lib) that import this module. */
 	dependents: z.array(z.string()).optional(),
 });
-export type Module_Json = z.infer<typeof Module_Json>;
+export type ModuleJson = z.infer<typeof ModuleJson>;
 
 /**
  * Top-level source metadata.
  *
  * @see https://github.com/ryanatkn/gro/blob/main/src/docs/gro_plugin_sveltekit_app.md#well-known-src
  */
-export const Src_Json = z.looseObject({
+export const SrcJson = z.looseObject({
 	name: z.string(),
 	version: z.string(),
-	modules: z.array(Module_Json).optional(),
+	modules: z.array(ModuleJson).optional(),
 });
-export type Src_Json = z.infer<typeof Src_Json>;
+export type SrcJson = z.infer<typeof SrcJson>;
 
 /**
  * Format identifier name with generic parameters for display.
  * @example identifier_get_display_name({name: 'Map', kind: 'type', generic_params: [{name: 'K'}, {name: 'V'}]})
  * // => 'Map<K, V>'
  */
-export const identifier_get_display_name = (identifier: Identifier_Json): string => {
+export const identifier_get_display_name = (identifier: IdentifierJson): string => {
 	if (!identifier.generic_params?.length) return identifier.name;
 	const params = identifier.generic_params.map((p) => {
 		let param = p.name;
@@ -167,7 +167,7 @@ export const identifier_get_display_name = (identifier: Identifier_Json): string
  * // => "import type {Foo} from '@pkg/lib/foo.js';"
  */
 export const identifier_generate_import = (
-	identifier: Identifier_Json,
+	identifier: IdentifierJson,
 	module_path: string,
 	pkg_name: string,
 ): string => {

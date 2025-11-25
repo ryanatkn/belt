@@ -6,19 +6,19 @@ import type {Flavored} from './types.js';
 import {to_file_path} from './path.js';
 import {fs_exists} from './fs.js';
 
-export const Git_Origin = z.string();
-export type Git_Origin = Flavored<string, 'Git_Origin'>;
+export const GitOrigin = z.string();
+export type GitOrigin = Flavored<string, 'GitOrigin'>;
 
-export const Git_Branch = z.string();
-export type Git_Branch = Flavored<string, 'Git_Branch'>;
+export const GitBranch = z.string();
+export type GitBranch = Flavored<string, 'GitBranch'>;
 
 /**
  * Returns the current git branch name or throws if something goes wrong.
  */
-export const git_current_branch_name = async (options?: SpawnOptions): Promise<Git_Branch> => {
+export const git_current_branch_name = async (options?: SpawnOptions): Promise<GitBranch> => {
 	const {stdout} = await spawn_out('git', ['rev-parse', '--abbrev-ref', 'HEAD'], options);
 	if (!stdout) throw Error('git_current_branch_name failed');
-	const branch_name = stdout.trim() as Git_Branch;
+	const branch_name = stdout.trim() as GitBranch;
 	return branch_name;
 };
 
@@ -26,8 +26,8 @@ export const git_current_branch_name = async (options?: SpawnOptions): Promise<G
  * @returns a boolean indicating if the remote git branch exists
  */
 export const git_remote_branch_exists = async (
-	origin: Git_Origin = 'origin' as Git_Origin,
-	branch?: Git_Branch,
+	origin: GitOrigin = 'origin' as GitOrigin,
+	branch?: GitBranch,
 	options?: SpawnOptions,
 ): Promise<boolean> => {
 	const final_branch = branch ?? (await git_current_branch_name(options));
@@ -54,7 +54,7 @@ export const git_remote_branch_exists = async (
  * @returns a boolean indicating if the local git branch exists
  */
 export const git_local_branch_exists = async (
-	branch: Git_Branch,
+	branch: GitBranch,
 	options?: SpawnOptions,
 ): Promise<boolean> => {
 	if (options?.cwd && !(await fs_exists(to_file_path(options.cwd)))) {
@@ -67,7 +67,7 @@ export const git_local_branch_exists = async (
 /**
  * Git workspace status flags indicating which types of changes are present.
  */
-export interface Git_Workspace_Status {
+export interface GitWorkspaceStatus {
 	unstaged_changes: boolean;
 	staged_changes: boolean;
 	untracked_files: boolean;
@@ -101,7 +101,7 @@ export interface Git_Workspace_Status {
  * @param stdout - The raw output from `git status --porcelain -z`
  * @returns status object with flags for unstaged changes, staged changes, and untracked files
  */
-export const git_parse_workspace_status = (stdout: string | null): Git_Workspace_Status => {
+export const git_parse_workspace_status = (stdout: string | null): GitWorkspaceStatus => {
 	// Split on NUL character (\0) for -z format
 	// Filter out empty strings (last element after final \0)
 	const entries = stdout?.split('\0').filter(Boolean) ?? [];
@@ -153,7 +153,7 @@ export const git_parse_workspace_status = (stdout: string | null): Git_Workspace
  */
 export const git_check_workspace = async (
 	options?: SpawnOptions,
-): Promise<Git_Workspace_Status> => {
+): Promise<GitWorkspaceStatus> => {
 	const {stdout} = await spawn_out('git', ['status', '--porcelain', '-z'], options);
 	return git_parse_workspace_status(stdout);
 };
@@ -161,19 +161,19 @@ export const git_check_workspace = async (
 /**
  * @returns `true` if the workspace has no changes at all
  */
-export const git_workspace_is_clean = (status: Git_Workspace_Status): boolean =>
+export const git_workspace_is_clean = (status: GitWorkspaceStatus): boolean =>
 	!status.unstaged_changes && !status.staged_changes && !status.untracked_files;
 
 /**
  * @returns `true` if the workspace has no unstaged changes and no untracked files (staged changes are OK)
  */
-export const git_workspace_is_fully_staged = (status: Git_Workspace_Status): boolean =>
+export const git_workspace_is_fully_staged = (status: GitWorkspaceStatus): boolean =>
 	!status.unstaged_changes && !status.untracked_files;
 
 /**
  * Converts a workspace status to a human-readable message.
  */
-export const git_workspace_status_message = (status: Git_Workspace_Status): string => {
+export const git_workspace_status_message = (status: GitWorkspaceStatus): string => {
 	if (git_workspace_is_clean(status)) return 'workspace is clean';
 	const issues: Array<string> = [];
 	if (status.unstaged_changes) issues.push('unstaged changes');
@@ -204,8 +204,8 @@ export const git_check_fully_staged_workspace = async (
  * Calls `git fetch` and throws if anything goes wrong.
  */
 export const git_fetch = async (
-	origin: Git_Origin = 'origin' as Git_Origin,
-	branch?: Git_Branch,
+	origin: GitOrigin = 'origin' as GitOrigin,
+	branch?: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const args = ['fetch', origin];
@@ -223,9 +223,9 @@ export const git_fetch = async (
  * @returns the previous branch name, if it changed
  */
 export const git_checkout = async (
-	branch: Git_Branch,
+	branch: GitBranch,
 	options?: SpawnOptions,
-): Promise<Git_Branch | null> => {
+): Promise<GitBranch | null> => {
 	const current_branch = await git_current_branch_name(options);
 	if (branch === current_branch) {
 		return null;
@@ -241,8 +241,8 @@ export const git_checkout = async (
  * Calls `git pull` and throws if anything goes wrong.
  */
 export const git_pull = async (
-	origin: Git_Origin = 'origin' as Git_Origin,
-	branch?: Git_Branch,
+	origin: GitOrigin = 'origin' as GitOrigin,
+	branch?: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const args = ['pull', origin];
@@ -257,8 +257,8 @@ export const git_pull = async (
  * Calls `git push` and throws if anything goes wrong.
  */
 export const git_push = async (
-	origin: Git_Origin,
-	branch?: Git_Branch,
+	origin: GitOrigin,
+	branch?: GitBranch,
 	options?: SpawnOptions,
 	set_upstream = false,
 ): Promise<void> => {
@@ -275,8 +275,8 @@ export const git_push = async (
  * Calls `git push` and throws if anything goes wrong.
  */
 export const git_push_to_create = async (
-	origin: Git_Origin = 'origin' as Git_Origin,
-	branch?: Git_Branch,
+	origin: GitOrigin = 'origin' as GitOrigin,
+	branch?: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const final_branch = branch ?? (await git_current_branch_name(options));
@@ -297,7 +297,7 @@ export const git_push_to_create = async (
  * Deletes a branch locally and throws if anything goes wrong.
  */
 export const git_delete_local_branch = async (
-	branch: Git_Branch,
+	branch: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const result = await spawn('git', ['branch', '-D', branch], options);
@@ -310,8 +310,8 @@ export const git_delete_local_branch = async (
  * Deletes a branch remotely and throws if anything goes wrong.
  */
 export const git_delete_remote_branch = async (
-	origin: Git_Origin,
-	branch: Git_Branch,
+	origin: GitOrigin,
+	branch: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const result = await spawn('git', ['push', origin, ':' + branch], options);
@@ -324,8 +324,8 @@ export const git_delete_remote_branch = async (
  * Resets the `target` branch back to its first commit both locally and remotely.
  */
 export const git_reset_branch_to_first_commit = async (
-	origin: Git_Origin,
-	branch: Git_Branch,
+	origin: GitOrigin,
+	branch: GitBranch,
 	options?: SpawnOptions,
 ): Promise<void> => {
 	const previous_branch = await git_checkout(branch, options);
@@ -377,8 +377,8 @@ export const git_check_setting_pull_rebase = async (options?: SpawnOptions): Pro
  * Clones a branch locally to another directory and updates the origin to match the source.
  */
 export const git_clone_locally = async (
-	origin: Git_Origin,
-	branch: Git_Branch,
+	origin: GitOrigin,
+	branch: GitBranch,
 	source_dir: string,
 	target_dir: string,
 	options?: SpawnOptions,

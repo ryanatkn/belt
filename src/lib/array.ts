@@ -1,4 +1,4 @@
-import type {Array_Element} from './types.js';
+import type {ArrayElement} from './types.js';
 
 // TODO try to cange to readonly again, see if upstream errors are tolerably fixed
 export const EMPTY_ARRAY: Array<any> = Object.freeze([]) as any;
@@ -20,7 +20,7 @@ export const remove_unordered = (array: Array<any>, index: number): void => {
  * Returns a function that returns the next item in the `array`
  * in a linear sequence, looping back to index 0 when it reaches the end.
  */
-export const to_next = <T extends ReadonlyArray<any>>(array: T): (() => Array_Element<T>) => {
+export const to_next = <T extends ReadonlyArray<any>>(array: T): (() => ArrayElement<T>) => {
 	let i = -1;
 	return () => {
 		i++;

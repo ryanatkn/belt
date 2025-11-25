@@ -4,7 +4,7 @@ import {count_graphemes} from './string.js';
 import {transform_empty_object_to_undefined} from './object.js';
 import {Url} from './url.js';
 
-export const Package_Json_Repository = z.union([
+export const PackageJsonRepository = z.union([
 	z.string(),
 	z.looseObject({
 		type: z.string(),
@@ -12,9 +12,9 @@ export const Package_Json_Repository = z.union([
 		directory: z.string().optional(),
 	}),
 ]);
-export type Package_Json_Repository = z.infer<typeof Package_Json_Repository>;
+export type PackageJsonRepository = z.infer<typeof PackageJsonRepository>;
 
-export const Package_Json_Author = z.union([
+export const PackageJsonAuthor = z.union([
 	z.string(),
 	z.looseObject({
 		name: z.string(),
@@ -22,16 +22,16 @@ export const Package_Json_Author = z.union([
 		url: Url.optional(),
 	}),
 ]);
-export type Package_Json_Author = z.infer<typeof Package_Json_Author>;
+export type PackageJsonAuthor = z.infer<typeof PackageJsonAuthor>;
 
-export const Package_Json_Funding = z.union([
+export const PackageJsonFunding = z.union([
 	z.string(),
 	z.looseObject({
 		type: z.string(),
 		url: Url,
 	}),
 ]);
-export type Package_Json_Funding = z.infer<typeof Package_Json_Funding>;
+export type PackageJsonFunding = z.infer<typeof PackageJsonFunding>;
 
 // The base export value schema that can be a string, null, or nested conditions
 const export_value_schema: z.ZodType = z.lazy(() =>
@@ -44,8 +44,8 @@ const export_value_schema: z.ZodType = z.lazy(() =>
 		),
 	]),
 );
-export const Export_Value = export_value_schema;
-export type Export_Value = z.infer<typeof Export_Value>;
+export const ExportValue = export_value_schema;
+export type ExportValue = z.infer<typeof ExportValue>;
 
 /**
  * Package exports can be:
@@ -53,17 +53,17 @@ export type Export_Value = z.infer<typeof Export_Value>;
  * 2. null (to block exports)
  * 3. A record of export conditions/paths
  */
-export const Package_Json_Exports = z.union([
+export const PackageJsonExports = z.union([
 	z.string(),
 	z.null(),
 	z.record(z.string(), export_value_schema),
 ]);
-export type Package_Json_Exports = z.infer<typeof Package_Json_Exports>;
+export type PackageJsonExports = z.infer<typeof PackageJsonExports>;
 
 /**
  * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json
  */
-export const Package_Json = z.looseObject({
+export const PackageJson = z.looseObject({
 	// according to the npm docs, `name` and `version` are the only required properties
 	name: z.string(),
 	version: z.string(),
@@ -104,14 +104,14 @@ export const Package_Json = z.looseObject({
 	license: z.string().optional(),
 	scripts: z.record(z.string(), z.string()).optional(),
 	homepage: Url.optional(),
-	author: z.union([z.string(), Package_Json_Author.optional()]),
-	repository: z.union([z.string(), Url, Package_Json_Repository]).optional(),
-	contributors: z.array(z.union([z.string(), Package_Json_Author])).optional(),
+	author: z.union([z.string(), PackageJsonAuthor.optional()]),
+	repository: z.union([z.string(), Url, PackageJsonRepository]).optional(),
+	contributors: z.array(z.union([z.string(), PackageJsonAuthor])).optional(),
 	bugs: z
 		.union([z.string(), z.looseObject({url: Url.optional(), email: z.email().optional()})])
 		.optional(),
 	funding: z
-		.union([Url, Package_Json_Funding, z.array(z.union([Url, Package_Json_Funding]))])
+		.union([Url, PackageJsonFunding, z.array(z.union([Url, PackageJsonFunding]))])
 		.optional(),
 	keywords: z.array(z.string()).optional(),
 
@@ -130,6 +130,6 @@ export const Package_Json = z.looseObject({
 	sideEffects: z.array(z.string()).optional(),
 	files: z.array(z.string()).optional(),
 	main: z.string().optional(),
-	exports: Package_Json_Exports.transform(transform_empty_object_to_undefined).optional(),
+	exports: PackageJsonExports.transform(transform_empty_object_to_undefined).optional(),
 });
-export type Package_Json = z.infer<typeof Package_Json>;
+export type PackageJson = z.infer<typeof PackageJson>;

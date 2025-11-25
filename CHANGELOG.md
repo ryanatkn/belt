@@ -109,7 +109,7 @@
 
 ### Patch Changes
 
-- add `options` arg to `Result_Error` and `Unreachable_Error` ctors ([34723fe](https://github.com/ryanatkn/belt/commit/34723fe))
+- add `options` arg to `ResultError` and `UnreachableError` ctors ([34723fe](https://github.com/ryanatkn/belt/commit/34723fe))
 
 ## 0.31.0
 
@@ -144,7 +144,7 @@
 
 ### Patch Changes
 
-- add `Class_Constructor` to `types.ts` ([dc8f0b9](https://github.com/ryanatkn/belt/commit/dc8f0b9))
+- add `ClassConstructor` to `types.ts` ([dc8f0b9](https://github.com/ryanatkn/belt/commit/dc8f0b9))
 
 ## 0.29.0
 
@@ -211,7 +211,7 @@
 
 ### Patch Changes
 
-- improve `Json` types, adding `Json_Primitive`, `Json_Object`, and `Json_Array` ([9db9a1d](https://github.com/ryanatkn/belt/commit/9db9a1d))
+- improve `Json` types, adding `JsonPrimitive`, `JsonObject`, and `JsonArray` ([9db9a1d](https://github.com/ryanatkn/belt/commit/9db9a1d))
 
 ## 0.26.0
 
@@ -442,13 +442,13 @@
 
 ### Patch Changes
 
-- add `Pick_Union` and `Keyof_Union` type helpers ([6e6ac53](https://github.com/ryanatkn/belt/commit/6e6ac53))
+- add `PickUnion` and `KeyofUnion` type helpers ([6e6ac53](https://github.com/ryanatkn/belt/commit/6e6ac53))
 
 ## 0.19.1
 
 ### Patch Changes
 
-- add `Array_Element` type helper ([940ec97](https://github.com/ryanatkn/belt/commit/940ec97))
+- add `ArrayElement` type helper ([940ec97](https://github.com/ryanatkn/belt/commit/940ec97))
 
 ## 0.19.0
 
@@ -502,7 +502,7 @@
 
 ### Minor Changes
 
-- rename to `Proper_Snakes` ([#21](https://github.com/ryanatkn/belt/pull/21))
+- rename to `ProperSnakes` ([#21](https://github.com/ryanatkn/belt/pull/21))
 
 ## 0.15.4
 
@@ -649,7 +649,7 @@
 
 ## 0.6.0
 
-- **break**: change `Log_Level` from an enum to a string type union,
+- **break**: change `LogLevel` from an enum to a string type union,
   change its default to `info`, and add `to_log_level_value` to convert it to a number
   ([#11](https://github.com/ryanatkn/belt/pull/11))
 

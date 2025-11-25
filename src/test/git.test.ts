@@ -11,12 +11,12 @@ import {
 	git_workspace_status_message,
 	git_workspace_is_clean,
 	git_workspace_is_fully_staged,
-	type Git_Workspace_Status,
+	type GitWorkspaceStatus,
 } from '$lib/git.ts';
 
 describe('git_workspace_is_clean', () => {
 	test('returns true when all flags are false', () => {
-		const clean_status: Git_Workspace_Status = {
+		const clean_status: GitWorkspaceStatus = {
 			unstaged_changes: false,
 			staged_changes: false,
 			untracked_files: false,
@@ -54,7 +54,7 @@ describe('git_workspace_is_clean', () => {
 
 describe('git_workspace_is_fully_staged', () => {
 	test('returns true when only staged changes exist', () => {
-		const staged_status: Git_Workspace_Status = {
+		const staged_status: GitWorkspaceStatus = {
 			unstaged_changes: false,
 			staged_changes: true,
 			untracked_files: false,
@@ -63,7 +63,7 @@ describe('git_workspace_is_fully_staged', () => {
 	});
 
 	test('returns true when workspace is clean', () => {
-		const clean_status: Git_Workspace_Status = {
+		const clean_status: GitWorkspaceStatus = {
 			unstaged_changes: false,
 			staged_changes: false,
 			untracked_files: false,
@@ -96,7 +96,7 @@ describe('git_workspace_is_fully_staged', () => {
 
 describe('git_workspace_status_message', () => {
 	test('returns clean message when workspace is clean', () => {
-		const clean_status: Git_Workspace_Status = {
+		const clean_status: GitWorkspaceStatus = {
 			unstaged_changes: false,
 			staged_changes: false,
 			untracked_files: false,
@@ -105,7 +105,7 @@ describe('git_workspace_status_message', () => {
 	});
 
 	test('lists all issues when multiple flags are true', () => {
-		const dirty_status: Git_Workspace_Status = {
+		const dirty_status: GitWorkspaceStatus = {
 			unstaged_changes: true,
 			staged_changes: true,
 			untracked_files: true,

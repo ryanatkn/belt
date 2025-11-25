@@ -15,7 +15,7 @@ export const create_stopwatch = (decimals = 2): Stopwatch => {
 	};
 };
 
-export type Timings_Key = string | number;
+export type TimingsKey = string | number;
 
 /**
  * Tracks and manages multiple timing operations.
@@ -24,8 +24,8 @@ export type Timings_Key = string | number;
 export class Timings {
 	readonly decimals: number | undefined;
 
-	private readonly timings: Map<Timings_Key, number | undefined> = new Map();
-	private readonly stopwatches: Map<Timings_Key, Stopwatch> = new Map();
+	private readonly timings: Map<TimingsKey, number | undefined> = new Map();
+	private readonly stopwatches: Map<TimingsKey, Stopwatch> = new Map();
 
 	constructor(decimals?: number) {
 		this.decimals = decimals;
@@ -34,14 +34,14 @@ export class Timings {
 	/**
 	 * Starts a timing operation for the given key.
 	 */
-	start(key: Timings_Key, decimals = this.decimals): () => number {
+	start(key: TimingsKey, decimals = this.decimals): () => number {
 		const final_key = this.next_key(key);
 		this.stopwatches.set(final_key, create_stopwatch(decimals));
 		this.timings.set(final_key, undefined); // initializing to preserve order
 		return () => this.stop(final_key);
 	}
 
-	private next_key(key: Timings_Key): Timings_Key {
+	private next_key(key: TimingsKey): TimingsKey {
 		if (!this.stopwatches.has(key)) return key;
 		let i = 2;
 		while (true) {
@@ -53,7 +53,7 @@ export class Timings {
 	/**
 	 * Stops a timing operation and records the elapsed time.
 	 */
-	private stop(key: Timings_Key): number {
+	private stop(key: TimingsKey): number {
 		const stopwatch = this.stopwatches.get(key);
 		if (!stopwatch) return 0; // TODO maybe warn?
 		this.stopwatches.delete(key);
@@ -62,13 +62,13 @@ export class Timings {
 		return timing;
 	}
 
-	get(key: Timings_Key): number {
+	get(key: TimingsKey): number {
 		const timing = this.timings.get(key);
 		if (timing === undefined) return 0; // TODO maybe warn?
 		return timing;
 	}
 
-	entries(): IterableIterator<[Timings_Key, number | undefined]> {
+	entries(): IterableIterator<[TimingsKey, number | undefined]> {
 		return this.timings.entries();
 	}
 
