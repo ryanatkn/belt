@@ -255,6 +255,66 @@ export const library_json: LibraryJson = {
 						return_type: 'Deferred<T>',
 						parameters: [],
 					},
+					{
+						name: 'map_concurrent',
+						kind: 'function',
+						doc_comment: 'Maps over items with controlled concurrency, preserving input order.',
+						examples: [
+							"```ts\nconst results = await map_concurrent(\n  file_paths,\n  async (path) => readFile(path, 'utf8'),\n  5, // max 5 concurrent reads\n);\n```",
+						],
+						source_line: 54,
+						type_signature:
+							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<R[]>',
+						return_type: 'Promise<R[]>',
+						return_description: 'Promise resolving to array of results in same order as input',
+						parameters: [
+							{
+								name: 'items',
+								type: 'T[]',
+								description: '- Array of items to process',
+							},
+							{
+								name: 'fn',
+								type: '(item: T, index: number) => Promise<R>',
+								description: '- Async function to apply to each item',
+							},
+							{
+								name: 'concurrency',
+								type: 'number',
+								description: '- Maximum number of concurrent operations (default: 10)',
+								default_value: '10',
+							},
+						],
+					},
+					{
+						name: 'map_concurrent_settled',
+						kind: 'function',
+						doc_comment:
+							'Like `map_concurrent` but collects all results/errors instead of failing fast.\nReturns a tuple of [results, errors] where results may have undefined entries for failed items.',
+						source_line: 121,
+						type_signature:
+							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
+						return_type: 'Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
+						return_description: 'Promise resolving to [results, errors] tuple',
+						parameters: [
+							{
+								name: 'items',
+								type: 'T[]',
+								description: '- Array of items to process',
+							},
+							{
+								name: 'fn',
+								type: '(item: T, index: number) => Promise<R>',
+								description: '- Async function to apply to each item',
+							},
+							{
+								name: 'concurrency',
+								type: 'number',
+								description: '- Maximum number of concurrent operations (default: 10)',
+								default_value: '10',
+							},
+						],
+					},
 				],
 				dependents: ['throttle.ts'],
 			},
