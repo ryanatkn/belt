@@ -41,7 +41,7 @@ test('create_deferred - can be awaited before resolving', async () => {
 
 test('map_concurrent - processes all items', async () => {
 	const items = [1, 2, 3, 4, 5];
-	const results = await map_concurrent(items, async (x) => x * 2);
+	const results = await map_concurrent(items, async (x) => x * 2, 3);
 	expect(results).toEqual([2, 4, 6, 8, 10]);
 });
 
@@ -80,12 +80,12 @@ test('map_concurrent - respects concurrency limit', async () => {
 });
 
 test('map_concurrent - handles empty array', async () => {
-	const results = await map_concurrent([], async (x: number) => x * 2);
+	const results = await map_concurrent([], async (x: number) => x * 2, 3);
 	expect(results).toEqual([]);
 });
 
 test('map_concurrent - handles single item', async () => {
-	const results = await map_concurrent([42], async (x) => x * 2);
+	const results = await map_concurrent([42], async (x) => x * 2, 3);
 	expect(results).toEqual([84]);
 });
 
@@ -139,7 +139,7 @@ test('map_concurrent - concurrency 1 is sequential', async () => {
 
 test('map_concurrent - passes index to callback', async () => {
 	const items = ['a', 'b', 'c'];
-	const results = await map_concurrent(items, async (item, index) => `${item}:${index}`);
+	const results = await map_concurrent(items, async (item, index) => `${item}:${index}`, 3);
 	expect(results).toEqual(['a:0', 'b:1', 'c:2']);
 });
 
@@ -153,13 +153,18 @@ test('map_concurrent - high concurrency with fewer items', async () => {
 
 test('map_concurrent_settled - collects all results', async () => {
 	const items = [1, 2, 3, 4, 5];
-	const [results, errors] = await map_concurrent_settled(items, async (x) => x * 2);
-	expect(results).toEqual([2, 4, 6, 8, 10]);
-	expect(errors).toEqual([]);
+	const results = await map_concurrent_settled(items, async (x) => x * 2, 3);
+	expect(results).toEqual([
+		{status: 'fulfilled', value: 2},
+		{status: 'fulfilled', value: 4},
+		{status: 'fulfilled', value: 6},
+		{status: 'fulfilled', value: 8},
+		{status: 'fulfilled', value: 10},
+	]);
 });
 
 test('map_concurrent_settled - collects errors without failing', async () => {
-	const [results, errors] = await map_concurrent_settled(
+	const results = await map_concurrent_settled(
 		[1, 2, 3, 4, 5],
 		async (x) => {
 			if (x === 2 || x === 4) throw new Error(`error ${x}`);
@@ -168,19 +173,19 @@ test('map_concurrent_settled - collects errors without failing', async () => {
 		2,
 	);
 
-	expect(results[0]).toBe(2);
-	expect(results[1]).toBeUndefined();
-	expect(results[2]).toBe(6);
-	expect(results[3]).toBeUndefined();
-	expect(results[4]).toBe(10);
+	expect(results[0]).toEqual({status: 'fulfilled', value: 2});
+	expect(results[1]!.status).toBe('rejected');
+	expect(results[2]).toEqual({status: 'fulfilled', value: 6});
+	expect(results[3]!.status).toBe('rejected');
+	expect(results[4]).toEqual({status: 'fulfilled', value: 10});
 
-	expect(errors).toHaveLength(2);
-	expect(errors.map((e) => e.index).sort()).toEqual([1, 3]); // eslint-disable-line @typescript-eslint/require-array-sort-compare
+	const rejected = results.filter((r) => r.status === 'rejected');
+	expect(rejected).toHaveLength(2);
 });
 
 test('map_concurrent_settled - preserves order with varying delays', async () => {
 	const items = [50, 10, 30, 20, 40];
-	const [results] = await map_concurrent_settled(
+	const results = await map_concurrent_settled(
 		items,
 		async (delay, index) => {
 			await new Promise((r) => setTimeout(r, delay));
@@ -188,13 +193,13 @@ test('map_concurrent_settled - preserves order with varying delays', async () =>
 		},
 		3,
 	);
-	expect(results).toEqual([0, 1, 2, 3, 4]);
+	const values = results.map((r) => (r.status === 'fulfilled' ? r.value : undefined));
+	expect(values).toEqual([0, 1, 2, 3, 4]);
 });
 
 test('map_concurrent_settled - handles empty array', async () => {
-	const [results, errors] = await map_concurrent_settled([], async (x: number) => x);
+	const results = await map_concurrent_settled([], async (x: number) => x, 3);
 	expect(results).toEqual([]);
-	expect(errors).toEqual([]);
 });
 
 test('map_concurrent_settled - throws on invalid concurrency', async () => {
@@ -204,7 +209,7 @@ test('map_concurrent_settled - throws on invalid concurrency', async () => {
 });
 
 test('map_concurrent_settled - all items fail', async () => {
-	const [results, errors] = await map_concurrent_settled(
+	const results = await map_concurrent_settled(
 		[1, 2, 3],
 		async (x) => {
 			throw new Error(`error ${x}`);
@@ -212,20 +217,20 @@ test('map_concurrent_settled - all items fail', async () => {
 		2,
 	);
 
-	expect(results).toEqual([undefined, undefined, undefined]);
-	expect(errors).toHaveLength(3);
+	expect(results.every((r) => r.status === 'rejected')).toBe(true);
+	expect(results).toHaveLength(3);
 });
 
 // Additional edge case tests
 
 test('map_concurrent - handles undefined results correctly', async () => {
-	const results = await map_concurrent([1, 2, 3], async () => undefined);
+	const results = await map_concurrent([1, 2, 3], async () => undefined, 3);
 	expect(results).toEqual([undefined, undefined, undefined]);
 	expect(results).toHaveLength(3);
 });
 
 test('map_concurrent - handles null results correctly', async () => {
-	const results = await map_concurrent([1, 2, 3], async () => null);
+	const results = await map_concurrent([1, 2, 3], async () => null, 3);
 	expect(results).toEqual([null, null, null]);
 });
 
@@ -236,7 +241,7 @@ test('map_concurrent - preserves error object', async () => {
 	try {
 		await map_concurrent([1], async () => {
 			throw custom_error;
-		});
+		}, 3);
 		expect.fail('should have thrown');
 	} catch (err) {
 		expect(err).toBe(custom_error);
@@ -310,7 +315,7 @@ test('map_concurrent - handles synchronous throw in async function', async () =>
 				throw new Error('sync throw');
 			}
 			return x;
-		}),
+		}, 3),
 	).rejects.toThrow('sync throw');
 });
 
@@ -318,17 +323,19 @@ test('map_concurrent_settled - preserves error objects', async () => {
 	const custom_error = new Error('custom');
 	(custom_error as any).code = 'CUSTOM_CODE';
 
-	const [, errors] = await map_concurrent_settled([1], async () => {
+	const results = await map_concurrent_settled([1], async () => {
 		throw custom_error;
-	});
+	}, 3);
 
-	expect(errors).toHaveLength(1);
-	expect(errors[0]!.error).toBe(custom_error);
-	expect((errors[0]!.error as any).code).toBe('CUSTOM_CODE');
+	expect(results).toHaveLength(1);
+	expect(results[0]!.status).toBe('rejected');
+	const rejected = results[0] as PromiseRejectedResult;
+	expect(rejected.reason).toBe(custom_error);
+	expect((rejected.reason as any).code).toBe('CUSTOM_CODE');
 });
 
 test('map_concurrent_settled - error indices are correct with varying delays', async () => {
-	const [, errors] = await map_concurrent_settled(
+	const results = await map_concurrent_settled(
 		[1, 2, 3, 4, 5],
 		async (x) => {
 			// Items 2 and 4 fail, but 4 completes before 2 due to shorter delay
@@ -346,8 +353,11 @@ test('map_concurrent_settled - error indices are correct with varying delays', a
 	);
 
 	// Error indices should reflect original array positions, not completion order
-	const error_indices = errors.map((e) => e.index).sort(); // eslint-disable-line @typescript-eslint/require-array-sort-compare
-	expect(error_indices).toEqual([1, 3]); // indices of items 2 and 4
+	expect(results[0]!.status).toBe('fulfilled');
+	expect(results[1]!.status).toBe('rejected'); // index 1 = item 2
+	expect(results[2]!.status).toBe('fulfilled');
+	expect(results[3]!.status).toBe('rejected'); // index 3 = item 4
+	expect(results[4]!.status).toBe('fulfilled');
 });
 
 test('map_concurrent_settled - respects concurrency limit', async () => {
@@ -366,4 +376,79 @@ test('map_concurrent_settled - respects concurrency limit', async () => {
 	);
 
 	expect(max_concurrent).toBe(2);
+});
+
+test('map_concurrent - nested calls', async () => {
+	const results = await map_concurrent(
+		[1, 2],
+		async (x) => {
+			const inner = await map_concurrent([10, 20], async (y) => x * y, 2);
+			return inner;
+		},
+		2,
+	);
+	expect(results).toEqual([
+		[10, 20],
+		[20, 40],
+	]);
+});
+
+test('map_concurrent_settled - single item fails', async () => {
+	const results = await map_concurrent_settled(
+		[1],
+		async () => {
+			throw new Error('single failure');
+		},
+		1,
+	);
+
+	expect(results).toHaveLength(1);
+	expect(results[0]!.status).toBe('rejected');
+});
+
+test('map_concurrent_settled - first item fails, rest succeed', async () => {
+	const results = await map_concurrent_settled(
+		[1, 2, 3],
+		async (x) => {
+			if (x === 1) throw new Error('first fails');
+			return x * 2;
+		},
+		1,
+	);
+
+	expect(results[0]!.status).toBe('rejected');
+	expect(results[1]).toEqual({status: 'fulfilled', value: 4});
+	expect(results[2]).toEqual({status: 'fulfilled', value: 6});
+});
+
+test('map_concurrent_settled - last item fails, rest succeed', async () => {
+	const results = await map_concurrent_settled(
+		[1, 2, 3],
+		async (x) => {
+			if (x === 3) throw new Error('last fails');
+			return x * 2;
+		},
+		1,
+	);
+
+	expect(results[0]).toEqual({status: 'fulfilled', value: 2});
+	expect(results[1]).toEqual({status: 'fulfilled', value: 4});
+	expect(results[2]!.status).toBe('rejected');
+});
+
+test('map_concurrent_settled - distinguishes undefined value from failure', async () => {
+	const results = await map_concurrent_settled(
+		[1, 2, 3],
+		async (x) => {
+			if (x === 1) return undefined;
+			if (x === 2) throw new Error('fail');
+			return x;
+		},
+		3,
+	);
+
+	// undefined return is fulfilled, not rejected
+	expect(results[0]).toEqual({status: 'fulfilled', value: undefined});
+	expect(results[1]!.status).toBe('rejected');
+	expect(results[2]).toEqual({status: 'fulfilled', value: 3});
 });

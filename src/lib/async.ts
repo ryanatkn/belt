@@ -39,7 +39,7 @@ export const create_deferred = <T>(): Deferred<T> => {
  *
  * @param items array of items to process
  * @param fn async function to apply to each item
- * @param concurrency maximum number of concurrent operations (default: 10)
+ * @param concurrency maximum number of concurrent operations
  * @returns promise resolving to array of results in same order as input
  *
  * @example
@@ -54,7 +54,7 @@ export const create_deferred = <T>(): Deferred<T> => {
 export const map_concurrent = async <T, R>(
 	items: Array<T>,
 	fn: (item: T, index: number) => Promise<R>,
-	concurrency = 10,
+	concurrency: number,
 ): Promise<Array<R>> => {
 	if (concurrency < 1) {
 		throw new Error('concurrency must be at least 1');
@@ -111,24 +111,35 @@ export const map_concurrent = async <T, R>(
 
 /**
  * Like `map_concurrent` but collects all results/errors instead of failing fast.
- * Returns a tuple of [results, errors] where results may have undefined entries for failed items.
+ * Returns an array of settlement objects matching the `Promise.allSettled` pattern.
  *
  * @param items array of items to process
  * @param fn async function to apply to each item
- * @param concurrency maximum number of concurrent operations (default: 10)
- * @returns promise resolving to [results, errors] tuple
+ * @param concurrency maximum number of concurrent operations
+ * @returns promise resolving to array of `PromiseSettledResult` objects in input order
+ *
+ * @example
+ * ```ts
+ * const results = await map_concurrent_settled(urls, fetch, 5);
+ * for (const [i, result] of results.entries()) {
+ *   if (result.status === 'fulfilled') {
+ *     console.log(`${urls[i]}: ${result.value.status}`);
+ *   } else {
+ *     console.error(`${urls[i]}: ${result.reason}`);
+ *   }
+ * }
+ * ```
  */
 export const map_concurrent_settled = async <T, R>(
 	items: Array<T>,
 	fn: (item: T, index: number) => Promise<R>,
-	concurrency = 10,
-): Promise<[Array<R | undefined>, Array<{index: number; error: unknown}>]> => {
+	concurrency: number,
+): Promise<Array<PromiseSettledResult<R>>> => {
 	if (concurrency < 1) {
 		throw new Error('concurrency must be at least 1');
 	}
 
-	const results: Array<R | undefined> = new Array(items.length);
-	const errors: Array<{index: number; error: unknown}> = [];
+	const results: Array<PromiseSettledResult<R>> = new Array(items.length);
 	let next_index = 0;
 	let active_count = 0;
 
@@ -136,7 +147,7 @@ export const map_concurrent_settled = async <T, R>(
 		const run_next = (): void => {
 			// Check if we're done
 			if (next_index >= items.length && active_count === 0) {
-				resolve([results, errors]);
+				resolve(results);
 				return;
 			}
 
@@ -147,11 +158,11 @@ export const map_concurrent_settled = async <T, R>(
 				active_count++;
 
 				fn(item, index)
-					.then((result) => {
-						results[index] = result;
+					.then((value) => {
+						results[index] = {status: 'fulfilled', value};
 					})
-					.catch((error) => {
-						errors.push({index, error});
+					.catch((reason: unknown) => {
+						results[index] = {status: 'rejected', reason};
 					})
 					.finally(() => {
 						active_count--;
@@ -162,7 +173,7 @@ export const map_concurrent_settled = async <T, R>(
 
 		// Handle empty array
 		if (items.length === 0) {
-			resolve([results, errors]);
+			resolve(results);
 			return;
 		}
 

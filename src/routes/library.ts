@@ -264,7 +264,7 @@ export const library_json: LibraryJson = {
 						],
 						source_line: 54,
 						type_signature:
-							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<R[]>',
+							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency: number): Promise<R[]>',
 						return_type: 'Promise<R[]>',
 						return_description: 'promise resolving to array of results in same order as input',
 						parameters: [
@@ -281,8 +281,7 @@ export const library_json: LibraryJson = {
 							{
 								name: 'concurrency',
 								type: 'number',
-								description: 'maximum number of concurrent operations (default: 10)',
-								default_value: '10',
+								description: 'maximum number of concurrent operations',
 							},
 						],
 					},
@@ -290,12 +289,16 @@ export const library_json: LibraryJson = {
 						name: 'map_concurrent_settled',
 						kind: 'function',
 						doc_comment:
-							'Like `map_concurrent` but collects all results/errors instead of failing fast.\nReturns a tuple of [results, errors] where results may have undefined entries for failed items.',
-						source_line: 121,
+							'Like `map_concurrent` but collects all results/errors instead of failing fast.\nReturns an array of settlement objects matching the `Promise.allSettled` pattern.',
+						examples: [
+							"```ts\nconst results = await map_concurrent_settled(urls, fetch, 5);\nfor (const [i, result] of results.entries()) {\n  if (result.status === 'fulfilled') {\n    console.log(`${urls[i]}: ${result.value.status}`);\n  } else {\n    console.error(`${urls[i]}: ${result.reason}`);\n  }\n}\n```",
+						],
+						source_line: 133,
 						type_signature:
-							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
-						return_type: 'Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
-						return_description: 'promise resolving to [results, errors] tuple',
+							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency: number): Promise<PromiseSettledResult<R>[]>',
+						return_type: 'Promise<PromiseSettledResult<R>[]>',
+						return_description:
+							'promise resolving to array of `PromiseSettledResult` objects in input order',
 						parameters: [
 							{
 								name: 'items',
@@ -310,8 +313,7 @@ export const library_json: LibraryJson = {
 							{
 								name: 'concurrency',
 								type: 'number',
-								description: 'maximum number of concurrent operations (default: 10)',
-								default_value: '10',
+								description: 'maximum number of concurrent operations',
 							},
 						],
 					},
