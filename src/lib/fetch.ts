@@ -189,10 +189,7 @@ const print_ratelimit_headers = (headers: Headers): string => {
 };
 
 export const FetchValueCacheKey = z.string();
-export type FetchValueCacheKey = Flavored<
-	z.infer<typeof FetchValueCacheKey>,
-	'FetchValueCacheKey'
->;
+export type FetchValueCacheKey = Flavored<z.infer<typeof FetchValueCacheKey>, 'FetchValueCacheKey'>;
 
 export const FetchValueCacheItem = z.object({
 	key: FetchValueCacheKey,

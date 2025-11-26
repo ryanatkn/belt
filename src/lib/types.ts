@@ -21,9 +21,9 @@ export type OmitStrict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
  * @see https://stackoverflow.com/users/5770132/oblosys
  */
 export type PickUnion<T, K extends KeyofUnion<T>> = T extends unknown
-	? K & keyof T extends never
+	? K & keyof T extends never // eslint-disable-line @typescript-eslint/no-redundant-type-constituents
 		? never
-		: Pick<T, K & keyof T>
+		: Pick<T, K & keyof T> // eslint-disable-line @typescript-eslint/no-redundant-type-constituents
 	: never;
 
 /**

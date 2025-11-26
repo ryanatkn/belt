@@ -34,7 +34,10 @@ export interface LibraryJson {
 /**
  * Creates a `LibraryJson` with computed properties from package.json and source metadata.
  */
-export const library_json_parse = (package_json: PackageJson, source_json: SourceJson): LibraryJson => {
+export const library_json_parse = (
+	package_json: PackageJson,
+	source_json: SourceJson,
+): LibraryJson => {
 	const {name} = package_json;
 
 	// TODO hacky

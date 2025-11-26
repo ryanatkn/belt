@@ -151,9 +151,7 @@ export const git_parse_workspace_status = (stdout: string | null): GitWorkspaceS
  * The -z format provides more reliable parsing by using NUL separators and avoiding escaping.
  * @returns status object with flags for unstaged changes, staged changes, and untracked files
  */
-export const git_check_workspace = async (
-	options?: SpawnOptions,
-): Promise<GitWorkspaceStatus> => {
+export const git_check_workspace = async (options?: SpawnOptions): Promise<GitWorkspaceStatus> => {
 	const {stdout} = await spawn_out('git', ['status', '--porcelain', '-z'], options);
 	return git_parse_workspace_status(stdout);
 };
