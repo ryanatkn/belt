@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.40.1",
+  "version": "0.40.2",
   "modules": [
     {
       "path": "array.ts",
@@ -44,6 +44,14 @@
         },
         {
           "name": "create_deferred",
+          "kind": "function"
+        },
+        {
+          "name": "map_concurrent",
+          "kind": "function"
+        },
+        {
+          "name": "map_concurrent_settled",
           "kind": "function"
         }
       ]
