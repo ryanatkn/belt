@@ -5,7 +5,7 @@ import type {LibraryJson} from './library_json.js';
 export const library_json: LibraryJson = {
 	package_json: {
 		name: '@ryanatkn/belt',
-		version: '0.40.2',
+		version: '0.41.0',
 		description: 'utility belt for JS',
 		glyph: '🦕',
 		logo: 'logo.svg',
@@ -118,7 +118,7 @@ export const library_json: LibraryJson = {
 	},
 	source_json: {
 		name: '@ryanatkn/belt',
-		version: '0.40.2',
+		version: '0.41.0',
 		modules: [
 			{
 				path: 'array.ts',

@@ -1,5 +1,12 @@
 # @ryanatkn/belt
 
+## 0.41.0
+
+### Minor Changes
+
+- change `map_concurrent_settled` to return `PromiseSettledResult` ([8061202](https://github.com/ryanatkn/belt/commit/8061202))
+- make `concurrency` required for `map_concurrent` and `map_concurrent_settled` ([8061202](https://github.com/ryanatkn/belt/commit/8061202))
+
 ## 0.40.2
 
 ### Patch Changes
