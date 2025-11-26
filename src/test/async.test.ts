@@ -239,9 +239,13 @@ test('map_concurrent - preserves error object', async () => {
 	(custom_error as any).code = 'ENOENT';
 
 	try {
-		await map_concurrent([1], async () => {
-			throw custom_error;
-		}, 3);
+		await map_concurrent(
+			[1],
+			async () => {
+				throw custom_error;
+			},
+			3,
+		);
 		expect.fail('should have thrown');
 	} catch (err) {
 		expect(err).toBe(custom_error);
@@ -309,13 +313,17 @@ test('map_concurrent - items.length equals concurrency', async () => {
 
 test('map_concurrent - handles synchronous throw in async function', async () => {
 	await expect(
-		map_concurrent([1, 2, 3], async (x) => {
-			if (x === 2) {
-				// Synchronous throw, not a rejection
-				throw new Error('sync throw');
-			}
-			return x;
-		}, 3),
+		map_concurrent(
+			[1, 2, 3],
+			async (x) => {
+				if (x === 2) {
+					// Synchronous throw, not a rejection
+					throw new Error('sync throw');
+				}
+				return x;
+			},
+			3,
+		),
 	).rejects.toThrow('sync throw');
 });
 
@@ -323,9 +331,13 @@ test('map_concurrent_settled - preserves error objects', async () => {
 	const custom_error = new Error('custom');
 	(custom_error as any).code = 'CUSTOM_CODE';
 
-	const results = await map_concurrent_settled([1], async () => {
-		throw custom_error;
-	}, 3);
+	const results = await map_concurrent_settled(
+		[1],
+		async () => {
+			throw custom_error;
+		},
+		3,
+	);
 
 	expect(results).toHaveLength(1);
 	expect(results[0]!.status).toBe('rejected');
