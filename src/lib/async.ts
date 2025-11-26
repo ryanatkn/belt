@@ -37,10 +37,10 @@ export const create_deferred = <T>(): Deferred<T> => {
 /**
  * Maps over items with controlled concurrency, preserving input order.
  *
- * @param items - Array of items to process
- * @param fn - Async function to apply to each item
- * @param concurrency - Maximum number of concurrent operations (default: 10)
- * @returns Promise resolving to array of results in same order as input
+ * @param items array of items to process
+ * @param fn async function to apply to each item
+ * @param concurrency maximum number of concurrent operations (default: 10)
+ * @returns promise resolving to array of results in same order as input
  *
  * @example
  * ```ts
@@ -113,10 +113,10 @@ export const map_concurrent = async <T, R>(
  * Like `map_concurrent` but collects all results/errors instead of failing fast.
  * Returns a tuple of [results, errors] where results may have undefined entries for failed items.
  *
- * @param items - Array of items to process
- * @param fn - Async function to apply to each item
- * @param concurrency - Maximum number of concurrent operations (default: 10)
- * @returns Promise resolving to [results, errors] tuple
+ * @param items array of items to process
+ * @param fn async function to apply to each item
+ * @param concurrency maximum number of concurrent operations (default: 10)
+ * @returns promise resolving to [results, errors] tuple
  */
 export const map_concurrent_settled = async <T, R>(
 	items: Array<T>,

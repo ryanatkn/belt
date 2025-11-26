@@ -266,22 +266,22 @@ export const library_json: LibraryJson = {
 						type_signature:
 							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<R[]>',
 						return_type: 'Promise<R[]>',
-						return_description: 'Promise resolving to array of results in same order as input',
+						return_description: 'promise resolving to array of results in same order as input',
 						parameters: [
 							{
 								name: 'items',
 								type: 'T[]',
-								description: '- Array of items to process',
+								description: 'array of items to process',
 							},
 							{
 								name: 'fn',
 								type: '(item: T, index: number) => Promise<R>',
-								description: '- Async function to apply to each item',
+								description: 'async function to apply to each item',
 							},
 							{
 								name: 'concurrency',
 								type: 'number',
-								description: '- Maximum number of concurrent operations (default: 10)',
+								description: 'maximum number of concurrent operations (default: 10)',
 								default_value: '10',
 							},
 						],
@@ -295,22 +295,22 @@ export const library_json: LibraryJson = {
 						type_signature:
 							'<T, R>(items: T[], fn: (item: T, index: number) => Promise<R>, concurrency?: number): Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
 						return_type: 'Promise<[(R | undefined)[], { index: number; error: unknown; }[]]>',
-						return_description: 'Promise resolving to [results, errors] tuple',
+						return_description: 'promise resolving to [results, errors] tuple',
 						parameters: [
 							{
 								name: 'items',
 								type: 'T[]',
-								description: '- Array of items to process',
+								description: 'array of items to process',
 							},
 							{
 								name: 'fn',
 								type: '(item: T, index: number) => Promise<R>',
-								description: '- Async function to apply to each item',
+								description: 'async function to apply to each item',
 							},
 							{
 								name: 'concurrency',
 								type: 'number',
-								description: '- Maximum number of concurrent operations (default: 10)',
+								description: 'maximum number of concurrent operations (default: 10)',
 								default_value: '10',
 							},
 						],
@@ -660,12 +660,12 @@ export const library_json: LibraryJson = {
 							{
 								name: 'a',
 								type: 'unknown',
-								description: '- First value to compare',
+								description: 'first value to compare',
 							},
 							{
 								name: 'b',
 								type: 'unknown',
-								description: '- Second value to compare',
+								description: 'second value to compare',
 							},
 						],
 					},
