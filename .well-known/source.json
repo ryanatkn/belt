@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.40.2",
+  "version": "0.41.0",
   "modules": [
     {
       "path": "array.ts",
