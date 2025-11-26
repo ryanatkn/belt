@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.40.2
+
+### Patch Changes
+
+- add `map_concurrent` and `map_concurrent_settled` ([ec8abaf](https://github.com/ryanatkn/belt/commit/ec8abaf))
+
 ## 0.40.1
 
 ### Patch Changes
