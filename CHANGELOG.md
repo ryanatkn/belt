@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.40.1
+
+### Patch Changes
+
+- make `optional` optional ([72146e7](https://github.com/ryanatkn/belt/commit/72146e7))
+
 ## 0.40.0
 
 ### Minor Changes
