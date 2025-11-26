@@ -343,7 +343,7 @@ test('map_concurrent_settled - preserves error objects', async () => {
 	expect(results[0]!.status).toBe('rejected');
 	const rejected = results[0] as PromiseRejectedResult;
 	expect(rejected.reason).toBe(custom_error);
-	expect((rejected.reason as any).code).toBe('CUSTOM_CODE');
+	expect(rejected.reason.code).toBe('CUSTOM_CODE');
 });
 
 test('map_concurrent_settled - error indices are correct with varying delays', async () => {
