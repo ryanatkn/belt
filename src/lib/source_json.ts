@@ -49,7 +49,7 @@ export type GenericParamInfo = z.infer<typeof GenericParamInfo>;
 export const ParameterInfo = z.looseObject({
 	name: z.string(),
 	type: z.string(),
-	optional: z.boolean(),
+	optional: z.boolean().optional(),
 	description: z.string().optional(),
 	default_value: z.string().optional(),
 });
@@ -66,7 +66,7 @@ export type ParameterInfo = z.infer<typeof ParameterInfo>;
 export const ComponentPropInfo = z.looseObject({
 	name: z.string(),
 	type: z.string(),
-	optional: z.boolean(),
+	optional: z.boolean().optional(),
 	description: z.string().optional(),
 	default_value: z.string().optional(),
 	bindable: z.boolean().optional(),

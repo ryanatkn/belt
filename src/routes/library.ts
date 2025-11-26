@@ -3805,7 +3805,7 @@ export const library_json: LibraryJson = {
 							'Parameter information for functions and methods.\n\nKept distinct from ComponentPropInfo despite structural similarity.\nFunction parameters form a tuple with positional semantics:\ncalling order matters (`fn(a, b)` vs `fn(b, a)`),\nmay include rest parameters and destructuring patterns.',
 						source_line: 49,
 						type_signature:
-							'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; }, $loose>',
+							'ZodObject<{ name: ZodString; type: ZodString; optional: ZodOptional<ZodBoolean>; description: ZodOptional<ZodString>; default_value: ZodOptional<...>; }, $loose>',
 					},
 					{
 						name: 'ComponentPropInfo',
@@ -3814,7 +3814,7 @@ export const library_json: LibraryJson = {
 							'Component prop information for Svelte components.\n\nKept distinct from ParameterInfo despite structural similarity.\nComponent props are named attributes with different semantics:\nno positional order when passing (`<Foo {a} {b} />` = `<Foo {b} {a} />`),\nsupport two-way binding via `$bindable` rune.',
 						source_line: 66,
 						type_signature:
-							'ZodObject<{ name: ZodString; type: ZodString; optional: ZodBoolean; description: ZodOptional<ZodString>; default_value: ZodOptional<ZodString>; bindable: ZodOptional<...>; }, $loose>',
+							'ZodObject<{ name: ZodString; type: ZodString; optional: ZodOptional<ZodBoolean>; description: ZodOptional<ZodString>; default_value: ZodOptional<...>; bindable: ZodOptional<...>; }, $loose>',
 					},
 					{
 						name: 'DeclarationJson',
