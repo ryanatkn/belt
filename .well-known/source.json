@@ -1,6 +1,6 @@
 {
   "name": "@ryanatkn/belt",
-  "version": "0.41.0",
+  "version": "0.41.1",
   "modules": [
     {
       "path": "array.ts",
@@ -259,6 +259,14 @@
         },
         {
           "name": "fs_empty_dir",
+          "kind": "function"
+        },
+        {
+          "name": "FsSearchOptions",
+          "kind": "type"
+        },
+        {
+          "name": "fs_search",
           "kind": "function"
         }
       ]
