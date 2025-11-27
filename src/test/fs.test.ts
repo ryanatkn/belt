@@ -272,7 +272,7 @@ describe('fs_search', () => {
 		const result = await fs_search(dir, {cwd: null});
 
 		expect(result.map((f) => f.path).sort()).toEqual(['a.txt', 'b.txt']);
-		expect(result.every((f) => f.is_directory === false)).toBe(true);
+		expect(result.every((f) => !f.is_directory)).toBe(true);
 
 		await rm(dir, {recursive: true});
 	});
