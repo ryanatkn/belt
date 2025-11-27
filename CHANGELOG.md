@@ -1,5 +1,11 @@
 # @ryanatkn/belt
 
+## 0.41.1
+
+### Patch Changes
+
+- add `fs_search` ([#59](https://github.com/ryanatkn/belt/pull/59))
+
 ## 0.41.0
 
 ### Minor Changes
