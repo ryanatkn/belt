@@ -177,6 +177,7 @@ export const library_json: LibraryJson = {
 						],
 					},
 				],
+				dependents: ['fs.ts'],
 			},
 			{
 				path: 'async.ts',
@@ -1005,7 +1006,7 @@ export const library_json: LibraryJson = {
 						name: 'fs_exists',
 						kind: 'function',
 						doc_comment: 'Checks if a file or directory exists.',
-						source_line: 8,
+						source_line: 13,
 						type_signature: '(path: string): Promise<boolean>',
 						return_type: 'Promise<boolean>',
 						parameters: [
@@ -1020,7 +1021,7 @@ export const library_json: LibraryJson = {
 						kind: 'function',
 						doc_comment:
 							'Empties a directory, recursively by default. If `should_remove` is provided, only entries where it returns `true` are removed.',
-						source_line: 20,
+						source_line: 25,
 						type_signature:
 							'(dir: string, should_remove?: ((name: string) => boolean) | undefined, options?: RmOptions | undefined): Promise<void>',
 						return_type: 'Promise<void>',
@@ -1041,7 +1042,67 @@ export const library_json: LibraryJson = {
 							},
 						],
 					},
+					{
+						name: 'FsSearchOptions',
+						kind: 'type',
+						source_line: 35,
+						type_signature: 'FsSearchOptions',
+						properties: [
+							{
+								name: 'filter',
+								kind: 'variable',
+								type_signature: 'PathFilter | Array<PathFilter>',
+								doc_comment:
+									'One or more filter functions, any of which can short-circuit the search by returning `false`.',
+							},
+							{
+								name: 'file_filter',
+								kind: 'variable',
+								type_signature: 'FileFilter | Array<FileFilter>',
+								doc_comment:
+									'One or more file filter functions. Every filter must pass for a file to be included.',
+							},
+							{
+								name: 'sort',
+								kind: 'variable',
+								type_signature: 'boolean | null | ((a: ResolvedPath, b: ResolvedPath) => number)',
+								doc_comment:
+									'Pass `null` or `false` to speed things up at the cost of volatile ordering.',
+							},
+							{
+								name: 'include_directories',
+								kind: 'variable',
+								type_signature: 'boolean',
+								doc_comment: 'Set to `true` to include directories. Defaults to `false`.',
+							},
+							{
+								name: 'cwd',
+								kind: 'variable',
+								type_signature: 'string | null',
+								doc_comment: "Sets the cwd for `dir` unless it's an absolute path or `null`.",
+							},
+						],
+					},
+					{
+						name: 'fs_search',
+						kind: 'function',
+						source_line: 58,
+						type_signature: '(dir: string, options?: FsSearchOptions): Promise<ResolvedPath[]>',
+						return_type: 'Promise<ResolvedPath[]>',
+						parameters: [
+							{
+								name: 'dir',
+								type: 'string',
+							},
+							{
+								name: 'options',
+								type: 'FsSearchOptions',
+								default_value: 'EMPTY_OBJECT',
+							},
+						],
+					},
 				],
+				dependencies: ['array.ts', 'object.ts', 'string.ts'],
 				dependents: ['git.ts'],
 			},
 			{
@@ -2616,7 +2677,7 @@ export const library_json: LibraryJson = {
 						],
 					},
 				],
-				dependents: ['fetch.ts', 'package_json.ts', 'throttle.ts'],
+				dependents: ['fetch.ts', 'fs.ts', 'package_json.ts', 'throttle.ts'],
 			},
 			{
 				path: 'package_json.ts',
@@ -3987,7 +4048,7 @@ export const library_json: LibraryJson = {
 					},
 				],
 				dependencies: ['iterator.ts'],
-				dependents: ['library_json.ts', 'package_json.ts', 'url.ts'],
+				dependents: ['fs.ts', 'library_json.ts', 'package_json.ts', 'url.ts'],
 			},
 			{
 				path: 'throttle.ts',
