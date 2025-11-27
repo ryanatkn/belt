@@ -101,23 +101,28 @@ const crawl = async (
 	include_directories: boolean,
 	base_dir: string | null,
 ): Promise<void> => {
+	let subdirs: Array<Promise<void>> | undefined;
 	const dirents = await readdir(dir, {withFileTypes: true});
-	const subdirs: Array<Promise<void>> = [];
 	for (const dirent of dirents) {
 		const {name, parentPath} = dirent;
 		const is_directory = dirent.isDirectory();
 		const id = parentPath + name;
-		if (filters && !filters.every((f) => f(id, is_directory))) continue;
+
+		if (filters && !filters.every((f) => f(id, is_directory))) {
+			continue;
+		}
+
 		const path = base_dir === null ? name : base_dir + '/' + name;
+
 		if (is_directory) {
 			const dir_id = id + '/';
 			if (include_directories) {
 				paths.push({path, id: dir_id, is_directory: true});
 			}
-			subdirs.push(crawl(dir_id, paths, filters, file_filters, include_directories, path));
+			(subdirs ??= []).push(crawl(dir_id, paths, filters, file_filters, include_directories, path));
 		} else if (!file_filters || file_filters.every((f) => f(id))) {
 			paths.push({path, id, is_directory: false});
 		}
 	}
-	if (subdirs.length) await Promise.all(subdirs);
+	if (subdirs) await Promise.all(subdirs);
 };
