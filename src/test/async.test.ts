@@ -247,9 +247,9 @@ test('map_concurrent - preserves error object', async () => {
 			3,
 		);
 		expect.fail('should have thrown');
-	} catch (err) {
-		expect(err).toBe(custom_error);
-		expect(err.code).toBe('ENOENT');
+	} catch (error) {
+		expect(error).toBe(custom_error);
+		expect(error.code).toBe('ENOENT');
 	}
 });
 
